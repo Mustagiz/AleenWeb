@@ -1,0 +1,39 @@
+{
+  "version": 2,
+  "buildCommand": null,
+  "outputDirectory": ".",
+  "functions": {
+    "api/**/*.js": {
+      "runtime": "nodejs18.x"
+    }
+  },
+  "rewrites": [
+    { "source": "/api/auth/login", "destination": "/api/auth/login" },
+    { "source": "/api/admin/verify", "destination": "/api/admin/verify" },
+    { "source": "/api/admin/catalog", "destination": "/api/admin/catalog" },
+    { "source": "/api/admin/carousel", "destination": "/api/admin/carousel" },
+    { "source": "/api/admin/hero-rotator", "destination": "/api/admin/hero-rotator" },
+    { "source": "/api/admin/mega-banner", "destination": "/api/admin/mega-banner" },
+    { "source": "/api/admin/upload", "destination": "/api/admin/upload" },
+    { "source": "/api/admin/users", "destination": "/api/admin/users" },
+    { "source": "/api/admin/password", "destination": "/api/admin/password" },
+    { "source": "/api/catalog", "destination": "/api/catalog" },
+    { "source": "/api/carousel", "destination": "/api/carousel" },
+    { "source": "/api/hero-rotator", "destination": "/api/hero-rotator" },
+    { "source": "/api/mega-banner", "destination": "/api/mega-banner" }
+  ],
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/(.*)\\.html",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-cache" }
+      ]
+    }
+  ]
+}
