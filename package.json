@@ -3,16 +3,10 @@
   "version": "1.0.0",
   "description": "Aleen Clothing Luxury Haute Couture Website",
   "scripts": {
-    "build": "echo 'Static build ready'",
     "start": "node server.js",
     "dev": "node server.js"
   },
-  "keywords": [
-    "aleen",
-    "couture",
-    "luxury",
-    "website"
-  ],
+  "keywords": ["aleen", "couture", "luxury", "website"],
   "author": "Aleen Atelier",
   "license": "ISC"
 }
