@@ -1,0 +1,234 @@
+{
+  "masterPassword": "aleen",
+  "users": [
+    {
+      "username": "admin",
+      "role": "admin",
+      "password": "aleen",
+      "createdAt": "14 Nov 2026"
+    },
+    {
+      "username": "rajesh",
+      "role": "staff",
+      "password": "pass123",
+      "createdAt": "14 Nov 2026"
+    }
+  ],
+  "megaMenuBanner": {
+    "img": "https://mahira2.netlify.app/assets/s2-card-women.jpg?v=2",
+    "badge": "CURATED HAUTE COUTURE",
+    "title": "The Women's Edit",
+    "line": "Handcrafted Banarasi weaves & royal silhouettes",
+    "url": "collections.html"
+  },
+  "carouselSlides": [
+    {
+      "img": "assets/pakistani-kurti-1.jpg",
+      "title": "Zeenat Raw Silk Kurti",
+      "subtitle": "Heirloom Gold Zardozi & Hand-Adda Bullion Embroidery",
+      "tag": "Pakistani Haute Couture",
+      "desc": "Tailored in royal ivory raw silk with intricate antique gold bullion work, pearls, and gossamer sleeves embodying timeless Awadh grandeur.",
+      "price": "\u20b918,500",
+      "url": "collections.html?category=kurtis",
+      "headline": "Curated Haute Couture"
+    },
+    {
+      "img": "assets/pakistani-kurti-2.jpg",
+      "title": "Gul-e-Rana Velvet Kurti",
+      "subtitle": "Forest Emerald Micro-Velvet with Antique Kashmiri Tilla",
+      "tag": "Curated Velvet Edit",
+      "desc": "Opulent forest emerald velvet tailored with glistening metallic tilla cord, traditional dabka bouquets, and artisanal scalloped gold lace borders.",
+      "price": "\u20b924,000",
+      "url": "collections.html?category=kurtis",
+      "headline": "The Royal Awadh Edit"
+    },
+    {
+      "img": "assets/pakistani-kurti-3.jpg",
+      "title": "Noor Festive Organza",
+      "subtitle": "Blush Peach Tissue Organza with Gossamer Cutwork",
+      "tag": "Festive Organza Edit",
+      "desc": "Weightless blush peach tissue organza adorned with hand-placed seed pearls, delicate scallop embroidery, and diaphanous balloon sleeves.",
+      "price": "\u20b916,800",
+      "url": "collections.html?category=kurtis",
+      "headline": "Festive Organza Reverie"
+    },
+    {
+      "img": "https://mahira2.netlify.app/assets/s3-kurta.jpg?v=5",
+      "title": "Gulmohar Chanderi Set",
+      "subtitle": "Handspun Tissue Chanderi with Antique Marodi Dori",
+      "tag": "Royal Kurta Ensembles",
+      "desc": "Handspun pure chanderi kurta matched with tailored straight brocade trousers and a gossamer metallic dupatta edged with intricate marodi border.",
+      "price": "\u20b921,500",
+      "url": "collections.html?category=kurta-sets",
+      "headline": "Handspun Heritage Ensembles"
+    },
+    {
+      "img": "https://mahira2.netlify.app/assets/women-clean.jpg?v=3",
+      "title": "Sheesh Mahal Lehenga",
+      "subtitle": "Monumental Crimson Velvet with Semi-Precious Encrusting",
+      "tag": "Heritage Bridal Couture",
+      "desc": "A museum-grade bridal lehenga featuring 16 hand-embroidered kalis encrusted with genuine dabka, badla, and semi-precious stone embellishments.",
+      "price": "\u20b985,000",
+      "url": "collections.html?category=lehengas",
+      "headline": "Imperial Bridal Masterpiece"
+    }
+  ],
+  "catalog": [
+    {
+      "id": "ALN-PK-01",
+      "title": "Zeenat Embroidered Pakistani Kurti",
+      "category": "kurtis",
+      "categoryLabel": "Pakistani Kurtis",
+      "price": 34500,
+      "craft": "Pure Zari & Adda Needlework",
+      "fabric": "Pure Raw Silk with Organza Lace Trims",
+      "origin": "Lahore Atelier",
+      "badge": "Heritage Edition",
+      "image": "/assets/uploads/1794646100138_Dubais_Next_Big_Boom_Mega_Projects_Coming_20252030_1.webp",
+      "desc": "Tailored royal ivory raw silk Pakistani kurti accented with heirloom gold zardozi adda embroidery, intricate hand-cut lace sleeve trims, and pearl button plackets."
+    },
+    {
+      "id": "ALN-KS-02",
+      "title": "Gulmohar Chanderi Kurta Set",
+      "category": "kurta-sets",
+      "categoryLabel": "Kurta Sets",
+      "price": 26800,
+      "craft": "Marodi & Aari Needlework",
+      "fabric": "Tissue Chanderi with Silk Organza",
+      "origin": "Chanderi Weavers Guild",
+      "badge": "Bestseller",
+      "image": "https://mahira2.netlify.app/assets/s3-kurta.jpg?v=5",
+      "desc": "Delicate dusty rose organza adorned with fine metallic badla and antique marodi needlecraft. Paired with straight-cut brocade trousers and scalloped veil."
+    },
+    {
+      "id": "ALN-DS-03",
+      "title": "Aura Champagne Flared Gown",
+      "category": "dresses",
+      "categoryLabel": "Dresses & Sets",
+      "price": 38900,
+      "craft": "Pita Work & Micro Pleating",
+      "fabric": "Raw Silk & Multilayered Tulle",
+      "origin": "Aleen Design Studio",
+      "badge": "New Silhouette",
+      "image": "https://mahira2.netlify.app/assets/s3-dresses.jpg?v=5",
+      "desc": "Contemporary architectural drape meeting traditional hand-embroidery. A 32-meter flare cut structured for gala celebrations and grand occasions."
+    },
+    {
+      "id": "ALN-LH-04",
+      "title": "Sheesh Mahal Bridal Lehenga",
+      "category": "lehengas",
+      "categoryLabel": "Lehengas",
+      "price": 135000,
+      "craft": "Zardozi & Dabka Resham",
+      "fabric": "Heritage Velvet & Tissue Silk",
+      "origin": "Lucknow Artisans",
+      "badge": "Royal Couture",
+      "image": "https://mahira2.netlify.app/assets/women-clean.jpg?v=3",
+      "desc": "Inspired by the mirrored halls of Amber Fort. Encased in genuine semi-precious bead embroidery, beaten metallic cord, and a dual tissue veil."
+    },
+    {
+      "id": "ALN-PK-05",
+      "title": "Gul-e-Rana Velvet Pakistani Kurti",
+      "category": "kurtis",
+      "categoryLabel": "Pakistani Kurtis",
+      "price": 38200,
+      "craft": "Tilla & Dabka Hand Embroidery",
+      "fabric": "Micro Velvet with Pure Silk Lining",
+      "origin": "Old City Lahore",
+      "badge": "Artisanal",
+      "image": "assets/pakistani-kurti-2.jpg",
+      "desc": "Opulent forest emerald micro-velvet silhouette enriched with antique metallic tilla cord, dabka floral bouquets, and scalloped hem border work."
+    },
+    {
+      "id": "ALN-KS-06",
+      "title": "Mumtaz Anarkali Ensemble",
+      "category": "kurta-sets",
+      "categoryLabel": "Kurta Sets",
+      "price": 31500,
+      "craft": "Lucknowi Chikankari & Mukaish",
+      "fabric": "Pure Mulberry Georgette",
+      "origin": "Awadh Atelier",
+      "badge": "Hand-Embroidered",
+      "image": "https://mahira2.netlify.app/assets/s4-room.jpg?v=1",
+      "desc": "32 Kalis of handcrafted shadow-work Chikankari interspersed with silver mukaish dots that catch the light at every graceful turn."
+    },
+    {
+      "id": "ALN-DP-07",
+      "title": "Pashmina Heritage Dupatta",
+      "category": "dupattas",
+      "categoryLabel": "Dupattas",
+      "price": 24000,
+      "craft": "Sozni Hand Needlework",
+      "fabric": "Grade-A Cashmere Pashmina",
+      "origin": "Srinagar Valley",
+      "badge": "Limited Craft",
+      "image": "https://mahira2.netlify.app/assets/s5-room.jpg?v=1",
+      "desc": "Featherlight warmth woven from Himalayan capra hircus fleece, detailed with single-needle botanical jaal borders."
+    },
+    {
+      "id": "ALN-UN-08",
+      "title": "Rangkat Brocade Unstitched Brocade",
+      "category": "unstitched",
+      "categoryLabel": "Unstitched Fabrics",
+      "price": 29500,
+      "craft": "Multi-warp Rangkat Weaving",
+      "fabric": "Pure Mulberry Silk 4.5m",
+      "origin": "Bespoke Loom 12",
+      "badge": "Mastercut",
+      "image": "https://mahira2.netlify.app/assets/s3-bg.jpg?v=1",
+      "desc": "Rare artisanal yardage crafted on hand-shuttle looms with alternating warp threads. Tailorable for bespoke lehengas or sherwanis."
+    },
+    {
+      "id": "ALN-PK-09",
+      "title": "Noor Organza Festive Pakistani Kurti",
+      "category": "kurtis",
+      "categoryLabel": "Pakistani Kurtis",
+      "price": 29800,
+      "craft": "Pearl Moti & Scalloped Cutwork",
+      "fabric": "Pure Tissue Silk Organza",
+      "origin": "Karachi Design House",
+      "badge": "Trending",
+      "image": "assets/pakistani-kurti-3.jpg",
+      "desc": "Weightless blush peach tissue organza Pakistani kurti featuring hand-placed pearl droplets, gossamer cutwork sleeves, and fine badla embroidery."
+    },
+    {
+      "id": "ALN-LH-10",
+      "title": "Vasant Garden Floral Lehenga",
+      "category": "lehengas",
+      "categoryLabel": "Lehengas",
+      "price": 92000,
+      "craft": "French Knot & Silk Floss",
+      "fabric": "Mulberry Organza & Crepe",
+      "origin": "Aleen Design Studio",
+      "badge": "Signature Cut",
+      "image": "https://mahira2.netlify.app/assets/women-clean.jpg?v=3",
+      "desc": "A springtime dream composed of thousand-petal floral tapestries rendered in ombr\u00e9 pastel threads, crowned by an embroidered sweetheart bustier."
+    },
+    {
+      "id": "ALN-DS-11",
+      "title": "Mehrunissa Draped Kaftan Set",
+      "category": "dresses",
+      "categoryLabel": "Dresses & Sets",
+      "price": 22400,
+      "craft": "Hand-rolled Zardozi Cords",
+      "fabric": "Italian Crepe de Chine",
+      "origin": "Modern Atelier",
+      "badge": "Resort Couture",
+      "image": "https://mahira2.netlify.app/assets/s3-dresses.jpg?v=5",
+      "desc": "Effortless luxury designed for intimate soirees. Relaxed silhouette cinched with an ornate hand-beaded bullion belt."
+    },
+    {
+      "id": "ALN-UN-12",
+      "title": "Zari Buti Handloom Fabric Set",
+      "category": "unstitched",
+      "categoryLabel": "Unstitched Fabrics",
+      "price": 18500,
+      "craft": "Jamdani Floral Insertion",
+      "fabric": "Organic Handspun Chanderi",
+      "origin": "Madhya Pradesh Looms",
+      "badge": "Pure Natural",
+      "image": "https://mahira2.netlify.app/assets/s3-kurta.jpg?v=5",
+      "desc": "Includes 5 meters of pure chanderi with woven golden bootis alongside 2.5 meters of dyed satin lining and a matched organza drape."
+    }
+  ]
+}
