@@ -28,7 +28,7 @@ module.exports = async (req, res) => {
 
   if (req.method === 'OPTIONS') { res.status(200).end(); return; }
 
-  if (req.method === 'GET') {
+  if (req.method === 'GET' || req.method === 'HEAD') {
     try {
       const catalog = await getCatalog();
       res.status(200).json({ success: true, catalog });

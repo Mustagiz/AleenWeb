@@ -34,7 +34,7 @@ module.exports = async (req, res) => {
     return;
   }
 
-  if (req.method === 'GET') {
+  if (req.method === 'GET' || req.method === 'HEAD') {
     try {
       const slides = await getCarouselSlides();
       res.status(200).json({ success: true, slides });
