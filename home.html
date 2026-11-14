@@ -8741,7 +8741,7 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
     handleScrollModel();
   }
 
-  // 2. Luxury Full-Width Couture Auto-Slider (2-Second Cycle, Pure Title & Description)
+  // 2. Luxury Full-Width Couture Auto-Slider (5-Second Cycle, Pure Title & Description)
   (function initCoutureAutoSlider() {
     const stage = document.getElementById('fwSlidesStage');
     const theater = document.getElementById('fwSliderTheater');
@@ -8750,7 +8750,7 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
     let slides = Array.from(stage.querySelectorAll('.fw-slide'));
     let currentIndex = 0;
     let autoPlayTimer = null;
-    const SLIDE_DURATION = 2000; // Exact 2 seconds
+    const SLIDE_DURATION = 5000; // Exact 5 seconds per user request
 
     // Sync with Admin custom slides if saved in localStorage
     function rehydrateCustomSlides(customList) {
@@ -8760,22 +8760,30 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
         const art = document.createElement('article');
         art.className = `fw-slide ${idx === 0 ? 'active' : ''}`;
         art.setAttribute('data-slide-index', idx);
-        const headline = slide.headline || 'Curated Haute Couture';
-        const title = slide.title || 'Curated Atelier Piece';
-        const desc = slide.desc || 'An authentic Awadh atelier masterpiece crafted with heritage needlework and regal craftsmanship.';
+        
+        const headline = (slide.headline || '').trim();
+        const title = (slide.title || '').trim();
+        const desc = (slide.desc || '').trim();
         const img = slide.img || '';
+
+        const hasAnyContent = headline || title || desc;
+        let contentHtml = '';
+        if (hasAnyContent) {
+          contentHtml = `
+            <div class="fw-slide-content">
+              ${headline ? `<p class="fw-slide-eyebrow">The Atelier Masterpieces</p><h2 class="fw-slide-headline">${headline}</h2><i class="fw-slide-orna" aria-hidden="true"><b></b></i>` : ''}
+              ${title ? `<h3 class="fw-slide-title">${title}</h3>` : ''}
+              ${desc ? `<p class="fw-slide-desc">${desc}</p>` : ''}
+            </div>
+          `;
+        }
+
         art.innerHTML = `
           <div class="fw-slide-img-wrap" aria-hidden="true">
-            <img src="${img}" alt="${title}" class="fw-slide-img">
+            <img src="${img}" alt="${title || 'Aleen Haute Couture'}" class="fw-slide-img">
           </div>
           <div class="fw-slide-veil" aria-hidden="true"></div>
-          <div class="fw-slide-content">
-            <p class="fw-slide-eyebrow">The Atelier Masterpieces</p>
-            <h2 class="fw-slide-headline">${headline}</h2>
-            <i class="fw-slide-orna" aria-hidden="true"><b></b></i>
-            <h3 class="fw-slide-title">${title}</h3>
-            <p class="fw-slide-desc">${desc}</p>
-          </div>
+          ${contentHtml}
         `;
         stage.appendChild(art);
       });

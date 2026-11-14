@@ -111,7 +111,12 @@
       "weave": "Pure Zari & Adda Needlework",
       "delivery": "Express Insured Dispatch (3-5 Days)",
       "whatsapp": "+91 98765 43210",
-      "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
+      "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
+      "images": [
+        "assets/pakistani-kurti-1.jpg",
+        "assets/pakistani-kurti-2.jpg",
+        "assets/pakistani-kurti-3.jpg"
+      ]
     },
     {
       "id": "ALN-KS-02",
@@ -128,7 +133,10 @@
       "weave": "Marodi & Aari Needlework",
       "delivery": "Express Insured Dispatch (3-5 Days)",
       "whatsapp": "+91 98765 43210",
-      "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
+      "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
+      "images": [
+        "https://mahira2.netlify.app/assets/s3-kurta.jpg?v=5"
+      ]
     },
     {
       "id": "ALN-DS-03",
@@ -145,7 +153,10 @@
       "weave": "Pita Work & Micro Pleating",
       "delivery": "Express Insured Dispatch (3-5 Days)",
       "whatsapp": "+91 98765 43210",
-      "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
+      "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
+      "images": [
+        "https://mahira2.netlify.app/assets/s3-dresses.jpg?v=5"
+      ]
     },
     {
       "id": "ALN-LH-04",
@@ -162,7 +173,10 @@
       "weave": "Zardozi & Dabka Resham",
       "delivery": "Express Insured Dispatch (3-5 Days)",
       "whatsapp": "+91 98765 43210",
-      "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
+      "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
+      "images": [
+        "https://mahira2.netlify.app/assets/women-clean.jpg?v=3"
+      ]
     },
     {
       "id": "ALN-PK-05",
@@ -179,7 +193,12 @@
       "weave": "Tilla & Dabka Hand Embroidery",
       "delivery": "Express Insured Dispatch (3-5 Days)",
       "whatsapp": "+91 98765 43210",
-      "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
+      "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
+      "images": [
+        "assets/pakistani-kurti-2.jpg",
+        "assets/pakistani-kurti-1.jpg",
+        "assets/pakistani-kurti-3.jpg"
+      ]
     },
     {
       "id": "ALN-KS-06",
@@ -196,7 +215,10 @@
       "weave": "Lucknowi Chikankari & Mukaish",
       "delivery": "Express Insured Dispatch (3-5 Days)",
       "whatsapp": "+91 98765 43210",
-      "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
+      "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
+      "images": [
+        "https://mahira2.netlify.app/assets/s4-room.jpg?v=1"
+      ]
     },
     {
       "id": "ALN-DP-07",
@@ -213,7 +235,10 @@
       "weave": "Sozni Hand Needlework",
       "delivery": "Express Insured Dispatch (3-5 Days)",
       "whatsapp": "+91 98765 43210",
-      "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
+      "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
+      "images": [
+        "https://mahira2.netlify.app/assets/s5-room.jpg?v=1"
+      ]
     },
     {
       "id": "ALN-UN-08",
@@ -230,7 +255,10 @@
       "weave": "Multi-warp Rangkat Weaving",
       "delivery": "Express Insured Dispatch (3-5 Days)",
       "whatsapp": "+91 98765 43210",
-      "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
+      "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
+      "images": [
+        "https://mahira2.netlify.app/assets/s3-bg.jpg?v=1"
+      ]
     },
     {
       "id": "ALN-PK-09",
@@ -247,7 +275,12 @@
       "weave": "Pearl Moti & Scalloped Cutwork",
       "delivery": "Express Insured Dispatch (3-5 Days)",
       "whatsapp": "+91 98765 43210",
-      "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
+      "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
+      "images": [
+        "assets/pakistani-kurti-3.jpg",
+        "assets/pakistani-kurti-1.jpg",
+        "assets/pakistani-kurti-2.jpg"
+      ]
     },
     {
       "id": "ALN-LH-10",
@@ -264,7 +297,10 @@
       "weave": "French Knot & Silk Floss",
       "delivery": "Express Insured Dispatch (3-5 Days)",
       "whatsapp": "+91 98765 43210",
-      "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
+      "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
+      "images": [
+        "https://mahira2.netlify.app/assets/women-clean.jpg?v=3"
+      ]
     },
     {
       "id": "ALN-DS-11",
@@ -281,7 +317,10 @@
       "weave": "Hand-rolled Zardozi Cords",
       "delivery": "Express Insured Dispatch (3-5 Days)",
       "whatsapp": "+91 98765 43210",
-      "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
+      "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
+      "images": [
+        "https://mahira2.netlify.app/assets/s3-dresses.jpg?v=5"
+      ]
     },
     {
       "id": "ALN-UN-12",
@@ -298,7 +337,10 @@
       "weave": "Jamdani Floral Insertion",
       "delivery": "Express Insured Dispatch (3-5 Days)",
       "whatsapp": "+91 98765 43210",
-      "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
+      "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
+      "images": [
+        "https://mahira2.netlify.app/assets/s3-kurta.jpg?v=5"
+      ]
     }
   ]
 }

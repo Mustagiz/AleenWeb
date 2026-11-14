@@ -1230,12 +1230,132 @@
       cursor: pointer;
       z-index: 5;
     }
+    .card-angles-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(4, 9, 6, 0.78);
+      border: 1px solid rgba(201, 163, 95, 0.55);
+      backdrop-filter: blur(8px);
+      color: #f7efdc;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-family: var(--sans);
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      z-index: 3;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+    }
+
+    .modal-gallery-col {
+      display: flex;
+      flex-direction: column;
+      background: #040906;
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px 0 0 24px;
+    }
+    @media (max-width: 820px) {
+      .modal-gallery-col {
+        border-radius: 24px 24px 0 0;
+      }
+    }
     .modal-img-frame {
-      height: 100%;
+      position: relative;
+      flex: 1;
       min-height: 440px;
       background: #040906;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
     }
     .modal-img-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: opacity 0.22s ease;
+    }
+    .modal-gallery-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(4, 9, 6, 0.82);
+      border: 1px solid rgba(201, 163, 95, 0.65);
+      color: var(--gold-spark);
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 4;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+    }
+    .modal-gallery-arrow:hover {
+      background: var(--gold);
+      color: #040906;
+      transform: translateY(-50%) scale(1.1);
+    }
+    .modal-arrow-prev { left: 14px; }
+    .modal-arrow-next { right: 14px; }
+
+    .modal-gallery-counter {
+      position: absolute;
+      bottom: 12px;
+      right: 14px;
+      background: rgba(4, 9, 6, 0.85);
+      border: 1px solid rgba(201, 163, 95, 0.45);
+      border-radius: 999px;
+      padding: 4px 12px;
+      font-family: var(--sans);
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      color: var(--gold-spark);
+      z-index: 4;
+    }
+
+    .modal-thumbs-strip {
+      display: flex;
+      gap: 10px;
+      padding: 12px 16px;
+      background: rgba(0, 0, 0, 0.55);
+      border-top: 1px solid rgba(201, 163, 95, 0.25);
+      overflow-x: auto;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-thumb-btn {
+      width: 56px;
+      height: 56px;
+      border-radius: 8px;
+      border: 1.5px solid rgba(201, 163, 95, 0.35);
+      background: #040906;
+      overflow: hidden;
+      padding: 0;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      flex-shrink: 0;
+    }
+    .modal-thumb-btn:hover {
+      border-color: var(--gold-spark);
+      transform: translateY(-2px);
+    }
+    .modal-thumb-btn.active {
+      border-color: var(--gold-spark);
+      box-shadow: 0 0 12px rgba(201, 163, 95, 0.6);
+      transform: scale(1.08);
+    }
+    .modal-thumb-btn img {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -2344,8 +2464,14 @@
 <div class="modal-overlay" id="quickModal" role="dialog" aria-modal="true">
   <div class="modal-card">
     <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close modal">&times;</button>
-    <div class="modal-img-frame">
-      <img id="modalImg" src="" alt="Garment presentation">
+    <div class="modal-gallery-col">
+      <div class="modal-img-frame">
+        <img id="modalImg" src="" alt="Garment presentation">
+        <button type="button" class="modal-gallery-arrow modal-arrow-prev" id="modalGalleryPrev" aria-label="Previous angle">&#10094;</button>
+        <button type="button" class="modal-gallery-arrow modal-arrow-next" id="modalGalleryNext" aria-label="Next angle">&#10095;</button>
+        <div class="modal-gallery-counter" id="modalGalleryCounter">1 of 1</div>
+      </div>
+      <div class="modal-thumbs-strip" id="modalThumbsStrip"></div>
     </div>
     <div class="modal-detail-col">
       <span class="modal-kicker" id="modalCraft">Royal Adda Needlework</span>
@@ -2770,7 +2896,12 @@
     "weave": "Pure Zari & Adda Needlework",
     "delivery": "Express Insured Dispatch (3-5 Days)",
     "whatsapp": "+91 98765 43210",
-    "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
+    "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
+    "images": [
+      "assets/pakistani-kurti-1.jpg",
+      "assets/pakistani-kurti-2.jpg",
+      "assets/pakistani-kurti-3.jpg"
+    ]
   },
   {
     "id": "ALN-KS-02",
@@ -2787,7 +2918,10 @@
     "weave": "Marodi & Aari Needlework",
     "delivery": "Express Insured Dispatch (3-5 Days)",
     "whatsapp": "+91 98765 43210",
-    "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
+    "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
+    "images": [
+      "https://mahira2.netlify.app/assets/s3-kurta.jpg?v=5"
+    ]
   },
   {
     "id": "ALN-DS-03",
@@ -2804,7 +2938,10 @@
     "weave": "Pita Work & Micro Pleating",
     "delivery": "Express Insured Dispatch (3-5 Days)",
     "whatsapp": "+91 98765 43210",
-    "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
+    "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
+    "images": [
+      "https://mahira2.netlify.app/assets/s3-dresses.jpg?v=5"
+    ]
   },
   {
     "id": "ALN-LH-04",
@@ -2821,7 +2958,10 @@
     "weave": "Zardozi & Dabka Resham",
     "delivery": "Express Insured Dispatch (3-5 Days)",
     "whatsapp": "+91 98765 43210",
-    "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
+    "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
+    "images": [
+      "https://mahira2.netlify.app/assets/women-clean.jpg?v=3"
+    ]
   },
   {
     "id": "ALN-PK-05",
@@ -2838,7 +2978,12 @@
     "weave": "Tilla & Dabka Hand Embroidery",
     "delivery": "Express Insured Dispatch (3-5 Days)",
     "whatsapp": "+91 98765 43210",
-    "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
+    "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
+    "images": [
+      "assets/pakistani-kurti-2.jpg",
+      "assets/pakistani-kurti-1.jpg",
+      "assets/pakistani-kurti-3.jpg"
+    ]
   },
   {
     "id": "ALN-KS-06",
@@ -2855,7 +3000,10 @@
     "weave": "Lucknowi Chikankari & Mukaish",
     "delivery": "Express Insured Dispatch (3-5 Days)",
     "whatsapp": "+91 98765 43210",
-    "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
+    "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
+    "images": [
+      "https://mahira2.netlify.app/assets/s4-room.jpg?v=1"
+    ]
   },
   {
     "id": "ALN-DP-07",
@@ -2872,7 +3020,10 @@
     "weave": "Sozni Hand Needlework",
     "delivery": "Express Insured Dispatch (3-5 Days)",
     "whatsapp": "+91 98765 43210",
-    "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
+    "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
+    "images": [
+      "https://mahira2.netlify.app/assets/s5-room.jpg?v=1"
+    ]
   },
   {
     "id": "ALN-UN-08",
@@ -2889,7 +3040,10 @@
     "weave": "Multi-warp Rangkat Weaving",
     "delivery": "Express Insured Dispatch (3-5 Days)",
     "whatsapp": "+91 98765 43210",
-    "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
+    "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
+    "images": [
+      "https://mahira2.netlify.app/assets/s3-bg.jpg?v=1"
+    ]
   },
   {
     "id": "ALN-PK-09",
@@ -2906,7 +3060,12 @@
     "weave": "Pearl Moti & Scalloped Cutwork",
     "delivery": "Express Insured Dispatch (3-5 Days)",
     "whatsapp": "+91 98765 43210",
-    "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
+    "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
+    "images": [
+      "assets/pakistani-kurti-3.jpg",
+      "assets/pakistani-kurti-1.jpg",
+      "assets/pakistani-kurti-2.jpg"
+    ]
   },
   {
     "id": "ALN-LH-10",
@@ -2923,7 +3082,10 @@
     "weave": "French Knot & Silk Floss",
     "delivery": "Express Insured Dispatch (3-5 Days)",
     "whatsapp": "+91 98765 43210",
-    "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
+    "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
+    "images": [
+      "https://mahira2.netlify.app/assets/women-clean.jpg?v=3"
+    ]
   },
   {
     "id": "ALN-DS-11",
@@ -2940,7 +3102,10 @@
     "weave": "Hand-rolled Zardozi Cords",
     "delivery": "Express Insured Dispatch (3-5 Days)",
     "whatsapp": "+91 98765 43210",
-    "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
+    "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
+    "images": [
+      "https://mahira2.netlify.app/assets/s3-dresses.jpg?v=5"
+    ]
   },
   {
     "id": "ALN-UN-12",
@@ -2957,7 +3122,10 @@
     "weave": "Jamdani Floral Insertion",
     "delivery": "Express Insured Dispatch (3-5 Days)",
     "whatsapp": "+91 98765 43210",
-    "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
+    "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
+    "images": [
+      "https://mahira2.netlify.app/assets/s3-kurta.jpg?v=5"
+    ]
   }
 ];
 
@@ -3133,6 +3301,7 @@
             </svg>
           </button>
           <img src="${item.image}" alt="${item.title}" loading="lazy" />
+          ${item.images && item.images.length > 1 ? `<span class="card-angles-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg> ${item.images.length} ANGLES</span>` : ''}
           ${item.badge ? `<span class="card-badge">${item.badge}</span>` : ''}
         </div>
         <div class="card-info">
@@ -3195,10 +3364,84 @@
     if (!item || !modalEl) return;
     activeModalItem = item;
 
-    if (modalImg) {
-      modalImg.src = item.image;
-      modalImg.alt = item.title;
+    // Multi-angle gallery setup
+    const itemImages = (Array.isArray(item.images) && item.images.length > 0) ? item.images : [item.image || 'assets/pakistani-kurti-1.jpg'];
+    let currentAngleIdx = 0;
+
+    function setModalAngle(idx) {
+      if (idx < 0) idx = itemImages.length - 1;
+      if (idx >= itemImages.length) idx = 0;
+      currentAngleIdx = idx;
+
+      if (modalImg) {
+        modalImg.style.opacity = '0.35';
+        setTimeout(() => {
+          modalImg.src = itemImages[currentAngleIdx];
+          modalImg.alt = `${item.title} — Angle ${currentAngleIdx + 1}`;
+          modalImg.style.opacity = '1';
+        }, 100);
+      }
+
+      const counterEl = document.getElementById("modalGalleryCounter");
+      if (counterEl) {
+        counterEl.textContent = `${currentAngleIdx + 1} of ${itemImages.length}`;
+        counterEl.style.display = itemImages.length > 1 ? 'block' : 'none';
+      }
+
+      const prevBtn = document.getElementById("modalGalleryPrev");
+      const nextBtn = document.getElementById("modalGalleryNext");
+      if (prevBtn) prevBtn.style.display = itemImages.length > 1 ? 'flex' : 'none';
+      if (nextBtn) nextBtn.style.display = itemImages.length > 1 ? 'flex' : 'none';
+
+      const thumbBtns = document.querySelectorAll(".modal-thumb-btn");
+      thumbBtns.forEach((tb, i) => {
+        if (i === currentAngleIdx) tb.classList.add("active");
+        else tb.classList.remove("active");
+      });
     }
+
+    const thumbsStrip = document.getElementById("modalThumbsStrip");
+    if (thumbsStrip) {
+      if (itemImages.length > 1) {
+        thumbsStrip.style.display = "flex";
+        thumbsStrip.innerHTML = itemImages.map((src, i) => `
+          <button type="button" class="modal-thumb-btn ${i === 0 ? 'active' : ''}" data-idx="${i}" aria-label="View Angle ${i + 1}">
+            <img src="${src}" alt="Angle ${i + 1}">
+          </button>
+        `).join("");
+      } else {
+        thumbsStrip.style.display = "none";
+        thumbsStrip.innerHTML = "";
+      }
+    }
+
+    setModalAngle(0);
+
+    const prevBtn = document.getElementById("modalGalleryPrev");
+    const nextBtn = document.getElementById("modalGalleryNext");
+    if (prevBtn) {
+      prevBtn.onclick = (e) => {
+        e.stopPropagation();
+        setModalAngle(currentAngleIdx - 1);
+      };
+    }
+    if (nextBtn) {
+      nextBtn.onclick = (e) => {
+        e.stopPropagation();
+        setModalAngle(currentAngleIdx + 1);
+      };
+    }
+
+    if (thumbsStrip) {
+      thumbsStrip.onclick = (e) => {
+        const btn = e.target.closest(".modal-thumb-btn");
+        if (btn) {
+          const idx = parseInt(btn.getAttribute("data-idx"), 10);
+          if (!isNaN(idx)) setModalAngle(idx);
+        }
+      };
+    }
+
     if (modalCraft) modalCraft.textContent = item.craft || "Handcrafted Masterpiece";
     if (modalTitle) modalTitle.textContent = item.title;
     if (modalPrice) modalPrice.textContent = formatPrice(item.price);
@@ -3348,8 +3591,14 @@
   }
 
   document.addEventListener("keydown", e => {
-    if (e.key === "Escape" && modalEl?.classList.contains("open")) {
-      closeModal();
+    if (modalEl?.classList.contains("open")) {
+      if (e.key === "Escape") {
+        closeModal();
+      } else if (e.key === "ArrowLeft") {
+        document.getElementById("modalGalleryPrev")?.click();
+      } else if (e.key === "ArrowRight") {
+        document.getElementById("modalGalleryNext")?.click();
+      }
     }
   });
 
