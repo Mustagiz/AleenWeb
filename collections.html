@@ -1368,6 +1368,7 @@
       cursor: pointer;
       z-index: 5;
     }
+
     .card-angles-badge {
       position: absolute;
       top: 12px;
@@ -1397,6 +1398,7 @@
       overflow: hidden;
       border-radius: 24px 0 0 24px;
     }
+
     @media (max-width: 820px) {
       .modal-gallery-col {
         border-radius: 24px 24px 0 0;
@@ -1421,6 +1423,7 @@
       display: block;
       transition: opacity 0.22s ease;
     }
+
     .modal-gallery-arrow {
       position: absolute;
       top: 50%;
@@ -1438,15 +1441,22 @@
       cursor: pointer;
       z-index: 4;
       transition: all 0.25s ease;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
     }
+
     .modal-gallery-arrow:hover {
       background: var(--gold);
       color: #040906;
       transform: translateY(-50%) scale(1.1);
     }
-    .modal-arrow-prev { left: 14px; }
-    .modal-arrow-next { right: 14px; }
+
+    .modal-arrow-prev {
+      left: 14px;
+    }
+
+    .modal-arrow-next {
+      right: 14px;
+    }
 
     .modal-gallery-counter {
       position: absolute;
@@ -1474,6 +1484,7 @@
       justify-content: center;
       align-items: center;
     }
+
     .modal-thumb-btn {
       width: 56px;
       height: 56px;
@@ -1486,15 +1497,18 @@
       transition: all 0.25s ease;
       flex-shrink: 0;
     }
+
     .modal-thumb-btn:hover {
       border-color: var(--gold-spark);
       transform: translateY(-2px);
     }
+
     .modal-thumb-btn.active {
       border-color: var(--gold-spark);
       box-shadow: 0 0 12px rgba(201, 163, 95, 0.6);
       transform: scale(1.08);
     }
+
     .modal-thumb-btn img {
       width: 100%;
       height: 100%;
@@ -2931,24 +2945,26 @@
 
   </main>
 
-<!-- Quick Examine Modal -->
-<div class="modal-overlay" id="quickModal" role="dialog" aria-modal="true">
-  <div class="modal-card">
-    <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close modal">&times;</button>
-    <div class="modal-gallery-col">
-      <div class="modal-img-frame">
-        <img id="modalImg" src="" alt="Garment presentation">
-        <button type="button" class="modal-gallery-arrow modal-arrow-prev" id="modalGalleryPrev" aria-label="Previous angle">&#10094;</button>
-        <button type="button" class="modal-gallery-arrow modal-arrow-next" id="modalGalleryNext" aria-label="Next angle">&#10095;</button>
-        <div class="modal-gallery-counter" id="modalGalleryCounter">1 of 1</div>
+  <!-- Quick Examine Modal -->
+  <div class="modal-overlay" id="quickModal" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close modal">&times;</button>
+      <div class="modal-gallery-col">
+        <div class="modal-img-frame">
+          <img id="modalImg" src="" alt="Garment presentation">
+          <button type="button" class="modal-gallery-arrow modal-arrow-prev" id="modalGalleryPrev"
+            aria-label="Previous angle">&#10094;</button>
+          <button type="button" class="modal-gallery-arrow modal-arrow-next" id="modalGalleryNext"
+            aria-label="Next angle">&#10095;</button>
+          <div class="modal-gallery-counter" id="modalGalleryCounter">1 of 1</div>
+        </div>
+        <div class="modal-thumbs-strip" id="modalThumbsStrip"></div>
       </div>
-      <div class="modal-thumbs-strip" id="modalThumbsStrip"></div>
-    </div>
-    <div class="modal-detail-col">
-      <span class="modal-kicker" id="modalCraft">Royal Adda Needlework</span>
-      <h2 class="modal-title" id="modalTitle">Zeenat Embroidered Pakistani Kurti</h2>
-      <div class="modal-price" id="modalPrice">₹34,500</div>
-      <p class="modal-desc" id="modalDesc">Detailed description of this bespoke piece will appear here.</p>
+      <div class="modal-detail-col">
+        <span class="modal-kicker" id="modalCraft">Royal Adda Needlework</span>
+        <h2 class="modal-title" id="modalTitle">Zeenat Embroidered Pakistani Kurti</h2>
+        <div class="modal-price" id="modalPrice">₹34,500</div>
+        <p class="modal-desc" id="modalDesc">Detailed description of this bespoke piece will appear here.</p>
 
         <div class="spec-grid">
           <div class="spec-item">
@@ -3970,92 +3986,92 @@
         if (!item || !modalEl) return;
         activeModalItem = item;
 
-    // Multi-angle gallery setup
-    const itemImages = (Array.isArray(item.images) && item.images.length > 0) ? item.images : [item.image || 'assets/pakistani-kurti-1.jpg'];
-    let currentAngleIdx = 0;
+        // Multi-angle gallery setup
+        const itemImages = (Array.isArray(item.images) && item.images.length > 0) ? item.images : [item.image || 'assets/pakistani-kurti-1.jpg'];
+        let currentAngleIdx = 0;
 
-    function setModalAngle(idx) {
-      if (idx < 0) idx = itemImages.length - 1;
-      if (idx >= itemImages.length) idx = 0;
-      currentAngleIdx = idx;
+        function setModalAngle(idx) {
+          if (idx < 0) idx = itemImages.length - 1;
+          if (idx >= itemImages.length) idx = 0;
+          currentAngleIdx = idx;
 
-      if (modalImg) {
-        modalImg.style.opacity = '0.35';
-        setTimeout(() => {
-          modalImg.src = itemImages[currentAngleIdx];
-          modalImg.alt = `${item.title} — Angle ${currentAngleIdx + 1}`;
-          modalImg.style.opacity = '1';
-        }, 100);
-      }
+          if (modalImg) {
+            modalImg.style.opacity = '0.35';
+            setTimeout(() => {
+              modalImg.src = itemImages[currentAngleIdx];
+              modalImg.alt = `${item.title} — Angle ${currentAngleIdx + 1}`;
+              modalImg.style.opacity = '1';
+            }, 100);
+          }
 
-      const counterEl = document.getElementById("modalGalleryCounter");
-      if (counterEl) {
-        counterEl.textContent = `${currentAngleIdx + 1} of ${itemImages.length}`;
-        counterEl.style.display = itemImages.length > 1 ? 'block' : 'none';
-      }
+          const counterEl = document.getElementById("modalGalleryCounter");
+          if (counterEl) {
+            counterEl.textContent = `${currentAngleIdx + 1} of ${itemImages.length}`;
+            counterEl.style.display = itemImages.length > 1 ? 'block' : 'none';
+          }
 
-      const prevBtn = document.getElementById("modalGalleryPrev");
-      const nextBtn = document.getElementById("modalGalleryNext");
-      if (prevBtn) prevBtn.style.display = itemImages.length > 1 ? 'flex' : 'none';
-      if (nextBtn) nextBtn.style.display = itemImages.length > 1 ? 'flex' : 'none';
+          const prevBtn = document.getElementById("modalGalleryPrev");
+          const nextBtn = document.getElementById("modalGalleryNext");
+          if (prevBtn) prevBtn.style.display = itemImages.length > 1 ? 'flex' : 'none';
+          if (nextBtn) nextBtn.style.display = itemImages.length > 1 ? 'flex' : 'none';
 
-      const thumbBtns = document.querySelectorAll(".modal-thumb-btn");
-      thumbBtns.forEach((tb, i) => {
-        if (i === currentAngleIdx) tb.classList.add("active");
-        else tb.classList.remove("active");
-      });
-    }
+          const thumbBtns = document.querySelectorAll(".modal-thumb-btn");
+          thumbBtns.forEach((tb, i) => {
+            if (i === currentAngleIdx) tb.classList.add("active");
+            else tb.classList.remove("active");
+          });
+        }
 
-    const thumbsStrip = document.getElementById("modalThumbsStrip");
-    if (thumbsStrip) {
-      if (itemImages.length > 1) {
-        thumbsStrip.style.display = "flex";
-        thumbsStrip.innerHTML = itemImages.map((src, i) => `
+        const thumbsStrip = document.getElementById("modalThumbsStrip");
+        if (thumbsStrip) {
+          if (itemImages.length > 1) {
+            thumbsStrip.style.display = "flex";
+            thumbsStrip.innerHTML = itemImages.map((src, i) => `
           <button type="button" class="modal-thumb-btn ${i === 0 ? 'active' : ''}" data-idx="${i}" aria-label="View Angle ${i + 1}">
             <img src="${src}" alt="Angle ${i + 1}">
           </button>
         `).join("");
-      } else {
-        thumbsStrip.style.display = "none";
-        thumbsStrip.innerHTML = "";
-      }
-    }
-
-    setModalAngle(0);
-
-    const prevBtn = document.getElementById("modalGalleryPrev");
-    const nextBtn = document.getElementById("modalGalleryNext");
-    if (prevBtn) {
-      prevBtn.onclick = (e) => {
-        e.stopPropagation();
-        setModalAngle(currentAngleIdx - 1);
-      };
-    }
-    if (nextBtn) {
-      nextBtn.onclick = (e) => {
-        e.stopPropagation();
-        setModalAngle(currentAngleIdx + 1);
-      };
-    }
-
-    if (thumbsStrip) {
-      thumbsStrip.onclick = (e) => {
-        const btn = e.target.closest(".modal-thumb-btn");
-        if (btn) {
-          const idx = parseInt(btn.getAttribute("data-idx"), 10);
-          if (!isNaN(idx)) setModalAngle(idx);
+          } else {
+            thumbsStrip.style.display = "none";
+            thumbsStrip.innerHTML = "";
+          }
         }
-      };
-    }
 
-    if (modalCraft) modalCraft.textContent = item.craft || "Handcrafted Masterpiece";
-    if (modalTitle) modalTitle.textContent = item.title;
-    if (modalPrice) modalPrice.textContent = formatPrice(item.price);
-    if (modalDesc) modalDesc.textContent = item.desc || "Bespoke creation by Aleen master artisans.";
-    if (modalFabric) modalFabric.textContent = item.fabric || "Pure Silk";
-    if (modalWeave) modalWeave.textContent = item.weave || item.craft || "Artisan Weave";
-    if (modalOrigin) modalOrigin.textContent = item.origin || "Aleen Looms";
-    if (modalDelivery) modalDelivery.textContent = item.delivery || "Express Insured Dispatch (3-5 Days)";
+        setModalAngle(0);
+
+        const prevBtn = document.getElementById("modalGalleryPrev");
+        const nextBtn = document.getElementById("modalGalleryNext");
+        if (prevBtn) {
+          prevBtn.onclick = (e) => {
+            e.stopPropagation();
+            setModalAngle(currentAngleIdx - 1);
+          };
+        }
+        if (nextBtn) {
+          nextBtn.onclick = (e) => {
+            e.stopPropagation();
+            setModalAngle(currentAngleIdx + 1);
+          };
+        }
+
+        if (thumbsStrip) {
+          thumbsStrip.onclick = (e) => {
+            const btn = e.target.closest(".modal-thumb-btn");
+            if (btn) {
+              const idx = parseInt(btn.getAttribute("data-idx"), 10);
+              if (!isNaN(idx)) setModalAngle(idx);
+            }
+          };
+        }
+
+        if (modalCraft) modalCraft.textContent = item.craft || "Handcrafted Masterpiece";
+        if (modalTitle) modalTitle.textContent = item.title;
+        if (modalPrice) modalPrice.textContent = formatPrice(item.price);
+        if (modalDesc) modalDesc.textContent = item.desc || "Bespoke creation by Aleen master artisans.";
+        if (modalFabric) modalFabric.textContent = item.fabric || "Pure Silk";
+        if (modalWeave) modalWeave.textContent = item.weave || item.craft || "Artisan Weave";
+        if (modalOrigin) modalOrigin.textContent = item.origin || "Aleen Looms";
+        if (modalDelivery) modalDelivery.textContent = item.delivery || "Express Insured Dispatch (3-5 Days)";
 
         if (modalSizePicker) {
           const sizes = (item.sizes || "Custom Bespoke, Standard S, Standard M, Standard L")

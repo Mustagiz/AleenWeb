@@ -1,7 +1,7 @@
 // POST /api/auth/login
 const { getData } = require('../_data');
 
-module.exports = (req, res) => {
+module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
@@ -22,7 +22,7 @@ module.exports = (req, res) => {
     return;
   }
 
-  const data = getData();
+  const data = await getData();
   const user = data.users.find(
     u => u.username === username.trim() && u.password === password.trim()
   );
@@ -32,7 +32,6 @@ module.exports = (req, res) => {
     return;
   }
 
-  // Simple token (username:role encoded)
   const token = Buffer.from(`${user.username}:${user.role}:${Date.now()}`).toString('base64');
   res.status(200).json({
     success: true,

@@ -1,6 +1,11 @@
 const http = require('http');
+const https = require('https');
 const fs = require('fs');
 const path = require('path');
+
+const FIREBASE_PROJECT_ID = 'aleen-a5c32';
+const FIREBASE_API_KEY = 'AIzaSyDJOIWVS5LwRfhLLEa_lT51CI6ndQp1eXQ';
+const FIRESTORE_URL = `https://firestore.googleapis.com/v1/projects/${FIREBASE_PROJECT_ID}/databases/(default)/documents/settings/atelier_data?key=${FIREBASE_API_KEY}`;
 
 const PORT = process.env.PORT || 3300;
 const ROOT = __dirname;
@@ -132,9 +137,54 @@ if (fs.existsSync(DATA_FILE)) {
   fs.writeFileSync(DATA_FILE, JSON.stringify(atelierData, null, 2), 'utf8');
 }
 
+function saveToFirestore(data) {
+  try {
+    const url = new URL(FIRESTORE_URL);
+    const payload = JSON.stringify({
+      fields: {
+        jsonPayload: { stringValue: JSON.stringify(data) },
+        updatedAt: { stringValue: new Date().toISOString() }
+      }
+    });
+    const req = https.request(url, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(payload)
+      },
+      timeout: 4000
+    }, (res) => {
+      // success
+    });
+    req.on('error', () => {});
+    req.write(payload);
+    req.end();
+  } catch(e) {}
+}
+
 function saveData() {
   fs.writeFileSync(DATA_FILE, JSON.stringify(atelierData, null, 2), 'utf8');
+  saveToFirestore(atelierData);
 }
+
+// Initial async fetch from Firestore to stay in sync
+https.get(FIRESTORE_URL, { timeout: 3500 }, (res) => {
+  let body = '';
+  res.on('data', chunk => body += chunk);
+  res.on('end', () => {
+    if (res.statusCode === 200) {
+      try {
+        const doc = JSON.parse(body);
+        const raw = doc.fields?.jsonPayload?.stringValue;
+        if (raw) {
+          const remote = JSON.parse(raw);
+          atelierData = { ...atelierData, ...remote };
+          console.log('✦ Synced live data from Firebase Firestore (aleen-a5c32)');
+        }
+      } catch(e) {}
+    }
+  });
+}).on('error', () => {});
 
 // Active session tokens with role check
 const activeSessions = new Map(); // token -> { username, role, expires }
