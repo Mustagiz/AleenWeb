@@ -1073,15 +1073,17 @@
       }
     }
 
-    /* Garment Card: Deep Emerald Arch */
+    /* Garment Card: Deep Emerald Arch (Clickable to open dialog) */
     .garment-card {
       background: linear-gradient(180deg, #132418 0%, #09120c 100%);
       border: 1px solid rgba(201, 163, 95, 0.45);
-      border-radius: 160px 160px 16px 16px;
+      border-radius: 180px 180px 16px 16px;
       padding: 10px 10px 18px;
       position: relative;
       display: flex;
       flex-direction: column;
+      cursor: pointer;
+      user-select: none;
       transition: all 0.35s var(--ease);
       box-shadow: 0 16px 36px rgba(0, 0, 0, 0.28);
     }
@@ -1094,8 +1096,8 @@
     .card-media {
       position: relative;
       width: 100%;
-      height: 320px;
-      border-radius: 150px 150px 10px 10px;
+      height: 385px;
+      border-radius: 170px 170px 10px 10px;
       overflow: hidden;
       background: #040906;
     }
@@ -1134,39 +1136,6 @@
       border-color: var(--gold-spark);
     }
 
-    .quick-examine-btn {
-      position: absolute;
-      bottom: 12px;
-      left: 50%;
-      transform: translateX(-50%) translateY(20px);
-      opacity: 0;
-      background: rgba(4, 9, 6, 0.88);
-      border: 1px solid var(--gold);
-      color: var(--gold-spark);
-      padding: 7px 18px;
-      border-radius: 999px;
-      font-family: var(--sans);
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 1.4px;
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      cursor: pointer;
-      z-index: 3;
-      transition: all 0.3s ease;
-      white-space: nowrap;
-    }
-    .garment-card:hover .quick-examine-btn {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
-    .quick-examine-btn:hover {
-      background: var(--gold);
-      color: #241A0C;
-    }
-
     .card-info {
       padding: 12px 6px 0;
       display: flex;
@@ -1190,15 +1159,7 @@
       font-weight: 500;
       color: #f7efdc !important;
       line-height: 1.25;
-      margin-bottom: 6px;
-    }
-    .card-price {
-      font-family: var(--serif);
-      font-size: 16px;
-      font-weight: 600;
-      color: #f0d48c !important;
-      margin-bottom: 10px;
-      letter-spacing: 0.5px;
+      margin-bottom: 12px;
     }
     .card-foot {
       margin-top: auto;
@@ -1217,26 +1178,13 @@
       text-transform: uppercase;
       color: rgba(247, 239, 220, 0.8) !important;
     }
-    .card-add-btn {
-      background: transparent;
-      border: 1px solid rgba(201, 163, 95, 0.65);
-      border-radius: 999px;
-      padding: 6px 14px;
-      font-family: var(--sans);
-      font-size: 10px;
+    .card-foot-price {
+      font-family: var(--serif);
+      font-size: 16.5px;
       font-weight: 600;
-      letter-spacing: 1.4px;
-      text-transform: uppercase;
       color: #f0d48c !important;
-      cursor: pointer;
-      transition: all 0.25s ease;
-    }
-    .card-add-btn:hover {
-      background: linear-gradient(135deg, #e4be77 0%, #c9a35f 100%);
-      color: #040906 !important;
-      border-color: #e4be77;
-      transform: scale(1.05);
-      box-shadow: 0 4px 14px rgba(201, 163, 95, 0.35);
+      letter-spacing: 0.5px;
+      white-space: nowrap;
     }
 
     /* Quick Examine Modal */
@@ -1378,45 +1326,44 @@
     }
     .modal-action-row {
       display: flex;
-      gap: 12px;
       margin-top: auto;
+      padding-top: 8px;
     }
-    .modal-add-bag {
-      flex: 1;
-      padding: 13px 20px;
-      background: var(--gold);
-      color: #241A0C;
-      border: 1px solid var(--gold-light);
+    .modal-inquire-btn {
+      width: 100%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: linear-gradient(135deg, #1d4029 0%, #0d1e13 100%);
+      border: 1.5px solid var(--gold);
       border-radius: 999px;
+      padding: 14px 28px;
       font-family: var(--sans);
-      font-size: 11.5px;
+      font-size: 13.5px;
       font-weight: 700;
-      letter-spacing: 1.5px;
+      letter-spacing: 2px;
       text-transform: uppercase;
+      color: #f7efdc;
       cursor: pointer;
-      transition: all 0.25s ease;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+      text-decoration: none;
     }
-    .modal-add-bag:hover {
-      background: var(--gold-spark);
+    .modal-inquire-btn:hover {
+      background: linear-gradient(135deg, #e4be77 0%, #c9a35f 100%);
+      color: #040906;
+      border-color: #f0d48c;
       transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(201, 163, 95, 0.4);
     }
-    .modal-bespoke {
-      padding: 13px 20px;
-      background: transparent;
-      color: var(--gold-light);
-      border: 1px solid rgba(201, 163, 95, 0.6);
-      border-radius: 999px;
-      font-family: var(--sans);
-      font-size: 11.5px;
-      font-weight: 600;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.25s ease;
+    .modal-inquire-btn svg {
+      width: 20px;
+      height: 20px;
+      transition: transform 0.3s ease;
     }
-    .modal-bespoke:hover {
-      background: rgba(201, 163, 95, 0.15);
-      border-color: var(--gold);
+    .modal-inquire-btn:hover svg {
+      transform: scale(1.12);
     }
 
     /* Toast */
@@ -2421,7 +2368,7 @@
         </div>
         <div class="spec-item">
           <span class="spec-lbl">Atelier Delivery</span>
-          <span class="spec-val">Express Insured Dispatch</span>
+          <span class="spec-val" id="modalDelivery">Express Insured Dispatch</span>
         </div>
       </div>
 
@@ -2434,8 +2381,10 @@
       </div>
 
       <div class="modal-action-row">
-        <button class="modal-add-bag" id="modalAddBagBtn">Add to Atelier Bag</button>
-        <button class="modal-bespoke" id="modalBespokeBtn">Consult Tailor</button>
+        <button type="button" class="modal-inquire-btn" id="modalInquireBtn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.82.49 3.53 1.34 5L2 22l5.16-1.31C8.59 21.49 10.25 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18.2c-1.57 0-3.05-.44-4.32-1.21l-.31-.19-3.06.78.82-2.98-.2-.33A8.17 8.17 0 0 1 3.8 12c0-4.52 3.68-8.2 8.2-8.2s8.2 3.68 8.2 8.2-3.68 8.2-8.2 8.2zm4.52-6.13c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.12-.14.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43l-.48-.01c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1s.9 2.44 1.03 2.61c.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.22-.16-.47-.29z"/></svg>
+          <span>Inquire</span>
+        </button>
       </div>
     </div>
   </div>
@@ -2806,163 +2755,211 @@
 (function() {
   // Master Garments Data
   const DEFAULT_GARMENTS = [
-      {
-        id: "ALN-PK-01",
-        title: "Zeenat Embroidered Pakistani Kurti",
-        category: "kurtis",
-        categoryLabel: "Pakistani Kurtis",
-        price: 34500,
-        craft: "Pure Zari & Adda Needlework",
-        fabric: "Pure Raw Silk with Organza Lace Trims",
-        origin: "Lahore Atelier",
-        badge: "Heritage Edition",
-        image: "assets/pakistani-kurti-1.jpg",
-        desc: "Tailored royal ivory raw silk Pakistani kurti accented with heirloom gold zardozi adda embroidery, intricate hand-cut lace sleeve trims, and pearl button plackets."
-      },
-      {
-        id: "ALN-KS-02",
-        title: "Gulmohar Chanderi Kurta Set",
-        category: "kurta-sets",
-        categoryLabel: "Kurta Sets",
-        price: 26800,
-        craft: "Marodi & Aari Needlework",
-        fabric: "Tissue Chanderi with Silk Organza",
-        origin: "Chanderi Weavers Guild",
-        badge: "Bestseller",
-        image: "https://mahira2.netlify.app/assets/s3-kurta.jpg?v=5",
-        desc: "Delicate dusty rose organza adorned with fine metallic badla and antique marodi needlecraft. Paired with straight-cut brocade trousers and scalloped veil."
-      },
-      {
-        id: "ALN-DS-03",
-        title: "Aura Champagne Flared Gown",
-        category: "dresses",
-        categoryLabel: "Dresses & Sets",
-        price: 38900,
-        craft: "Pita Work & Micro Pleating",
-        fabric: "Raw Silk & Multilayered Tulle",
-        origin: "Aleen Design Studio",
-        badge: "New Silhouette",
-        image: "https://mahira2.netlify.app/assets/s3-dresses.jpg?v=5",
-        desc: "Contemporary architectural drape meeting traditional hand-embroidery. A 32-meter flare cut structured for gala celebrations and grand occasions."
-      },
-      {
-        id: "ALN-LH-04",
-        title: "Sheesh Mahal Bridal Lehenga",
-        category: "lehengas",
-        categoryLabel: "Lehengas",
-        price: 135000,
-        craft: "Zardozi & Dabka Resham",
-        fabric: "Heritage Velvet & Tissue Silk",
-        origin: "Lucknow Artisans",
-        badge: "Royal Couture",
-        image: "https://mahira2.netlify.app/assets/women-clean.jpg?v=3",
-        desc: "Inspired by the mirrored halls of Amber Fort. Encased in genuine semi-precious bead embroidery, beaten metallic cord, and a dual tissue veil."
-      },
-      {
-        id: "ALN-PK-05",
-        title: "Gul-e-Rana Velvet Pakistani Kurti",
-        category: "kurtis",
-        categoryLabel: "Pakistani Kurtis",
-        price: 38200,
-        craft: "Tilla & Dabka Hand Embroidery",
-        fabric: "Micro Velvet with Pure Silk Lining",
-        origin: "Old City Lahore",
-        badge: "Artisanal",
-        image: "assets/pakistani-kurti-2.jpg",
-        desc: "Opulent forest emerald micro-velvet silhouette enriched with antique metallic tilla cord, dabka floral bouquets, and scalloped hem border work."
-      },
-      {
-        id: "ALN-KS-06",
-        title: "Mumtaz Anarkali Ensemble",
-        category: "kurta-sets",
-        categoryLabel: "Kurta Sets",
-        price: 31500,
-        craft: "Lucknowi Chikankari & Mukaish",
-        fabric: "Pure Mulberry Georgette",
-        origin: "Awadh Atelier",
-        badge: "Hand-Embroidered",
-        image: "https://mahira2.netlify.app/assets/s4-room.jpg?v=1",
-        desc: "32 Kalis of handcrafted shadow-work Chikankari interspersed with silver mukaish dots that catch the light at every graceful turn."
-      },
-      {
-        id: "ALN-DP-07",
-        title: "Pashmina Heritage Dupatta",
-        category: "dupattas",
-        categoryLabel: "Dupattas",
-        price: 24000,
-        craft: "Sozni Hand Needlework",
-        fabric: "Grade-A Cashmere Pashmina",
-        origin: "Srinagar Valley",
-        badge: "Limited Craft",
-        image: "https://mahira2.netlify.app/assets/s5-room.jpg?v=1",
-        desc: "Featherlight warmth woven from Himalayan capra hircus fleece, detailed with single-needle botanical jaal borders."
-      },
-      {
-        id: "ALN-UN-08",
-        title: "Rangkat Brocade Unstitched Brocade",
-        category: "unstitched",
-        categoryLabel: "Unstitched Fabrics",
-        price: 29500,
-        craft: "Multi-warp Rangkat Weaving",
-        fabric: "Pure Mulberry Silk 4.5m",
-        origin: "Bespoke Loom 12",
-        badge: "Mastercut",
-        image: "https://mahira2.netlify.app/assets/s3-bg.jpg?v=1",
-        desc: "Rare artisanal yardage crafted on hand-shuttle looms with alternating warp threads. Tailorable for bespoke lehengas or sherwanis."
-      },
-      {
-        id: "ALN-PK-09",
-        title: "Noor Organza Festive Pakistani Kurti",
-        category: "kurtis",
-        categoryLabel: "Pakistani Kurtis",
-        price: 29800,
-        craft: "Pearl Moti & Scalloped Cutwork",
-        fabric: "Pure Tissue Silk Organza",
-        origin: "Karachi Design House",
-        badge: "Trending",
-        image: "assets/pakistani-kurti-3.jpg",
-        desc: "Weightless blush peach tissue organza Pakistani kurti featuring hand-placed pearl droplets, gossamer cutwork sleeves, and fine badla embroidery."
-      },
-      {
-        id: "ALN-LH-10",
-        title: "Vasant Garden Floral Lehenga",
-        category: "lehengas",
-        categoryLabel: "Lehengas",
-        price: 92000,
-        craft: "French Knot & Silk Floss",
-        fabric: "Mulberry Organza & Crepe",
-        origin: "Aleen Design Studio",
-        badge: "Signature Cut",
-        image: "https://mahira2.netlify.app/assets/women-clean.jpg?v=3",
-        desc: "A springtime dream composed of thousand-petal floral tapestries rendered in ombré pastel threads, crowned by an embroidered sweetheart bustier."
-      },
-      {
-        id: "ALN-DS-11",
-        title: "Mehrunissa Draped Kaftan Set",
-        category: "dresses",
-        categoryLabel: "Dresses & Sets",
-        price: 22400,
-        craft: "Hand-rolled Zardozi Cords",
-        fabric: "Italian Crepe de Chine",
-        origin: "Modern Atelier",
-        badge: "Resort Couture",
-        image: "https://mahira2.netlify.app/assets/s3-dresses.jpg?v=5",
-        desc: "Effortless luxury designed for intimate soirees. Relaxed silhouette cinched with an ornate hand-beaded bullion belt."
-      },
-      {
-        id: "ALN-UN-12",
-        title: "Zari Buti Handloom Fabric Set",
-        category: "unstitched",
-        categoryLabel: "Unstitched Fabrics",
-        price: 18500,
-        craft: "Jamdani Floral Insertion",
-        fabric: "Organic Handspun Chanderi",
-        origin: "Madhya Pradesh Looms",
-        badge: "Pure Natural",
-        image: "https://mahira2.netlify.app/assets/s3-kurta.jpg?v=5",
-        desc: "Includes 5 meters of pure chanderi with woven golden bootis alongside 2.5 meters of dyed satin lining and a matched organza drape."
-      }
-    ];
+  {
+    "id": "ALN-PK-01",
+    "title": "Zeenat Embroidered Pakistani Kurti",
+    "category": "kurtis",
+    "categoryLabel": "Pakistani Kurtis",
+    "price": 34500,
+    "craft": "Pure Zari & Adda Needlework",
+    "fabric": "Pure Raw Silk with Organza Lace Trims",
+    "origin": "Lahore Atelier",
+    "badge": "Heritage Edition",
+    "image": "assets/pakistani-kurti-1.jpg",
+    "desc": "Tailored royal ivory raw silk Pakistani kurti accented with heirloom gold zardozi adda embroidery, intricate hand-cut lace sleeve trims, and pearl button plackets.",
+    "weave": "Pure Zari & Adda Needlework",
+    "delivery": "Express Insured Dispatch (3-5 Days)",
+    "whatsapp": "+91 98765 43210",
+    "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
+  },
+  {
+    "id": "ALN-KS-02",
+    "title": "Gulmohar Chanderi Kurta Set",
+    "category": "kurta-sets",
+    "categoryLabel": "Kurta Sets",
+    "price": 26800,
+    "craft": "Marodi & Aari Needlework",
+    "fabric": "Tissue Chanderi with Silk Organza",
+    "origin": "Chanderi Weavers Guild",
+    "badge": "Bestseller",
+    "image": "https://mahira2.netlify.app/assets/s3-kurta.jpg?v=5",
+    "desc": "Delicate dusty rose organza adorned with fine metallic badla and antique marodi needlecraft. Paired with straight-cut brocade trousers and scalloped veil.",
+    "weave": "Marodi & Aari Needlework",
+    "delivery": "Express Insured Dispatch (3-5 Days)",
+    "whatsapp": "+91 98765 43210",
+    "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
+  },
+  {
+    "id": "ALN-DS-03",
+    "title": "Aura Champagne Flared Gown",
+    "category": "dresses",
+    "categoryLabel": "Dresses & Sets",
+    "price": 38900,
+    "craft": "Pita Work & Micro Pleating",
+    "fabric": "Raw Silk & Multilayered Tulle",
+    "origin": "Aleen Design Studio",
+    "badge": "New Silhouette",
+    "image": "https://mahira2.netlify.app/assets/s3-dresses.jpg?v=5",
+    "desc": "Contemporary architectural drape meeting traditional hand-embroidery. A 32-meter flare cut structured for gala celebrations and grand occasions.",
+    "weave": "Pita Work & Micro Pleating",
+    "delivery": "Express Insured Dispatch (3-5 Days)",
+    "whatsapp": "+91 98765 43210",
+    "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
+  },
+  {
+    "id": "ALN-LH-04",
+    "title": "Sheesh Mahal Bridal Lehenga",
+    "category": "lehengas",
+    "categoryLabel": "Lehengas",
+    "price": 135000,
+    "craft": "Zardozi & Dabka Resham",
+    "fabric": "Heritage Velvet & Tissue Silk",
+    "origin": "Lucknow Artisans",
+    "badge": "Royal Couture",
+    "image": "https://mahira2.netlify.app/assets/women-clean.jpg?v=3",
+    "desc": "Inspired by the mirrored halls of Amber Fort. Encased in genuine semi-precious bead embroidery, beaten metallic cord, and a dual tissue veil.",
+    "weave": "Zardozi & Dabka Resham",
+    "delivery": "Express Insured Dispatch (3-5 Days)",
+    "whatsapp": "+91 98765 43210",
+    "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
+  },
+  {
+    "id": "ALN-PK-05",
+    "title": "Gul-e-Rana Velvet Pakistani Kurti",
+    "category": "kurtis",
+    "categoryLabel": "Pakistani Kurtis",
+    "price": 38200,
+    "craft": "Tilla & Dabka Hand Embroidery",
+    "fabric": "Micro Velvet with Pure Silk Lining",
+    "origin": "Old City Lahore",
+    "badge": "Artisanal",
+    "image": "assets/pakistani-kurti-2.jpg",
+    "desc": "Opulent forest emerald micro-velvet silhouette enriched with antique metallic tilla cord, dabka floral bouquets, and scalloped hem border work.",
+    "weave": "Tilla & Dabka Hand Embroidery",
+    "delivery": "Express Insured Dispatch (3-5 Days)",
+    "whatsapp": "+91 98765 43210",
+    "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
+  },
+  {
+    "id": "ALN-KS-06",
+    "title": "Mumtaz Anarkali Ensemble",
+    "category": "kurta-sets",
+    "categoryLabel": "Kurta Sets",
+    "price": 31500,
+    "craft": "Lucknowi Chikankari & Mukaish",
+    "fabric": "Pure Mulberry Georgette",
+    "origin": "Awadh Atelier",
+    "badge": "Hand-Embroidered",
+    "image": "https://mahira2.netlify.app/assets/s4-room.jpg?v=1",
+    "desc": "32 Kalis of handcrafted shadow-work Chikankari interspersed with silver mukaish dots that catch the light at every graceful turn.",
+    "weave": "Lucknowi Chikankari & Mukaish",
+    "delivery": "Express Insured Dispatch (3-5 Days)",
+    "whatsapp": "+91 98765 43210",
+    "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
+  },
+  {
+    "id": "ALN-DP-07",
+    "title": "Pashmina Heritage Dupatta",
+    "category": "dupattas",
+    "categoryLabel": "Dupattas",
+    "price": 24000,
+    "craft": "Sozni Hand Needlework",
+    "fabric": "Grade-A Cashmere Pashmina",
+    "origin": "Srinagar Valley",
+    "badge": "Limited Craft",
+    "image": "https://mahira2.netlify.app/assets/s5-room.jpg?v=1",
+    "desc": "Featherlight warmth woven from Himalayan capra hircus fleece, detailed with single-needle botanical jaal borders.",
+    "weave": "Sozni Hand Needlework",
+    "delivery": "Express Insured Dispatch (3-5 Days)",
+    "whatsapp": "+91 98765 43210",
+    "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
+  },
+  {
+    "id": "ALN-UN-08",
+    "title": "Rangkat Brocade Unstitched Brocade",
+    "category": "unstitched",
+    "categoryLabel": "Unstitched Fabrics",
+    "price": 29500,
+    "craft": "Multi-warp Rangkat Weaving",
+    "fabric": "Pure Mulberry Silk 4.5m",
+    "origin": "Bespoke Loom 12",
+    "badge": "Mastercut",
+    "image": "https://mahira2.netlify.app/assets/s3-bg.jpg?v=1",
+    "desc": "Rare artisanal yardage crafted on hand-shuttle looms with alternating warp threads. Tailorable for bespoke lehengas or sherwanis.",
+    "weave": "Multi-warp Rangkat Weaving",
+    "delivery": "Express Insured Dispatch (3-5 Days)",
+    "whatsapp": "+91 98765 43210",
+    "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
+  },
+  {
+    "id": "ALN-PK-09",
+    "title": "Noor Organza Festive Pakistani Kurti",
+    "category": "kurtis",
+    "categoryLabel": "Pakistani Kurtis",
+    "price": 29800,
+    "craft": "Pearl Moti & Scalloped Cutwork",
+    "fabric": "Pure Tissue Silk Organza",
+    "origin": "Karachi Design House",
+    "badge": "Trending",
+    "image": "assets/pakistani-kurti-3.jpg",
+    "desc": "Weightless blush peach tissue organza Pakistani kurti featuring hand-placed pearl droplets, gossamer cutwork sleeves, and fine badla embroidery.",
+    "weave": "Pearl Moti & Scalloped Cutwork",
+    "delivery": "Express Insured Dispatch (3-5 Days)",
+    "whatsapp": "+91 98765 43210",
+    "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
+  },
+  {
+    "id": "ALN-LH-10",
+    "title": "Vasant Garden Floral Lehenga",
+    "category": "lehengas",
+    "categoryLabel": "Lehengas",
+    "price": 92000,
+    "craft": "French Knot & Silk Floss",
+    "fabric": "Mulberry Organza & Crepe",
+    "origin": "Aleen Design Studio",
+    "badge": "Signature Cut",
+    "image": "https://mahira2.netlify.app/assets/women-clean.jpg?v=3",
+    "desc": "A springtime dream composed of thousand-petal floral tapestries rendered in ombré pastel threads, crowned by an embroidered sweetheart bustier.",
+    "weave": "French Knot & Silk Floss",
+    "delivery": "Express Insured Dispatch (3-5 Days)",
+    "whatsapp": "+91 98765 43210",
+    "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
+  },
+  {
+    "id": "ALN-DS-11",
+    "title": "Mehrunissa Draped Kaftan Set",
+    "category": "dresses",
+    "categoryLabel": "Dresses & Sets",
+    "price": 22400,
+    "craft": "Hand-rolled Zardozi Cords",
+    "fabric": "Italian Crepe de Chine",
+    "origin": "Modern Atelier",
+    "badge": "Resort Couture",
+    "image": "https://mahira2.netlify.app/assets/s3-dresses.jpg?v=5",
+    "desc": "Effortless luxury designed for intimate soirees. Relaxed silhouette cinched with an ornate hand-beaded bullion belt.",
+    "weave": "Hand-rolled Zardozi Cords",
+    "delivery": "Express Insured Dispatch (3-5 Days)",
+    "whatsapp": "+91 98765 43210",
+    "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
+  },
+  {
+    "id": "ALN-UN-12",
+    "title": "Zari Buti Handloom Fabric Set",
+    "category": "unstitched",
+    "categoryLabel": "Unstitched Fabrics",
+    "price": 18500,
+    "craft": "Jamdani Floral Insertion",
+    "fabric": "Organic Handspun Chanderi",
+    "origin": "Madhya Pradesh Looms",
+    "badge": "Pure Natural",
+    "image": "https://mahira2.netlify.app/assets/s3-kurta.jpg?v=5",
+    "desc": "Includes 5 meters of pure chanderi with woven golden bootis alongside 2.5 meters of dyed satin lining and a matched organza drape.",
+    "weave": "Jamdani Floral Insertion",
+    "delivery": "Express Insured Dispatch (3-5 Days)",
+    "whatsapp": "+91 98765 43210",
+    "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
+  }
+];
 
   // State
   let GARMENTS = [...DEFAULT_GARMENTS];
@@ -3051,8 +3048,8 @@
   const modalFabric = document.getElementById("modalFabric");
   const modalWeave = document.getElementById("modalWeave");
   const modalOrigin = document.getElementById("modalOrigin");
-  const modalAddBagBtn = document.getElementById("modalAddBagBtn");
-  const modalBespokeBtn = document.getElementById("modalBespokeBtn");
+  const modalDelivery = document.getElementById("modalDelivery");
+  const modalInquireBtn = document.getElementById("modalInquireBtn");
   const modalSizePicker = document.getElementById("modalSizePicker");
 
   function showToast(msg) {
@@ -3124,6 +3121,10 @@
       const isLiked = wishlist.includes(item.id);
       const card = document.createElement("article");
       card.className = "garment-card";
+      card.setAttribute("data-id", item.id);
+      card.setAttribute("role", "button");
+      card.setAttribute("tabindex", "0");
+      card.setAttribute("aria-label", `View details for ${item.title}`);
       card.innerHTML = `
         <div class="card-media">
           <button class="card-wish-btn ${isLiked ? 'liked' : ''}" data-id="${item.id}" aria-label="Save to Wishlist">
@@ -3132,19 +3133,14 @@
             </svg>
           </button>
           <img src="${item.image}" alt="${item.title}" loading="lazy" />
-          <button class="quick-examine-btn" data-id="${item.id}">
-            <span>Examine Craft</span>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-          </button>
           ${item.badge ? `<span class="card-badge">${item.badge}</span>` : ''}
         </div>
         <div class="card-info">
           <span class="card-origin">${item.craft || 'Artisanal Needlework'}</span>
           <h3 class="card-title">${item.title}</h3>
-          <p class="card-price">${formatPrice(item.price)}</p>
           <div class="card-foot">
             <span class="card-cat-badge">${item.categoryLabel || item.category}</span>
-            <button class="card-add-btn" data-id="${item.id}">Acquire</button>
+            <span class="card-foot-price">${formatPrice(item.price)}</span>
           </div>
         </div>
       `;
@@ -3208,8 +3204,19 @@
     if (modalPrice) modalPrice.textContent = formatPrice(item.price);
     if (modalDesc) modalDesc.textContent = item.desc || "Bespoke creation by Aleen master artisans.";
     if (modalFabric) modalFabric.textContent = item.fabric || "Pure Silk";
-    if (modalWeave) modalWeave.textContent = item.craft || "Artisan Weave";
+    if (modalWeave) modalWeave.textContent = item.weave || item.craft || "Artisan Weave";
     if (modalOrigin) modalOrigin.textContent = item.origin || "Aleen Looms";
+    if (modalDelivery) modalDelivery.textContent = item.delivery || "Express Insured Dispatch (3-5 Days)";
+
+    if (modalSizePicker) {
+      const sizes = (item.sizes || "Custom Bespoke, Standard S, Standard M, Standard L")
+        .split(",")
+        .map(s => s.trim())
+        .filter(Boolean);
+      modalSizePicker.innerHTML = sizes.map((s, idx) => 
+        `<button type="button" class="size-chip ${idx === 0 ? 'active' : ''}">${s}</button>`
+      ).join("");
+    }
 
     modalEl.classList.add("open");
     document.body.style.overflow = "hidden";
@@ -3257,26 +3264,21 @@
         return;
       }
 
-      const examineBtn = e.target.closest(".quick-examine-btn");
-      if (examineBtn) {
-        e.stopPropagation();
-        const id = examineBtn.getAttribute("data-id");
-        openModal(id);
-        return;
-      }
-
-      const addBtn = e.target.closest(".card-add-btn");
-      if (addBtn) {
-        e.stopPropagation();
-        const id = addBtn.getAttribute("data-id");
-        addToBag(id);
-        return;
-      }
-
       const card = e.target.closest(".garment-card");
       if (card) {
-        const id = card.querySelector(".quick-examine-btn")?.getAttribute("data-id");
+        const id = card.getAttribute("data-id");
         if (id) openModal(id);
+      }
+    });
+
+    gridEl.addEventListener("keydown", e => {
+      if (e.key === "Enter" || e.key === " ") {
+        const card = e.target.closest(".garment-card");
+        if (card && !e.target.closest(".card-wish-btn")) {
+          e.preventDefault();
+          const id = card.getAttribute("data-id");
+          if (id) openModal(id);
+        }
       }
     });
   }
@@ -3325,20 +3327,16 @@
     });
   }
 
-  if (modalAddBagBtn) {
-    modalAddBagBtn.addEventListener("click", () => {
+  if (modalInquireBtn) {
+    modalInquireBtn.addEventListener("click", () => {
       if (!activeModalItem) return;
-      const selectedSize = modalSizePicker?.querySelector(".size-chip.active")?.textContent || "Standard";
-      addToBag(activeModalItem.id, selectedSize);
-      closeModal();
-    });
-  }
-
-  if (modalBespokeBtn) {
-    modalBespokeBtn.addEventListener("click", () => {
-      if (!activeModalItem) return;
-      showToast(`Master tailor consultation initiated for ${activeModalItem.title}`);
-      closeModal();
+      const selectedSize = modalSizePicker?.querySelector(".size-chip.active")?.textContent || "Custom Bespoke";
+      const cleanPhone = (activeModalItem.whatsapp || "919876543210").replace(/[^0-9]/g, '');
+      const priceFormatted = formatPrice(activeModalItem.price);
+      const msg = encodeURIComponent(
+        `Hello Aleen Atelier,\n\nI would like to inquire about this creation:\n\n✦ Garment: ${activeModalItem.title}\n✦ Code: ${activeModalItem.id}\n✦ Price: ${priceFormatted}\n✦ Craft: ${activeModalItem.craft || 'Artisanal'}\n✦ Fabric: ${activeModalItem.fabric || 'Pure Silk'}\n✦ Selected Sizing: ${selectedSize}\n\nPlease share availability and bespoke curation details.`
+      );
+      window.open(`https://wa.me/${cleanPhone}?text=${msg}`, '_blank');
     });
   }
 

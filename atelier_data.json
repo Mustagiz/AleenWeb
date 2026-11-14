@@ -45,34 +45,24 @@
   ],
   "carouselSlides": [
     {
+      "img": "/assets/uploads/1794653340763_Aleen_Clothing_Diwali_Festive_Edit.png",
+      "title": "Noor Festive Organza",
+      "subtitle": "Blush Peach Tissue Organza with Gossamer Cutwork",
+      "tag": "Festive Organza Edit",
+      "desc": "Weightless blush peach tissue organza adorned with hand-placed seed pearls, delicate scallop embroidery, and diaphanous balloon sleeves.",
+      "price": "₹16,800",
+      "url": "collections.html?category=kurtis",
+      "headline": "Festive Organza Reverie"
+    },
+    {
       "img": "assets/pakistani-kurti-1.jpg",
       "title": "Zeenat Raw Silk Kurti",
       "subtitle": "Heirloom Gold Zardozi & Hand-Adda Bullion Embroidery",
       "tag": "Pakistani Haute Couture",
       "desc": "Tailored in royal ivory raw silk with intricate antique gold bullion work, pearls, and gossamer sleeves embodying timeless Awadh grandeur.",
-      "price": "\u20b918,500",
+      "price": "₹18,500",
       "url": "collections.html?category=kurtis",
       "headline": "Curated Haute Couture"
-    },
-    {
-      "img": "assets/pakistani-kurti-2.jpg",
-      "title": "Gul-e-Rana Velvet Kurti",
-      "subtitle": "Forest Emerald Micro-Velvet with Antique Kashmiri Tilla",
-      "tag": "Curated Velvet Edit",
-      "desc": "Opulent forest emerald velvet tailored with glistening metallic tilla cord, traditional dabka bouquets, and artisanal scalloped gold lace borders.",
-      "price": "\u20b924,000",
-      "url": "collections.html?category=kurtis",
-      "headline": "The Royal Awadh Edit"
-    },
-    {
-      "img": "assets/pakistani-kurti-3.jpg",
-      "title": "Noor Festive Organza",
-      "subtitle": "Blush Peach Tissue Organza with Gossamer Cutwork",
-      "tag": "Festive Organza Edit",
-      "desc": "Weightless blush peach tissue organza adorned with hand-placed seed pearls, delicate scallop embroidery, and diaphanous balloon sleeves.",
-      "price": "\u20b916,800",
-      "url": "collections.html?category=kurtis",
-      "headline": "Festive Organza Reverie"
     },
     {
       "img": "https://mahira2.netlify.app/assets/s3-kurta.jpg?v=5",
@@ -80,17 +70,27 @@
       "subtitle": "Handspun Tissue Chanderi with Antique Marodi Dori",
       "tag": "Royal Kurta Ensembles",
       "desc": "Handspun pure chanderi kurta matched with tailored straight brocade trousers and a gossamer metallic dupatta edged with intricate marodi border.",
-      "price": "\u20b921,500",
+      "price": "₹21,500",
       "url": "collections.html?category=kurta-sets",
       "headline": "Handspun Heritage Ensembles"
     },
     {
-      "img": "https://mahira2.netlify.app/assets/women-clean.jpg?v=3",
+      "img": "assets/pakistani-kurti-2.jpg",
+      "title": "Gul-e-Rana Velvet Kurti",
+      "subtitle": "Forest Emerald Micro-Velvet with Antique Kashmiri Tilla",
+      "tag": "Curated Velvet Edit",
+      "desc": "Opulent forest emerald velvet tailored with glistening metallic tilla cord, traditional dabka bouquets, and artisanal scalloped gold lace borders.",
+      "price": "₹24,000",
+      "url": "collections.html?category=kurtis",
+      "headline": "The Royal Awadh Edit"
+    },
+    {
+      "img": "/assets/uploads/1794653641118_Festive_Grandeur_Diwali_Advertisement.png",
       "title": "Sheesh Mahal Lehenga",
       "subtitle": "Monumental Crimson Velvet with Semi-Precious Encrusting",
       "tag": "Heritage Bridal Couture",
       "desc": "A museum-grade bridal lehenga featuring 16 hand-embroidered kalis encrusted with genuine dabka, badla, and semi-precious stone embellishments.",
-      "price": "\u20b985,000",
+      "price": "₹85,000",
       "url": "collections.html?category=lehengas",
       "headline": "Imperial Bridal Masterpiece"
     }
@@ -106,8 +106,12 @@
       "fabric": "Pure Raw Silk with Organza Lace Trims",
       "origin": "Lahore Atelier",
       "badge": "Heritage Edition",
-      "image": "/assets/uploads/1794646100138_Dubais_Next_Big_Boom_Mega_Projects_Coming_20252030_1.webp",
-      "desc": "Tailored royal ivory raw silk Pakistani kurti accented with heirloom gold zardozi adda embroidery, intricate hand-cut lace sleeve trims, and pearl button plackets."
+      "image": "assets/pakistani-kurti-1.jpg",
+      "desc": "Tailored royal ivory raw silk Pakistani kurti accented with heirloom gold zardozi adda embroidery, intricate hand-cut lace sleeve trims, and pearl button plackets.",
+      "weave": "Pure Zari & Adda Needlework",
+      "delivery": "Express Insured Dispatch (3-5 Days)",
+      "whatsapp": "+91 98765 43210",
+      "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
     },
     {
       "id": "ALN-KS-02",
@@ -120,7 +124,11 @@
       "origin": "Chanderi Weavers Guild",
       "badge": "Bestseller",
       "image": "https://mahira2.netlify.app/assets/s3-kurta.jpg?v=5",
-      "desc": "Delicate dusty rose organza adorned with fine metallic badla and antique marodi needlecraft. Paired with straight-cut brocade trousers and scalloped veil."
+      "desc": "Delicate dusty rose organza adorned with fine metallic badla and antique marodi needlecraft. Paired with straight-cut brocade trousers and scalloped veil.",
+      "weave": "Marodi & Aari Needlework",
+      "delivery": "Express Insured Dispatch (3-5 Days)",
+      "whatsapp": "+91 98765 43210",
+      "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
     },
     {
       "id": "ALN-DS-03",
@@ -133,7 +141,11 @@
       "origin": "Aleen Design Studio",
       "badge": "New Silhouette",
       "image": "https://mahira2.netlify.app/assets/s3-dresses.jpg?v=5",
-      "desc": "Contemporary architectural drape meeting traditional hand-embroidery. A 32-meter flare cut structured for gala celebrations and grand occasions."
+      "desc": "Contemporary architectural drape meeting traditional hand-embroidery. A 32-meter flare cut structured for gala celebrations and grand occasions.",
+      "weave": "Pita Work & Micro Pleating",
+      "delivery": "Express Insured Dispatch (3-5 Days)",
+      "whatsapp": "+91 98765 43210",
+      "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
     },
     {
       "id": "ALN-LH-04",
@@ -146,7 +158,11 @@
       "origin": "Lucknow Artisans",
       "badge": "Royal Couture",
       "image": "https://mahira2.netlify.app/assets/women-clean.jpg?v=3",
-      "desc": "Inspired by the mirrored halls of Amber Fort. Encased in genuine semi-precious bead embroidery, beaten metallic cord, and a dual tissue veil."
+      "desc": "Inspired by the mirrored halls of Amber Fort. Encased in genuine semi-precious bead embroidery, beaten metallic cord, and a dual tissue veil.",
+      "weave": "Zardozi & Dabka Resham",
+      "delivery": "Express Insured Dispatch (3-5 Days)",
+      "whatsapp": "+91 98765 43210",
+      "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
     },
     {
       "id": "ALN-PK-05",
@@ -159,7 +175,11 @@
       "origin": "Old City Lahore",
       "badge": "Artisanal",
       "image": "assets/pakistani-kurti-2.jpg",
-      "desc": "Opulent forest emerald micro-velvet silhouette enriched with antique metallic tilla cord, dabka floral bouquets, and scalloped hem border work."
+      "desc": "Opulent forest emerald micro-velvet silhouette enriched with antique metallic tilla cord, dabka floral bouquets, and scalloped hem border work.",
+      "weave": "Tilla & Dabka Hand Embroidery",
+      "delivery": "Express Insured Dispatch (3-5 Days)",
+      "whatsapp": "+91 98765 43210",
+      "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
     },
     {
       "id": "ALN-KS-06",
@@ -172,7 +192,11 @@
       "origin": "Awadh Atelier",
       "badge": "Hand-Embroidered",
       "image": "https://mahira2.netlify.app/assets/s4-room.jpg?v=1",
-      "desc": "32 Kalis of handcrafted shadow-work Chikankari interspersed with silver mukaish dots that catch the light at every graceful turn."
+      "desc": "32 Kalis of handcrafted shadow-work Chikankari interspersed with silver mukaish dots that catch the light at every graceful turn.",
+      "weave": "Lucknowi Chikankari & Mukaish",
+      "delivery": "Express Insured Dispatch (3-5 Days)",
+      "whatsapp": "+91 98765 43210",
+      "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
     },
     {
       "id": "ALN-DP-07",
@@ -185,7 +209,11 @@
       "origin": "Srinagar Valley",
       "badge": "Limited Craft",
       "image": "https://mahira2.netlify.app/assets/s5-room.jpg?v=1",
-      "desc": "Featherlight warmth woven from Himalayan capra hircus fleece, detailed with single-needle botanical jaal borders."
+      "desc": "Featherlight warmth woven from Himalayan capra hircus fleece, detailed with single-needle botanical jaal borders.",
+      "weave": "Sozni Hand Needlework",
+      "delivery": "Express Insured Dispatch (3-5 Days)",
+      "whatsapp": "+91 98765 43210",
+      "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
     },
     {
       "id": "ALN-UN-08",
@@ -198,7 +226,11 @@
       "origin": "Bespoke Loom 12",
       "badge": "Mastercut",
       "image": "https://mahira2.netlify.app/assets/s3-bg.jpg?v=1",
-      "desc": "Rare artisanal yardage crafted on hand-shuttle looms with alternating warp threads. Tailorable for bespoke lehengas or sherwanis."
+      "desc": "Rare artisanal yardage crafted on hand-shuttle looms with alternating warp threads. Tailorable for bespoke lehengas or sherwanis.",
+      "weave": "Multi-warp Rangkat Weaving",
+      "delivery": "Express Insured Dispatch (3-5 Days)",
+      "whatsapp": "+91 98765 43210",
+      "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
     },
     {
       "id": "ALN-PK-09",
@@ -211,7 +243,11 @@
       "origin": "Karachi Design House",
       "badge": "Trending",
       "image": "assets/pakistani-kurti-3.jpg",
-      "desc": "Weightless blush peach tissue organza Pakistani kurti featuring hand-placed pearl droplets, gossamer cutwork sleeves, and fine badla embroidery."
+      "desc": "Weightless blush peach tissue organza Pakistani kurti featuring hand-placed pearl droplets, gossamer cutwork sleeves, and fine badla embroidery.",
+      "weave": "Pearl Moti & Scalloped Cutwork",
+      "delivery": "Express Insured Dispatch (3-5 Days)",
+      "whatsapp": "+91 98765 43210",
+      "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
     },
     {
       "id": "ALN-LH-10",
@@ -224,7 +260,11 @@
       "origin": "Aleen Design Studio",
       "badge": "Signature Cut",
       "image": "https://mahira2.netlify.app/assets/women-clean.jpg?v=3",
-      "desc": "A springtime dream composed of thousand-petal floral tapestries rendered in ombr\u00e9 pastel threads, crowned by an embroidered sweetheart bustier."
+      "desc": "A springtime dream composed of thousand-petal floral tapestries rendered in ombré pastel threads, crowned by an embroidered sweetheart bustier.",
+      "weave": "French Knot & Silk Floss",
+      "delivery": "Express Insured Dispatch (3-5 Days)",
+      "whatsapp": "+91 98765 43210",
+      "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
     },
     {
       "id": "ALN-DS-11",
@@ -237,7 +277,11 @@
       "origin": "Modern Atelier",
       "badge": "Resort Couture",
       "image": "https://mahira2.netlify.app/assets/s3-dresses.jpg?v=5",
-      "desc": "Effortless luxury designed for intimate soirees. Relaxed silhouette cinched with an ornate hand-beaded bullion belt."
+      "desc": "Effortless luxury designed for intimate soirees. Relaxed silhouette cinched with an ornate hand-beaded bullion belt.",
+      "weave": "Hand-rolled Zardozi Cords",
+      "delivery": "Express Insured Dispatch (3-5 Days)",
+      "whatsapp": "+91 98765 43210",
+      "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
     },
     {
       "id": "ALN-UN-12",
@@ -250,7 +294,11 @@
       "origin": "Madhya Pradesh Looms",
       "badge": "Pure Natural",
       "image": "https://mahira2.netlify.app/assets/s3-kurta.jpg?v=5",
-      "desc": "Includes 5 meters of pure chanderi with woven golden bootis alongside 2.5 meters of dyed satin lining and a matched organza drape."
+      "desc": "Includes 5 meters of pure chanderi with woven golden bootis alongside 2.5 meters of dyed satin lining and a matched organza drape.",
+      "weave": "Jamdani Floral Insertion",
+      "delivery": "Express Insured Dispatch (3-5 Days)",
+      "whatsapp": "+91 98765 43210",
+      "sizes": "Custom Bespoke, Standard S, Standard M, Standard L"
     }
   ]
 }
