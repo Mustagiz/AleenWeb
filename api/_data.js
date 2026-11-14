@@ -1,5 +1,6 @@
 // Shared data store for Vercel serverless functions
 // Synchronized permanently with Firebase Firestore (aleen-a5c32)
+// Uses dedicated documents for carousel slides and catalog to prevent document size limits
 
 const fs = require('fs');
 const path = require('path');
@@ -7,7 +8,7 @@ const https = require('https');
 
 const PROJECT_ID = 'aleen-a5c32';
 const API_KEY = 'AIzaSyDJOIWVS5LwRfhLLEa_lT51CI6ndQp1eXQ';
-const FIRESTORE_URL = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/settings/atelier_data?key=${API_KEY}`;
+const BASE_FIRESTORE = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/settings`;
 const DATA_FILE = path.join(process.cwd(), 'atelier_data.json');
 
 const DEFAULT_DATA = {
@@ -29,7 +30,7 @@ const DEFAULT_DATA = {
 
 let _cache = null;
 let _lastFetchTime = 0;
-const CACHE_TTL_MS = 3000; // 3-second cache to ensure fast responses and fresh data
+const CACHE_TTL_MS = 2000;
 
 function readLocalFallback() {
   try {
@@ -43,9 +44,10 @@ function readLocalFallback() {
   return { ...DEFAULT_DATA };
 }
 
-function fetchFromFirestore() {
+function fetchDoc(docName) {
   return new Promise((resolve) => {
-    const req = https.get(FIRESTORE_URL, { timeout: 3500 }, (res) => {
+    const url = `${BASE_FIRESTORE}/${docName}?key=${API_KEY}`;
+    const req = https.get(url, { timeout: 3500 }, (res) => {
       let body = '';
       res.on('data', chunk => body += chunk);
       res.on('end', () => {
@@ -53,33 +55,20 @@ function fetchFromFirestore() {
           try {
             const doc = JSON.parse(body);
             const raw = doc.fields?.jsonPayload?.stringValue;
-            if (raw) {
-              const data = JSON.parse(raw);
-              return resolve({ ...DEFAULT_DATA, ...data });
-            }
-          } catch (e) {
-            console.warn('Firestore doc parse error:', e.message);
-          }
+            if (raw) return resolve(JSON.parse(raw));
+          } catch (e) {}
         }
         resolve(null);
       });
     });
-
-    req.on('timeout', () => {
-      req.destroy();
-      resolve(null);
-    });
-
-    req.on('error', (err) => {
-      console.warn('Firestore fetch error:', err.message);
-      resolve(null);
-    });
+    req.on('timeout', () => { req.destroy(); resolve(null); });
+    req.on('error', () => resolve(null));
   });
 }
 
-function saveToFirestore(data) {
+function saveDoc(docName, data) {
   return new Promise((resolve) => {
-    const url = new URL(FIRESTORE_URL);
+    const url = new URL(`${BASE_FIRESTORE}/${docName}?key=${API_KEY}`);
     const payload = JSON.stringify({
       fields: {
         jsonPayload: { stringValue: JSON.stringify(data) },
@@ -93,28 +82,54 @@ function saveToFirestore(data) {
         'Content-Type': 'application/json',
         'Content-Length': Buffer.byteLength(payload)
       },
-      timeout: 4000
+      timeout: 4500
     }, (res) => {
-      let body = '';
-      res.on('data', chunk => body += chunk);
-      res.on('end', () => {
-        resolve(res.statusCode === 200);
-      });
+      resolve(res.statusCode === 200);
     });
 
-    req.on('timeout', () => {
-      req.destroy();
-      resolve(false);
-    });
-
-    req.on('error', (err) => {
-      console.warn('Firestore write error:', err.message);
-      resolve(false);
-    });
-
+    req.on('timeout', () => { req.destroy(); resolve(false); });
+    req.on('error', () => resolve(false));
     req.write(payload);
     req.end();
   });
+}
+
+async function getCarouselSlides() {
+  const remote = await fetchDoc('atelier_carousel');
+  if (Array.isArray(remote) && remote.length >= 2) {
+    if (!_cache) _cache = readLocalFallback();
+    _cache.carouselSlides = remote;
+    return remote;
+  }
+  const data = await getData();
+  return data.carouselSlides || [];
+}
+
+async function saveCarouselSlides(slides) {
+  if (!_cache) _cache = readLocalFallback();
+  _cache.carouselSlides = slides;
+  _lastFetchTime = Date.now();
+  await saveDoc('atelier_carousel', slides);
+  return slides;
+}
+
+async function getCatalog() {
+  const remote = await fetchDoc('atelier_catalog');
+  if (Array.isArray(remote) && remote.length > 0) {
+    if (!_cache) _cache = readLocalFallback();
+    _cache.catalog = remote;
+    return remote;
+  }
+  const data = await getData();
+  return data.catalog || [];
+}
+
+async function saveCatalog(catalog) {
+  if (!_cache) _cache = readLocalFallback();
+  _cache.catalog = catalog;
+  _lastFetchTime = Date.now();
+  await saveDoc('atelier_catalog', catalog);
+  return catalog;
 }
 
 async function getData() {
@@ -123,32 +138,30 @@ async function getData() {
     return _cache;
   }
 
-  const firestoreData = await fetchFromFirestore();
-  if (firestoreData) {
-    _cache = firestoreData;
-    _lastFetchTime = now;
-    return _cache;
-  }
-
-  if (!_cache) {
-    _cache = readLocalFallback();
-    _lastFetchTime = now;
-  }
+  const base = await fetchDoc('atelier_data') || readLocalFallback();
+  _cache = { ...DEFAULT_DATA, ...base };
+  _lastFetchTime = now;
   return _cache;
 }
 
 async function saveData(data) {
   _cache = { ..._cache, ...data };
   _lastFetchTime = Date.now();
-
-  try {
-    fs.writeFileSync(DATA_FILE, JSON.stringify(_cache, null, 2), 'utf8');
-  } catch (e) {
-    // Vercel source fs is read-only
-  }
-
-  await saveToFirestore(_cache);
+  if (data.carouselSlides) await saveDoc('atelier_carousel', data.carouselSlides);
+  if (data.catalog) await saveDoc('atelier_catalog', data.catalog);
+  
+  const generalData = { ..._cache };
+  delete generalData.carouselSlides;
+  delete generalData.catalog;
+  await saveDoc('atelier_data', generalData);
   return _cache;
 }
 
-module.exports = { getData, saveData };
+module.exports = {
+  getData,
+  saveData,
+  getCarouselSlides,
+  saveCarouselSlides,
+  getCatalog,
+  saveCatalog
+};

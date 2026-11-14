@@ -4603,9 +4603,11 @@
       const cropRotateRight = document.getElementById("cropRotateRight");
       const cropResetBtn = document.getElementById("cropResetBtn");
       const ratioBtns = document.querySelectorAll(".crop-ratio-btn");
+      let currentCropOptions = {};
 
       function openCropStudio(imageUrlOrData, options = {}) {
         if (!cropModal || !cropperTargetImg) return;
+        currentCropOptions = options;
         const initialRatio = options.ratio !== undefined ? options.ratio : 0.75;
         cropperCallback = options.onApply || null;
 
@@ -4689,9 +4691,13 @@
         applyCropBtn.textContent = "Processing Crop...";
 
         try {
+          const maxW = currentCropOptions.maxWidth || (currentCropOptions.ratio && currentCropOptions.ratio > 1 ? 1600 : 1200);
+          const maxH = currentCropOptions.maxHeight || (currentCropOptions.ratio && currentCropOptions.ratio > 1 ? 900 : 1600);
+          const quality = currentCropOptions.quality || 0.82;
+
           const canvas = cropperInstance.getCroppedCanvas({
-            maxWidth: 2400,
-            maxHeight: 2400,
+            maxWidth: maxW,
+            maxHeight: maxH,
             imageSmoothingEnabled: true,
             imageSmoothingQuality: "high"
           });
@@ -4702,7 +4708,7 @@
             return;
           }
 
-          const croppedData = canvas.toDataURL("image/jpeg", 0.92);
+          const croppedData = canvas.toDataURL("image/jpeg", quality);
           const token = localStorage.getItem("atelier_admin_token") || "admin_session";
           let finalUrl = croppedData;
 
@@ -5250,6 +5256,9 @@
         reader.onload = function(e) {
           openCropStudio(e.target.result, {
             ratio: 16 / 9, // 16:9 full-width slider
+            maxWidth: 1600,
+            maxHeight: 900,
+            quality: 0.82,
             onApply: (croppedUrl) => {
               updateSlideImg(idx, croppedUrl);
               const inputEl = document.getElementById("cmImgInput_" + idx);
@@ -5270,6 +5279,9 @@
         }
         openCropStudio(carouselSlides[idx].img, {
           ratio: 16 / 9,
+          maxWidth: 1600,
+          maxHeight: 900,
+          quality: 0.82,
           onApply: (croppedUrl) => {
             updateSlideImg(idx, croppedUrl);
             const inputEl = document.getElementById("cmImgInput_" + idx);
@@ -5280,17 +5292,20 @@
         });
       };
 
-      // Sync carousel from server on load
-      fetch("/api/carousel")
+      // Sync carousel from server on load (with cache-busting timestamp)
+      fetch("/api/carousel?t=" + Date.now())
         .then(r => r.json())
         .then(data => {
-          if (data && data.success && Array.isArray(data.slides) && data.slides.length >= 2) {
-            carouselSlides = data.slides;
+          const list = (data && Array.isArray(data.slides)) ? data.slides : (Array.isArray(data) ? data : null);
+          if (list && list.length >= 2) {
+            carouselSlides = list;
             localStorage.setItem("aleen_carousel_slides", JSON.stringify(carouselSlides));
             renderCarouselManager();
           }
         })
-        .catch(() => { });
+        .catch((err) => {
+          console.warn("Could not sync carousel from server:", err);
+        });
 
       window.moveSlide = function (idx, dir) {
         const newIdx = idx + dir;

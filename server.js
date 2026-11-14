@@ -137,9 +137,11 @@ if (fs.existsSync(DATA_FILE)) {
   fs.writeFileSync(DATA_FILE, JSON.stringify(atelierData, null, 2), 'utf8');
 }
 
-function saveToFirestore(data) {
+const BASE_FIRESTORE = `https://firestore.googleapis.com/v1/projects/${FIREBASE_PROJECT_ID}/databases/(default)/documents/settings`;
+
+function saveDocToFirestore(docName, data) {
   try {
-    const url = new URL(FIRESTORE_URL);
+    const url = new URL(`${BASE_FIRESTORE}/${docName}?key=${FIREBASE_API_KEY}`);
     const payload = JSON.stringify({
       fields: {
         jsonPayload: { stringValue: JSON.stringify(data) },
@@ -152,10 +154,8 @@ function saveToFirestore(data) {
         'Content-Type': 'application/json',
         'Content-Length': Buffer.byteLength(payload)
       },
-      timeout: 4000
-    }, (res) => {
-      // success
-    });
+      timeout: 4500
+    }, (res) => {});
     req.on('error', () => {});
     req.write(payload);
     req.end();
@@ -164,27 +164,53 @@ function saveToFirestore(data) {
 
 function saveData() {
   fs.writeFileSync(DATA_FILE, JSON.stringify(atelierData, null, 2), 'utf8');
-  saveToFirestore(atelierData);
+  if (atelierData.carouselSlides) {
+    saveDocToFirestore('atelier_carousel', atelierData.carouselSlides);
+  }
+  if (atelierData.catalog) {
+    saveDocToFirestore('atelier_catalog', atelierData.catalog);
+  }
+  const generalData = { ...atelierData };
+  delete generalData.carouselSlides;
+  delete generalData.catalog;
+  saveDocToFirestore('atelier_data', generalData);
 }
 
 // Initial async fetch from Firestore to stay in sync
-https.get(FIRESTORE_URL, { timeout: 3500 }, (res) => {
-  let body = '';
-  res.on('data', chunk => body += chunk);
-  res.on('end', () => {
-    if (res.statusCode === 200) {
-      try {
-        const doc = JSON.parse(body);
-        const raw = doc.fields?.jsonPayload?.stringValue;
-        if (raw) {
-          const remote = JSON.parse(raw);
-          atelierData = { ...atelierData, ...remote };
-          console.log('✦ Synced live data from Firebase Firestore (aleen-a5c32)');
-        }
-      } catch(e) {}
-    }
-  });
-}).on('error', () => {});
+function fetchFirestoreDoc(docName, cb) {
+  https.get(`${BASE_FIRESTORE}/${docName}?key=${FIREBASE_API_KEY}`, { timeout: 3500 }, (res) => {
+    let body = '';
+    res.on('data', chunk => body += chunk);
+    res.on('end', () => {
+      if (res.statusCode === 200) {
+        try {
+          const doc = JSON.parse(body);
+          const raw = doc.fields?.jsonPayload?.stringValue;
+          if (raw) cb(JSON.parse(raw));
+        } catch(e) {}
+      }
+    });
+  }).on('error', () => {});
+}
+
+fetchFirestoreDoc('atelier_data', (remote) => {
+  atelierData = { ...atelierData, ...remote };
+  console.log('✦ Synced live data from Firebase Firestore atelier_data');
+});
+
+fetchFirestoreDoc('atelier_carousel', (slides) => {
+  if (Array.isArray(slides) && slides.length >= 2) {
+    atelierData.carouselSlides = slides;
+    console.log('✦ Synced ' + slides.length + ' carousel slides from Firestore atelier_carousel');
+  }
+});
+
+fetchFirestoreDoc('atelier_catalog', (catalog) => {
+  if (Array.isArray(catalog) && catalog.length > 0) {
+    atelierData.catalog = catalog;
+    console.log('✦ Synced ' + catalog.length + ' garments from Firestore atelier_catalog');
+  }
+});
 
 // Active session tokens with role check
 const activeSessions = new Map(); // token -> { username, role, expires }
@@ -361,20 +387,26 @@ const server = http.createServer(async (req, res) => {
 
     // 3. Carousel API Endpoints
     if (reqPath === '/api/carousel' && req.method === 'GET') {
-      res.writeHead(200);
+      res.writeHead(200, {
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-store, no-cache, must-revalidate'
+      });
       res.end(JSON.stringify({ success: true, slides: atelierData.carouselSlides }));
       return;
     }
     if (reqPath === '/api/admin/carousel') {
       if (req.method === 'GET') {
-        res.writeHead(200);
-        res.end(JSON.stringify({ slides: atelierData.carouselSlides }));
+        res.writeHead(200, {
+          'Content-Type': 'application/json',
+          'Cache-Control': 'no-store, no-cache, must-revalidate'
+        });
+        res.end(JSON.stringify({ success: true, slides: atelierData.carouselSlides }));
         return;
       }
       if (req.method === 'POST') {
         const admin = verifyAdmin(req);
         if (!admin) {
-          res.writeHead(403);
+          res.writeHead(403, { 'Content-Type': 'application/json' });
           res.end(JSON.stringify({ error: 'Admin role required to update carousel slides' }));
           return;
         }
@@ -382,11 +414,11 @@ const server = http.createServer(async (req, res) => {
         if (Array.isArray(slides) && slides.length >= 2) {
           atelierData.carouselSlides = slides;
           saveData();
-          res.writeHead(200);
-          res.end(JSON.stringify({ success: true, message: 'Carousel slides updated live!' }));
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ success: true, message: 'Carousel slides updated live!', slides: atelierData.carouselSlides }));
           return;
         }
-        res.writeHead(400);
+        res.writeHead(400, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ error: 'At least 2 slides are required' }));
         return;
       }

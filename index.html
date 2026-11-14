@@ -8802,12 +8802,14 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
       console.warn('Slider rehydrate error:', e);
     }
 
-    // Always keep in sync with atelier server database
-    fetch('/api/carousel')
+    // Always keep in sync with atelier server database (cache-busting timestamp)
+    fetch('/api/carousel?t=' + Date.now())
       .then(res => res.json())
       .then(data => {
-        if (data && data.slides && Array.isArray(data.slides) && data.slides.length >= 2) {
-          rehydrateCustomSlides(data.slides);
+        const list = (data && Array.isArray(data.slides)) ? data.slides : (Array.isArray(data) ? data : null);
+        if (list && list.length >= 2) {
+          localStorage.setItem('aleen_carousel_slides', JSON.stringify(list));
+          rehydrateCustomSlides(list);
           showSlide(currentIndex);
         }
       })
