@@ -3757,8 +3757,9 @@
       fetch('/api/catalog')
         .then(r => r.json())
         .then(data => {
-          if (data.success && Array.isArray(data.garments) && data.garments.length > 0) {
-            GARMENTS = data.garments;
+          const list = Array.isArray(data.catalog) ? data.catalog : (Array.isArray(data.garments) ? data.garments : null);
+          if (list && list.length > 0) {
+            GARMENTS = list;
             localStorage.setItem("aleen_master_catalog", JSON.stringify(GARMENTS));
             if (typeof filterAndSortGarments === 'function') {
               filterAndSortGarments(false);
@@ -4196,23 +4197,22 @@
       }
 
       document.addEventListener("keydown", e => {
-        if (e.key === "Escape" && modalEl?.classList.contains("open")) {
-          closeModal();
+        if (modalEl?.classList.contains("open")) {
+          if (e.key === "Escape") {
+            closeModal();
+          } else if (e.key === "ArrowLeft") {
+            document.getElementById("modalGalleryPrev")?.click();
+          } else if (e.key === "ArrowRight") {
+            document.getElementById("modalGalleryNext")?.click();
+          }
         }
       });
 
-  document.addEventListener("keydown", e => {
-    if (modalEl?.classList.contains("open")) {
-      if (e.key === "Escape") {
-        closeModal();
-      } else if (e.key === "ArrowLeft") {
-        document.getElementById("modalGalleryPrev")?.click();
-      } else if (e.key === "ArrowRight") {
-        document.getElementById("modalGalleryNext")?.click();
-      }
-    }
-  });
-
+      // Boot
+      updateTabButtons();
+      filterAndSortGarments(true);
+    })();
+  </script>
 </body>
 
 </html>
