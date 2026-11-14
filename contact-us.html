@@ -953,6 +953,9 @@
   box-shadow: none !important;
   box-sizing: border-box !important;
   transition: background 0.35s ease, backdrop-filter 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease !important;
+  --logo-h: clamp(88px, 9.8vh, 112px);
+  --logo-half: calc(var(--logo-h) * 0.5925);
+  --nav-gap: clamp(26px, 2.8vw, 54px);
 }
 
 #header.is-solid, #header.scrolled {
@@ -964,32 +967,67 @@
 }
 
 .nav-center {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: 100% !important;
+  display: contents !important;
+}
+
+.logo-space {
+  display: none !important;
 }
 
 .nav-side {
+  position: absolute !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  z-index: 1 !important;
   display: flex !important;
   align-items: center !important;
-  gap: clamp(32px, 3.5vw, 60px) !important;
+  gap: clamp(13px, 1.4vw, 28px) !important;
+}
+
+.nav-l {
+  right: calc(50% + var(--logo-half) + var(--nav-gap)) !important;
+  justify-content: flex-end !important;
+}
+
+.nav-r {
+  left: calc(50% + var(--logo-half) + var(--nav-gap)) !important;
+  justify-content: flex-start !important;
 }
 
 .nav-side a {
+  position: relative !important;
+  display: block !important;
+  padding: 10px 0 !important;
   font-family: var(--sans) !important;
-  font-size: clamp(11px, 0.76vw, 12.5px) !important;
-  font-weight: 500 !important;
-  letter-spacing: 0.26em !important;
+  font-size: clamp(10px, 0.76vw, 13px) !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.2em !important;
   text-transform: uppercase !important;
-  color: #ffffff !important;
+  color: rgba(240, 232, 210, 0.96) !important;
+  white-space: nowrap !important;
   text-decoration: none !important;
-  padding: 8px 4px !important;
   transition: color 0.3s ease !important;
 }
 
-.nav-side a:hover {
-  color: var(--gold-spark) !important;
+.nav-side a:hover, .nav-side a.is-open {
+  color: var(--gold-light) !important;
+}
+
+.nav-side a::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 2px !important;
+  height: 1px !important;
+  background: var(--gold) !important;
+  transform: scaleX(0) !important;
+  transform-origin: left center !important;
+  transition: transform 0.3s var(--ease-io) !important;
+}
+
+.nav-side a:hover::after, .nav-side a.is-open::after {
+  transform: scaleX(1) !important;
 }
 
 .brand-slot {
@@ -1000,17 +1038,19 @@
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  pointer-events: auto !important;
+  pointer-events: none !important;
+  z-index: 2 !important;
 }
 
 .brand {
   display: inline-block !important;
   line-height: 0 !important;
   text-decoration: none !important;
+  pointer-events: auto !important;
 }
 
 .brand svg, #brandLogo {
-  height: clamp(54px, 6.2vh, 66px) !important;
+  height: clamp(68px, 7.2vh, 84px) !important;
   width: auto !important;
   display: block !important;
 }

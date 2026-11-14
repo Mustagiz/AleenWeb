@@ -36,6 +36,28 @@ let atelierData = {
     line: 'Handcrafted Banarasi weaves & royal silhouettes',
     url: 'collections.html'
   },
+  heroRotator: [
+    {
+      eyebrow: "Centuries Of Indian Artistry",
+      headline: "Couture<br>Beyond Time",
+      tagline: "Where Awadh needlecraft meets timeless grace."
+    },
+    {
+      eyebrow: "The Atelier Edit 2026",
+      headline: "Poetry In<br>Pure Silks",
+      tagline: "Handspun heritage fabrics tailored for modern royalty."
+    },
+    {
+      eyebrow: "Heirloom Craftsmanship",
+      headline: "Zardozi &<br>Golden Threads",
+      tagline: "Each thread an unbroken continuum of centuries-old grace."
+    },
+    {
+      eyebrow: "Awadh Grandeur Redefined",
+      headline: "Elegance<br>In Every Drape",
+      tagline: "Consciously curated silhouettes designed to outlive the season."
+    }
+  ],
   carouselSlides: [
     {
       img: 'assets/pakistani-kurti-1.jpg',
@@ -316,6 +338,39 @@ const server = http.createServer(async (req, res) => {
         }
         res.writeHead(400);
         res.end(JSON.stringify({ error: 'At least 2 slides are required' }));
+        return;
+      }
+    }
+
+    // 3b. Hero Section 3s Text Rotator Endpoints
+    if (reqPath === '/api/hero-rotator' && req.method === 'GET') {
+      res.writeHead(200);
+      res.end(JSON.stringify({ success: true, rotator: atelierData.heroRotator || [] }));
+      return;
+    }
+    if (reqPath === '/api/admin/hero-rotator') {
+      if (req.method === 'GET') {
+        res.writeHead(200);
+        res.end(JSON.stringify({ rotator: atelierData.heroRotator || [] }));
+        return;
+      }
+      if (req.method === 'POST') {
+        const admin = verifyAdmin(req);
+        if (!admin) {
+          res.writeHead(403);
+          res.end(JSON.stringify({ error: 'Admin role required to update hero rotator' }));
+          return;
+        }
+        const { rotator } = await parseBody(req);
+        if (Array.isArray(rotator) && rotator.length >= 1) {
+          atelierData.heroRotator = rotator;
+          saveData();
+          res.writeHead(200);
+          res.end(JSON.stringify({ success: true, message: 'Hero text rotator updated live!' }));
+          return;
+        }
+        res.writeHead(400);
+        res.end(JSON.stringify({ error: 'At least 1 hero message is required' }));
         return;
       }
     }

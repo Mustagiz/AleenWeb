@@ -8082,7 +8082,14 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
     new Promise(function (res) { setTimeout(res, 400); })
   ]);
 
-  var isScrolledOrAnchor = (window.location.hash && window.location.hash.length > 1) || (window.scrollY > 80);
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+  window.scrollTo(0, 0);
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+
+  var isScrolledOrAnchor = (window.location.hash && window.location.hash.length > 1 && !window.location.hash.includes('top'));
 
   if (!window.gsap) {
     document.addEventListener('DOMContentLoaded', function () {
@@ -8095,7 +8102,6 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
   } else if (reduced || isScrolledOrAnchor) {
     applyFinalState();
   } else {
-    window.scrollTo(0, 0);
     setIntroInitialStates();   // hide logo parts immediately — no flash before the film
     capped.then(function () {
       requestAnimationFrame(function () {
@@ -8825,6 +8831,117 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
 
     // Start auto cycle
     showSlide(0);
+  })();
+
+  // 3. Homepage Hero Section Text Rotator (Changes every 3 seconds, syncs with admin)
+  (function initHeroTextRotator() {
+    const ebEl = document.getElementById('heroEbText');
+    const hlEl = document.getElementById('heroHeadline');
+    const tagEl = document.getElementById('heroTagline');
+    if (!ebEl || !hlEl || !tagEl) return;
+
+    let heroMessages = [
+      {
+        eyebrow: "Centuries Of Indian Artistry",
+        headline: "Couture<br>Beyond Time",
+        tagline: "Where Awadh needlecraft meets timeless grace."
+      },
+      {
+        eyebrow: "The Atelier Edit 2026",
+        headline: "Poetry In<br>Pure Silks",
+        tagline: "Handspun heritage fabrics tailored for modern royalty."
+      },
+      {
+        eyebrow: "Heirloom Craftsmanship",
+        headline: "Zardozi &<br>Golden Threads",
+        tagline: "Each thread an unbroken continuum of centuries-old grace."
+      },
+      {
+        eyebrow: "Awadh Grandeur Redefined",
+        headline: "Elegance<br>In Every Drape",
+        tagline: "Consciously curated silhouettes designed to outlive the season."
+      }
+    ];
+
+    try {
+      const saved = localStorage.getItem('aleen_hero_rotator');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) heroMessages = parsed;
+      }
+    } catch(e) {}
+
+    fetch('/api/hero-rotator')
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.success && Array.isArray(data.rotator) && data.rotator.length > 0) {
+          heroMessages = data.rotator;
+          localStorage.setItem('aleen_hero_rotator', JSON.stringify(data.rotator));
+        }
+      })
+      .catch(() => {});
+
+    let currentIndex = 0;
+    let isTransitioning = false;
+
+    // Apply smooth transition styling
+    [ebEl, hlEl, tagEl].forEach(el => {
+      el.style.transition = 'opacity 0.45s cubic-bezier(0.22, 0.61, 0.21, 1), transform 0.45s cubic-bezier(0.22, 0.61, 0.21, 1)';
+      el.style.display = 'inline-block';
+    });
+
+    function advanceHeroText() {
+      if (isTransitioning || heroMessages.length <= 1) return;
+      isTransitioning = true;
+
+      // Glide and fade out upward
+      ebEl.style.opacity = '0';
+      ebEl.style.transform = 'translateY(-12px)';
+      hlEl.style.opacity = '0';
+      hlEl.style.transform = 'translateY(-16px)';
+      tagEl.style.opacity = '0';
+      tagEl.style.transform = 'translateY(-12px)';
+
+      setTimeout(() => {
+        currentIndex = (currentIndex + 1) % heroMessages.length;
+        const msg = heroMessages[currentIndex];
+
+        ebEl.textContent = msg.eyebrow || '';
+        hlEl.innerHTML = msg.headline || '';
+        tagEl.textContent = msg.tagline || '';
+
+        // Prepare entrance position (from below)
+        ebEl.style.transition = 'none';
+        hlEl.style.transition = 'none';
+        tagEl.style.transition = 'none';
+
+        ebEl.style.transform = 'translateY(14px)';
+        hlEl.style.transform = 'translateY(18px)';
+        tagEl.style.transform = 'translateY(14px)';
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            ebEl.style.transition = 'opacity 0.55s cubic-bezier(0.22, 0.61, 0.21, 1), transform 0.55s cubic-bezier(0.22, 0.61, 0.21, 1)';
+            hlEl.style.transition = 'opacity 0.55s cubic-bezier(0.22, 0.61, 0.21, 1) 0.08s, transform 0.55s cubic-bezier(0.22, 0.61, 0.21, 1) 0.08s';
+            tagEl.style.transition = 'opacity 0.55s cubic-bezier(0.22, 0.61, 0.21, 1) 0.16s, transform 0.55s cubic-bezier(0.22, 0.61, 0.21, 1) 0.16s';
+
+            ebEl.style.opacity = '1';
+            ebEl.style.transform = 'translateY(0)';
+            hlEl.style.opacity = '1';
+            hlEl.style.transform = 'translateY(0)';
+            tagEl.style.opacity = '1';
+            tagEl.style.transform = 'translateY(0)';
+
+            setTimeout(() => {
+              isTransitioning = false;
+            }, 600);
+          });
+        });
+      }, 450);
+    }
+
+    // Auto rotate every 3 seconds (3000ms)
+    setInterval(advanceHeroText, 3000);
   })();
 })();
 </script>

@@ -21,6 +21,28 @@
     "line": "Handcrafted Banarasi weaves & royal silhouettes",
     "url": "collections.html"
   },
+  "heroRotator": [
+    {
+      "eyebrow": "Centuries Of Indian Artistry",
+      "headline": "Couture<br>Beyond Time",
+      "tagline": "Where Awadh needlecraft meets timeless grace."
+    },
+    {
+      "eyebrow": "The Atelier Edit 2026",
+      "headline": "Poetry In<br>Pure Silks",
+      "tagline": "Handspun heritage fabrics tailored for modern royalty."
+    },
+    {
+      "eyebrow": "Heirloom Craftsmanship",
+      "headline": "Zardozi &<br>Golden Threads",
+      "tagline": "Each thread an unbroken continuum of centuries-old grace."
+    },
+    {
+      "eyebrow": "Awadh Grandeur Redefined",
+      "headline": "Elegance<br>In Every Drape",
+      "tagline": "Consciously curated silhouettes designed to outlive the season."
+    }
+  ],
   "carouselSlides": [
     {
       "img": "assets/pakistani-kurti-1.jpg",
