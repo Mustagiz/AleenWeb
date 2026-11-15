@@ -4817,9 +4817,9 @@
         applyCropBtn.textContent = "Processing Crop...";
 
         try {
-          const maxW = currentCropOptions.maxWidth || (currentCropOptions.ratio && currentCropOptions.ratio > 1 ? 1600 : 1200);
-          const maxH = currentCropOptions.maxHeight || (currentCropOptions.ratio && currentCropOptions.ratio > 1 ? 900 : 1600);
-          const quality = currentCropOptions.quality || 0.82;
+          const maxW = currentCropOptions.maxWidth || (currentCropOptions.ratio && currentCropOptions.ratio > 1 ? 2560 : 1800);
+          const maxH = currentCropOptions.maxHeight || (currentCropOptions.ratio && currentCropOptions.ratio > 1 ? 1440 : 2400);
+          const quality = currentCropOptions.quality || 0.94;
 
           const canvas = cropperInstance.getCroppedCanvas({
             maxWidth: maxW,
@@ -5284,7 +5284,8 @@
         window.carouselSlides = carouselSlides;
         const token = localStorage.getItem("atelier_admin_token") || "admin_session";
         try {
-          await fetch("/api/admin/carousel", {
+          // Primary serverless endpoint: /api/carousel (POST)
+          const res = await fetch("/api/carousel", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -5292,6 +5293,19 @@
             },
             body: JSON.stringify({ slides: carouselSlides })
           });
+          const resData = await res.json();
+          if (!res.ok || !resData.success) {
+            console.warn("Primary /api/carousel sync notice:", resData);
+            // Secondary fallback to /api/admin/carousel for legacy local server
+            await fetch("/api/admin/carousel", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token
+              },
+              body: JSON.stringify({ slides: carouselSlides })
+            });
+          }
         } catch (e) {
           console.warn("Carousel sync error:", e);
         }
@@ -5351,6 +5365,10 @@
               Upload &amp; Crop
               <input type="file" accept="image/*" style="display: none;" onchange="uploadAndCropCarouselSlideImg(${idx}, this)">
             </label>
+            <label class="tbl-btn tbl-btn-edit" style="cursor: pointer; display: inline-flex; align-items: center; gap: 5px; padding: 7px 12px; margin: 0; white-space: nowrap; background: rgba(201, 163, 95, 0.22); border-color: var(--gold); color: #fff;" title="Upload photo directly at original 100% native quality without cropping or blurriness">
+              ✦ Original Quality
+              <input type="file" accept="image/*" style="display: none;" onchange="uploadDirectCarouselSlideImg(${idx}, this)">
+            </label>
             <button type="button" class="tbl-btn tbl-btn-edit" style="padding: 7px 12px; margin: 0; white-space: nowrap;" onclick="cropExistingCarouselSlideImg(${idx})" title="Frame and crop current slide background">
               ✂ Crop / Frame
             </button>
@@ -5375,6 +5393,23 @@
         if (preview) preview.src = val;
       };
 
+      window.uploadDirectCarouselSlideImg = function (idx, fileInput) {
+        if (!fileInput.files || !fileInput.files[0]) return;
+        const file = fileInput.files[0];
+        const reader = new FileReader();
+        reader.onload = async function(e) {
+          const originalDataUrl = e.target.result;
+          updateSlideImg(idx, originalDataUrl);
+          const inputEl = document.getElementById("cmImgInput_" + idx);
+          if (inputEl) inputEl.value = originalDataUrl;
+          await saveCarouselToServer();
+          renderCarouselManager();
+          showToast("✦ Original photo applied at pristine 100% native quality!");
+        };
+        reader.readAsDataURL(file);
+        fileInput.value = "";
+      };
+
       window.uploadAndCropCarouselSlideImg = function (idx, fileInput) {
         if (!fileInput.files || !fileInput.files[0]) return;
         const file = fileInput.files[0];
@@ -5382,9 +5417,9 @@
         reader.onload = function(e) {
           openCropStudio(e.target.result, {
             ratio: 16 / 9, // 16:9 full-width slider
-            maxWidth: 1600,
-            maxHeight: 900,
-            quality: 0.82,
+            maxWidth: 2560,
+            maxHeight: 1440,
+            quality: 0.94,
             onApply: (croppedUrl) => {
               updateSlideImg(idx, croppedUrl);
               const inputEl = document.getElementById("cmImgInput_" + idx);
@@ -5405,9 +5440,9 @@
         }
         openCropStudio(carouselSlides[idx].img, {
           ratio: 16 / 9,
-          maxWidth: 1600,
-          maxHeight: 900,
-          quality: 0.82,
+          maxWidth: 2560,
+          maxHeight: 1440,
+          quality: 0.94,
           onApply: (croppedUrl) => {
             updateSlideImg(idx, croppedUrl);
             const inputEl = document.getElementById("cmImgInput_" + idx);

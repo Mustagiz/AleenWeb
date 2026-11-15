@@ -150,7 +150,16 @@ function saveDoc(docName, data) {
       },
       timeout: 4500
     }, (res) => {
-      resolve(res.statusCode === 200);
+      let b = '';
+      res.on('data', c => b += c);
+      res.on('end', () => {
+        if (res.statusCode !== 200) {
+          console.warn(`saveDoc(${docName}) failed with status ${res.statusCode}:`, b);
+          resolve(false);
+        } else {
+          resolve(true);
+        }
+      });
     });
 
     req.on('timeout', () => { req.destroy(); resolve(false); });
@@ -163,6 +172,16 @@ function saveDoc(docName, data) {
 async function getCarouselSlides() {
   const remote = await fetchDoc('atelier_carousel');
   if (Array.isArray(remote) && remote.length >= 2) {
+    // If any slide references a dedicated high-resolution image document, resolve it
+    for (let i = 0; i < remote.length; i++) {
+      if (typeof remote[i].img === 'string' && remote[i].img.startsWith('firestore:')) {
+        const docKey = remote[i].img.replace('firestore:', '');
+        const imgDoc = await fetchDoc(docKey);
+        if (imgDoc && imgDoc.img) {
+          remote[i].img = imgDoc.img;
+        }
+      }
+    }
     if (!_cache) _cache = readLocalFallback();
     _cache.carouselSlides = remote;
     return remote;
@@ -175,7 +194,20 @@ async function saveCarouselSlides(slides) {
   if (!_cache) _cache = readLocalFallback();
   _cache.carouselSlides = slides;
   _lastFetchTime = Date.now();
-  await saveDoc('atelier_carousel', slides);
+
+  // Create clean copy of slides for persistence
+  const payloadSlides = JSON.parse(JSON.stringify(slides));
+  for (let i = 0; i < payloadSlides.length; i++) {
+    const s = payloadSlides[i];
+    // If slide image is a large base64 data URL (> 50KB), store in dedicated document to prevent 1MB limit
+    if (typeof s.img === 'string' && s.img.startsWith('data:image')) {
+      const docKey = `atelier_slide_img_${i}`;
+      await saveDoc(docKey, { img: s.img, updatedAt: new Date().toISOString() });
+      s.img = `firestore:${docKey}`;
+    }
+  }
+
+  await saveDoc('atelier_carousel', payloadSlides);
   return slides;
 }
 

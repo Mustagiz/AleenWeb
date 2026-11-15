@@ -3357,55 +3357,70 @@ button:hover,
   padding: 0 20px;
 }
 .w-all-cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
-  padding: 16px 36px;
-  border: 1px solid rgba(214, 178, 110, 0.7);
-  border-radius: 999px;
-  background: rgba(18, 27, 18, 0.75);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  color: var(--gold-light, #f0dfa8);
-  font-family: var(--sans, sans-serif);
-  font-size: clamp(12px, 0.85vw, 14px);
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  text-decoration: none;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-  transition: all 0.4s var(--ease, ease);
-  position: relative;
-  overflow: hidden;
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: clamp(44px, 3vw, 54px) !important;
+  padding: 0 clamp(24px, 2.2vw, 42px) !important;
+  font-family: var(--sans, sans-serif) !important;
+  font-size: clamp(10.5px, 0.8vw, 13px) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.22em !important;
+  text-transform: uppercase !important;
+  text-decoration: none !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  border-radius: 0 !important; /* Strict Rectangle Shape */
+  border: 1px solid rgba(201, 163, 95, 0.95) !important;
+  background: rgba(10, 20, 14, 0.92) !important;
+  color: #ffffff !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45) !important;
+  cursor: pointer !important;
+  transition: border-color 0.45s var(--ease), box-shadow 0.45s var(--ease) !important;
 }
-.w-all-cta::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(214, 178, 110, 0.25), transparent 70%);
-  opacity: 0;
-  transition: opacity 0.4s ease;
+.w-all-cta .fill {
+  position: absolute !important;
+  inset: 0 !important;
+  background: linear-gradient(100deg, #d5b06a 0%, #c9a35f 55%, #bd9351 100%) !important;
+  transform: scaleX(1) !important;
+  transform-origin: left center !important;
+  transition: transform 0.85s var(--ease-io, cubic-bezier(0.65, 0, 0.35, 1)) !important;
+  will-change: transform !important;
+  z-index: 0 !important;
+}
+.w-all-cta:hover .fill {
+  transform: scaleX(0) !important;
+  transform-origin: right center !important;
+  transition-delay: 0s !important;
+}
+.w-all-cta .lbl,
+.w-all-cta .arrow {
+  position: relative !important;
+  z-index: 1 !important;
+  color: #ffffff !important;
+  transition: transform 0.45s var(--ease, ease), color 0.45s var(--ease, ease) !important;
+}
+.w-all-cta .arrow {
+  width: clamp(20px, 1.6vw, 28px) !important;
+  margin-left: 1.1em !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+.w-all-cta .arrow svg {
+  width: 100% !important;
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 1.4 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+}
+.w-all-cta:hover .arrow {
+  transform: translateX(5px) !important;
 }
 .w-all-cta:hover {
-  border-color: rgba(236, 207, 139, 1);
-  color: #fff;
-  transform: translateY(-2px);
-  box-shadow: 0 16px 40px rgba(214, 178, 110, 0.25);
-}
-.w-all-cta:hover::before {
-  opacity: 1;
-}
-.w-all-cta svg {
-  width: 22px;
-  height: 9px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.5;
-  transition: transform 0.3s ease;
-}
-.w-all-cta:hover svg {
-  transform: translateX(4px);
+  border-color: #f0dfa8 !important;
+  box-shadow: 0 10px 30px rgba(201, 163, 95, 0.25) !important;
 }
 
 /* Atelier Manager Portal Link in Footer */
@@ -5723,9 +5738,10 @@ body.is-ready .brand, body.is-ready #brand {
 
     <!-- Single Bottom Center Button -->
     <div class="w-bottom-action">
-      <a class="w-all-cta" href="collections.html">
-        <span>✦ Explore All Collections</span>
-        <svg viewBox="0 0 28 10"><path d="M0 5h24M20 1l5 4-5 4"/></svg>
+      <a class="btn btn-primary w-all-cta" href="collections.html">
+        <span class="fill"></span>
+        <span class="lbl">✦ EXPLORE ALL COLLECTIONS</span>
+        <span class="arrow"><svg viewBox="0 0 28 10"><path d="M0 5h24M20 1l5 4-5 4"/></svg></span>
       </a>
     </div>
   </section>
@@ -6301,7 +6317,7 @@ body.is-ready .brand, body.is-ready #brand {
   position: relative;
   background: linear-gradient(180deg, #09150d 0%, #040906 100%);
   color: #f7efdc;
-  padding: clamp(60px, 8vh, 90px) clamp(22px, 4vw, 70px) 36px;
+  padding: clamp(32px, 4.2vh, 48px) clamp(22px, 4vw, 70px) 36px;
   border-top: 1px solid rgba(201, 163, 95, 0.35);
   overflow: hidden;
   z-index: 10;
@@ -6318,38 +6334,45 @@ body.is-ready .brand, body.is-ready #brand {
 .f-statement {
   text-align: center;
   max-width: 650px;
-  margin: 0 auto clamp(36px, 5vh, 60px);
+  margin: 0 auto clamp(28px, 3.8vh, 44px) !important;
+  padding: 0 6vw 0 !important;
+  transform: translateY(-18px) !important;
   position: relative;
   z-index: 2;
 }
 .f-statement .lotus {
-  width: 32px;
-  height: 26px;
+  width: 34px;
+  height: 28px;
   fill: var(--gold);
-  margin: 0 auto 12px;
+  margin: 0 auto 14px;
   display: block;
 }
 .f-st-line2 {
-  font-family: var(--sans);
-  font-size: 12px;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: var(--gold-light);
-  margin-bottom: 10px;
+  font-family: var(--serif-i), 'Cormorant Garamond', serif !important;
+  font-size: clamp(32px, 3.8vw, 48px) !important;
+  font-style: italic !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.02em !important;
+  text-transform: none !important;
+  color: var(--gold-light, #f0dfa8) !important;
+  margin: 0 auto 8px !important;
+  line-height: 1.2 !important;
 }
 .f-st-rule {
   display: block;
-  width: 44px;
+  width: 54px;
   height: 1px;
-  background: var(--gold);
-  margin: 0 auto 14px;
-  opacity: 0.6;
+  background: linear-gradient(90deg, transparent, var(--gold, #c9a35f), transparent);
+  margin: 16px auto 22px;
+  opacity: 0.85;
 }
 .f-st-copy {
-  font-family: var(--serif-i);
-  font-size: clamp(17px, 1.4vw, 21px);
-  color: var(--cream);
-  line-height: 1.6;
+  font-family: var(--sans, sans-serif) !important;
+  font-size: clamp(14px, 1.1vw, 16.5px) !important;
+  font-weight: 300 !important;
+  letter-spacing: 0.04em !important;
+  color: rgba(247, 239, 220, 0.9) !important;
+  line-height: 1.8 !important;
 }
 
 .f-main {
@@ -7100,19 +7123,70 @@ body.is-ready .brand, body.is-ready #brand {
   pointer-events: auto !important;
 }
 .b-all .btn {
-  text-decoration: none !important;
+  position: relative !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 12px !important;
+  height: clamp(44px, 3vw, 54px) !important;
   padding: 0 clamp(24px, 2.2vw, 42px) !important;
-  height: clamp(46px, 3.2cqw, 54px) !important;
+  font-family: var(--sans, sans-serif) !important;
+  font-size: clamp(10.5px, 0.8vw, 13px) !important;
+  font-weight: 600 !important;
   letter-spacing: 0.22em !important;
-  background: rgba(15, 29, 21, 0.8) !important;
-  backdrop-filter: blur(8px) !important;
-  -webkit-backdrop-filter: blur(8px) !important;
-  border: 1px solid var(--gold) !important;
+  text-transform: uppercase !important;
+  text-decoration: none !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  border-radius: 0 !important; /* Strict Rectangle Shape */
+  border: 1px solid rgba(201, 163, 95, 0.95) !important;
+  background: rgba(10, 20, 14, 0.92) !important;
+  color: #ffffff !important;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45) !important;
+  cursor: pointer !important;
+  transition: border-color 0.45s var(--ease), box-shadow 0.45s var(--ease) !important;
+}
+.b-all .btn .fill {
+  position: absolute !important;
+  inset: 0 !important;
+  background: linear-gradient(100deg, #d5b06a 0%, #c9a35f 55%, #bd9351 100%) !important;
+  transform: scaleX(1) !important;
+  transform-origin: left center !important;
+  transition: transform 0.85s var(--ease-io, cubic-bezier(0.65, 0, 0.35, 1)) !important;
+  will-change: transform !important;
+  z-index: 0 !important;
+}
+.b-all .btn:hover .fill {
+  transform: scaleX(0) !important;
+  transform-origin: right center !important;
+  transition-delay: 0s !important;
+}
+.b-all .btn .lbl,
+.b-all .btn .arrow {
+  position: relative !important;
+  z-index: 1 !important;
+  color: #ffffff !important;
+  transition: transform 0.45s var(--ease, ease), color 0.45s var(--ease, ease) !important;
+}
+.b-all .btn .arrow {
+  width: clamp(20px, 1.6vw, 28px) !important;
+  margin-left: 1.1em !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+.b-all .btn .arrow svg {
+  width: 100% !important;
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 1.4 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+}
+.b-all .btn:hover .arrow {
+  transform: translateX(5px) !important;
+}
+.b-all .btn:hover {
+  border-color: #f0dfa8 !important;
+  box-shadow: 0 10px 30px rgba(201, 163, 95, 0.25) !important;
 }
 @media (max-width: 767px) {
   .b-all {

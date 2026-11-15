@@ -198,8 +198,13 @@ function fetchFirestoreDoc(docName, cb) {
 }
 
 fetchFirestoreDoc('atelier_data', (remote) => {
-  atelierData = { ...atelierData, ...remote };
-  console.log('✦ Synced live data from Firebase Firestore atelier_data');
+  if (remote) {
+    delete remote.carouselSlides;
+    delete remote.catalog;
+    delete remote.womenCollections;
+    atelierData = { ...atelierData, ...remote };
+    console.log('✦ Synced live data from Firebase Firestore atelier_data');
+  }
 });
 
 fetchFirestoreDoc('atelier_carousel', (slides) => {
@@ -396,17 +401,9 @@ const server = http.createServer(async (req, res) => {
       return;
     }
 
-    // 3. Carousel API Endpoints
-    if (reqPath === '/api/carousel' && req.method === 'GET') {
-      res.writeHead(200, {
-        'Content-Type': 'application/json',
-        'Cache-Control': 'no-store, no-cache, must-revalidate'
-      });
-      res.end(JSON.stringify({ success: true, slides: atelierData.carouselSlides }));
-      return;
-    }
-    if (reqPath === '/api/admin/carousel') {
-      if (req.method === 'GET') {
+    // 3. Carousel API Endpoints (supports both /api/carousel and /api/admin/carousel)
+    if (reqPath === '/api/carousel' || reqPath === '/api/admin/carousel') {
+      if (req.method === 'GET' || req.method === 'HEAD') {
         res.writeHead(200, {
           'Content-Type': 'application/json',
           'Cache-Control': 'no-store, no-cache, must-revalidate'
@@ -425,6 +422,7 @@ const server = http.createServer(async (req, res) => {
         if (Array.isArray(slides) && slides.length >= 2) {
           atelierData.carouselSlides = slides;
           saveData();
+          saveDocToFirestore('atelier_carousel', slides);
           res.writeHead(200, { 'Content-Type': 'application/json' });
           res.end(JSON.stringify({ success: true, message: 'Carousel slides updated live!', slides: atelierData.carouselSlides }));
           return;
