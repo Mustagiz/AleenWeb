@@ -2170,5 +2170,14 @@
 </script>
 
 
+<!-- Agentation Visual Feedback for AI Coding Agents (Local Development) -->
+<script>
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    const s = document.createElement('script');
+    s.src = '/assets/agentation.standalone.js';
+    s.defer = true;
+    document.body.appendChild(s);
+  }
+</script>
 </body>
 </html>
