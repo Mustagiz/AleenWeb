@@ -25,7 +25,73 @@ const DEFAULT_DATA = {
   },
   heroRotator: [],
   carouselSlides: [],
-  catalog: []
+  catalog: [],
+  womenCollections: [
+    {
+      id: "kurtis",
+      kicker: "New Collection",
+      title: "Pakistani Kurtis",
+      desc: "Royal silhouettes in pure raw silk & velvet.",
+      img: "assets/pakistani-kurti-1.jpg",
+      url: "collections.html?category=kurtis"
+    },
+    {
+      id: "kurta-sets",
+      kicker: "New Collection",
+      title: "Kurta Sets",
+      desc: "Everyday elegance, elevated.",
+      img: "https://mahira2.netlify.app/assets/s3-kurta.jpg?v=5",
+      url: "collections.html?category=kurta-sets"
+    },
+    {
+      id: "dresses",
+      kicker: "New Collection",
+      title: "Dresses & Sets",
+      desc: "Modern silhouettes for every you.",
+      img: "https://mahira2.netlify.app/assets/s3-dresses.jpg?v=5",
+      url: "dresses.html"
+    },
+    {
+      id: "lehengas",
+      kicker: "New Collection",
+      title: "Lehengas",
+      desc: "Royal silhouettes, timeless grace.",
+      img: "https://mahira2.netlify.app/assets/women-clean.jpg?v=3",
+      url: "collections.html?category=lehengas"
+    },
+    {
+      id: "anarkalis",
+      kicker: "New Collection",
+      title: "Anarkali Sets",
+      desc: "Voluminous flares & royal grace.",
+      img: "https://mahira2.netlify.app/assets/s4-room.jpg?v=1",
+      url: "collections.html?category=kurta-sets"
+    },
+    {
+      id: "dupattas",
+      kicker: "Heirloom Weaves",
+      title: "Dupattas & Stoles",
+      desc: "Handwoven organza & metallic gossamer.",
+      img: "assets/pakistani-kurti-3.jpg",
+      url: "collections.html?category=dupattas"
+    },
+    {
+      id: "fabrics",
+      kicker: "Atelier Curations",
+      title: "Unstitched Fabrics",
+      desc: "Pure Banarasi katan silks & brocades.",
+      img: "https://mahira2.netlify.app/assets/s2-card-kala.jpg?v=2",
+      url: "collections.html?category=fabrics"
+    },
+    {
+      id: "velvet",
+      kicker: "Limited Edition",
+      title: "Royal Velvet Edit",
+      desc: "Opulent micro-velvet with antique tilla.",
+      img: "assets/pakistani-kurti-2.jpg",
+      url: "collections.html?category=kurtis"
+    }
+  ]
 };
 
 let _cache = null;
@@ -132,6 +198,25 @@ async function saveCatalog(catalog) {
   return catalog;
 }
 
+async function getWomenCollections() {
+  const remote = await fetchDoc('atelier_women');
+  if (Array.isArray(remote) && remote.length >= 2) {
+    if (!_cache) _cache = readLocalFallback();
+    _cache.womenCollections = remote;
+    return remote;
+  }
+  const data = await getData();
+  return data.womenCollections || DEFAULT_DATA.womenCollections;
+}
+
+async function saveWomenCollections(cards) {
+  if (!_cache) _cache = readLocalFallback();
+  _cache.womenCollections = cards;
+  _lastFetchTime = Date.now();
+  await saveDoc('atelier_women', cards);
+  return cards;
+}
+
 async function getData() {
   const now = Date.now();
   if (_cache && (now - _lastFetchTime < CACHE_TTL_MS)) {
@@ -149,10 +234,12 @@ async function saveData(data) {
   _lastFetchTime = Date.now();
   if (data.carouselSlides) await saveDoc('atelier_carousel', data.carouselSlides);
   if (data.catalog) await saveDoc('atelier_catalog', data.catalog);
+  if (data.womenCollections) await saveDoc('atelier_women', data.womenCollections);
   
   const generalData = { ..._cache };
   delete generalData.carouselSlides;
   delete generalData.catalog;
+  delete generalData.womenCollections;
   await saveDoc('atelier_data', generalData);
   return _cache;
 }
@@ -163,5 +250,7 @@ module.exports = {
   getCarouselSlides,
   saveCarouselSlides,
   getCatalog,
-  saveCatalog
+  saveCatalog,
+  getWomenCollections,
+  saveWomenCollections
 };

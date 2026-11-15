@@ -3018,7 +3018,15 @@
             <path d="M3 15l5-5 4 4 6-6 3 3"></path>
             <circle cx="8" cy="7" r="1.5"></circle>
           </svg>
-          ✦ Full-Width Couture Slider (Images &amp; Descriptions)
+          ✦ Full-Width Couture Slider
+        </button>
+        <button type="button" class="admin-tab-btn" data-tab="women-collections">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          ✦ Women's Arched Cards
         </button>
         <button type="button" class="admin-tab-btn" data-tab="settings">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -3048,9 +3056,9 @@
       <button type="button" class="qj-btn" onclick="switchAdminTab('catalog')">📦 1. Garments Catalog</button>
       <button type="button" class="qj-btn qj-btn-gold" onclick="switchAdminTab('hero')">✨ 2. Hero Section 3s Text
         Rotator</button>
-      <button type="button" class="qj-btn qj-btn-gold" onclick="switchAdminTab('carousel')">🖼️ 3. Full-Width Couture
-        Slider (Images &amp; Content)</button>
-      <button type="button" class="qj-btn" onclick="switchAdminTab('settings')">⚙️ 4. Staff &amp; Passwords</button>
+      <button type="button" class="qj-btn qj-btn-gold" onclick="switchAdminTab('carousel')">🖼️ 3. Full-Width Couture Slider</button>
+      <button type="button" class="qj-btn qj-btn-gold" onclick="switchAdminTab('women-collections')">🏛️ 4. Women's Arched Cards</button>
+      <button type="button" class="qj-btn" onclick="switchAdminTab('settings')">⚙️ 5. Staff &amp; Passwords</button>
     </div>
 
     <!-- PANE 1: GARMENTS CATALOG -->
@@ -3174,7 +3182,10 @@
             <p>Directly customize the haute couture slides, titles, crafts, descriptions, and links displayed in the
               full-width slider on the homepage.</p>
           </div>
-          <div style="display: flex; gap: 10px;">
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button type="button" class="admin-tab-btn" onclick="syncCarouselFromServer(); showToast('Synced latest slides from cloud');" title="Pull latest slides from cloud database">
+              🔄 Sync Cloud
+            </button>
             <button type="button" class="pane-add-btn" id="addCarouselSlideBtn">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                 <line x1="12" y1="5" x2="12" y2="19"></line>
@@ -3282,6 +3293,38 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================= -->
+    <!-- TAB 4: WOMEN'S COLLECTIONS (ARCHED CARDS MANAGER)       -->
+    <!-- ======================================================= -->
+    <section class="admin-pane" id="paneWomenCollections">
+      <div class="carousel-manager-card">
+        <div class="cm-header">
+          <div>
+            <h2 class="cm-title">Women's Collections &mdash; Arched Cards Editor</h2>
+            <p class="cm-desc">
+              Manage the luxury arched panels in the "New Collections For Women" homepage section.
+              These cards auto-scroll smoothly on the homepage with pause-on-hover. Update category kickers, titles, descriptions, links, and background photos live.
+            </p>
+          </div>
+          <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <button type="button" class="admin-tab-btn" id="addNewWomenCardBtn" style="border-color: var(--gold); color: var(--gold); padding: 8px 16px;">
+              + Add Arched Card
+            </button>
+            <button type="button" class="admin-tab-btn" id="saveWomenCardsBtn" style="background: var(--gold); color: #000; font-weight: 600; padding: 8px 18px;">
+              ✦ Save All Live
+            </button>
+            <button type="button" class="admin-tab-btn" id="resetWomenCardsBtn" style="padding: 8px 16px;">
+              Reset to Defaults
+            </button>
+          </div>
+        </div>
+
+        <div class="cm-slides-grid" id="womenCardsGrid">
+          <!-- Rendered by JavaScript -->
         </div>
       </div>
     </section>
@@ -4412,10 +4455,78 @@
         }
       ];
 
+      const DEFAULT_WOMEN_COLLECTIONS = [
+        {
+          id: "kurtis",
+          kicker: "New Collection",
+          title: "Pakistani Kurtis",
+          desc: "Royal silhouettes in pure raw silk & velvet.",
+          img: "assets/pakistani-kurti-1.jpg",
+          url: "collections.html?category=kurtis"
+        },
+        {
+          id: "kurta-sets",
+          kicker: "New Collection",
+          title: "Kurta Sets",
+          desc: "Everyday elegance, elevated.",
+          img: "https://mahira2.netlify.app/assets/s3-kurta.jpg?v=5",
+          url: "collections.html?category=kurta-sets"
+        },
+        {
+          id: "dresses",
+          kicker: "New Collection",
+          title: "Dresses & Sets",
+          desc: "Modern silhouettes for every you.",
+          img: "https://mahira2.netlify.app/assets/s3-dresses.jpg?v=5",
+          url: "dresses.html"
+        },
+        {
+          id: "lehengas",
+          kicker: "New Collection",
+          title: "Lehengas",
+          desc: "Royal silhouettes, timeless grace.",
+          img: "https://mahira2.netlify.app/assets/women-clean.jpg?v=3",
+          url: "collections.html?category=lehengas"
+        },
+        {
+          id: "anarkalis",
+          kicker: "New Collection",
+          title: "Anarkali Sets",
+          desc: "Voluminous flares & royal grace.",
+          img: "https://mahira2.netlify.app/assets/s4-room.jpg?v=1",
+          url: "collections.html?category=kurta-sets"
+        },
+        {
+          id: "dupattas",
+          kicker: "Heirloom Weaves",
+          title: "Dupattas & Stoles",
+          desc: "Handwoven organza & metallic gossamer.",
+          img: "assets/pakistani-kurti-3.jpg",
+          url: "collections.html?category=dupattas"
+        },
+        {
+          id: "fabrics",
+          kicker: "Atelier Curations",
+          title: "Unstitched Fabrics",
+          desc: "Pure Banarasi katan silks & brocades.",
+          img: "https://mahira2.netlify.app/assets/s2-card-kala.jpg?v=2",
+          url: "collections.html?category=fabrics"
+        },
+        {
+          id: "velvet",
+          kicker: "Limited Edition",
+          title: "Royal Velvet Edit",
+          desc: "Opulent micro-velvet with antique tilla.",
+          img: "assets/pakistani-kurti-2.jpg",
+          url: "collections.html?category=kurtis"
+        }
+      ];
+
       // State
       let catalog = JSON.parse(localStorage.getItem("aleen_master_catalog") || "null") || DEFAULT_CATALOG;
       let heroRotator = JSON.parse(localStorage.getItem("aleen_hero_rotator") || "null") || DEFAULT_HERO_ROTATOR;
       let carouselSlides = JSON.parse(localStorage.getItem("aleen_carousel_slides") || "null") || DEFAULT_CAROUSEL;
+      let womenCollections = JSON.parse(localStorage.getItem("aleen_women_collections") || "null") || DEFAULT_WOMEN_COLLECTIONS;
       let users = JSON.parse(localStorage.getItem("aleen_users") || "[]");
 
       // DOM Elements
@@ -4450,6 +4561,7 @@
           renderCatalog();
           renderHeroManager();
           renderCarouselManager();
+          renderWomenCardsManager();
           renderUsersTable();
         } else {
           if (authGate) authGate.style.display = "flex";
@@ -4502,7 +4614,14 @@
         panes.forEach(p => p.classList.remove("active"));
         if (target === "catalog") document.getElementById("paneCatalog")?.classList.add("active");
         if (target === "hero") document.getElementById("paneHero")?.classList.add("active");
-        if (target === "carousel") document.getElementById("paneCarousel")?.classList.add("active");
+        if (target === "carousel") {
+          document.getElementById("paneCarousel")?.classList.add("active");
+          if (typeof syncCarouselFromServer === "function") syncCarouselFromServer();
+        }
+        if (target === "women-collections") {
+          document.getElementById("paneWomenCollections")?.classList.add("active");
+          if (typeof syncWomenCardsFromServer === "function") syncWomenCardsFromServer();
+        }
         if (target === "settings") document.getElementById("paneSettings")?.classList.add("active");
       };
 
@@ -5293,19 +5412,22 @@
       };
 
       // Sync carousel from server on load (with cache-busting timestamp)
-      fetch("/api/carousel?t=" + Date.now())
-        .then(r => r.json())
-        .then(data => {
-          const list = (data && Array.isArray(data.slides)) ? data.slides : (Array.isArray(data) ? data : null);
-          if (list && list.length >= 2) {
-            carouselSlides = list;
-            localStorage.setItem("aleen_carousel_slides", JSON.stringify(carouselSlides));
-            renderCarouselManager();
-          }
-        })
-        .catch((err) => {
-          console.warn("Could not sync carousel from server:", err);
-        });
+      window.syncCarouselFromServer = function () {
+        fetch("/api/carousel?t=" + Date.now())
+          .then(r => r.json())
+          .then(data => {
+            const list = (data && Array.isArray(data.slides)) ? data.slides : (Array.isArray(data) ? data : null);
+            if (list && list.length >= 2) {
+              carouselSlides = list;
+              localStorage.setItem("aleen_carousel_slides", JSON.stringify(carouselSlides));
+              renderCarouselManager();
+            }
+          })
+          .catch((err) => {
+            console.warn("Could not sync carousel from server:", err);
+          });
+      };
+      syncCarouselFromServer();
 
       window.moveSlide = function (idx, dir) {
         const newIdx = idx + dir;
@@ -5353,6 +5475,233 @@
         saveCarouselToServer();
         renderCarouselManager();
         showToast("Carousel reset to default curation");
+      });
+
+      // ==========================================
+      // TAB 4: WOMEN'S COLLECTIONS (ARCHED CARDS) LOGIC
+      // ==========================================
+      const womenCardsGrid = document.getElementById("womenCardsGrid");
+      window.womenCollections = womenCollections;
+
+      async function saveWomenCardsToServer() {
+        localStorage.setItem("aleen_women_collections", JSON.stringify(womenCollections));
+        window.womenCollections = womenCollections;
+        const token = localStorage.getItem("atelier_admin_token") || "admin_session";
+        try {
+          const res = await fetch("/api/admin/women-collections", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer " + token
+            },
+            body: JSON.stringify({ collections: womenCollections })
+          });
+          const result = await res.json();
+          if (result && result.success) {
+            // saved
+          }
+        } catch (e) {
+          console.warn("Women collections sync error:", e);
+        }
+      }
+
+      window.updateWomenCardKicker = function (idx, val) {
+        if (womenCollections[idx]) {
+          womenCollections[idx].kicker = val;
+          saveWomenCardsToServer();
+        }
+      };
+
+      window.updateWomenCardTitle = function (idx, val) {
+        if (womenCollections[idx]) {
+          womenCollections[idx].title = val;
+          saveWomenCardsToServer();
+        }
+      };
+
+      window.updateWomenCardDesc = function (idx, val) {
+        if (womenCollections[idx]) {
+          womenCollections[idx].desc = val;
+          saveWomenCardsToServer();
+        }
+      };
+
+      window.updateWomenCardUrl = function (idx, val) {
+        if (womenCollections[idx]) {
+          womenCollections[idx].url = val;
+          saveWomenCardsToServer();
+        }
+      };
+
+      window.updateWomenCardImg = function (idx, val) {
+        if (!womenCollections[idx]) return;
+        womenCollections[idx].img = val;
+        const preview = document.getElementById("wcPreview_" + idx);
+        if (preview) preview.src = val;
+        saveWomenCardsToServer();
+      };
+
+      window.uploadAndCropWomenCardImg = function (idx, fileInput) {
+        if (!fileInput.files || !fileInput.files[0]) return;
+        const file = fileInput.files[0];
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          openCropStudio(e.target.result, {
+            ratio: 0.75, // 3:4 Arched silhouette
+            maxWidth: 900,
+            maxHeight: 1200,
+            quality: 0.82,
+            onApply: (croppedUrl) => {
+              updateWomenCardImg(idx, croppedUrl);
+              const inputEl = document.getElementById("wcImgInput_" + idx);
+              if (inputEl) inputEl.value = croppedUrl;
+              saveWomenCardsToServer();
+              renderWomenCardsManager();
+            }
+          });
+        };
+        reader.readAsDataURL(file);
+        fileInput.value = "";
+      };
+
+      window.cropExistingWomenCardImg = function (idx) {
+        if (!womenCollections[idx] || !womenCollections[idx].img) {
+          alert("Please enter or upload an image first.");
+          return;
+        }
+        openCropStudio(womenCollections[idx].img, {
+          ratio: 0.75,
+          maxWidth: 900,
+          maxHeight: 1200,
+          quality: 0.82,
+          onApply: (croppedUrl) => {
+            updateWomenCardImg(idx, croppedUrl);
+            const inputEl = document.getElementById("wcImgInput_" + idx);
+            if (inputEl) inputEl.value = croppedUrl;
+            saveWomenCardsToServer();
+            renderWomenCardsManager();
+          }
+        });
+      };
+
+      function renderWomenCardsManager() {
+        if (!womenCardsGrid) return;
+        womenCardsGrid.innerHTML = womenCollections.map((card, idx) => `
+          <div class="cm-slide-item" data-idx="${idx}">
+            <div class="cm-img-preview-wrap" style="aspect-ratio: 3/4; border-radius: 999px 999px 12px 12px; overflow: hidden; max-height: 220px;">
+              <span class="cm-slide-num">Card #${idx + 1}</span>
+              <img src="${card.img}" alt="${escapeHtml(card.title || 'Arched Card')}" class="cm-img-preview" id="wcPreview_${idx}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='https://mahira2.netlify.app/assets/s4-p1.jpg?v=3'">
+            </div>
+
+            <div class="cm-field-group">
+              <label class="cm-field-label">Category Kicker (e.g. New Collection, Limited Edition)</label>
+              <input type="text" class="cm-input" value="${escapeHtml(card.kicker || '')}" placeholder="New Collection" oninput="updateWomenCardKicker(${idx}, this.value)">
+            </div>
+
+            <div class="cm-field-group">
+              <label class="cm-field-label">Garment / Collection Title (e.g. Pakistani Kurtis)</label>
+              <input type="text" class="cm-input cm-title-input" value="${escapeHtml(card.title || '')}" placeholder="Garment Title" oninput="updateWomenCardTitle(${idx}, this.value)">
+            </div>
+
+            <div class="cm-field-group">
+              <label class="cm-field-label">Couture Description</label>
+              <textarea class="cm-input" rows="2" style="resize:vertical;" placeholder="Royal silhouettes in pure raw silk & velvet." oninput="updateWomenCardDesc(${idx}, this.value)">${escapeHtml(card.desc || '')}</textarea>
+            </div>
+
+            <div class="cm-field-group">
+              <label class="cm-field-label">Target Page Link</label>
+              <input type="text" class="cm-input" value="${escapeHtml(card.url || 'collections.html')}" placeholder="collections.html?category=kurtis" oninput="updateWomenCardUrl(${idx}, this.value)">
+            </div>
+
+            <div class="cm-field-group">
+              <label class="cm-field-label">Arched Card Photo</label>
+              <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                <input type="text" class="cm-input cm-img-input" id="wcImgInput_${idx}" value="${escapeHtml(card.img || '')}" placeholder="assets/... or https://..." oninput="updateWomenCardImg(${idx}, this.value)" style="flex: 1; min-width: 140px;">
+                <label class="tbl-btn tbl-btn-edit" style="cursor: pointer; display: inline-flex; align-items: center; gap: 5px; padding: 7px 12px; margin: 0; white-space: nowrap;" title="Upload photo and open Crop Studio">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                  Upload &amp; Crop
+                  <input type="file" accept="image/*" style="display: none;" onchange="uploadAndCropWomenCardImg(${idx}, this)">
+                </label>
+                <button type="button" class="tbl-btn tbl-btn-edit" style="padding: 7px 12px; margin: 0; white-space: nowrap;" onclick="cropExistingWomenCardImg(${idx})" title="Frame and crop current photo">
+                  ✂ Crop / Frame
+                </button>
+              </div>
+            </div>
+
+            <div class="cm-actions-row">
+              <div style="display: flex; gap: 6px;">
+                <button type="button" class="tbl-btn tbl-btn-edit" onclick="moveWomenCard(${idx}, -1)" ${idx === 0 ? "disabled style=\"opacity:0.4\"" : ""} title="Move Left">&larr;</button>
+                <button type="button" class="tbl-btn tbl-btn-edit" onclick="moveWomenCard(${idx}, 1)" ${idx === womenCollections.length - 1 ? "disabled style=\"opacity:0.4\"" : ""} title="Move Right">&rarr;</button>
+              </div>
+              <button type="button" class="tbl-btn tbl-btn-del" onclick="deleteWomenCard(${idx})">Remove</button>
+            </div>
+          </div>
+        `).join("");
+      }
+
+      window.moveWomenCard = function (idx, dir) {
+        const newIdx = idx + dir;
+        if (newIdx < 0 || newIdx >= womenCollections.length) return;
+        const temp = womenCollections[idx];
+        womenCollections[idx] = womenCollections[newIdx];
+        womenCollections[newIdx] = temp;
+        saveWomenCardsToServer();
+        renderWomenCardsManager();
+      };
+
+      window.deleteWomenCard = function (idx) {
+        if (womenCollections.length <= 2) {
+          alert("At least 2 arched cards are required for the seamless infinite auto-scroll.");
+          return;
+        }
+        womenCollections.splice(idx, 1);
+        saveWomenCardsToServer();
+        renderWomenCardsManager();
+        showToast("Card removed");
+      };
+
+      window.syncWomenCardsFromServer = function () {
+        fetch("/api/women-collections?t=" + Date.now())
+          .then(r => r.json())
+          .then(data => {
+            const list = (data && Array.isArray(data.collections)) ? data.collections : (Array.isArray(data) ? data : null);
+            if (list && list.length >= 2) {
+              womenCollections = list;
+              localStorage.setItem("aleen_women_collections", JSON.stringify(womenCollections));
+              renderWomenCardsManager();
+            }
+          })
+          .catch((err) => {
+            console.warn("Could not sync women collections from server:", err);
+          });
+      };
+      syncWomenCardsFromServer();
+
+      document.getElementById("addNewWomenCardBtn")?.addEventListener("click", () => {
+        womenCollections.push({
+          id: "collection_" + Date.now(),
+          kicker: "New Collection",
+          title: "New Arched Collection",
+          desc: "Tailored royal silhouettes embodying timeless Awadh needlecraft and elegance.",
+          img: "https://mahira2.netlify.app/assets/s4-p1.jpg?v=3",
+          url: "collections.html"
+        });
+        saveWomenCardsToServer();
+        renderWomenCardsManager();
+        showToast("New arched collection card added!");
+      });
+
+      document.getElementById("saveWomenCardsBtn")?.addEventListener("click", async () => {
+        await saveWomenCardsToServer();
+        showToast("✦ Women's collection cards saved live! Homepage auto-scroll updated.");
+      });
+
+      document.getElementById("resetWomenCardsBtn")?.addEventListener("click", () => {
+        if (!confirm("Reset to default 8 luxury collection cards?")) return;
+        womenCollections = JSON.parse(JSON.stringify(DEFAULT_WOMEN_COLLECTIONS));
+        saveWomenCardsToServer();
+        renderWomenCardsManager();
+        showToast("Women's collections reset to default curation");
       });
 
       // ==========================================

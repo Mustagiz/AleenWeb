@@ -3304,13 +3304,17 @@ button:hover,
   margin: 0 auto !important;
   outline: none !important;
   overflow-x: auto !important;
-  scroll-behavior: smooth !important;
-  scroll-snap-type: x mandatory !important;
+  scroll-behavior: auto !important;
+  scroll-snap-type: none !important;
   -webkit-overflow-scrolling: touch !important;
   scrollbar-width: none !important;
   padding: 10px 8vw 20px !important;
   -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8vw, black calc(100% - 8vw), transparent 100%) !important;
   mask-image: linear-gradient(to right, transparent 0%, black 8vw, black calc(100% - 8vw), transparent 100%) !important;
+  cursor: grab;
+}
+.w-track:active {
+  cursor: grabbing;
 }
 .w-track::-webkit-scrollbar {
   display: none !important;
@@ -3324,12 +3328,80 @@ button:hover,
   border-radius: 999px 999px 16px 16px !important;
   border: 1px solid rgba(214, 178, 110, 0.65) !important;
   overflow: hidden !important;
-  scroll-snap-align: center !important;
-  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease) !important;
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease), border-color 0.4s var(--ease) !important;
+  text-decoration: none !important;
+  display: block !important;
+  color: inherit !important;
+  cursor: pointer !important;
 }
 .w-card:hover {
-  transform: translateY(-8px) scale(1.01) !important;
-  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.75), 0 0 24px rgba(201, 163, 95, 0.25) !important;
+  transform: translateY(-8px) scale(1.02) !important;
+  border-color: rgba(236, 207, 139, 1) !important;
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.8), 0 0 28px rgba(201, 163, 95, 0.35) !important;
+}
+.w-card:hover > img {
+  transform: scale(1.05) !important;
+}
+
+.w-bottom-action {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: clamp(32px, 4.5vh, 56px);
+  padding: 0 20px;
+}
+.w-all-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 16px 36px;
+  border: 1px solid rgba(214, 178, 110, 0.7);
+  border-radius: 999px;
+  background: rgba(18, 27, 18, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--gold-light, #f0dfa8);
+  font-family: var(--sans, sans-serif);
+  font-size: clamp(12px, 0.85vw, 14px);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  transition: all 0.4s var(--ease, ease);
+  position: relative;
+  overflow: hidden;
+}
+.w-all-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(214, 178, 110, 0.25), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.w-all-cta:hover {
+  border-color: rgba(236, 207, 139, 1);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgba(214, 178, 110, 0.25);
+}
+.w-all-cta:hover::before {
+  opacity: 1;
+}
+.w-all-cta svg {
+  width: 22px;
+  height: 9px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  transition: transform 0.3s ease;
+}
+.w-all-cta:hover svg {
+  transform: translateX(4px);
 }
 
 /* Atelier Manager Portal Link in Footer */
@@ -5566,57 +5638,87 @@ body.is-ready .brand, body.is-ready #brand {
       <i class="sh-orna"><b></b></i>
       <p class="sh-sub">Fresh silhouettes. Timeless craftsmanship. Made for you.</p>
     </header>
-    <div class="w-track" tabindex="0">
-      <article class="w-card">
-        <img src="assets/pakistani-kurti-1.jpg" alt="Model wearing luxury ivory Pakistani Kurti" loading="lazy" decoding="async">
+    <div class="w-track" id="womenTrack" tabindex="0">
+      <a class="w-card" href="collections.html?category=kurtis" aria-label="Pakistani Kurtis">
+        <img src="assets/pakistani-kurti-1.jpg" alt="Pakistani Kurtis" loading="lazy" decoding="async">
         <span class="w-scrim"></span>
         <div class="w-caption">
           <p class="w-kicker">New Collection</p>
           <h3>Pakistani Kurtis</h3>
           <p class="w-line">Royal silhouettes in pure raw silk &amp; velvet.</p>
-          <a class="cta" href="collections.html?category=kurtis"><span class="fill"></span><span class="lbl">Explore</span><span class="arrow"><svg viewBox="0 0 28 10"><path d="M0 5h24M20 1l5 4-5 4"/></svg></span></a>
         </div>
-      </article>
-      <article class="w-card">
-        <img src="https://mahira2.netlify.app/assets/s3-kurta.jpg?v=5" alt="Model in a rose kurta set" loading="lazy" decoding="async">
+      </a>
+      <a class="w-card" href="collections.html?category=kurta-sets" aria-label="Kurta Sets">
+        <img src="https://mahira2.netlify.app/assets/s3-kurta.jpg?v=5" alt="Kurta Sets" loading="lazy" decoding="async">
         <span class="w-scrim"></span>
         <div class="w-caption">
           <p class="w-kicker">New Collection</p>
           <h3>Kurta Sets</h3>
           <p class="w-line">Everyday elegance, elevated.</p>
-          <a class="cta" href="collections.html?category=kurta-sets"><span class="fill"></span><span class="lbl">Explore</span><span class="arrow"><svg viewBox="0 0 28 10"><path d="M0 5h24M20 1l5 4-5 4"/></svg></span></a>
         </div>
-      </article>
-      <article class="w-card">
-        <img src="https://mahira2.netlify.app/assets/s3-dresses.jpg?v=5" alt="Model standing in a cream dress" loading="lazy" decoding="async">
+      </a>
+      <a class="w-card" href="dresses.html" aria-label="Dresses &amp; Sets">
+        <img src="https://mahira2.netlify.app/assets/s3-dresses.jpg?v=5" alt="Dresses &amp; Sets" loading="lazy" decoding="async">
         <span class="w-scrim"></span>
         <div class="w-caption">
           <p class="w-kicker">New Collection</p>
           <h3>Dresses &amp; Sets</h3>
           <p class="w-line">Modern silhouettes for every you.</p>
-          <a class="cta" href="dresses.html"><span class="fill"></span><span class="lbl">Explore</span><span class="arrow"><svg viewBox="0 0 28 10"><path d="M0 5h24M20 1l5 4-5 4"/></svg></span></a>
         </div>
-      </article>
-      <article class="w-card">
-        <img src="https://mahira2.netlify.app/assets/women-clean.jpg?v=3" alt="Model seated in a royal embroidered bridal lehenga" loading="lazy" decoding="async">
+      </a>
+      <a class="w-card" href="collections.html?category=lehengas" aria-label="Lehengas">
+        <img src="https://mahira2.netlify.app/assets/women-clean.jpg?v=3" alt="Lehengas" loading="lazy" decoding="async">
         <span class="w-scrim"></span>
         <div class="w-caption">
           <p class="w-kicker">New Collection</p>
           <h3>Lehengas</h3>
           <p class="w-line">Royal silhouettes, timeless grace.</p>
-          <a class="cta" href="collections.html?category=lehengas"><span class="fill"></span><span class="lbl">Explore</span><span class="arrow"><svg viewBox="0 0 28 10"><path d="M0 5h24M20 1l5 4-5 4"/></svg></span></a>
         </div>
-      </article>
-      <article class="w-card">
-        <img src="https://mahira2.netlify.app/assets/s4-room.jpg?v=1" alt="Model in an embroidered 32-kali georgette anarkali ensemble" loading="lazy" decoding="async">
+      </a>
+      <a class="w-card" href="collections.html?category=kurta-sets" aria-label="Anarkali Sets">
+        <img src="https://mahira2.netlify.app/assets/s4-room.jpg?v=1" alt="Anarkali Sets" loading="lazy" decoding="async">
         <span class="w-scrim"></span>
         <div class="w-caption">
           <p class="w-kicker">New Collection</p>
           <h3>Anarkali Sets</h3>
           <p class="w-line">Voluminous flares &amp; royal grace.</p>
-          <a class="cta" href="collections.html?category=kurta-sets"><span class="fill"></span><span class="lbl">Explore</span><span class="arrow"><svg viewBox="0 0 28 10"><path d="M0 5h24M20 1l5 4-5 4"/></svg></span></a>
         </div>
-      </article>
+      </a>
+      <a class="w-card" href="collections.html?category=dupattas" aria-label="Dupattas &amp; Stoles">
+        <img src="assets/pakistani-kurti-3.jpg" alt="Dupattas &amp; Stoles" loading="lazy" decoding="async">
+        <span class="w-scrim"></span>
+        <div class="w-caption">
+          <p class="w-kicker">Heirloom Weaves</p>
+          <h3>Dupattas &amp; Stoles</h3>
+          <p class="w-line">Handwoven organza &amp; metallic gossamer.</p>
+        </div>
+      </a>
+      <a class="w-card" href="collections.html?category=fabrics" aria-label="Unstitched Fabrics">
+        <img src="https://mahira2.netlify.app/assets/s2-card-kala.jpg?v=2" alt="Unstitched Fabrics" loading="lazy" decoding="async">
+        <span class="w-scrim"></span>
+        <div class="w-caption">
+          <p class="w-kicker">Atelier Curations</p>
+          <h3>Unstitched Fabrics</h3>
+          <p class="w-line">Pure Banarasi katan silks &amp; brocades.</p>
+        </div>
+      </a>
+      <a class="w-card" href="collections.html?category=kurtis" aria-label="Royal Velvet Edit">
+        <img src="assets/pakistani-kurti-2.jpg" alt="Royal Velvet Edit" loading="lazy" decoding="async">
+        <span class="w-scrim"></span>
+        <div class="w-caption">
+          <p class="w-kicker">Limited Edition</p>
+          <h3>Royal Velvet Edit</h3>
+          <p class="w-line">Opulent micro-velvet with antique tilla.</p>
+        </div>
+      </a>
+    </div>
+
+    <!-- Single Bottom Center Button -->
+    <div class="w-bottom-action">
+      <a class="w-all-cta" href="collections.html">
+        <span>✦ Explore All Collections</span>
+        <svg viewBox="0 0 28 10"><path d="M0 5h24M20 1l5 4-5 4"/></svg>
+      </a>
     </div>
   </section>
 
@@ -8164,39 +8266,90 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
     window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
   });
 
-  /* women's collection pager */
-  (function () {
-    var track = $('.w-track'), cur = $('.w-cur');
-    if (!track || !cur) return;
-    var cards = $$('.w-card', track), idx = 0;
-    function show(n) {
-      idx = (n + cards.length) % cards.length;
-      cur.textContent = '0' + (idx + 1);
-      if (track.scrollWidth > track.clientWidth + 10) {
-        var c = cards[idx];
-        track.scrollTo({ left: c.offsetLeft - (track.clientWidth - c.offsetWidth) / 2, behavior: reduced ? 'auto' : 'smooth' });
-      } else {
-        cards.forEach(function (c) { c.classList.remove('is-focus'); });
-        var f = cards[idx];
-        f.classList.add('is-focus');
-        clearTimeout(f.__ft);
-        f.__ft = setTimeout(function () { f.classList.remove('is-focus'); }, 1200);
-      }
+  /* S03: New Collections For Women Auto-Scroller & Dynamic Sync */
+  (function initWomenCollectionsAutoScroll() {
+    var track = document.getElementById('womenTrack') || document.querySelector('.w-track');
+    if (!track) return;
+
+    function buildCardHtml(c) {
+      return `
+        <a class="w-card" href="${c.url || 'collections.html'}" aria-label="${c.title || 'Collection'}">
+          <img src="${c.img}" alt="${c.title || 'Aleen Women Collection'}" loading="lazy" decoding="async">
+          <span class="w-scrim"></span>
+          <div class="w-caption">
+            <p class="w-kicker">${c.kicker || 'New Collection'}</p>
+            <h3>${c.title}</h3>
+            <p class="w-line">${c.desc}</p>
+          </div>
+        </a>
+      `;
     }
-    var _wp = $('.w-prev'); if (_wp) _wp.addEventListener('click', function () { show(idx - 1); });
-    var _wn = $('.w-next'); if (_wn) _wn.addEventListener('click', function () { show(idx + 1); });
-    var sTimer = 0;
-    track.addEventListener('scroll', function () {
-      clearTimeout(sTimer);
-      sTimer = setTimeout(function () {
-        var mid = track.scrollLeft + track.clientWidth / 2, best = 0, bd = 1e9;
-        cards.forEach(function (c, i) {
-          var d = Math.abs(c.offsetLeft + c.offsetWidth / 2 - mid);
-          if (d < bd) { bd = d; best = i; }
-        });
-        idx = best; cur.textContent = '0' + (idx + 1);
-      }, 90);
+
+    function renderTrack(cards) {
+      if (!Array.isArray(cards) || cards.length < 2) return;
+      var cardsHtml = cards.map(buildCardHtml).join('');
+      // Duplicate sequence for seamless continuous infinite auto-scroll
+      track.innerHTML = cardsHtml + cardsHtml;
+      startAutoScroll();
+    }
+
+    // Try cached collections first for instant zero-latency paint
+    try {
+      var cached = localStorage.getItem('aleen_women_collections');
+      if (cached) {
+        var parsed = JSON.parse(cached);
+        if (Array.isArray(parsed) && parsed.length >= 2) {
+          renderTrack(parsed);
+        }
+      }
+    } catch(e) {}
+
+    // Always fetch latest live collections from server/Firestore
+    fetch('/api/women-collections?t=' + Date.now())
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        var list = (d && Array.isArray(d.collections)) ? d.collections : (Array.isArray(d) ? d : null);
+        if (list && list.length >= 2) {
+          localStorage.setItem('aleen_women_collections', JSON.stringify(list));
+          renderTrack(list);
+        }
+      })
+      .catch(function (err) {
+        console.warn('Women collections live sync error:', err);
+      });
+
+    var isPaused = false;
+    var touchTimeout = null;
+    var rafId = null;
+
+    track.addEventListener('mouseenter', function () { isPaused = true; });
+    track.addEventListener('mouseleave', function () { isPaused = false; });
+    track.addEventListener('touchstart', function () {
+      isPaused = true;
+      clearTimeout(touchTimeout);
     }, { passive: true });
+    track.addEventListener('touchend', function () {
+      clearTimeout(touchTimeout);
+      touchTimeout = setTimeout(function () { isPaused = false; }, 2200);
+    }, { passive: true });
+
+    function startAutoScroll() {
+      if (rafId) cancelAnimationFrame(rafId);
+
+      function loop() {
+        if (!isPaused) {
+          track.scrollLeft += 0.85; // smooth luxury glide
+          var half = track.scrollWidth / 2;
+          if (half > 0 && track.scrollLeft >= half) {
+            track.scrollLeft -= half;
+          }
+        }
+        rafId = requestAnimationFrame(loop);
+      }
+      rafId = requestAnimationFrame(loop);
+    }
+
+    startAutoScroll();
   })();
 
   /* scroll choreography — every chapter has its own movement */

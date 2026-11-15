@@ -170,9 +170,13 @@ function saveData() {
   if (atelierData.catalog) {
     saveDocToFirestore('atelier_catalog', atelierData.catalog);
   }
+  if (atelierData.womenCollections) {
+    saveDocToFirestore('atelier_women', atelierData.womenCollections);
+  }
   const generalData = { ...atelierData };
   delete generalData.carouselSlides;
   delete generalData.catalog;
+  delete generalData.womenCollections;
   saveDocToFirestore('atelier_data', generalData);
 }
 
@@ -209,6 +213,13 @@ fetchFirestoreDoc('atelier_catalog', (catalog) => {
   if (Array.isArray(catalog) && catalog.length > 0) {
     atelierData.catalog = catalog;
     console.log('✦ Synced ' + catalog.length + ' garments from Firestore atelier_catalog');
+  }
+});
+
+fetchFirestoreDoc('atelier_women', (cards) => {
+  if (Array.isArray(cards) && cards.length >= 2) {
+    atelierData.womenCollections = cards;
+    console.log('✦ Synced ' + cards.length + ' women collection cards from Firestore atelier_women');
   }
 });
 
@@ -420,6 +431,45 @@ const server = http.createServer(async (req, res) => {
         }
         res.writeHead(400, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ error: 'At least 2 slides are required' }));
+        return;
+      }
+    }
+
+    // 3a. Women Collections (Arched Cards) Endpoints
+    if (reqPath === '/api/women-collections' && (req.method === 'GET' || req.method === 'HEAD')) {
+      res.writeHead(200, {
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-store, no-cache, must-revalidate'
+      });
+      res.end(JSON.stringify({ success: true, collections: atelierData.womenCollections || [] }));
+      return;
+    }
+    if (reqPath === '/api/admin/women-collections') {
+      if (req.method === 'GET' || req.method === 'HEAD') {
+        res.writeHead(200, {
+          'Content-Type': 'application/json',
+          'Cache-Control': 'no-store, no-cache, must-revalidate'
+        });
+        res.end(JSON.stringify({ success: true, collections: atelierData.womenCollections || [] }));
+        return;
+      }
+      if (req.method === 'POST') {
+        const admin = verifyAdmin(req);
+        if (!admin) {
+          res.writeHead(403, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: 'Admin role required' }));
+          return;
+        }
+        const { collections } = await parseBody(req);
+        if (Array.isArray(collections) && collections.length >= 2) {
+          atelierData.womenCollections = collections;
+          saveData();
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ success: true, message: 'Women collections updated live!', collections: atelierData.womenCollections }));
+          return;
+        }
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'At least 2 collections are required' }));
         return;
       }
     }
