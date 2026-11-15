@@ -5479,6 +5479,27 @@ body.is-ready .brand, body.is-ready #brand {
    ALEEN HAUTE COUTURE — LIGHT (IVORY) / DARK (NOIR) THEME SYSTEM
    ========================================================================== */
 
+
+/* Header Aleen Brand Logo Shadow & Elevation */
+#brandLogo, .brand svg {
+  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.75)) drop-shadow(0 1px 5px rgba(201, 163, 95, 0.3)) !important;
+  transition: filter 0.3s ease, height 0.35s ease !important;
+}
+
+.brand:hover #brandLogo, .brand:hover svg {
+  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.85)) drop-shadow(0 2px 8px rgba(201, 163, 95, 0.45)) !important;
+}
+
+html[data-theme="light"] #brandLogo,
+html[data-theme="light"] .brand svg {
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15)) drop-shadow(0 1px 4px rgba(138, 100, 32, 0.25)) !important;
+}
+
+html[data-theme="light"] .brand:hover #brandLogo,
+html[data-theme="light"] .brand:hover svg {
+  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.22)) drop-shadow(0 2px 7px rgba(138, 100, 32, 0.38)) !important;
+}
+
 /* Theme Toggle Button */
 .theme-toggle-wrap {
   position: absolute;
