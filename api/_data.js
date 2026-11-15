@@ -148,7 +148,7 @@ function saveDoc(docName, data) {
         'Content-Type': 'application/json',
         'Content-Length': Buffer.byteLength(payload)
       },
-      timeout: 4500
+      timeout: 3000
     }, (res) => {
       let b = '';
       res.on('data', c => b += c);
@@ -197,14 +197,19 @@ async function saveCarouselSlides(slides) {
 
   // Create clean copy of slides for persistence
   const payloadSlides = JSON.parse(JSON.stringify(slides));
+  const subDocPromises = [];
   for (let i = 0; i < payloadSlides.length; i++) {
     const s = payloadSlides[i];
-    // If slide image is a large base64 data URL (> 50KB), store in dedicated document to prevent 1MB limit
+    // If slide image is a large base64 data URL (> 50KB), store in dedicated document in parallel
     if (typeof s.img === 'string' && s.img.startsWith('data:image')) {
       const docKey = `atelier_slide_img_${i}`;
-      await saveDoc(docKey, { img: s.img, updatedAt: new Date().toISOString() });
+      subDocPromises.push(saveDoc(docKey, { img: s.img, updatedAt: new Date().toISOString() }));
       s.img = `firestore:${docKey}`;
     }
+  }
+
+  if (subDocPromises.length > 0) {
+    await Promise.all(subDocPromises);
   }
 
   await saveDoc('atelier_carousel', payloadSlides);
@@ -256,13 +261,18 @@ async function saveWomenCollections(cards) {
   _lastFetchTime = Date.now();
 
   const payloadCards = JSON.parse(JSON.stringify(cards));
+  const subDocPromises = [];
   for (let i = 0; i < payloadCards.length; i++) {
     const c = payloadCards[i];
     if (typeof c.img === 'string' && c.img.startsWith('data:image')) {
       const docKey = `atelier_women_img_${i}`;
-      await saveDoc(docKey, { img: c.img, updatedAt: new Date().toISOString() });
+      subDocPromises.push(saveDoc(docKey, { img: c.img, updatedAt: new Date().toISOString() }));
       c.img = `firestore:${docKey}`;
     }
+  }
+
+  if (subDocPromises.length > 0) {
+    await Promise.all(subDocPromises);
   }
 
   await saveDoc('atelier_women', payloadCards);
