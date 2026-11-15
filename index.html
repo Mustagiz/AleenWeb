@@ -1919,14 +1919,26 @@ section { position: relative; }
 }
 .x-copy p em { font-family: var(--serif-i); font-style: italic; }
 .x-copy .cta {
-  margin-top: 4.5cqw;
-  height: 6.9cqw;
-  padding: 0 2.9cqw;
-  font-size: 1.85cqw;
-  letter-spacing: 0.24em;
-  border-color: rgba(206, 170, 100, 0.96);
+  display: none !important;
 }
-.x-copy .cta .arrow { width: 3.1cqw; margin-left: 1.6cqw; }
+
+.x-bottom-action {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 2.2cqw;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@media (max-width: 900px) {
+  .x-bottom-action {
+    position: static;
+    margin-top: 24px;
+    padding: 0 20px;
+  }
+}
 
 .x-bridge { position: relative; height: clamp(90px, 14vh, 170px); margin-top: -1px;
   background: linear-gradient(180deg, rgba(34, 30, 18, 0) 0%, rgba(28, 38, 20, 0.72) 45%, #16240f 100%); }
@@ -5755,24 +5767,31 @@ body.is-ready .brand, body.is-ready #brand {
         <h2>Explore The Collection</h2>
         <p class="x-sub">Timeless traditions. Modern stories.</p>
       </header>
-      <article class="x-card x-women">
+      <article class="x-card x-women" onclick="window.location.href='collections.html'">
         <img src="https://mahira2.netlify.app/assets/s2-card-women.jpg?v=2" alt="Model in a champagne saree seated in warm heritage light" loading="lazy" decoding="async">
         <div class="x-copy">
           <h3>Women</h3>
           <i class="x-rule"></i>
           <p>Elegance in every drape,<br>for <em>every you</em>.</p>
-          <a class="cta" href="collections.html"><span class="fill"></span><span class="lbl">Explore</span><span class="arrow"><svg viewBox="0 0 28 10"><path d="M0 5h24M20 1l5 4-5 4"/></svg></span></a>
         </div>
       </article>
-      <article class="x-card x-kala">
+      <article class="x-card x-kala" onclick="window.location.href='collections.html'">
         <img src="https://mahira2.netlify.app/assets/s2-card-kala.jpg?v=2" alt="Hand-painted kalamkari fabric draped beside a brass pot" loading="lazy" decoding="async">
         <div class="x-copy">
           <h3>Kalamkari</h3>
           <i class="x-rule"></i>
           <p>Art that tells <em>a story</em>.</p>
-          <a class="cta" href="collections.html"><span class="fill"></span><span class="lbl">Explore</span><span class="arrow"><svg viewBox="0 0 28 10"><path d="M0 5h24M20 1l5 4-5 4"/></svg></span></a>
         </div>
       </article>
+      
+      <!-- Single Bottom Center Explore Button -->
+      <div class="x-bottom-action">
+        <a class="btn btn-primary w-all-cta" href="collections.html">
+          <span class="fill"></span>
+          <span class="lbl">✦ EXPLORE THE COLLECTION</span>
+          <span class="arrow"><svg viewBox="0 0 28 10"><path d="M0 5h24M20 1l5 4-5 4"/></svg></span>
+        </a>
+      </div>
     </div>
     
   </section>
@@ -6543,12 +6562,57 @@ body.is-ready .brand, body.is-ready #brand {
   stroke-width: 1.8;
 }
 
+@keyframes fOrnaShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes fDiamondPulse {
+  0%, 100% {
+    transform: translateX(-50%) rotate(45deg) scale(1);
+    box-shadow: 0 0 6px rgba(201, 163, 95, 0.4), inset 0 0 4px rgba(201, 163, 95, 0.3);
+    border-color: rgba(201, 163, 95, 0.7);
+  }
+  50% {
+    transform: translateX(-50%) rotate(45deg) scale(1.25);
+    box-shadow: 0 0 16px rgba(228, 190, 119, 0.95), 0 0 28px rgba(201, 163, 95, 0.6), inset 0 0 6px rgba(228, 190, 119, 0.85);
+    border-color: #f7e7be;
+  }
+}
+
 .f-orna {
-  display: block;
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(201, 163, 95, 0.3), transparent);
-  margin: clamp(36px, 5vh, 50px) 0 24px;
+  position: relative !important;
+  display: block !important;
+  width: min(92vw, 1400px) !important;
+  max-width: 1400px !important;
+  height: 1px !important;
+  margin: clamp(36px, 5vh, 50px) auto 28px !important;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(201, 163, 95, 0.15) 20%, 
+    rgba(247, 231, 190, 0.95) 50%, 
+    rgba(201, 163, 95, 0.15) 80%, 
+    transparent 100%) !important;
+  background-size: 200% 100% !important;
+  animation: fOrnaShimmer 6s linear infinite !important;
+}
+
+.f-orna::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 50% !important;
+  top: -5px !important;
+  width: 11px !important;
+  height: 11px !important;
+  background: #09130c !important;
+  border: 1px solid #c9a35f !important;
+  transform: translateX(-50%) rotate(45deg) !important;
+  animation: fDiamondPulse 3.5s ease-in-out infinite !important;
+  z-index: 2 !important;
 }
 
 .f-bottom {
