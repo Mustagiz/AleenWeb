@@ -1103,57 +1103,49 @@
       font-style: italic;
     }
 
-    /* Controls Container: filter pills + search */
-    .catalog-controls-card {
+    /* ===================================================
+       E-COMMERCE LUXURY FILTER & REFINE SYSTEM
+       =================================================== */
+    .ecom-filter-system {
       background: rgba(8, 20, 13, 0.88);
       backdrop-filter: blur(28px);
       -webkit-backdrop-filter: blur(28px);
       border: 1px solid rgba(214, 178, 110, 0.32);
-      border-radius: 22px;
-      padding: 22px 26px;
+      border-radius: 24px;
+      padding: 18px 22px;
       box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 235, 180, 0.2);
-      margin-bottom: 20px;
+      margin-bottom: 22px;
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 16px;
       position: relative;
-      overflow: hidden;
     }
 
-    .catalog-controls-card::before {
-      content: "";
-      position: absolute;
-      top: -40%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 60%;
-      height: 100%;
-      background: radial-gradient(ellipse at center, rgba(201, 163, 95, 0.08) 0%, transparent 70%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .filter-tabs-wrapper {
+    /* 1. Quick Category Pills Navigation */
+    .ecom-quick-nav-bar {
       position: relative;
       width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1;
-    }
-
-    .filter-tabs {
       display: flex;
       align-items: center;
       gap: 8px;
-      justify-content: center;
-      flex-wrap: wrap;
-      width: 100%;
-      margin: 0;
-      padding: 2px 0;
     }
 
-    .filter-tab {
+    .ecom-quick-nav-track {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      padding: 4px 2px;
+      width: 100%;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .ecom-quick-nav-track::-webkit-scrollbar {
+      display: none;
+    }
+
+    .ecom-cat-pill {
       background: rgba(14, 30, 20, 0.72);
       border: 1px solid rgba(214, 178, 110, 0.26);
       color: rgba(247, 241, 227, 0.9);
@@ -1162,7 +1154,7 @@
       font-family: var(--sans);
       font-size: 11px;
       font-weight: 500;
-      letter-spacing: 1px;
+      letter-spacing: 0.8px;
       text-transform: uppercase;
       cursor: pointer;
       display: inline-flex;
@@ -1170,10 +1162,10 @@
       gap: 6px;
       white-space: nowrap;
       transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-      user-select: none;
+      flex-shrink: 0;
     }
 
-    .filter-tab:hover {
+    .ecom-cat-pill:hover {
       background: rgba(201, 163, 95, 0.2);
       color: #ffffff;
       border-color: var(--gold-light);
@@ -1181,7 +1173,7 @@
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
     }
 
-    .filter-tab.active {
+    .ecom-cat-pill.active {
       background: linear-gradient(135deg, #e5bf78 0%, #c9a35f 100%);
       color: #07120a;
       border-color: #fce7b3;
@@ -1190,45 +1182,143 @@
       transform: translateY(-1px);
     }
 
-    .filter-tab-count {
+    .ecom-pill-count {
       font-size: 9.5px;
       font-weight: 600;
       padding: 1px 6px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.12);
       color: inherit;
-      opacity: 0.85;
+      opacity: 0.9;
       line-height: 1.3;
     }
 
-    .filter-tab.active .filter-tab-count {
+    .ecom-cat-pill.active .ecom-pill-count {
       background: rgba(7, 18, 10, 0.22);
       color: #07120a;
-      opacity: 1;
     }
 
-    .catalog-controls-divider {
+    .ecom-scroll-arrow {
+      background: rgba(14, 30, 20, 0.85);
+      border: 1px solid rgba(201, 163, 95, 0.4);
+      color: var(--gold);
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 16px;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+    .ecom-scroll-arrow:hover {
+      background: var(--gold);
+      color: #000;
+    }
+
+    .ecom-divider {
       width: 100%;
       height: 1px;
       background: linear-gradient(90deg, transparent 0%, rgba(201, 163, 95, 0.28) 25%, rgba(201, 163, 95, 0.28) 75%, transparent 100%);
       margin: 0;
-      z-index: 1;
     }
 
-    .catalog-search-row {
+    /* 2. Main E-Commerce Actions Deck */
+    .ecom-action-deck {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 16px;
-      width: 100%;
-      z-index: 1;
       flex-wrap: wrap;
+      width: 100%;
+    }
+
+    .ecom-deck-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* Filter & Refine Trigger Button */
+    .ecom-filter-trigger-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      background: rgba(201, 163, 95, 0.14);
+      border: 1px solid rgba(201, 163, 95, 0.5);
+      border-radius: 999px;
+      color: #fce7b3;
+      font-family: var(--sans);
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      white-space: nowrap;
+    }
+    .ecom-filter-trigger-btn:hover {
+      background: rgba(201, 163, 95, 0.28);
+      border-color: var(--gold-light);
+      box-shadow: 0 4px 16px rgba(201, 163, 95, 0.35);
+      transform: translateY(-1px);
+    }
+    .ecom-filter-badge {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-deep) 100%);
+      color: #000;
+      font-size: 10px;
+      font-weight: 800;
+      border-radius: 999px;
+      padding: 1px 7px;
+      line-height: 1.4;
+    }
+
+    /* Quick Price Chips */
+    .ecom-quick-price-chips {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .ecom-chip {
+      background: rgba(14, 30, 20, 0.65);
+      border: 1px solid rgba(214, 178, 110, 0.22);
+      border-radius: 999px;
+      color: rgba(247, 241, 227, 0.82);
+      padding: 7px 13px;
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .ecom-chip:hover {
+      border-color: var(--gold);
+      color: #ffffff;
+      background: rgba(201, 163, 95, 0.15);
+    }
+    .ecom-chip.active {
+      background: rgba(201, 163, 95, 0.25);
+      border-color: var(--gold);
+      color: var(--gold-spark);
+      font-weight: 600;
+    }
+
+    .ecom-deck-center {
+      flex: 1 1 260px;
+      min-width: 220px;
     }
 
     .search-box {
       position: relative;
-      flex: 1 1 320px;
-      height: 44px;
+      width: 100%;
+      height: 42px;
       display: flex;
       align-items: center;
     }
@@ -1241,38 +1331,34 @@
       stroke: var(--gold);
       pointer-events: none;
       z-index: 2;
-      transition: stroke 0.25s ease;
     }
 
     .search-input {
       width: 100%;
-      height: 44px;
+      height: 42px;
       background: rgba(4, 10, 7, 0.78);
       border: 1px solid rgba(201, 163, 95, 0.32);
       border-radius: 999px;
-      padding: 0 42px 0 46px;
+      padding: 0 42px 0 44px;
       font-family: var(--sans);
-      font-size: 13px;
+      font-size: 12.5px;
       color: #ffffff;
       outline: none;
       box-sizing: border-box;
       transition: all 0.25s ease;
-      line-height: 44px;
     }
-
     .search-input:focus {
       border-color: var(--gold);
       background: rgba(4, 10, 7, 0.95);
-      box-shadow: 0 0 20px rgba(201, 163, 95, 0.35);
+      box-shadow: 0 0 18px rgba(201, 163, 95, 0.35);
     }
-
     .search-input::placeholder {
       color: rgba(239, 228, 200, 0.45);
     }
 
     .search-clear-btn {
       position: absolute;
-      right: 14px;
+      right: 12px;
       top: 50%;
       transform: translateY(-50%);
       background: rgba(201, 163, 95, 0.2);
@@ -1290,58 +1376,28 @@
       transition: all 0.2s ease;
       z-index: 3;
     }
-
     .search-clear-btn:hover {
       background: var(--gold);
       color: #000;
     }
 
-    .filter-active-chip {
-      display: none;
+    .ecom-deck-right {
+      display: flex;
       align-items: center;
-      gap: 6px;
-      background: rgba(201, 163, 95, 0.15);
-      border: 1px solid rgba(201, 163, 95, 0.4);
-      color: var(--gold-light);
-      padding: 6px 14px;
-      border-radius: 999px;
-      font-size: 11.5px;
-      letter-spacing: 0.5px;
-      white-space: nowrap;
-      height: 32px;
-      box-sizing: border-box;
-    }
-
-    .filter-active-chip button {
-      background: none;
-      border: none;
-      color: inherit;
-      cursor: pointer;
-      font-size: 13px;
-      padding: 0 0 0 4px;
-      line-height: 1;
-      opacity: 0.75;
-      display: inline-flex;
-      align-items: center;
-    }
-
-    .filter-active-chip button:hover {
-      opacity: 1;
-      color: #fff;
+      gap: 12px;
+      flex-wrap: wrap;
     }
 
     .sort-box {
       position: relative;
-      flex: 0 0 auto;
-      height: 44px;
+      height: 42px;
       display: flex;
       align-items: center;
     }
-
     .sort-box::after {
       content: "";
       position: absolute;
-      right: 18px;
+      right: 16px;
       top: 50%;
       width: 7px;
       height: 7px;
@@ -1349,38 +1405,422 @@
       border-bottom: 1.5px solid var(--gold);
       transform: translateY(-65%) rotate(45deg);
       pointer-events: none;
-      transition: transform 0.25s ease;
     }
-
-    .sort-box:hover::after {
-      transform: translateY(-35%) rotate(45deg);
-    }
-
     .sort-box select {
-      height: 44px;
+      height: 42px;
       background: rgba(4, 10, 7, 0.78);
       border: 1px solid rgba(201, 163, 95, 0.32);
       border-radius: 999px;
-      padding: 0 40px 0 22px;
+      padding: 0 38px 0 18px;
       font-family: var(--sans);
       font-size: 12px;
       font-weight: 500;
-      letter-spacing: 0.8px;
+      letter-spacing: 0.6px;
       color: var(--gold-light);
       outline: none;
       cursor: pointer;
       appearance: none;
       -webkit-appearance: none;
-      -moz-appearance: none;
       box-sizing: border-box;
       transition: all 0.25s ease;
-      line-height: 44px;
     }
-
     .sort-box select:focus {
       border-color: var(--gold);
-      background: rgba(4, 10, 7, 0.95);
       box-shadow: 0 0 16px rgba(201, 163, 95, 0.35);
+    }
+
+    /* Grid Layout Switcher */
+    .ecom-grid-switcher {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      background: rgba(4, 10, 7, 0.78);
+      border: 1px solid rgba(201, 163, 95, 0.3);
+      padding: 3px;
+      border-radius: 999px;
+      height: 42px;
+      box-sizing: border-box;
+    }
+    .ecom-grid-btn {
+      width: 32px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5px;
+      background: transparent;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      padding: 0 4px;
+      transition: all 0.2s ease;
+    }
+    .ecom-grid-btn span {
+      display: block;
+      width: 3px;
+      height: 14px;
+      background: rgba(201, 163, 95, 0.45);
+      border-radius: 1px;
+      transition: background 0.2s ease;
+    }
+    .ecom-grid-btn:hover span {
+      background: var(--gold-light);
+    }
+    .ecom-grid-btn.active {
+      background: rgba(201, 163, 95, 0.22);
+    }
+    .ecom-grid-btn.active span {
+      background: var(--gold-spark);
+    }
+
+    /* 3. Active Filters Strip */
+    .ecom-active-strip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding-top: 4px;
+      width: 100%;
+    }
+    .ecom-active-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: rgba(239, 228, 200, 0.6);
+      font-weight: 600;
+    }
+    .ecom-active-tags {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .ecom-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(201, 163, 95, 0.16);
+      border: 1px solid rgba(201, 163, 95, 0.45);
+      color: var(--gold-light);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+    .ecom-tag button {
+      background: none;
+      border: none;
+      color: inherit;
+      cursor: pointer;
+      font-size: 12px;
+      line-height: 1;
+      opacity: 0.75;
+      padding: 0;
+      display: flex;
+      align-items: center;
+    }
+    .ecom-tag button:hover {
+      opacity: 1;
+      color: #fff;
+    }
+    .ecom-clear-all-link {
+      background: none;
+      border: none;
+      color: rgba(239, 228, 200, 0.65);
+      font-size: 11px;
+      text-decoration: underline;
+      cursor: pointer;
+      padding: 2px 6px;
+      transition: color 0.2s ease;
+    }
+    .ecom-clear-all-link:hover {
+      color: var(--gold-spark);
+    }
+
+    /* ===================================================
+       SLIDE-OUT FILTER & REFINE DRAWER (OFF-CANVAS)
+       =================================================== */
+    .ecom-drawer-scrim {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 9990;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .ecom-drawer-scrim.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .ecom-filter-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: min(440px, 92vw);
+      height: 100vh;
+      background: linear-gradient(180deg, #0d1e13 0%, #060e08 100%);
+      border-left: 1px solid rgba(214, 178, 110, 0.35);
+      box-shadow: -15px 0 50px rgba(0, 0, 0, 0.7);
+      z-index: 9995;
+      transform: translateX(100%);
+      transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+    }
+    .ecom-filter-drawer.open {
+      transform: translateX(0);
+    }
+
+    .ecom-drawer-header {
+      padding: 22px 24px;
+      border-bottom: 1px solid rgba(201, 163, 95, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .ecom-drawer-title {
+      font-family: var(--serif);
+      font-size: 20px;
+      color: #ffffff;
+      margin: 0;
+      letter-spacing: 0.5px;
+    }
+    .ecom-drawer-badge {
+      background: rgba(201, 163, 95, 0.18);
+      border: 1px solid rgba(201, 163, 95, 0.4);
+      color: var(--gold-light);
+      font-size: 10.5px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 999px;
+    }
+    .ecom-drawer-clear-btn {
+      background: none;
+      border: none;
+      color: rgba(239, 228, 200, 0.6);
+      font-size: 12px;
+      cursor: pointer;
+      text-decoration: underline;
+      transition: color 0.2s ease;
+    }
+    .ecom-drawer-clear-btn:hover {
+      color: var(--gold);
+    }
+    .ecom-drawer-close {
+      background: rgba(201, 163, 95, 0.15);
+      border: 1px solid rgba(201, 163, 95, 0.3);
+      color: var(--gold-light);
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+    .ecom-drawer-close:hover {
+      background: var(--gold);
+      color: #000;
+    }
+
+    .ecom-drawer-body {
+      padding: 20px 24px;
+      overflow-y: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .ecom-facet-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .ecom-facet-title {
+      font-family: var(--serif);
+      font-size: 14px;
+      letter-spacing: 0.8px;
+      color: var(--gold-spark);
+      text-transform: uppercase;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .ecom-price-brackets {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .ecom-radio-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(14, 30, 20, 0.55);
+      border: 1px solid rgba(214, 178, 110, 0.18);
+      border-radius: 12px;
+      padding: 10px 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 12.5px;
+      color: rgba(247, 241, 227, 0.85);
+    }
+    .ecom-radio-pill:hover {
+      border-color: var(--gold);
+      background: rgba(201, 163, 95, 0.12);
+    }
+    .ecom-radio-pill input[type="radio"] {
+      accent-color: var(--gold);
+    }
+
+    .ecom-custom-price-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .ecom-price-input-wrap {
+      display: flex;
+      align-items: center;
+      background: rgba(4, 10, 7, 0.8);
+      border: 1px solid rgba(201, 163, 95, 0.3);
+      border-radius: 8px;
+      padding: 0 10px;
+      height: 38px;
+      flex: 1;
+    }
+    .ecom-price-input-wrap span {
+      color: var(--gold);
+      font-size: 12px;
+      margin-right: 4px;
+    }
+    .ecom-price-input-wrap input {
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 12px;
+      width: 100%;
+      outline: none;
+    }
+    .ecom-price-apply-btn {
+      background: rgba(201, 163, 95, 0.2);
+      border: 1px solid var(--gold);
+      color: var(--gold-light);
+      padding: 0 14px;
+      height: 38px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .ecom-price-apply-btn:hover {
+      background: var(--gold);
+      color: #000;
+    }
+
+    .ecom-facet-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+    .ecom-tag-chip {
+      background: rgba(14, 30, 20, 0.65);
+      border: 1px solid rgba(214, 178, 110, 0.24);
+      color: rgba(247, 241, 227, 0.85);
+      padding: 7px 13px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .ecom-tag-chip:hover {
+      border-color: var(--gold);
+      color: #fff;
+    }
+    .ecom-tag-chip.active {
+      background: rgba(201, 163, 95, 0.26);
+      border-color: var(--gold-light);
+      color: var(--gold-spark);
+      font-weight: 600;
+      box-shadow: 0 2px 10px rgba(201, 163, 95, 0.25);
+    }
+
+    .ecom-drawer-footer {
+      padding: 18px 24px;
+      border-top: 1px solid rgba(201, 163, 95, 0.25);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(6, 14, 8, 0.95);
+      flex-shrink: 0;
+    }
+    .ecom-drawer-reset-btn {
+      flex: 1;
+      height: 44px;
+      background: rgba(14, 30, 20, 0.75);
+      border: 1px solid rgba(201, 163, 95, 0.35);
+      color: rgba(247, 241, 227, 0.85);
+      border-radius: 999px;
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .ecom-drawer-reset-btn:hover {
+      border-color: var(--gold);
+      color: #fff;
+    }
+    .ecom-drawer-apply-btn {
+      flex: 2;
+      height: 44px;
+      background: linear-gradient(135deg, #e5bf78 0%, #c9a35f 100%);
+      border: 1px solid #fce7b3;
+      color: #07120a;
+      border-radius: 999px;
+      font-family: var(--sans);
+      font-size: 12.5px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 6px 20px rgba(201, 163, 95, 0.35);
+    }
+    .ecom-drawer-apply-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 25px rgba(201, 163, 95, 0.5);
+    }
+
+    /* Grid View Switcher Modifier Classes */
+    .garments-grid.cols-2 {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 36px 24px !important;
+    }
+    .garments-grid.cols-3 {
+      grid-template-columns: repeat(3, 1fr) !important;
+      gap: 30px 20px !important;
+    }
+    .garments-grid.cols-4 {
+      grid-template-columns: repeat(4, 1fr) !important;
+      gap: 26px 18px !important;
+    }
+    .garments-grid.cols-5 {
+      grid-template-columns: repeat(5, 1fr) !important;
+      gap: 24px 16px !important;
     }
 
     /* Main Grid Section */
@@ -3191,71 +3631,223 @@
       <p class="catalog-tagline">"From timeless Banarasi weaves to hand-cut modern drapes &mdash; explore our complete
         atelier portfolio."</p>
 
-      <!-- Controls -->
-      <div class="catalog-controls-card">
-        <div class="filter-tabs-wrapper">
-          <div class="filter-tabs" id="filterTabs">
-            <button class="filter-tab active" data-category="all">
+      <!-- Controls: E-Commerce Luxury Filter System -->
+      <div class="ecom-filter-system">
+        <!-- 1. Horizontal Category Quick-Pills Navigation -->
+        <div class="ecom-quick-nav-bar">
+          <button type="button" class="ecom-scroll-arrow left" id="ecomScrollLeft" aria-label="Scroll categories left">‹</button>
+          <div class="ecom-quick-nav-track" id="filterTabs">
+            <button type="button" class="ecom-cat-pill active" data-category="all">
               <span>All Garments</span>
-              <span class="filter-tab-count" id="count-all">12</span>
+              <span class="ecom-pill-count" id="count-all">12</span>
             </button>
-            <button class="filter-tab" data-category="kurtis">
+            <button type="button" class="ecom-cat-pill" data-category="kurtis">
               <span>Pakistani Kurtis</span>
-              <span class="filter-tab-count" id="count-kurtis">3</span>
+              <span class="ecom-pill-count" id="count-kurtis">3</span>
             </button>
-            <button class="filter-tab" data-category="kurta-sets">
+            <button type="button" class="ecom-cat-pill" data-category="kurta-sets">
               <span>Kurta Sets</span>
-              <span class="filter-tab-count" id="count-kurta-sets">2</span>
+              <span class="ecom-pill-count" id="count-kurta-sets">2</span>
             </button>
-            <button class="filter-tab" data-category="lehengas">
+            <button type="button" class="ecom-cat-pill" data-category="lehengas">
               <span>Lehengas</span>
-              <span class="filter-tab-count" id="count-lehengas">2</span>
+              <span class="ecom-pill-count" id="count-lehengas">2</span>
             </button>
-            <button class="filter-tab" data-category="dresses">
+            <button type="button" class="ecom-cat-pill" data-category="dresses">
               <span>Dresses &amp; Sets</span>
-              <span class="filter-tab-count" id="count-dresses">2</span>
+              <span class="ecom-pill-count" id="count-dresses">2</span>
             </button>
-            <button class="filter-tab" data-category="dupattas">
+            <button type="button" class="ecom-cat-pill" data-category="dupattas">
               <span>Dupattas</span>
-              <span class="filter-tab-count" id="count-dupattas">1</span>
+              <span class="ecom-pill-count" id="count-dupattas">1</span>
             </button>
-            <button class="filter-tab" data-category="unstitched">
+            <button type="button" class="ecom-cat-pill" data-category="unstitched">
               <span>Unstitched Fabrics</span>
-              <span class="filter-tab-count" id="count-unstitched">2</span>
+              <span class="ecom-pill-count" id="count-unstitched">2</span>
             </button>
+          </div>
+          <button type="button" class="ecom-scroll-arrow right" id="ecomScrollRight" aria-label="Scroll categories right">›</button>
+        </div>
+
+        <div class="ecom-divider"></div>
+
+        <!-- 2. Main E-Commerce Actions Deck -->
+        <div class="ecom-action-deck">
+          <!-- Left: Filter & Refine Trigger + Quick Price Chips -->
+          <div class="ecom-deck-left">
+            <button type="button" class="ecom-filter-trigger-btn" id="openFilterDrawerBtn" aria-label="Open filter and refine drawer">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <line x1="4" y1="21" x2="4" y2="14"></line>
+                <line x1="4" y1="10" x2="4" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12" y2="3"></line>
+                <line x1="20" y1="21" x2="20" y2="16"></line>
+                <line x1="20" y1="12" x2="20" y2="3"></line>
+                <line x1="1" y1="14" x2="7" y2="14"></line>
+                <line x1="9" y1="8" x2="15" y2="8"></line>
+                <line x1="17" y1="16" x2="23" y2="16"></line>
+              </svg>
+              <span>Refine Filters</span>
+              <span class="ecom-filter-badge" id="ecomActiveFilterBadge" style="display: none;">0</span>
+            </button>
+
+            <!-- Quick Price Filter Chips -->
+            <div class="ecom-quick-price-chips" id="quickPriceChips">
+              <button type="button" class="ecom-chip active" data-price="all">All Prices</button>
+              <button type="button" class="ecom-chip" data-price="under30k">Under ₹30k</button>
+              <button type="button" class="ecom-chip" data-price="30k-50k">₹30k&ndash;₹50k</button>
+              <button type="button" class="ecom-chip" data-price="above50k">₹50k+</button>
+            </div>
+          </div>
+
+          <!-- Center: Instant Search Bar -->
+          <div class="ecom-deck-center">
+            <div class="search-box">
+              <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" id="searchInput" class="search-input" aria-label="Search garments by title, needlecraft, or material"
+                placeholder="Search by title, needlecraft, pure raw silk, velvet, zardozi..." autocomplete="off">
+              <button type="button" class="search-clear-btn" id="searchClearBtn" aria-label="Clear search query" title="Clear search">✕</button>
+            </div>
+          </div>
+
+          <!-- Right: Sort & Grid View Switcher -->
+          <div class="ecom-deck-right">
+            <div class="sort-box">
+              <select id="sortSelect" aria-label="Sort garments">
+                <option value="featured">✦ Featured Curations</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+                <option value="name-asc">Name: A to Z</option>
+              </select>
+            </div>
+
+            <!-- E-Commerce Grid Column Switcher (2, 3, 5 cols) -->
+            <div class="ecom-grid-switcher" aria-label="Grid layout view">
+              <button type="button" class="ecom-grid-btn" data-cols="2" title="2 Columns (Editorial Luxury View)" aria-label="2 Columns View">
+                <span></span><span></span>
+              </button>
+              <button type="button" class="ecom-grid-btn" data-cols="3" title="3 Columns (Balanced View)" aria-label="3 Columns View">
+                <span></span><span></span><span></span>
+              </button>
+              <button type="button" class="ecom-grid-btn active" data-cols="5" title="5 Columns (Catalog Gallery View)" aria-label="5 Columns View">
+                <span></span><span></span><span></span><span></span><span></span>
+              </button>
+            </div>
           </div>
         </div>
 
-        <div class="catalog-controls-divider"></div>
-
-        <div class="catalog-search-row">
-          <div class="search-box">
-            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-            <input type="text" id="searchInput" class="search-input" aria-label="Search garments by title, needlecraft, or material"
-              placeholder="Search by garment title, needlecraft, pure raw silk, velvet, zardozi..." autocomplete="off">
-            <button type="button" class="search-clear-btn" id="searchClearBtn" aria-label="Clear search query" title="Clear search">✕</button>
-          </div>
-
-          <div class="filter-active-chip" id="filterActiveChip">
-            <span id="filterActiveChipText">Filtered</span>
-            <button type="button" onclick="resetFilters()" title="Remove active filters">✕</button>
-          </div>
-
-          <div class="sort-box">
-            <select id="sortSelect" aria-label="Sort garments">
-              <option value="featured">✦ Featured Curations</option>
-              <option value="price-asc">Price: Low to High</option>
-              <option value="price-desc">Price: High to Low</option>
-              <option value="name-asc">Name: A to Z</option>
-            </select>
-          </div>
+        <!-- 3. Active Filters Strip (Removable Tags) -->
+        <div class="ecom-active-strip" id="ecomActiveStrip" style="display: none;">
+          <span class="ecom-active-label">Active Filters:</span>
+          <div class="ecom-active-tags" id="ecomActiveTags"></div>
+          <button type="button" class="ecom-clear-all-link" id="ecomClearAllLink" onclick="resetFilters()">Clear All</button>
         </div>
       </div>
     </div>
   </header>
+
+  <!-- E-COMMERCE SLIDE-OUT FILTER DRAWER -->
+  <div class="ecom-drawer-scrim" id="ecomDrawerScrim" aria-hidden="true"></div>
+  <aside class="ecom-filter-drawer" id="ecomFilterDrawer" aria-labelledby="ecomDrawerTitle" role="dialog" aria-modal="true">
+    <div class="ecom-drawer-header">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <h2 class="ecom-drawer-title" id="ecomDrawerTitle">Filter &amp; Refine</h2>
+        <span class="ecom-drawer-badge" id="ecomDrawerCountBadge">12 Pieces</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <button type="button" class="ecom-drawer-clear-btn" onclick="resetFilters()">Reset All</button>
+        <button type="button" class="ecom-drawer-close" id="closeFilterDrawerBtn" aria-label="Close filters">✕</button>
+      </div>
+    </div>
+
+    <div class="ecom-drawer-body">
+      <!-- Facet: Silhouette / Category -->
+      <div class="ecom-facet-group">
+        <h3 class="ecom-facet-title">Silhouette &amp; Category</h3>
+        <div class="ecom-facet-chips" id="drawerCategoryChips">
+          <button type="button" class="ecom-tag-chip active" data-cat="all">All Garments</button>
+          <button type="button" class="ecom-tag-chip" data-cat="kurtis">Pakistani Kurtis</button>
+          <button type="button" class="ecom-tag-chip" data-cat="kurta-sets">Kurta Sets</button>
+          <button type="button" class="ecom-tag-chip" data-cat="lehengas">Lehengas</button>
+          <button type="button" class="ecom-tag-chip" data-cat="dresses">Dresses &amp; Sets</button>
+          <button type="button" class="ecom-tag-chip" data-cat="dupattas">Dupattas</button>
+          <button type="button" class="ecom-tag-chip" data-cat="unstitched">Unstitched Fabrics</button>
+        </div>
+      </div>
+
+      <!-- Facet: Price Range -->
+      <div class="ecom-facet-group">
+        <h3 class="ecom-facet-title">Price Range</h3>
+        <div class="ecom-price-brackets" id="facetPriceBrackets">
+          <label class="ecom-radio-pill"><input type="radio" name="drawerPrice" value="all" checked><span>All Price Points</span></label>
+          <label class="ecom-radio-pill"><input type="radio" name="drawerPrice" value="under30k"><span>Under ₹30,000</span></label>
+          <label class="ecom-radio-pill"><input type="radio" name="drawerPrice" value="30k-50k"><span>₹30,000 &ndash; ₹50,000</span></label>
+          <label class="ecom-radio-pill"><input type="radio" name="drawerPrice" value="50k-80k"><span>₹50,000 &ndash; ₹80,000</span></label>
+          <label class="ecom-radio-pill"><input type="radio" name="drawerPrice" value="above80k"><span>Above ₹80,000</span></label>
+        </div>
+        <div class="ecom-custom-price-row">
+          <div class="ecom-price-input-wrap">
+            <span>₹</span>
+            <input type="number" id="customPriceMin" placeholder="Min" min="0" step="1000">
+          </div>
+          <span style="color: var(--gold);">&ndash;</span>
+          <div class="ecom-price-input-wrap">
+            <span>₹</span>
+            <input type="number" id="customPriceMax" placeholder="Max" min="0" step="1000">
+          </div>
+          <button type="button" class="ecom-price-apply-btn" id="applyCustomPriceBtn">Go</button>
+        </div>
+      </div>
+
+      <!-- Facet: Needlework & Craft -->
+      <div class="ecom-facet-group">
+        <h3 class="ecom-facet-title">Artisanal Needlework &amp; Craft</h3>
+        <div class="ecom-facet-chips" id="facetCraftChips">
+          <button type="button" class="ecom-tag-chip" data-craft="zari">Pure Zari</button>
+          <button type="button" class="ecom-tag-chip" data-craft="zardozi">Zardozi</button>
+          <button type="button" class="ecom-tag-chip" data-craft="tilla">Antique Tilla</button>
+          <button type="button" class="ecom-tag-chip" data-craft="dabka">Dabka</button>
+          <button type="button" class="ecom-tag-chip" data-craft="chikankari">Chikankari</button>
+          <button type="button" class="ecom-tag-chip" data-craft="mukaish">Mukaish</button>
+          <button type="button" class="ecom-tag-chip" data-craft="badla">Badla &amp; Marodi</button>
+          <button type="button" class="ecom-tag-chip" data-craft="brocade">Brocade</button>
+          <button type="button" class="ecom-tag-chip" data-craft="pearl">Pearl &amp; Moti</button>
+        </div>
+      </div>
+
+      <!-- Facet: Fabric & Silk -->
+      <div class="ecom-facet-group">
+        <h3 class="ecom-facet-title">Fabric &amp; Loom Weave</h3>
+        <div class="ecom-facet-chips" id="facetFabricChips">
+          <button type="button" class="ecom-tag-chip" data-fabric="silk">Pure Raw Silk</button>
+          <button type="button" class="ecom-tag-chip" data-fabric="velvet">Micro Velvet</button>
+          <button type="button" class="ecom-tag-chip" data-fabric="organza">Tissue Organza</button>
+          <button type="button" class="ecom-tag-chip" data-fabric="chanderi">Pure Chanderi</button>
+          <button type="button" class="ecom-tag-chip" data-fabric="georgette">Georgette</button>
+          <button type="button" class="ecom-tag-chip" data-fabric="pashmina">Pashmina</button>
+        </div>
+      </div>
+
+      <!-- Facet: Edition & Badge -->
+      <div class="ecom-facet-group">
+        <h3 class="ecom-facet-title">Atelier Edition</h3>
+        <div class="ecom-facet-chips" id="facetBadgeChips">
+          <button type="button" class="ecom-tag-chip" data-badge="new">New Arrivals</button>
+          <button type="button" class="ecom-tag-chip" data-badge="bestseller">Bestsellers</button>
+          <button type="button" class="ecom-tag-chip" data-badge="royal">Royal Couture</button>
+          <button type="button" class="ecom-tag-chip" data-badge="mastercut">Mastercut</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ecom-drawer-footer">
+      <button type="button" class="ecom-drawer-reset-btn" onclick="resetFilters()">Reset All</button>
+      <button type="button" class="ecom-drawer-apply-btn" id="ecomDrawerApplyBtn">Show (<span id="ecomDrawerResultCount">12</span>) Garments</button>
+    </div>
+  </aside>
 
   <main id="main" class="catalog-section">
     <div class="catalog-meta">
@@ -4153,11 +4745,18 @@
       });
 
       let currentCategory = "all";
+      let currentPriceFilter = "all"; // 'all', 'under30k', '30k-50k', '50k-80k', 'above80k', 'custom'
+      let customMinPrice = null;
+      let customMaxPrice = null;
+      let selectedCrafts = new Set();
+      let selectedFabrics = new Set();
+      let selectedBadges = new Set();
       let searchQuery = "";
       let sortOrder = "featured";
       let visibleLimit = 10;
       const PAGE_SIZE = 10;
       let currentFilteredList = [];
+      let currentGridCols = parseInt(localStorage.getItem("aleen_ecom_grid_cols") || "5", 10);
       let wishlist = JSON.parse(localStorage.getItem("aleen_wishlist") || "[]");
       let bag = JSON.parse(localStorage.getItem("aleen_bag") || "[]");
       let activeModalItem = null;
@@ -4194,14 +4793,34 @@
       const filterTabsEl = document.getElementById("filterTabs");
       const searchInput = document.getElementById("searchInput");
       const searchClearBtn = document.getElementById("searchClearBtn");
-      const filterActiveChip = document.getElementById("filterActiveChip");
-      const filterActiveChipText = document.getElementById("filterActiveChipText");
       const sortSelect = document.getElementById("sortSelect");
       const toastEl = document.getElementById("toastMsg");
       const toastText = document.getElementById("toastText");
       const seeMoreWrap = document.getElementById("seeMoreWrap");
       const seeMoreBtn = document.getElementById("seeMoreBtn");
       const activeFilterLabel = document.getElementById("activeFilterLabel");
+
+      // E-Commerce Refine Drawer Elements
+      const filterDrawerEl = document.getElementById("ecomFilterDrawer");
+      const filterDrawerScrim = document.getElementById("ecomDrawerScrim");
+      const openFilterDrawerBtn = document.getElementById("openFilterDrawerBtn");
+      const closeFilterDrawerBtn = document.getElementById("closeFilterDrawerBtn");
+      const ecomDrawerApplyBtn = document.getElementById("ecomDrawerApplyBtn");
+      const ecomActiveFilterBadge = document.getElementById("ecomActiveFilterBadge");
+      const ecomDrawerCountBadge = document.getElementById("ecomDrawerCountBadge");
+      const ecomDrawerResultCount = document.getElementById("ecomDrawerResultCount");
+      const ecomActiveStrip = document.getElementById("ecomActiveStrip");
+      const ecomActiveTags = document.getElementById("ecomActiveTags");
+      const quickPriceChips = document.getElementById("quickPriceChips");
+      const customPriceMinInput = document.getElementById("customPriceMin");
+      const customPriceMaxInput = document.getElementById("customPriceMax");
+      const applyCustomPriceBtn = document.getElementById("applyCustomPriceBtn");
+      const drawerCategoryChips = document.getElementById("drawerCategoryChips");
+      const facetCraftChips = document.getElementById("facetCraftChips");
+      const facetFabricChips = document.getElementById("facetFabricChips");
+      const facetBadgeChips = document.getElementById("facetBadgeChips");
+      const ecomScrollLeft = document.getElementById("ecomScrollLeft");
+      const ecomScrollRight = document.getElementById("ecomScrollRight");
 
       if (searchInput && searchQuery) {
         searchInput.value = searchQuery;
@@ -4271,6 +4890,45 @@
             (normCurrent === "kurtis" && (itemCat === "kurtis" || itemCat === "sarees")) ||
             (normCurrent === "kurta-sets" && (itemCat === "kurta-sets" || (item.title && item.title.toLowerCase().includes("anarkali"))));
 
+          // Price filter check
+          let matchesPrice = true;
+          const p = Number(item.price) || 0;
+          if (currentPriceFilter === "under30k") {
+            matchesPrice = p < 30000;
+          } else if (currentPriceFilter === "30k-50k") {
+            matchesPrice = p >= 30000 && p <= 50000;
+          } else if (currentPriceFilter === "50k-80k") {
+            matchesPrice = p >= 50000 && p <= 80000;
+          } else if (currentPriceFilter === "above50k") {
+            matchesPrice = p > 50000;
+          } else if (currentPriceFilter === "above80k") {
+            matchesPrice = p > 80000;
+          } else if (currentPriceFilter === "custom") {
+            if (customMinPrice !== null && p < customMinPrice) matchesPrice = false;
+            if (customMaxPrice !== null && p > customMaxPrice) matchesPrice = false;
+          }
+
+          // Craft filter check
+          let matchesCraft = true;
+          if (selectedCrafts.size > 0) {
+            const craftText = ((item.craft || "") + " " + (item.desc || "") + " " + (item.title || "")).toLowerCase();
+            matchesCraft = Array.from(selectedCrafts).some(c => craftText.includes(c));
+          }
+
+          // Fabric filter check
+          let matchesFabric = true;
+          if (selectedFabrics.size > 0) {
+            const fabricText = ((item.fabric || "") + " " + (item.desc || "") + " " + (item.title || "")).toLowerCase();
+            matchesFabric = Array.from(selectedFabrics).some(f => fabricText.includes(f));
+          }
+
+          // Badge filter check
+          let matchesBadge = true;
+          if (selectedBadges.size > 0) {
+            const badgeText = (item.badge || "").toLowerCase();
+            matchesBadge = Array.from(selectedBadges).some(b => badgeText.includes(b));
+          }
+
           const q = searchQuery.toLowerCase().trim();
           const matchesSearch = !q || (
             (item.title && item.title.toLowerCase().includes(q)) ||
@@ -4282,7 +4940,8 @@
             (item.badge && item.badge.toLowerCase().includes(q))
           );
           const matchesNew = !isNewArrivalsOnly || (item.badge && item.badge.toLowerCase().includes("new")) || item.badge === "Heritage Edition" || item.badge === "Bestseller";
-          return matchesCat && matchesSearch && matchesNew;
+          
+          return matchesCat && matchesPrice && matchesCraft && matchesFabric && matchesBadge && matchesSearch && matchesNew;
         });
 
         if (sortOrder === "price-asc") {
@@ -4300,17 +4959,60 @@
           searchClearBtn.style.display = searchQuery.trim().length > 0 ? "inline-flex" : "none";
         }
 
-        // Update Active Filter Chip
-        if (filterActiveChip && filterActiveChipText) {
-          const hasFilter = normCurrent !== "all" || searchQuery.trim().length > 0;
-          if (hasFilter) {
-            filterActiveChip.style.display = "inline-flex";
-            const parts = [];
-            if (normCurrent !== "all") parts.push(getCategoryLabel(normCurrent));
-            if (searchQuery.trim().length > 0) parts.push(`"${searchQuery.trim()}"`);
-            filterActiveChipText.textContent = parts.join(" • ");
+        // Calculate active filter count
+        const activeFilterCount = (normCurrent !== "all" ? 1 : 0) +
+          (currentPriceFilter !== "all" ? 1 : 0) +
+          selectedCrafts.size +
+          selectedFabrics.size +
+          selectedBadges.size +
+          (searchQuery.trim().length > 0 ? 1 : 0);
+
+        if (ecomActiveFilterBadge) {
+          ecomActiveFilterBadge.textContent = activeFilterCount;
+          ecomActiveFilterBadge.style.display = activeFilterCount > 0 ? "inline-block" : "none";
+        }
+
+        if (ecomDrawerCountBadge) {
+          ecomDrawerCountBadge.textContent = `${filtered.length} Pieces`;
+        }
+        if (ecomDrawerResultCount) {
+          ecomDrawerResultCount.textContent = filtered.length;
+        }
+
+        // Render Active Tags Bar
+        if (ecomActiveStrip && ecomActiveTags) {
+          if (activeFilterCount > 0) {
+            ecomActiveStrip.style.display = "flex";
+            const tags = [];
+            if (normCurrent !== "all") {
+              tags.push(`<span class="ecom-tag">Category: ${getCategoryLabel(normCurrent)} <button type="button" onclick="clearCategoryFilter()" title="Remove category filter">✕</button></span>`);
+            }
+            if (currentPriceFilter !== "all") {
+              let pLabel = "Price: " + currentPriceFilter;
+              if (currentPriceFilter === "under30k") pLabel = "Under ₹30,000";
+              else if (currentPriceFilter === "30k-50k") pLabel = "₹30k - ₹50k";
+              else if (currentPriceFilter === "above50k") pLabel = "Above ₹50,000";
+              else if (currentPriceFilter === "50k-80k") pLabel = "₹50k - ₹80k";
+              else if (currentPriceFilter === "above80k") pLabel = "Above ₹80,000";
+              else if (currentPriceFilter === "custom") pLabel = `₹${customMinPrice || 0} - ₹${customMaxPrice || 'Max'}`;
+              tags.push(`<span class="ecom-tag">${pLabel} <button type="button" onclick="clearPriceFilter()" title="Remove price filter">✕</button></span>`);
+            }
+            selectedCrafts.forEach(c => {
+              tags.push(`<span class="ecom-tag">Craft: ${c} <button type="button" onclick="removeCraftFilter('${c}')" title="Remove craft filter">✕</button></span>`);
+            });
+            selectedFabrics.forEach(f => {
+              tags.push(`<span class="ecom-tag">Fabric: ${f} <button type="button" onclick="removeFabricFilter('${f}')" title="Remove fabric filter">✕</button></span>`);
+            });
+            selectedBadges.forEach(b => {
+              tags.push(`<span class="ecom-tag">Edition: ${b} <button type="button" onclick="removeBadgeFilter('${b}')" title="Remove edition filter">✕</button></span>`);
+            });
+            if (searchQuery.trim().length > 0) {
+              tags.push(`<span class="ecom-tag">Search: "${searchQuery.trim()}" <button type="button" onclick="clearSearchFilter()" title="Clear search">✕</button></span>`);
+            }
+            ecomActiveTags.innerHTML = tags.join("");
           } else {
-            filterActiveChip.style.display = "none";
+            ecomActiveStrip.style.display = "none";
+            ecomActiveTags.innerHTML = "";
           }
         }
 
@@ -4344,14 +5046,16 @@
         if (!items) items = currentFilteredList.length ? currentFilteredList : GARMENTS;
         if (!gridEl) return;
         gridEl.innerHTML = "";
+        gridEl.className = "garments-grid cols-" + (currentGridCols || 5);
 
         if (items.length === 0) {
           if (countEl) countEl.textContent = "0";
           if (seeMoreWrap) seeMoreWrap.style.display = "none";
           gridEl.innerHTML = `
-        <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px;">
-          <p style="font-family: var(--serif-i); font-size: 24px; color: #554121; margin-bottom: 12px;">No atelier garments matched your filter.</p>
-          <button class="filter-tab active" onclick="resetFilters()">Reset All Filters</button>
+        <div style="grid-column: 1/-1; text-align: center; padding: 70px 20px;">
+          <p style="font-family: var(--serif-i); font-size: 26px; color: var(--gold-light); margin-bottom: 14px;">No atelier garments matched your filter.</p>
+          <p style="font-size: 13.5px; color: rgba(239, 228, 200, 0.65); margin-bottom: 24px;">Try loosening your filters or resetting to view the complete collection.</p>
+          <button class="ecom-cat-pill active" onclick="resetFilters()" style="padding: 10px 24px;">Reset All Filters</button>
         </div>
       `;
           return;
@@ -4402,33 +5106,122 @@
         }
       }
 
-      if (seeMoreBtn) {
-        seeMoreBtn.addEventListener("click", () => {
-          visibleLimit += PAGE_SIZE;
-          renderGarments(currentFilteredList);
-        });
-      }
+      window.clearCategoryFilter = function () {
+        currentCategory = "all";
+        updateCategoryPillButtons();
+        filterAndSortGarments(true);
+      };
+
+      window.clearPriceFilter = function () {
+        currentPriceFilter = "all";
+        customMinPrice = null;
+        customMaxPrice = null;
+        if (customPriceMinInput) customPriceMinInput.value = "";
+        if (customPriceMaxInput) customPriceMaxInput.value = "";
+        syncPriceChipStates();
+        filterAndSortGarments(true);
+      };
+
+      window.removeCraftFilter = function (craft) {
+        selectedCrafts.delete(craft);
+        syncCraftChipsState();
+        filterAndSortGarments(true);
+      };
+
+      window.removeFabricFilter = function (fabric) {
+        selectedFabrics.delete(fabric);
+        syncFabricChipsState();
+        filterAndSortGarments(true);
+      };
+
+      window.removeBadgeFilter = function (badge) {
+        selectedBadges.delete(badge);
+        syncBadgeChipsState();
+        filterAndSortGarments(true);
+      };
+
+      window.clearSearchFilter = function () {
+        searchQuery = "";
+        if (searchInput) searchInput.value = "";
+        filterAndSortGarments(true);
+      };
 
       window.resetFilters = function () {
         currentCategory = "all";
+        currentPriceFilter = "all";
+        customMinPrice = null;
+        customMaxPrice = null;
+        selectedCrafts.clear();
+        selectedFabrics.clear();
+        selectedBadges.clear();
         searchQuery = "";
         sortOrder = "featured";
         isNewArrivalsOnly = false;
         if (searchInput) searchInput.value = "";
         if (sortSelect) sortSelect.value = "featured";
-        updateTabButtons();
+        if (customPriceMinInput) customPriceMinInput.value = "";
+        if (customPriceMaxInput) customPriceMaxInput.value = "";
+        updateCategoryPillButtons();
+        syncPriceChipStates();
+        syncCraftChipsState();
+        syncFabricChipsState();
+        syncBadgeChipsState();
         filterAndSortGarments(true);
+        showToast("✦ All filters reset to atelier curation");
       };
 
-      function updateTabButtons() {
-        if (!filterTabsEl) return;
-        const tabs = filterTabsEl.querySelectorAll(".filter-tab");
-        tabs.forEach(tab => {
-          if (tab.getAttribute("data-category") === currentCategory) {
-            tab.classList.add("active");
-          } else {
-            tab.classList.remove("active");
-          }
+      function updateCategoryPillButtons() {
+        if (filterTabsEl) {
+          filterTabsEl.querySelectorAll(".ecom-cat-pill").forEach(pill => {
+            const cat = normalizeCategory(pill.getAttribute("data-category"));
+            if (cat === normalizeCategory(currentCategory)) pill.classList.add("active");
+            else pill.classList.remove("active");
+          });
+        }
+        if (drawerCategoryChips) {
+          drawerCategoryChips.querySelectorAll(".ecom-tag-chip").forEach(chip => {
+            const cat = normalizeCategory(chip.getAttribute("data-cat"));
+            if (cat === normalizeCategory(currentCategory)) chip.classList.add("active");
+            else chip.classList.remove("active");
+          });
+        }
+      }
+
+      function syncPriceChipStates() {
+        if (quickPriceChips) {
+          quickPriceChips.querySelectorAll(".ecom-chip").forEach(c => {
+            if (c.getAttribute("data-price") === currentPriceFilter) c.classList.add("active");
+            else c.classList.remove("active");
+          });
+        }
+        const radio = document.querySelector(`input[name="drawerPrice"][value="${currentPriceFilter}"]`);
+        if (radio) radio.checked = true;
+      }
+
+      function syncCraftChipsState() {
+        if (!facetCraftChips) return;
+        facetCraftChips.querySelectorAll(".ecom-tag-chip").forEach(chip => {
+          const val = chip.getAttribute("data-craft");
+          if (selectedCrafts.has(val)) chip.classList.add("active");
+          else chip.classList.remove("active");
+        });
+      }
+
+      function syncFabricChipsState() {
+        if (!facetFabricChips) return;
+        facetFabricChips.querySelectorAll(".ecom-tag-chip").forEach(chip => {
+          const val = chip.getAttribute("data-fabric");
+          if (selectedFabrics.has(val)) chip.classList.add("active");
+          else chip.classList.remove("active");
+        });
+      }
+
+      function syncBadgeChipsState() {
+        if (!facetBadgeChips) return;
+        facetBadgeChips.querySelectorAll(".ecom-tag-chip").forEach(chip => {
+          const val = chip.getAttribute("data-badge");
+          if (selectedBadges.has(val)) chip.classList.add("active");
+          else chip.classList.remove("active");
         });
       }
 
@@ -4546,16 +5339,191 @@
         activeModalItem = null;
       }
 
-      if (filterTabsEl) {
-        filterTabsEl.addEventListener("click", e => {
-          const btn = e.target.closest(".filter-tab");
-          if (!btn) return;
-          currentCategory = normalizeCategory(btn.getAttribute("data-category"));
-          isNewArrivalsOnly = false;
-          updateTabButtons();
+      // E-Commerce Refine Drawer open/close
+      function openFilterDrawer() {
+        if (!filterDrawerEl || !filterDrawerScrim) return;
+        filterDrawerEl.classList.add("open");
+        filterDrawerScrim.classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeFilterDrawer() {
+        if (!filterDrawerEl || !filterDrawerScrim) return;
+        filterDrawerEl.classList.remove("open");
+        filterDrawerScrim.classList.remove("open");
+        document.body.style.overflow = "";
+      }
+
+      if (openFilterDrawerBtn) openFilterDrawerBtn.addEventListener("click", openFilterDrawer);
+      if (closeFilterDrawerBtn) closeFilterDrawerBtn.addEventListener("click", closeFilterDrawer);
+      if (filterDrawerScrim) filterDrawerScrim.addEventListener("click", closeFilterDrawer);
+      if (ecomDrawerApplyBtn) {
+        ecomDrawerApplyBtn.addEventListener("click", () => {
+          closeFilterDrawer();
           filterAndSortGarments(true);
         });
       }
+
+      // Quick category pills bar navigation
+      if (filterTabsEl) {
+        filterTabsEl.addEventListener("click", e => {
+          const pill = e.target.closest(".ecom-cat-pill");
+          if (!pill) return;
+          currentCategory = normalizeCategory(pill.getAttribute("data-category"));
+          isNewArrivalsOnly = false;
+          updateCategoryPillButtons();
+          filterAndSortGarments(true);
+        });
+      }
+
+      // Horizontal scroll arrows for category ribbon
+      if (ecomScrollLeft && filterTabsEl) {
+        ecomScrollLeft.addEventListener("click", () => {
+          filterTabsEl.scrollBy({ left: -260, behavior: "smooth" });
+        });
+      }
+      if (ecomScrollRight && filterTabsEl) {
+        ecomScrollRight.addEventListener("click", () => {
+          filterTabsEl.scrollBy({ left: 260, behavior: "smooth" });
+        });
+      }
+
+      // Drawer category chips
+      if (drawerCategoryChips) {
+        drawerCategoryChips.addEventListener("click", e => {
+          const chip = e.target.closest(".ecom-tag-chip");
+          if (!chip) return;
+          currentCategory = normalizeCategory(chip.getAttribute("data-cat"));
+          isNewArrivalsOnly = false;
+          updateCategoryPillButtons();
+          filterAndSortGarments(true);
+        });
+      }
+
+      // Quick price chips (on the action deck)
+      if (quickPriceChips) {
+        quickPriceChips.addEventListener("click", e => {
+          const chip = e.target.closest(".ecom-chip");
+          if (!chip) return;
+          const priceVal = chip.getAttribute("data-price");
+          if (currentPriceFilter === priceVal && priceVal !== "all") {
+            currentPriceFilter = "all";
+          } else {
+            currentPriceFilter = priceVal;
+          }
+          customMinPrice = null;
+          customMaxPrice = null;
+          if (customPriceMinInput) customPriceMinInput.value = "";
+          if (customPriceMaxInput) customPriceMaxInput.value = "";
+          syncPriceChipStates();
+          filterAndSortGarments(true);
+        });
+      }
+
+      // Drawer price radio options
+      document.querySelectorAll('input[name="drawerPrice"]').forEach(radio => {
+        radio.addEventListener("change", e => {
+          if (e.target.checked) {
+            currentPriceFilter = e.target.value;
+            customMinPrice = null;
+            customMaxPrice = null;
+            if (customPriceMinInput) customPriceMinInput.value = "";
+            if (customPriceMaxInput) customPriceMaxInput.value = "";
+            syncPriceChipStates();
+            filterAndSortGarments(true);
+          }
+        });
+      });
+
+      // Custom price range apply button
+      if (applyCustomPriceBtn) {
+        applyCustomPriceBtn.addEventListener("click", () => {
+          const minVal = parseFloat(customPriceMinInput?.value);
+          const maxVal = parseFloat(customPriceMaxInput?.value);
+          if (isNaN(minVal) && isNaN(maxVal)) {
+            showToast("Please enter a valid minimum or maximum amount");
+            return;
+          }
+          currentPriceFilter = "custom";
+          customMinPrice = !isNaN(minVal) ? minVal : null;
+          customMaxPrice = !isNaN(maxVal) ? maxVal : null;
+          syncPriceChipStates();
+          filterAndSortGarments(true);
+          showToast(`✦ Price filter applied: ${customMinPrice ? '₹' + customMinPrice.toLocaleString('en-IN') : '₹0'} - ${customMaxPrice ? '₹' + customMaxPrice.toLocaleString('en-IN') : 'Above'}`);
+        });
+      }
+
+      // Craft facet chips
+      if (facetCraftChips) {
+        facetCraftChips.addEventListener("click", e => {
+          const chip = e.target.closest(".ecom-tag-chip");
+          if (!chip) return;
+          const craft = chip.getAttribute("data-craft");
+          if (selectedCrafts.has(craft)) {
+            selectedCrafts.delete(craft);
+          } else {
+            selectedCrafts.add(craft);
+          }
+          syncCraftChipsState();
+          filterAndSortGarments(true);
+        });
+      }
+
+      // Fabric facet chips
+      if (facetFabricChips) {
+        facetFabricChips.addEventListener("click", e => {
+          const chip = e.target.closest(".ecom-tag-chip");
+          if (!chip) return;
+          const fabric = chip.getAttribute("data-fabric");
+          if (selectedFabrics.has(fabric)) {
+            selectedFabrics.delete(fabric);
+          } else {
+            selectedFabrics.add(fabric);
+          }
+          syncFabricChipsState();
+          filterAndSortGarments(true);
+        });
+      }
+
+      // Badge facet chips
+      if (facetBadgeChips) {
+        facetBadgeChips.addEventListener("click", e => {
+          const chip = e.target.closest(".ecom-tag-chip");
+          if (!chip) return;
+          const badge = chip.getAttribute("data-badge");
+          if (selectedBadges.has(badge)) {
+            selectedBadges.delete(badge);
+          } else {
+            selectedBadges.add(badge);
+          }
+          syncBadgeChipsState();
+          filterAndSortGarments(true);
+        });
+      }
+
+      // Grid column layout switcher
+      function setGridColumns(cols) {
+        currentGridCols = cols;
+        localStorage.setItem("aleen_ecom_grid_cols", cols);
+        if (gridEl) {
+          gridEl.classList.remove("cols-2", "cols-3", "cols-4", "cols-5");
+          gridEl.classList.add(`cols-${cols}`);
+        }
+        document.querySelectorAll(".ecom-grid-btn").forEach(btn => {
+          if (parseInt(btn.getAttribute("data-cols"), 10) === cols) {
+            btn.classList.add("active");
+          } else {
+            btn.classList.remove("active");
+          }
+        });
+      }
+
+      document.querySelectorAll(".ecom-grid-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const cols = parseInt(btn.getAttribute("data-cols"), 10);
+          if (cols) setGridColumns(cols);
+        });
+      });
 
       if (searchClearBtn) {
         searchClearBtn.addEventListener("click", () => {
@@ -4680,10 +5648,14 @@
       }
 
       document.addEventListener("keydown", e => {
-        if (modalEl?.classList.contains("open")) {
-          if (e.key === "Escape") {
+        if (e.key === "Escape") {
+          if (filterDrawerEl?.classList.contains("open")) {
+            closeFilterDrawer();
+          } else if (modalEl?.classList.contains("open")) {
             closeModal();
-          } else if (e.key === "ArrowLeft") {
+          }
+        } else if (modalEl?.classList.contains("open")) {
+          if (e.key === "ArrowLeft") {
             document.getElementById("modalGalleryPrev")?.click();
           } else if (e.key === "ArrowRight") {
             document.getElementById("modalGalleryNext")?.click();
@@ -4692,7 +5664,13 @@
       });
 
       // Boot
-      updateTabButtons();
+      updateCategoryPillCounts();
+      updateCategoryPillButtons();
+      syncPriceChipStates();
+      syncCraftChipsState();
+      syncFabricChipsState();
+      syncBadgeChipsState();
+      setGridColumns(currentGridCols || 5);
       filterAndSortGarments(true);
     })();
   </script>
