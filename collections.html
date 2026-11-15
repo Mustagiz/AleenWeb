@@ -1185,7 +1185,8 @@
     .ecom-refine-search-wrap {
       flex: 1 1 280px;
       min-width: 220px;
-      max-width: 480px;
+      max-width: 460px;
+      margin-left: auto;
     }
 
     .search-box {
@@ -3525,7 +3526,7 @@
             </button>
           </div>
 
-          <!-- Center: Instant Search Bar -->
+          <!-- Center / Right: Instant Search Bar -->
           <div class="ecom-refine-search-wrap">
             <div class="search-box">
               <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -3535,31 +3536,6 @@
               <input type="text" id="searchInput" class="search-input" aria-label="Search garments by title, needlecraft, or material"
                 placeholder="Search by title, needlecraft, pure raw silk, velvet, zardozi..." autocomplete="off">
               <button type="button" class="search-clear-btn" id="searchClearBtn" aria-label="Clear search query" title="Clear search">✕</button>
-            </div>
-          </div>
-
-          <!-- Right: Sort & Grid View Switcher -->
-          <div class="ecom-refine-actions-right">
-            <div class="sort-box">
-              <select id="sortSelect" aria-label="Sort garments">
-                <option value="featured">✦ Featured Curations</option>
-                <option value="price-asc">Price: Low to High</option>
-                <option value="price-desc">Price: High to Low</option>
-                <option value="name-asc">Name: A to Z</option>
-              </select>
-            </div>
-
-            <!-- E-Commerce Grid Column Switcher (2, 3, 5 cols) -->
-            <div class="ecom-grid-switcher" aria-label="Grid layout view">
-              <button type="button" class="ecom-grid-btn" data-cols="2" title="2 Columns (Editorial Luxury View)" aria-label="2 Columns View">
-                <span></span><span></span>
-              </button>
-              <button type="button" class="ecom-grid-btn" data-cols="3" title="3 Columns (Balanced View)" aria-label="3 Columns View">
-                <span></span><span></span><span></span>
-              </button>
-              <button type="button" class="ecom-grid-btn active" data-cols="5" title="5 Columns (Catalog Gallery View)" aria-label="5 Columns View">
-                <span></span><span></span><span></span><span></span><span></span>
-              </button>
             </div>
           </div>
         </div>
@@ -3589,6 +3565,16 @@
     </div>
 
     <div class="ecom-drawer-body">
+      <!-- Facet: Sort By -->
+      <div class="ecom-facet-group">
+        <h3 class="ecom-facet-title">Sort By</h3>
+        <div class="ecom-facet-chips" id="drawerSortChips">
+          <button type="button" class="ecom-tag-chip active" data-sort="featured">✦ Featured Curations</button>
+          <button type="button" class="ecom-tag-chip" data-sort="price-asc">Price: Low to High</button>
+          <button type="button" class="ecom-tag-chip" data-sort="price-desc">Price: High to Low</button>
+          <button type="button" class="ecom-tag-chip" data-sort="name-asc">Name: A to Z</button>
+        </div>
+      </div>
       <!-- Facet: Silhouette / Category -->
       <div class="ecom-facet-group">
         <h3 class="ecom-facet-title">Silhouette &amp; Category</h3>
@@ -4644,6 +4630,7 @@
       const facetCraftChips = document.getElementById("facetCraftChips");
       const facetFabricChips = document.getElementById("facetFabricChips");
       const facetBadgeChips = document.getElementById("facetBadgeChips");
+      const drawerSortChips = document.getElementById("drawerSortChips");
       const ecomScrollLeft = document.getElementById("ecomScrollLeft");
       const ecomScrollRight = document.getElementById("ecomScrollRight");
 
@@ -4962,6 +4949,7 @@
       window.removeBadgeFilter = function (badge) {
         selectedBadges.delete(badge);
         syncBadgeChipsState();
+        syncSortChipsState();
         filterAndSortGarments(true);
       };
 
@@ -4991,6 +4979,7 @@
         syncCraftChipsState();
         syncFabricChipsState();
         syncBadgeChipsState();
+        syncSortChipsState();
         filterAndSortGarments(true);
         showToast("✦ All filters reset to atelier curation");
       };
@@ -5046,6 +5035,15 @@
         facetBadgeChips.querySelectorAll(".ecom-tag-chip").forEach(chip => {
           const val = chip.getAttribute("data-badge");
           if (selectedBadges.has(val)) chip.classList.add("active");
+          else chip.classList.remove("active");
+        });
+      }
+
+      function syncSortChipsState() {
+        if (!drawerSortChips) return;
+        drawerSortChips.querySelectorAll(".ecom-tag-chip").forEach(chip => {
+          const val = chip.getAttribute("data-sort");
+          if (val === sortOrder) chip.classList.add("active");
           else chip.classList.remove("active");
         });
       }
@@ -5326,6 +5324,17 @@
         });
       }
 
+      // Drawer sort chips
+      if (drawerSortChips) {
+        drawerSortChips.addEventListener("click", e => {
+          const chip = e.target.closest(".ecom-tag-chip");
+          if (!chip) return;
+          sortOrder = chip.getAttribute("data-sort") || "featured";
+          syncSortChipsState();
+          filterAndSortGarments(true);
+        });
+      }
+
       // Grid column layout switcher
       function setGridColumns(cols) {
         currentGridCols = cols;
@@ -5495,6 +5504,7 @@
       syncCraftChipsState();
       syncFabricChipsState();
       syncBadgeChipsState();
+      syncSortChipsState();
       setGridColumns(currentGridCols || 5);
       filterAndSortGarments(true);
     })();
