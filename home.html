@@ -5,6 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Aleen Clothing — Consciously Curated</title>
 <meta name="description" content="Aleen Clothing — bespoke heritage fashion. Timeless. Ethical. Exquisite.">
+<!-- SEO: Open Graph & Twitter Cards -->
+<meta property="og:title" content="Aleen Clothing — Consciously Curated">
+<meta property="og:description" content="Aleen Clothing — bespoke heritage fashion. Timeless. Ethical. Exquisite.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="./assets/preview-desktop.jpg">
+<meta property="og:url" content="https://aleen.clothing">
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Aleen Clothing">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Aleen Clothing — Consciously Curated">
+<meta name="twitter:description" content="Aleen Clothing — bespoke heritage fashion. Timeless. Ethical. Exquisite.">
+<meta name="twitter:image" content="./assets/preview-desktop.jpg">
+<!-- SEO: Canonical URL -->
+<link rel="canonical" href="https://aleen.clothing">
+<!-- End SEO -->
 <script>
 // Prevent broken intro animation state on reload when scrolled down
 if ('scrollRestoration' in history) {
@@ -5633,7 +5648,7 @@ body.is-ready .brand, body.is-ready #brand {
         <div class="hero-model-layer model-layer-1 active" data-model="1" style="opacity: 1 !important; visibility: visible !important; transform: none !important;">
           <picture>
             <source media="(max-width: 700px)" srcset="https://mahira2.netlify.app/assets/women-mobile.jpg?v=3">
-            <img src="https://mahira2.netlify.app/assets/women-clean.jpg?v=3" alt="Awadh champagne saree model" decoding="async" style="width: 100%; height: 100%; object-fit: cover; object-position: 50% 25%;">
+            <img src="https://mahira2.netlify.app/assets/women-clean.jpg?v=3" alt="Awadh champagne saree model" loading="eager" fetchpriority="high" style="width: 100%; height: 100%; object-fit: cover; object-position: 50% 25%;">
           </picture>
         </div>
       </div>
@@ -8476,7 +8491,7 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
     function buildCardHtml(c) {
       return `
         <a class="w-card" href="${c.url || 'collections.html'}" aria-label="${c.title || 'Collection'}">
-          <img src="${c.img}" alt="${c.title || 'Aleen Women Collection'}" loading="lazy" decoding="async">
+          <img src="${c.img}" alt="${c.title || 'Aleen Women Collection'}" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='https://mahira2.netlify.app/assets/s4-p1.jpg?v=3';">
           <span class="w-scrim"></span>
           <div class="w-caption">
             <p class="w-kicker">${c.kicker || 'New Collection'}</p>
@@ -9287,10 +9302,51 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
       .then(data => {
         if (data && data.success && Array.isArray(data.rotator) && data.rotator.length > 0) {
           heroMessages = data.rotator;
+          window.aleenHeroMessages = heroMessages;
           localStorage.setItem('aleen_hero_rotator', JSON.stringify(data.rotator));
         }
       })
       .catch(() => {});
+
+    window.aleenHeroMessages = heroMessages;
+
+    // Real-time synchronization via BroadcastChannel from Admin Panel
+    if (typeof BroadcastChannel !== 'undefined') {
+      const heroChannel = new BroadcastChannel('aleen_hero_realtime');
+      heroChannel.onmessage = function (event) {
+        if (event.data && event.data.type === 'HERO_UPDATED' && Array.isArray(event.data.rotator) && event.data.rotator.length > 0) {
+          heroMessages = event.data.rotator;
+          window.aleenHeroMessages = heroMessages;
+          currentIndex = Math.min(currentIndex, heroMessages.length - 1);
+          const cur = heroMessages[currentIndex];
+          if (cur) {
+            ebEl.textContent = cur.eyebrow || '';
+            hlEl.innerHTML = cur.headline || '';
+            tagEl.textContent = cur.tagline || '';
+          }
+        }
+      };
+    }
+
+    // Cross-tab real-time sync via storage event fallback
+    window.addEventListener('storage', function (e) {
+      if (e.key === 'aleen_hero_rotator' && e.newValue) {
+        try {
+          const parsed = JSON.parse(e.newValue);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            heroMessages = parsed;
+            window.aleenHeroMessages = heroMessages;
+            currentIndex = Math.min(currentIndex, heroMessages.length - 1);
+            const cur = heroMessages[currentIndex];
+            if (cur) {
+              ebEl.textContent = cur.eyebrow || '';
+              hlEl.innerHTML = cur.headline || '';
+              tagEl.textContent = cur.tagline || '';
+            }
+          }
+        } catch (_) {}
+      }
+    });
 
     let currentIndex = 0;
     let isTransitioning = false;

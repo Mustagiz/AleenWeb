@@ -23,7 +23,7 @@
   },
   "heroRotator": [
     {
-      "eyebrow": "Centuries Of Indian Artistry",
+      "eyebrow": "Heirloom Craftsmanship",
       "headline": "Couture<br>Beyond Time",
       "tagline": "Where Awadh needlecraft meets timeless grace."
     },
@@ -331,7 +331,7 @@
       "kicker": "New Collection",
       "title": "Pakistani Kurtis",
       "desc": "Royal silhouettes in pure raw silk & velvet.",
-      "img": "assets/pakistani-kurti-1.jpg",
+      "img": "https://mahira2.netlify.app/assets/s4-p1.jpg?v=3",
       "url": "collections.html?category=kurtis"
     },
     {

@@ -7,6 +7,21 @@
   <title>Aleen Clothing — The Haute Garments Gallery</title>
   <meta name="description"
     content="Explore handcrafted Sarees, Kurta Sets, Lehengas, Dresses & Unstitched Silks by Aleen Clothing. Tradition meets tomorrow.">
+  <!-- SEO: Open Graph & Twitter Cards -->
+<meta property="og:title" content="Aleen Clothing — The Haute Garments Gallery">
+<meta property="og:description" content="Explore handcrafted Sarees, Kurta Sets, Lehengas, Dresses & Unstitched Silks by Aleen Clothing. Tradition meets tomorrow.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="./assets/collection-bg.png">
+<meta property="og:url" content="https://aleen.clothing/collections.html">
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Aleen Clothing">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Aleen Clothing — The Haute Garments Gallery">
+<meta name="twitter:description" content="Explore handcrafted Sarees, Kurta Sets, Lehengas, Dresses & Unstitched Silks by Aleen Clothing. Tradition meets tomorrow.">
+<meta name="twitter:image" content="./assets/collection-bg.png">
+<!-- SEO: Canonical URL -->
+<link rel="canonical" href="https://aleen.clothing/collections.html">
+<!-- End SEO -->
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon-96x96.png">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
@@ -4026,6 +4041,21 @@
         .catch(() => { });
 
       // Real-time tab sync when Admin modifies catalog
+      if (typeof BroadcastChannel !== 'undefined') {
+        const catChannel = new BroadcastChannel('aleen_catalog_realtime');
+        catChannel.onmessage = (event) => {
+          if (event.data && event.data.type === 'CATALOG_UPDATED' && Array.isArray(event.data.catalog) && event.data.catalog.length > 0) {
+            GARMENTS = event.data.catalog;
+            if (typeof updateCategoryPillCounts === 'function') {
+              updateCategoryPillCounts();
+            }
+            if (typeof filterAndSortGarments === 'function') {
+              filterAndSortGarments(false);
+            }
+          }
+        };
+      }
+
       window.addEventListener('storage', (e) => {
         if (e.key === 'aleen_master_catalog' && e.newValue) {
           try {

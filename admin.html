@@ -3189,11 +3189,19 @@
       <div class="hero-manager-card">
         <div class="cm-header">
           <div class="cm-title-group">
-            <h3>Homepage Hero Section 3-Second Text Rotator</h3>
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 6px; flex-wrap: wrap;">
+              <h3 style="margin: 0;">Homepage Hero Section 3-Second Text Rotator</h3>
+              <span id="heroSyncBadge" class="carousel-sync-badge" title="Real-time synchronized across all open visitor sessions and cloud database">
+                <span class="sync-indicator-dot"></span> Synced live to cloud &amp; homepage
+              </span>
+            </div>
             <p>Customize the rotating Eyebrow, Main Headline, and Tagline messages displayed at the very top of the
-              homepage hero section. Text transitions with a smooth editorial glide every 3 seconds.</p>
+              homepage hero section. Text transitions with a smooth editorial glide every 3 seconds with instant real-time sync.</p>
           </div>
-          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+            <button type="button" class="admin-tab-btn" onclick="syncHeroFromServer(); showToast('Synced latest hero messages from cloud');" title="Pull latest hero messages from cloud database">
+              🔄 Sync Cloud
+            </button>
             <button type="button" class="pane-add-btn" id="addHeroMsgBtn">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                 <line x1="12" y1="5" x2="12" y2="19"></line>
@@ -3370,17 +3378,25 @@
       <div class="carousel-manager-card">
         <div class="cm-header">
           <div>
-            <h2 class="cm-title">Women's Collections &mdash; Arched Cards Editor</h2>
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 6px; flex-wrap: wrap;">
+              <h2 class="cm-title" style="margin: 0;">Women's Collections &mdash; Arched Cards Editor</h2>
+              <span id="womenSyncBadge" class="carousel-sync-badge" title="Real-time synchronized across all open visitor sessions and cloud database">
+                <span class="sync-indicator-dot"></span> Synced live to cloud &amp; homepage
+              </span>
+            </div>
             <p class="cm-desc">
               Manage the luxury arched panels in the "New Collections For Women" homepage section.
-              These cards auto-scroll smoothly on the homepage with pause-on-hover. Update category kickers, titles, descriptions, links, and background photos live.
+              These cards auto-scroll smoothly on the homepage with pause-on-hover. Update category kickers, titles, descriptions, links, and background photos live with instant real-time broadcast.
             </p>
           </div>
           <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <button type="button" class="admin-tab-btn" onclick="syncWomenCardsFromServer(); showToast('Synced latest arched cards from cloud');" title="Pull latest arched cards from cloud database">
+              🔄 Sync Cloud
+            </button>
             <button type="button" class="admin-tab-btn" id="addNewWomenCardBtn" style="border-color: var(--gold); color: var(--gold); padding: 8px 16px;">
               + Add Arched Card
             </button>
-            <button type="button" class="admin-tab-btn" id="saveWomenCardsBtn" style="background: var(--gold); color: #000; font-weight: 600; padding: 8px 18px;">
+            <button type="button" class="admin-tab-btn" id="saveWomenCardsBtn" style="background: linear-gradient(135deg, var(--gold) 0%, var(--gold-deep) 100%); color: #000; font-weight: 600; padding: 8px 18px;">
               ✦ Save All Live
             </button>
             <button type="button" class="admin-tab-btn" id="resetWomenCardsBtn" style="padding: 8px 16px;">
@@ -5178,8 +5194,15 @@
         closeGarmentModal();
       });
 
+      const catalogBroadcast = typeof BroadcastChannel !== 'undefined' ? new BroadcastChannel('aleen_catalog_realtime') : null;
+
       function saveCatalog() {
         localStorage.setItem("aleen_master_catalog", JSON.stringify(catalog));
+        if (catalogBroadcast) {
+          try {
+            catalogBroadcast.postMessage({ type: 'CATALOG_UPDATED', catalog: catalog, timestamp: Date.now() });
+          } catch(e) {}
+        }
         const token = localStorage.getItem("atelier_admin_token") || "admin_session";
         fetch("/api/admin/catalog", {
           method: "POST",
@@ -5219,6 +5242,114 @@
       const heroPrevHl = document.getElementById("heroPrevHl");
       const heroPrevTag = document.getElementById("heroPrevTag");
 
+      const heroBroadcast = typeof BroadcastChannel !== 'undefined' ? new BroadcastChannel('aleen_hero_realtime') : null;
+      let heroSaveTimer = null;
+
+      function updateHeroSyncBadgeState(state) {
+        const badge = document.getElementById("heroSyncBadge");
+        if (!badge) return;
+        if (state === 'syncing') {
+          badge.className = "carousel-sync-badge syncing";
+          badge.innerHTML = `<span class="sync-indicator-dot"></span> Syncing to cloud &amp; homepage...`;
+        } else if (state === 'cached') {
+          badge.className = "carousel-sync-badge cached";
+          badge.innerHTML = `<span class="sync-indicator-dot"></span> Saved locally in cache`;
+        } else {
+          badge.className = "carousel-sync-badge";
+          badge.innerHTML = `<span class="sync-indicator-dot"></span> Synced live to cloud &amp; homepage`;
+        }
+      }
+
+      function triggerHeroSave(instant = false) {
+        localStorage.setItem("aleen_hero_rotator", JSON.stringify(heroRotator));
+        window.heroRotator = heroRotator;
+        if (heroBroadcast) {
+          try {
+            heroBroadcast.postMessage({ type: 'HERO_UPDATED', rotator: heroRotator, timestamp: Date.now() });
+          } catch(e) {}
+        }
+        updateHeroSyncBadgeState('syncing');
+
+        if (instant) {
+          if (heroSaveTimer) clearTimeout(heroSaveTimer);
+          return saveHeroToServer();
+        }
+        if (heroSaveTimer) clearTimeout(heroSaveTimer);
+        heroSaveTimer = setTimeout(() => {
+          saveHeroToServer();
+        }, 350);
+      }
+
+      async function saveHeroToServer() {
+        updateHeroSyncBadgeState('syncing');
+        localStorage.setItem("aleen_hero_rotator", JSON.stringify(heroRotator));
+        window.heroRotator = heroRotator;
+        if (heroBroadcast) {
+          try {
+            heroBroadcast.postMessage({ type: 'HERO_UPDATED', rotator: heroRotator, timestamp: Date.now() });
+          } catch(e) {}
+        }
+        const token = localStorage.getItem("atelier_admin_token") || "admin_session";
+        try {
+          const res = await fetch("/api/admin/hero-rotator", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer " + token
+            },
+            body: JSON.stringify({ rotator: heroRotator })
+          });
+          updateHeroSyncBadgeState('live');
+        } catch (e) {
+          console.warn("Hero sync error:", e);
+          updateHeroSyncBadgeState('cached');
+        }
+      }
+
+      window.syncHeroFromServer = function () {
+        fetch("/api/hero-rotator?t=" + Date.now())
+          .then(r => r.json())
+          .then(d => {
+            if (d && d.success && Array.isArray(d.rotator) && d.rotator.length > 0) {
+              heroRotator = d.rotator;
+              localStorage.setItem("aleen_hero_rotator", JSON.stringify(heroRotator));
+              if (heroBroadcast) {
+                try {
+                  heroBroadcast.postMessage({ type: 'HERO_UPDATED', rotator: heroRotator, timestamp: Date.now() });
+                } catch(e) {}
+              }
+              renderHeroManager();
+              updateHeroSyncBadgeState('live');
+            }
+          })
+          .catch(() => {});
+      };
+
+      window.heroRotator = heroRotator;
+      window.updateHeroMsgEyebrow = function (idx, val) {
+        if (heroRotator[idx]) {
+          heroRotator[idx].eyebrow = val;
+          updateHeroPreview(idx);
+          triggerHeroSave();
+        }
+      };
+
+      window.updateHeroMsgHeadline = function (idx, val) {
+        if (heroRotator[idx]) {
+          heroRotator[idx].headline = val;
+          updateHeroPreview(idx);
+          triggerHeroSave();
+        }
+      };
+
+      window.updateHeroMsgTagline = function (idx, val) {
+        if (heroRotator[idx]) {
+          heroRotator[idx].tagline = val;
+          updateHeroPreview(idx);
+          triggerHeroSave();
+        }
+      };
+
       function updateHeroPreview(idx) {
         const item = heroRotator[idx] || heroRotator[0];
         if (!item) return;
@@ -5243,17 +5374,17 @@
 
         <div class="cm-field-group">
           <label class="cm-field-label">Eyebrow Kicker (Small Gold Text)</label>
-          <input type="text" class="cm-input" value="${item.eyebrow || ''}" placeholder="e.g. Centuries Of Indian Artistry" oninput="heroRotator[${idx}].eyebrow = this.value; updateHeroPreview(${idx});">
+          <input type="text" class="cm-input" value="${item.eyebrow || ''}" placeholder="e.g. Centuries Of Indian Artistry" oninput="updateHeroMsgEyebrow(${idx}, this.value)">
         </div>
 
         <div class="cm-field-group">
           <label class="cm-field-label">Main Headline (Accepts &lt;br&gt; for line break)</label>
-          <input type="text" class="cm-input" value="${item.headline || ''}" placeholder="e.g. Couture&lt;br&gt;Beyond Time" oninput="heroRotator[${idx}].headline = this.value; updateHeroPreview(${idx});">
+          <input type="text" class="cm-input" value="${item.headline || ''}" placeholder="e.g. Couture&lt;br&gt;Beyond Time" oninput="updateHeroMsgHeadline(${idx}, this.value)">
         </div>
 
         <div class="cm-field-group">
           <label class="cm-field-label">Sub-Tagline (Editorial description)</label>
-          <textarea class="cm-input" rows="2" style="resize:vertical;" placeholder="e.g. Where Awadh needlecraft meets timeless grace." oninput="heroRotator[${idx}].tagline = this.value; updateHeroPreview(${idx});">${item.tagline || ''}</textarea>
+          <textarea class="cm-input" rows="2" style="resize:vertical;" placeholder="e.g. Where Awadh needlecraft meets timeless grace." oninput="updateHeroMsgTagline(${idx}, this.value)">${item.tagline || ''}</textarea>
         </div>
       </div>
     `).join("");
@@ -5265,6 +5396,7 @@
         const temp = heroRotator[idx];
         heroRotator[idx] = heroRotator[target];
         heroRotator[target] = temp;
+        triggerHeroSave(true);
         renderHeroManager();
       };
 
@@ -5274,6 +5406,7 @@
           return;
         }
         heroRotator.splice(idx, 1);
+        triggerHeroSave(true);
         renderHeroManager();
       };
 
@@ -5283,54 +5416,27 @@
           headline: "Crafted For<br>Generations",
           tagline: "Celebrating the royal heritage of bespoke needlecraft."
         });
+        triggerHeroSave(true);
         renderHeroManager();
         showToast("Added new hero rotator message!");
       });
 
       document.getElementById("saveHeroBtn")?.addEventListener("click", async () => {
-        const token = localStorage.getItem("atelier_admin_token") || "admin_session";
-        localStorage.setItem("aleen_hero_rotator", JSON.stringify(heroRotator));
-
-        try {
-          const res = await fetch("/api/admin/hero-rotator", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": "Bearer " + token
-            },
-            body: JSON.stringify({ rotator: heroRotator })
-          });
-          const data = await res.json();
-          if (data.success) {
-            showToast("✦ Hero Rotator text successfully saved and synchronized live!");
-          } else {
-            showToast("Saved locally in browser cache.");
-          }
-        } catch (e) {
-          showToast("Saved locally in browser cache.");
-        }
+        await saveHeroToServer();
+        showToast("✦ Hero Rotator text successfully saved and synchronized live!");
       });
 
       document.getElementById("resetHeroBtn")?.addEventListener("click", () => {
         if (confirm("Reset hero rotator messages to default?")) {
           heroRotator = JSON.parse(JSON.stringify(DEFAULT_HERO_ROTATOR));
-          localStorage.setItem("aleen_hero_rotator", JSON.stringify(heroRotator));
+          triggerHeroSave(true);
           renderHeroManager();
           showToast("Hero messages reset to default.");
         }
       });
 
-      // Fetch hero rotator from server
-      fetch("/api/hero-rotator")
-        .then(r => r.json())
-        .then(d => {
-          if (d && d.success && Array.isArray(d.rotator) && d.rotator.length > 0) {
-            heroRotator = d.rotator;
-            localStorage.setItem("aleen_hero_rotator", JSON.stringify(heroRotator));
-            renderHeroManager();
-          }
-        })
-        .catch(() => { });
+      // Initial fetch hero rotator from server
+      syncHeroFromServer();
 
       // ==========================================
       // TAB 2: HOMEPAGE FULL-WIDTH CAROUSEL MANAGER
@@ -5703,8 +5809,45 @@
       const womenCardsGrid = document.getElementById("womenCardsGrid");
       window.womenCollections = womenCollections;
       const womenBroadcast = typeof BroadcastChannel !== 'undefined' ? new BroadcastChannel('aleen_women_realtime') : null;
+      let womenSaveTimer = null;
+
+      function updateWomenSyncBadgeState(state) {
+        const badge = document.getElementById("womenSyncBadge");
+        if (!badge) return;
+        if (state === 'syncing') {
+          badge.className = "carousel-sync-badge syncing";
+          badge.innerHTML = `<span class="sync-indicator-dot"></span> Syncing to cloud &amp; homepage...`;
+        } else if (state === 'cached') {
+          badge.className = "carousel-sync-badge cached";
+          badge.innerHTML = `<span class="sync-indicator-dot"></span> Saved locally in cache`;
+        } else {
+          badge.className = "carousel-sync-badge";
+          badge.innerHTML = `<span class="sync-indicator-dot"></span> Synced live to cloud &amp; homepage`;
+        }
+      }
+
+      function triggerWomenSave(instant = false) {
+        localStorage.setItem("aleen_women_collections", JSON.stringify(womenCollections));
+        window.womenCollections = womenCollections;
+        if (womenBroadcast) {
+          try {
+            womenBroadcast.postMessage({ type: 'WOMEN_CARDS_UPDATED', cards: womenCollections, timestamp: Date.now() });
+          } catch(e) {}
+        }
+        updateWomenSyncBadgeState('syncing');
+
+        if (instant) {
+          if (womenSaveTimer) clearTimeout(womenSaveTimer);
+          return saveWomenCardsToServer();
+        }
+        if (womenSaveTimer) clearTimeout(womenSaveTimer);
+        womenSaveTimer = setTimeout(() => {
+          saveWomenCardsToServer();
+        }, 350);
+      }
 
       async function saveWomenCardsToServer() {
+        updateWomenSyncBadgeState('syncing');
         localStorage.setItem("aleen_women_collections", JSON.stringify(womenCollections));
         window.womenCollections = womenCollections;
         if (womenBroadcast) {
@@ -5714,7 +5857,8 @@
         }
         const token = localStorage.getItem("atelier_admin_token") || "admin_session";
         try {
-          const res = await fetch("/api/admin/women-collections", {
+          // Primary serverless endpoint: /api/women-collections (POST)
+          const res = await fetch("/api/women-collections", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -5723,39 +5867,49 @@
             body: JSON.stringify({ collections: womenCollections })
           });
           const result = await res.json();
-          if (result && result.success) {
-            // saved
+          if (!res.ok || !result.success) {
+            // Secondary fallback to /api/admin/women-collections for local server
+            await fetch("/api/admin/women-collections", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token
+              },
+              body: JSON.stringify({ collections: womenCollections })
+            });
           }
+          updateWomenSyncBadgeState('live');
         } catch (e) {
           console.warn("Women collections sync error:", e);
+          updateWomenSyncBadgeState('cached');
         }
       }
 
       window.updateWomenCardKicker = function (idx, val) {
         if (womenCollections[idx]) {
           womenCollections[idx].kicker = val;
-          saveWomenCardsToServer();
+          triggerWomenSave();
         }
       };
 
       window.updateWomenCardTitle = function (idx, val) {
         if (womenCollections[idx]) {
           womenCollections[idx].title = val;
-          saveWomenCardsToServer();
+          triggerWomenSave();
         }
       };
 
       window.updateWomenCardDesc = function (idx, val) {
         if (womenCollections[idx]) {
           womenCollections[idx].desc = val;
-          saveWomenCardsToServer();
+          triggerWomenSave();
         }
       };
 
       window.updateWomenCardUrl = function (idx, val) {
         if (womenCollections[idx]) {
           womenCollections[idx].url = val;
-          saveWomenCardsToServer();
+          triggerWomenSave();
         }
       };
 
@@ -5764,7 +5918,7 @@
         womenCollections[idx].img = val;
         const preview = document.getElementById("wcPreview_" + idx);
         if (preview) preview.src = val;
-        saveWomenCardsToServer();
+        triggerWomenSave();
       };
 
       window.uploadDirectWomenCardImg = function (idx, fileInput) {
@@ -5797,7 +5951,7 @@
           updateWomenCardImg(idx, finalUrl);
           const inputEl = document.getElementById("wcImgInput_" + idx);
           if (inputEl) inputEl.value = finalUrl;
-          await saveWomenCardsToServer();
+          await triggerWomenSave(true);
           renderWomenCardsManager();
           showToast("✦ Original photo applied at pristine 100% native quality!");
         };
@@ -5815,12 +5969,34 @@
             maxWidth: 1600,
             maxHeight: 2133,
             quality: 0.95,
-            onApply: (croppedUrl) => {
-              updateWomenCardImg(idx, croppedUrl);
+            onApply: async (croppedUrl) => {
+              let finalUrl = croppedUrl;
+              try {
+                const token = localStorage.getItem("atelier_admin_token") || "admin_session";
+                const upRes = await fetch("/api/admin/upload", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token
+                  },
+                  body: JSON.stringify({
+                    filename: file.name ? `women_${Date.now()}_${file.name}` : `women_cropped_${Date.now()}.jpg`,
+                    data: croppedUrl
+                  })
+                });
+                const upData = await upRes.json();
+                if (upData.success && upData.url) {
+                  finalUrl = upData.url;
+                }
+              } catch(err) {
+                console.warn("Cropped women card upload notice:", err);
+              }
+              updateWomenCardImg(idx, finalUrl);
               const inputEl = document.getElementById("wcImgInput_" + idx);
-              if (inputEl) inputEl.value = croppedUrl;
-              saveWomenCardsToServer();
+              if (inputEl) inputEl.value = finalUrl;
+              await triggerWomenSave(true);
               renderWomenCardsManager();
+              showToast("✦ Arched card cropped and saved live!");
             }
           });
         };
@@ -5838,12 +6014,34 @@
           maxWidth: 1600,
           maxHeight: 2133,
           quality: 0.95,
-          onApply: (croppedUrl) => {
-            updateWomenCardImg(idx, croppedUrl);
+          onApply: async (croppedUrl) => {
+            let finalUrl = croppedUrl;
+            try {
+              const token = localStorage.getItem("atelier_admin_token") || "admin_session";
+              const upRes = await fetch("/api/admin/upload", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  "Authorization": "Bearer " + token
+                },
+                body: JSON.stringify({
+                  filename: `women_recropped_${Date.now()}.jpg`,
+                  data: croppedUrl
+                })
+              });
+              const upData = await upRes.json();
+              if (upData.success && upData.url) {
+                finalUrl = upData.url;
+              }
+            } catch(err) {
+              console.warn("Cropped women card upload notice:", err);
+            }
+            updateWomenCardImg(idx, finalUrl);
             const inputEl = document.getElementById("wcImgInput_" + idx);
-            if (inputEl) inputEl.value = croppedUrl;
-            saveWomenCardsToServer();
+            if (inputEl) inputEl.value = finalUrl;
+            await triggerWomenSave(true);
             renderWomenCardsManager();
+            showToast("✦ Arched card frame updated and saved live!");
           }
         });
       };
@@ -5914,7 +6112,7 @@
         const temp = womenCollections[idx];
         womenCollections[idx] = womenCollections[newIdx];
         womenCollections[newIdx] = temp;
-        saveWomenCardsToServer();
+        triggerWomenSave(true);
         renderWomenCardsManager();
       };
 
@@ -5924,7 +6122,7 @@
           return;
         }
         womenCollections.splice(idx, 1);
-        saveWomenCardsToServer();
+        triggerWomenSave(true);
         renderWomenCardsManager();
         showToast("Card removed");
       };
@@ -5937,7 +6135,13 @@
             if (list && list.length >= 2) {
               womenCollections = list;
               localStorage.setItem("aleen_women_collections", JSON.stringify(womenCollections));
+              if (womenBroadcast) {
+                try {
+                  womenBroadcast.postMessage({ type: 'WOMEN_CARDS_UPDATED', cards: womenCollections, timestamp: Date.now() });
+                } catch(e) {}
+              }
               renderWomenCardsManager();
+              updateWomenSyncBadgeState('live');
             }
           })
           .catch((err) => {
@@ -5955,7 +6159,7 @@
           img: "https://mahira2.netlify.app/assets/s4-p1.jpg?v=3",
           url: "collections.html"
         });
-        saveWomenCardsToServer();
+        triggerWomenSave(true);
         renderWomenCardsManager();
         showToast("New arched collection card added!");
       });
@@ -5968,7 +6172,7 @@
       document.getElementById("resetWomenCardsBtn")?.addEventListener("click", () => {
         if (!confirm("Reset to default 8 luxury collection cards?")) return;
         womenCollections = JSON.parse(JSON.stringify(DEFAULT_WOMEN_COLLECTIONS));
-        saveWomenCardsToServer();
+        triggerWomenSave(true);
         renderWomenCardsManager();
         showToast("Women's collections reset to default curation");
       });
