@@ -8583,7 +8583,7 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
     }
 
     function renderTrack(cards) {
-      if (!Array.isArray(cards) || cards.length < 2) return;
+      if (!Array.isArray(cards) || cards.length < 1) return;
       var cardsHtml = cards.map(buildCardHtml).join('');
       // Duplicate sequence for seamless continuous infinite auto-scroll
       track.innerHTML = cardsHtml + cardsHtml;
@@ -8595,7 +8595,7 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
       var cached = localStorage.getItem('aleen_women_collections');
       if (cached) {
         var parsed = JSON.parse(cached);
-        if (Array.isArray(parsed) && parsed.length >= 2) {
+        if (Array.isArray(parsed) && parsed.length >= 1) {
           renderTrack(parsed);
         }
       }
@@ -8606,7 +8606,7 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
       .then(function (r) { return r.json(); })
       .then(function (d) {
         var list = (d && Array.isArray(d.collections)) ? d.collections : (Array.isArray(d) ? d : null);
-        if (list && list.length >= 2) {
+        if (list && list.length >= 1) {
           localStorage.setItem('aleen_women_collections', JSON.stringify(list));
           renderTrack(list);
         }
@@ -8619,7 +8619,7 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
     if (typeof BroadcastChannel !== 'undefined') {
       var womenChannel = new BroadcastChannel('aleen_women_realtime');
       womenChannel.onmessage = function (event) {
-        if (event.data && event.data.type === 'WOMEN_CARDS_UPDATED' && Array.isArray(event.data.cards) && event.data.cards.length >= 2) {
+        if (event.data && event.data.type === 'WOMEN_CARDS_UPDATED' && Array.isArray(event.data.cards) && event.data.cards.length >= 1) {
           renderTrack(event.data.cards);
         }
       };
@@ -8630,7 +8630,7 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
       if (e.key === 'aleen_women_collections' && e.newValue) {
         try {
           var parsed = JSON.parse(e.newValue);
-          if (Array.isArray(parsed) && parsed.length >= 2) {
+          if (Array.isArray(parsed) && parsed.length >= 1) {
             renderTrack(parsed);
           }
         } catch (_) {}
@@ -9226,7 +9226,7 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
 
     // Sync with Admin custom slides if saved in localStorage
     function rehydrateCustomSlides(customList) {
-      if (!Array.isArray(customList) || customList.length < 2) return;
+      if (!Array.isArray(customList) || customList.length < 1) return;
       stage.innerHTML = '';
       customList.forEach((slide, idx) => {
         const art = document.createElement('article');
@@ -9266,7 +9266,7 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
       const savedSlides = localStorage.getItem('aleen_carousel_slides');
       if (savedSlides) {
         const parsed = JSON.parse(savedSlides);
-        if (Array.isArray(parsed) && parsed.length >= 2) {
+        if (Array.isArray(parsed) && parsed.length >= 1) {
           rehydrateCustomSlides(parsed);
         }
       }
@@ -9279,7 +9279,7 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
       .then(res => res.json())
       .then(data => {
         const list = (data && Array.isArray(data.slides)) ? data.slides : (Array.isArray(data) ? data : null);
-        if (list && list.length >= 2) {
+        if (list && list.length >= 1) {
           localStorage.setItem('aleen_carousel_slides', JSON.stringify(list));
           rehydrateCustomSlides(list);
           showSlide(currentIndex);
@@ -9291,7 +9291,7 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
     if (typeof BroadcastChannel !== 'undefined') {
       const carouselChannel = new BroadcastChannel('aleen_carousel_realtime');
       carouselChannel.onmessage = function (event) {
-        if (event.data && event.data.type === 'CAROUSEL_UPDATED' && Array.isArray(event.data.slides) && event.data.slides.length >= 2) {
+        if (event.data && event.data.type === 'CAROUSEL_UPDATED' && Array.isArray(event.data.slides) && event.data.slides.length >= 1) {
           rehydrateCustomSlides(event.data.slides);
           showSlide(Math.min(currentIndex, slides.length - 1));
         }
@@ -9303,7 +9303,7 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
       if (e.key === 'aleen_carousel_slides' && e.newValue) {
         try {
           const parsed = JSON.parse(e.newValue);
-          if (Array.isArray(parsed) && parsed.length >= 2) {
+          if (Array.isArray(parsed) && parsed.length >= 1) {
             rehydrateCustomSlides(parsed);
             showSlide(Math.min(currentIndex, slides.length - 1));
           }

@@ -4105,7 +4105,7 @@
       }
 
       // Live Sync with Server Backend
-      fetch('/api/catalog')
+      fetch('/api/catalog?t=' + Date.now())
         .then(r => r.json())
         .then(data => {
           const list = Array.isArray(data.catalog) ? data.catalog : (Array.isArray(data.garments) ? data.garments : null);

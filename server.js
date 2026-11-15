@@ -726,7 +726,9 @@ const server = http.createServer(async (req, res) => {
 
     // Performance: Strategic Cache-Control headers
     let cacheControl = 'public, max-age=86400'; // default 1 day
-    if (['.jpg', '.jpeg', '.png', '.webp', '.svg', '.ico', '.woff', '.woff2', '.ttf'].includes(ext) || filePath.includes('/assets/')) {
+    if (filePath.includes('/uploads/')) {
+      cacheControl = 'public, max-age=0, must-revalidate'; // User uploads revalidate immediately
+    } else if (['.jpg', '.jpeg', '.png', '.webp', '.svg', '.ico', '.woff', '.woff2', '.ttf'].includes(ext) || filePath.includes('/assets/')) {
       cacheControl = 'public, max-age=31536000, immutable'; // 1 year for static media/fonts
     } else if (ext === '.css' || ext === '.js') {
       cacheControl = 'public, max-age=31536000, immutable';

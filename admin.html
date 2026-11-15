@@ -4695,14 +4695,17 @@
         });
         panes.forEach(p => p.classList.remove("active"));
         if (target === "catalog") document.getElementById("paneCatalog")?.classList.add("active");
-        if (target === "hero") document.getElementById("paneHero")?.classList.add("active");
+        if (target === "hero") {
+          document.getElementById("paneHero")?.classList.add("active");
+          if (typeof renderHeroManager === "function") renderHeroManager();
+        }
         if (target === "carousel") {
           document.getElementById("paneCarousel")?.classList.add("active");
-          if (typeof syncCarouselFromServer === "function") syncCarouselFromServer();
+          if (typeof renderCarouselManager === "function") renderCarouselManager();
         }
         if (target === "women-collections") {
           document.getElementById("paneWomenCollections")?.classList.add("active");
-          if (typeof syncWomenCardsFromServer === "function") syncWomenCardsFromServer();
+          if (typeof renderWomenCardsManager === "function") renderWomenCardsManager();
         }
         if (target === "settings") document.getElementById("paneSettings")?.classList.add("active");
       };
@@ -5249,22 +5252,34 @@
           } catch(e) {}
         }
         const token = localStorage.getItem("atelier_admin_token") || "admin_session";
-        fetch("/api/admin/catalog", {
+        fetch("/api/catalog", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             "Authorization": "Bearer " + token
           },
-          body: JSON.stringify({ garments: catalog })
+          body: JSON.stringify({ catalog: catalog, garments: catalog })
+        }).then(res => {
+          if (!res.ok) {
+            return fetch("/api/admin/catalog", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token
+              },
+              body: JSON.stringify({ garments: catalog })
+            });
+          }
         }).catch(e => console.warn("Catalog sync error:", e));
       }
 
       // Live load from server API on init
-      fetch("/api/catalog")
+      fetch("/api/catalog?t=" + Date.now())
         .then(r => r.json())
         .then(data => {
-          if (data.success && Array.isArray(data.garments) && data.garments.length > 0) {
-            catalog = data.garments;
+          const list = Array.isArray(data.catalog) ? data.catalog : (Array.isArray(data.garments) ? data.garments : null);
+          if (list && list.length > 0) {
+            catalog = list;
             localStorage.setItem("aleen_master_catalog", JSON.stringify(catalog));
             renderCatalog();
           }
