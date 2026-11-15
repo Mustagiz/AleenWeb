@@ -5399,9 +5399,30 @@
         const reader = new FileReader();
         reader.onload = async function(e) {
           const originalDataUrl = e.target.result;
-          updateSlideImg(idx, originalDataUrl);
+          let finalUrl = originalDataUrl;
+          try {
+            const token = localStorage.getItem("atelier_admin_token") || "admin_session";
+            const upRes = await fetch("/api/admin/upload", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token
+              },
+              body: JSON.stringify({
+                filename: file.name || ("slide_" + Date.now() + ".jpg"),
+                data: originalDataUrl
+              })
+            });
+            const upData = await upRes.json();
+            if (upData.success && upData.url) {
+              finalUrl = upData.url;
+            }
+          } catch(err) {
+            console.warn("Direct upload error:", err);
+          }
+          updateSlideImg(idx, finalUrl);
           const inputEl = document.getElementById("cmImgInput_" + idx);
-          if (inputEl) inputEl.value = originalDataUrl;
+          if (inputEl) inputEl.value = finalUrl;
           await saveCarouselToServer();
           renderCarouselManager();
           showToast("✦ Original photo applied at pristine 100% native quality!");
@@ -5417,9 +5438,9 @@
         reader.onload = function(e) {
           openCropStudio(e.target.result, {
             ratio: 16 / 9, // 16:9 full-width slider
-            maxWidth: 2560,
-            maxHeight: 1440,
-            quality: 0.94,
+            maxWidth: 2880,
+            maxHeight: 1620,
+            quality: 0.96,
             onApply: (croppedUrl) => {
               updateSlideImg(idx, croppedUrl);
               const inputEl = document.getElementById("cmImgInput_" + idx);
@@ -5440,9 +5461,9 @@
         }
         openCropStudio(carouselSlides[idx].img, {
           ratio: 16 / 9,
-          maxWidth: 2560,
-          maxHeight: 1440,
-          quality: 0.94,
+          maxWidth: 2880,
+          maxHeight: 1620,
+          quality: 0.96,
           onApply: (croppedUrl) => {
             updateSlideImg(idx, croppedUrl);
             const inputEl = document.getElementById("cmImgInput_" + idx);
@@ -5583,6 +5604,44 @@
         saveWomenCardsToServer();
       };
 
+      window.uploadDirectWomenCardImg = function (idx, fileInput) {
+        if (!fileInput.files || !fileInput.files[0]) return;
+        const file = fileInput.files[0];
+        const reader = new FileReader();
+        reader.onload = async function(e) {
+          const originalDataUrl = e.target.result;
+          let finalUrl = originalDataUrl;
+          try {
+            const token = localStorage.getItem("atelier_admin_token") || "admin_session";
+            const upRes = await fetch("/api/admin/upload", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token
+              },
+              body: JSON.stringify({
+                filename: file.name || ("women_" + Date.now() + ".jpg"),
+                data: originalDataUrl
+              })
+            });
+            const upData = await upRes.json();
+            if (upData.success && upData.url) {
+              finalUrl = upData.url;
+            }
+          } catch(err) {
+            console.warn("Direct upload error:", err);
+          }
+          updateWomenCardImg(idx, finalUrl);
+          const inputEl = document.getElementById("wcImgInput_" + idx);
+          if (inputEl) inputEl.value = finalUrl;
+          await saveWomenCardsToServer();
+          renderWomenCardsManager();
+          showToast("✦ Original photo applied at pristine 100% native quality!");
+        };
+        reader.readAsDataURL(file);
+        fileInput.value = "";
+      };
+
       window.uploadAndCropWomenCardImg = function (idx, fileInput) {
         if (!fileInput.files || !fileInput.files[0]) return;
         const file = fileInput.files[0];
@@ -5590,9 +5649,9 @@
         reader.onload = function (e) {
           openCropStudio(e.target.result, {
             ratio: 0.75, // 3:4 Arched silhouette
-            maxWidth: 900,
-            maxHeight: 1200,
-            quality: 0.82,
+            maxWidth: 1600,
+            maxHeight: 2133,
+            quality: 0.95,
             onApply: (croppedUrl) => {
               updateWomenCardImg(idx, croppedUrl);
               const inputEl = document.getElementById("wcImgInput_" + idx);
@@ -5613,9 +5672,9 @@
         }
         openCropStudio(womenCollections[idx].img, {
           ratio: 0.75,
-          maxWidth: 900,
-          maxHeight: 1200,
-          quality: 0.82,
+          maxWidth: 1600,
+          maxHeight: 2133,
+          quality: 0.95,
           onApply: (croppedUrl) => {
             updateWomenCardImg(idx, croppedUrl);
             const inputEl = document.getElementById("wcImgInput_" + idx);
@@ -5659,6 +5718,11 @@
               <label class="cm-field-label">Arched Card Photo</label>
               <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
                 <input type="text" class="cm-input cm-img-input" id="wcImgInput_${idx}" value="${escapeHtml(card.img || '')}" placeholder="assets/... or https://..." oninput="updateWomenCardImg(${idx}, this.value)" style="flex: 1; min-width: 140px;">
+                <label class="tbl-btn tbl-btn-edit" style="cursor: pointer; display: inline-flex; align-items: center; gap: 5px; padding: 7px 12px; margin: 0; white-space: nowrap;" title="Upload photo directly at 100% native quality without cropping">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                  Upload Direct
+                  <input type="file" accept="image/*" style="display: none;" onchange="uploadDirectWomenCardImg(${idx}, this)">
+                </label>
                 <label class="tbl-btn tbl-btn-edit" style="cursor: pointer; display: inline-flex; align-items: center; gap: 5px; padding: 7px 12px; margin: 0; white-space: nowrap;" title="Upload photo and open Crop Studio">
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
                   Upload &amp; Crop

@@ -40,7 +40,7 @@ const DEFAULT_DATA = {
       kicker: "New Collection",
       title: "Kurta Sets",
       desc: "Everyday elegance, elevated.",
-      img: "https://mahira2.netlify.app/assets/s3-kurta.jpg?v=5",
+      img: "assets/women-collections/card_1_kurta-sets.jpg",
       url: "collections.html?category=kurta-sets"
     },
     {
@@ -48,7 +48,7 @@ const DEFAULT_DATA = {
       kicker: "New Collection",
       title: "Dresses & Sets",
       desc: "Modern silhouettes for every you.",
-      img: "https://mahira2.netlify.app/assets/s3-dresses.jpg?v=5",
+      img: "assets/women-collections/card_2_dresses.jpg",
       url: "dresses.html"
     },
     {
@@ -56,7 +56,7 @@ const DEFAULT_DATA = {
       kicker: "New Collection",
       title: "Lehengas",
       desc: "Royal silhouettes, timeless grace.",
-      img: "https://mahira2.netlify.app/assets/women-clean.jpg?v=3",
+      img: "assets/women-collections/card_3_lehengas.jpg",
       url: "collections.html?category=lehengas"
     },
     {
@@ -64,7 +64,7 @@ const DEFAULT_DATA = {
       kicker: "New Collection",
       title: "Anarkali Sets",
       desc: "Voluminous flares & royal grace.",
-      img: "https://mahira2.netlify.app/assets/s4-room.jpg?v=1",
+      img: "assets/women-collections/card_4_anarkalis.jpg",
       url: "collections.html?category=kurta-sets"
     },
     {
@@ -80,7 +80,7 @@ const DEFAULT_DATA = {
       kicker: "Atelier Curations",
       title: "Unstitched Fabrics",
       desc: "Pure Banarasi katan silks & brocades.",
-      img: "https://mahira2.netlify.app/assets/s2-card-kala.jpg?v=2",
+      img: "assets/women-collections/card_6_fabrics.jpg",
       url: "collections.html?category=fabrics"
     },
     {
@@ -233,6 +233,15 @@ async function saveCatalog(catalog) {
 async function getWomenCollections() {
   const remote = await fetchDoc('atelier_women');
   if (Array.isArray(remote) && remote.length >= 2) {
+    for (let i = 0; i < remote.length; i++) {
+      if (typeof remote[i].img === 'string' && remote[i].img.startsWith('firestore:')) {
+        const docKey = remote[i].img.replace('firestore:', '');
+        const imgDoc = await fetchDoc(docKey);
+        if (imgDoc && imgDoc.img) {
+          remote[i].img = imgDoc.img;
+        }
+      }
+    }
     if (!_cache) _cache = readLocalFallback();
     _cache.womenCollections = remote;
     return remote;
@@ -245,7 +254,18 @@ async function saveWomenCollections(cards) {
   if (!_cache) _cache = readLocalFallback();
   _cache.womenCollections = cards;
   _lastFetchTime = Date.now();
-  await saveDoc('atelier_women', cards);
+
+  const payloadCards = JSON.parse(JSON.stringify(cards));
+  for (let i = 0; i < payloadCards.length; i++) {
+    const c = payloadCards[i];
+    if (typeof c.img === 'string' && c.img.startsWith('data:image')) {
+      const docKey = `atelier_women_img_${i}`;
+      await saveDoc(docKey, { img: c.img, updatedAt: new Date().toISOString() });
+      c.img = `firestore:${docKey}`;
+    }
+  }
+
+  await saveDoc('atelier_women', payloadCards);
   return cards;
 }
 

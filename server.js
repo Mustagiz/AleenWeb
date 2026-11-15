@@ -165,13 +165,31 @@ function saveDocToFirestore(docName, data) {
 function saveData() {
   fs.writeFileSync(DATA_FILE, JSON.stringify(atelierData, null, 2), 'utf8');
   if (atelierData.carouselSlides) {
-    saveDocToFirestore('atelier_carousel', atelierData.carouselSlides);
+    const payloadSlides = JSON.parse(JSON.stringify(atelierData.carouselSlides));
+    for (let i = 0; i < payloadSlides.length; i++) {
+      const s = payloadSlides[i];
+      if (typeof s.img === 'string' && s.img.startsWith('data:image')) {
+        const docKey = `atelier_slide_img_${i}`;
+        saveDocToFirestore(docKey, { img: s.img, updatedAt: new Date().toISOString() });
+        s.img = `firestore:${docKey}`;
+      }
+    }
+    saveDocToFirestore('atelier_carousel', payloadSlides);
   }
   if (atelierData.catalog) {
     saveDocToFirestore('atelier_catalog', atelierData.catalog);
   }
   if (atelierData.womenCollections) {
-    saveDocToFirestore('atelier_women', atelierData.womenCollections);
+    const payloadCards = JSON.parse(JSON.stringify(atelierData.womenCollections));
+    for (let i = 0; i < payloadCards.length; i++) {
+      const c = payloadCards[i];
+      if (typeof c.img === 'string' && c.img.startsWith('data:image')) {
+        const docKey = `atelier_women_img_${i}`;
+        saveDocToFirestore(docKey, { img: c.img, updatedAt: new Date().toISOString() });
+        c.img = `firestore:${docKey}`;
+      }
+    }
+    saveDocToFirestore('atelier_women', payloadCards);
   }
   const generalData = { ...atelierData };
   delete generalData.carouselSlides;
@@ -209,6 +227,19 @@ fetchFirestoreDoc('atelier_data', (remote) => {
 
 fetchFirestoreDoc('atelier_carousel', (slides) => {
   if (Array.isArray(slides) && slides.length >= 2) {
+    slides.forEach((s, idx) => {
+      if (typeof s.img === 'string' && s.img.startsWith('firestore:')) {
+        const docKey = s.img.replace('firestore:', '');
+        fetchFirestoreDoc(docKey, (imgDoc) => {
+          if (imgDoc && imgDoc.img) {
+            s.img = imgDoc.img;
+            if (atelierData.carouselSlides && atelierData.carouselSlides[idx]) {
+              atelierData.carouselSlides[idx].img = imgDoc.img;
+            }
+          }
+        });
+      }
+    });
     atelierData.carouselSlides = slides;
     console.log('✦ Synced ' + slides.length + ' carousel slides from Firestore atelier_carousel');
   }
@@ -223,6 +254,19 @@ fetchFirestoreDoc('atelier_catalog', (catalog) => {
 
 fetchFirestoreDoc('atelier_women', (cards) => {
   if (Array.isArray(cards) && cards.length >= 2) {
+    cards.forEach((c, idx) => {
+      if (typeof c.img === 'string' && c.img.startsWith('firestore:')) {
+        const docKey = c.img.replace('firestore:', '');
+        fetchFirestoreDoc(docKey, (imgDoc) => {
+          if (imgDoc && imgDoc.img) {
+            c.img = imgDoc.img;
+            if (atelierData.womenCollections && atelierData.womenCollections[idx]) {
+              atelierData.womenCollections[idx].img = imgDoc.img;
+            }
+          }
+        });
+      }
+    });
     atelierData.womenCollections = cards;
     console.log('✦ Synced ' + cards.length + ' women collection cards from Firestore atelier_women');
   }
