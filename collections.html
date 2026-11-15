@@ -1009,39 +1009,72 @@
 
     /* Controls Container: filter pills + search */
     .catalog-controls-card {
-      background: rgba(10, 22, 14, 0.85);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border: 1px solid rgba(201, 163, 95, 0.32);
-      border-radius: 20px;
-      padding: 24px 30px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(201, 163, 95, 0.22);
-      margin-bottom: 12px;
+      background: rgba(8, 20, 13, 0.88);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid rgba(214, 178, 110, 0.32);
+      border-radius: 22px;
+      padding: 22px 26px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 235, 180, 0.2);
+      margin-bottom: 20px;
       display: flex;
       flex-direction: column;
-      gap: 22px;
+      gap: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .catalog-controls-card::before {
+      content: "";
+      position: absolute;
+      top: -40%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60%;
+      height: 100%;
+      background: radial-gradient(ellipse at center, rgba(201, 163, 95, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .filter-tabs-wrapper {
+      position: relative;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
     }
 
     .filter-tabs {
       display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
+      align-items: center;
+      gap: 8px;
       justify-content: center;
+      flex-wrap: wrap;
+      width: 100%;
+      margin: 0;
+      padding: 2px 0;
     }
 
     .filter-tab {
-      background: rgba(18, 36, 24, 0.65);
-      border: 1px solid rgba(201, 163, 95, 0.28);
-      color: rgba(247, 241, 227, 0.88);
-      padding: 9px 22px;
+      background: rgba(14, 30, 20, 0.72);
+      border: 1px solid rgba(214, 178, 110, 0.26);
+      color: rgba(247, 241, 227, 0.9);
+      padding: 8px 16px;
       border-radius: 999px;
       font-family: var(--sans);
-      font-size: 11.5px;
+      font-size: 11px;
       font-weight: 500;
-      letter-spacing: 1.2px;
+      letter-spacing: 1px;
       text-transform: uppercase;
       cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      user-select: none;
     }
 
     .filter-tab:hover {
@@ -1049,38 +1082,62 @@
       color: #ffffff;
       border-color: var(--gold-light);
       transform: translateY(-2px);
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
     }
 
     .filter-tab.active {
       background: linear-gradient(135deg, #e5bf78 0%, #c9a35f 100%);
-      color: #08110b;
-      border-color: #f7dfa3;
-      font-weight: 600;
+      color: #07120a;
+      border-color: #fce7b3;
+      font-weight: 700;
       box-shadow: 0 4px 18px rgba(201, 163, 95, 0.45);
       transform: translateY(-1px);
     }
 
+    .filter-tab-count {
+      font-size: 9.5px;
+      font-weight: 600;
+      padding: 1px 6px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+      color: inherit;
+      opacity: 0.85;
+      line-height: 1.3;
+    }
+
+    .filter-tab.active .filter-tab-count {
+      background: rgba(7, 18, 10, 0.22);
+      color: #07120a;
+      opacity: 1;
+    }
+
+    .catalog-controls-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(201, 163, 95, 0.28) 25%, rgba(201, 163, 95, 0.28) 75%, transparent 100%);
+      margin: 0;
+      z-index: 1;
+    }
+
     .catalog-search-row {
       display: flex;
-      flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 18px;
-      border-top: 1px solid rgba(201, 163, 95, 0.18);
-      padding-top: 20px;
+      gap: 16px;
+      width: 100%;
+      z-index: 1;
+      flex-wrap: wrap;
     }
 
     .search-box {
       position: relative;
       flex: 1 1 320px;
-      max-width: 480px;
       height: 44px;
       display: flex;
       align-items: center;
     }
 
-    .search-box svg {
+    .search-box svg.search-icon {
       position: absolute;
       left: 16px;
       top: 50%;
@@ -1088,15 +1145,16 @@
       stroke: var(--gold);
       pointer-events: none;
       z-index: 2;
+      transition: stroke 0.25s ease;
     }
 
     .search-input {
       width: 100%;
       height: 44px;
-      background: rgba(4, 9, 6, 0.72);
+      background: rgba(4, 10, 7, 0.78);
       border: 1px solid rgba(201, 163, 95, 0.32);
       border-radius: 999px;
-      padding: 0 20px 0 46px;
+      padding: 0 42px 0 46px;
       font-family: var(--sans);
       font-size: 13px;
       color: #ffffff;
@@ -1108,12 +1166,72 @@
 
     .search-input:focus {
       border-color: var(--gold);
-      background: rgba(4, 9, 6, 0.92);
-      box-shadow: 0 0 16px rgba(201, 163, 95, 0.35);
+      background: rgba(4, 10, 7, 0.95);
+      box-shadow: 0 0 20px rgba(201, 163, 95, 0.35);
     }
 
     .search-input::placeholder {
       color: rgba(239, 228, 200, 0.45);
+    }
+
+    .search-clear-btn {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(201, 163, 95, 0.2);
+      border: 1px solid rgba(201, 163, 95, 0.35);
+      color: var(--gold-light);
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 11px;
+      padding: 0;
+      transition: all 0.2s ease;
+      z-index: 3;
+    }
+
+    .search-clear-btn:hover {
+      background: var(--gold);
+      color: #000;
+    }
+
+    .filter-active-chip {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      background: rgba(201, 163, 95, 0.15);
+      border: 1px solid rgba(201, 163, 95, 0.4);
+      color: var(--gold-light);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+      height: 32px;
+      box-sizing: border-box;
+    }
+
+    .filter-active-chip button {
+      background: none;
+      border: none;
+      color: inherit;
+      cursor: pointer;
+      font-size: 13px;
+      padding: 0 0 0 4px;
+      line-height: 1;
+      opacity: 0.75;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .filter-active-chip button:hover {
+      opacity: 1;
+      color: #fff;
     }
 
     .sort-box {
@@ -1129,8 +1247,8 @@
       position: absolute;
       right: 18px;
       top: 50%;
-      width: 8px;
-      height: 8px;
+      width: 7px;
+      height: 7px;
       border-right: 1.5px solid var(--gold);
       border-bottom: 1.5px solid var(--gold);
       transform: translateY(-65%) rotate(45deg);
@@ -1144,7 +1262,7 @@
 
     .sort-box select {
       height: 44px;
-      background: rgba(4, 9, 6, 0.72);
+      background: rgba(4, 10, 7, 0.78);
       border: 1px solid rgba(201, 163, 95, 0.32);
       border-radius: 999px;
       padding: 0 40px 0 22px;
@@ -1165,16 +1283,8 @@
 
     .sort-box select:focus {
       border-color: var(--gold);
-      background: rgba(4, 9, 6, 0.92);
+      background: rgba(4, 10, 7, 0.95);
       box-shadow: 0 0 16px rgba(201, 163, 95, 0.35);
-    }
-      outline: none;
-      cursor: pointer;
-      transition: border-color 0.25s;
-    }
-
-    .sort-box select:focus {
-      border-color: var(--gold);
     }
 
     /* Main Grid Section */
@@ -2986,29 +3096,60 @@
 
       <!-- Controls -->
       <div class="catalog-controls-card">
-        <div class="filter-tabs" id="filterTabs">
-          <button class="filter-tab active" data-category="all">All Garments</button>
-          <button class="filter-tab" data-category="kurtis">Pakistani Kurtis</button>
-          <button class="filter-tab" data-category="kurta-sets">Kurta Sets</button>
-          <button class="filter-tab" data-category="lehengas">Lehengas</button>
-          <button class="filter-tab" data-category="dresses">Dresses &amp; Sets</button>
-          <button class="filter-tab" data-category="dupattas">Dupattas</button>
-          <button class="filter-tab" data-category="unstitched">Unstitched Fabrics</button>
+        <div class="filter-tabs-wrapper">
+          <div class="filter-tabs" id="filterTabs">
+            <button class="filter-tab active" data-category="all">
+              <span>All Garments</span>
+              <span class="filter-tab-count" id="count-all">12</span>
+            </button>
+            <button class="filter-tab" data-category="kurtis">
+              <span>Pakistani Kurtis</span>
+              <span class="filter-tab-count" id="count-kurtis">3</span>
+            </button>
+            <button class="filter-tab" data-category="kurta-sets">
+              <span>Kurta Sets</span>
+              <span class="filter-tab-count" id="count-kurta-sets">2</span>
+            </button>
+            <button class="filter-tab" data-category="lehengas">
+              <span>Lehengas</span>
+              <span class="filter-tab-count" id="count-lehengas">2</span>
+            </button>
+            <button class="filter-tab" data-category="dresses">
+              <span>Dresses &amp; Sets</span>
+              <span class="filter-tab-count" id="count-dresses">2</span>
+            </button>
+            <button class="filter-tab" data-category="dupattas">
+              <span>Dupattas</span>
+              <span class="filter-tab-count" id="count-dupattas">1</span>
+            </button>
+            <button class="filter-tab" data-category="unstitched">
+              <span>Unstitched Fabrics</span>
+              <span class="filter-tab-count" id="count-unstitched">2</span>
+            </button>
+          </div>
         </div>
+
+        <div class="catalog-controls-divider"></div>
 
         <div class="catalog-search-row">
           <div class="search-box">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
               <circle cx="11" cy="11" r="8"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
             <input type="text" id="searchInput" class="search-input"
-              placeholder="Search pakistani kurtis, anarkali, zardozi..." autocomplete="off">
+              placeholder="Search by garment title, needlecraft, pure raw silk, velvet, zardozi..." autocomplete="off">
+            <button type="button" class="search-clear-btn" id="searchClearBtn" aria-label="Clear search query" title="Clear search">✕</button>
+          </div>
+
+          <div class="filter-active-chip" id="filterActiveChip">
+            <span id="filterActiveChipText">Filtered</span>
+            <button type="button" onclick="resetFilters()" title="Remove active filters">✕</button>
           </div>
 
           <div class="sort-box">
             <select id="sortSelect" aria-label="Sort garments">
-              <option value="featured">Featured Curations</option>
+              <option value="featured">✦ Featured Curations</option>
               <option value="price-asc">Price: Low to High</option>
               <option value="price-desc">Price: High to Low</option>
               <option value="name-asc">Name: A to Z</option>
@@ -3874,6 +4015,9 @@
           if (list && list.length > 0) {
             GARMENTS = list;
             localStorage.setItem("aleen_master_catalog", JSON.stringify(GARMENTS));
+            if (typeof updateCategoryPillCounts === 'function') {
+              updateCategoryPillCounts();
+            }
             if (typeof filterAndSortGarments === 'function') {
               filterAndSortGarments(false);
             }
@@ -3886,6 +4030,9 @@
         if (e.key === 'aleen_master_catalog' && e.newValue) {
           try {
             GARMENTS = JSON.parse(e.newValue);
+            if (typeof updateCategoryPillCounts === 'function') {
+              updateCategoryPillCounts();
+            }
             if (typeof filterAndSortGarments === 'function') {
               filterAndSortGarments(false);
             }
@@ -3903,14 +4050,30 @@
       let bag = JSON.parse(localStorage.getItem("aleen_bag") || "[]");
       let activeModalItem = null;
 
+      function normalizeCategory(cat) {
+        if (!cat) return "all";
+        const c = String(cat).toLowerCase().trim();
+        if (c === "fabrics" || c === "fabric") return "unstitched";
+        if (c === "anarkalis" || c === "anarkali") return "kurta-sets";
+        if (c === "kurti") return "kurtis";
+        if (c === "lehenga") return "lehengas";
+        if (c === "dress") return "dresses";
+        if (c === "dupatta") return "dupattas";
+        return c;
+      }
+
       // Check URL query parameters (category & filter=new)
       const urlParams = new URLSearchParams(window.location.search);
       const catParam = urlParams.get("category");
       const filterParam = urlParams.get("filter");
+      const searchParam = urlParams.get("q");
       let isNewArrivalsOnly = (filterParam === "new");
 
       if (catParam) {
-        currentCategory = catParam.toLowerCase();
+        currentCategory = normalizeCategory(catParam);
+      }
+      if (searchParam) {
+        searchQuery = searchParam;
       }
 
       // DOM Elements
@@ -3918,26 +4081,43 @@
       const countEl = document.getElementById("visibleCount");
       const filterTabsEl = document.getElementById("filterTabs");
       const searchInput = document.getElementById("searchInput");
+      const searchClearBtn = document.getElementById("searchClearBtn");
+      const filterActiveChip = document.getElementById("filterActiveChip");
+      const filterActiveChipText = document.getElementById("filterActiveChipText");
       const sortSelect = document.getElementById("sortSelect");
       const toastEl = document.getElementById("toastMsg");
       const toastText = document.getElementById("toastText");
       const seeMoreWrap = document.getElementById("seeMoreWrap");
       const seeMoreBtn = document.getElementById("seeMoreBtn");
+      const activeFilterLabel = document.getElementById("activeFilterLabel");
 
-      // Modal Elements
-      const modalEl = document.getElementById("quickModal");
-      const modalCloseBtn = document.getElementById("modalCloseBtn");
-      const modalImg = document.getElementById("modalImg");
-      const modalCraft = document.getElementById("modalCraft");
-      const modalTitle = document.getElementById("modalTitle");
-      const modalPrice = document.getElementById("modalPrice");
-      const modalDesc = document.getElementById("modalDesc");
-      const modalFabric = document.getElementById("modalFabric");
-      const modalWeave = document.getElementById("modalWeave");
-      const modalOrigin = document.getElementById("modalOrigin");
-      const modalDelivery = document.getElementById("modalDelivery");
-      const modalInquireBtn = document.getElementById("modalInquireBtn");
-      const modalSizePicker = document.getElementById("modalSizePicker");
+      if (searchInput && searchQuery) {
+        searchInput.value = searchQuery;
+      }
+
+      function updateCategoryPillCounts() {
+        const counts = {
+          all: GARMENTS.length,
+          kurtis: 0,
+          "kurta-sets": 0,
+          lehengas: 0,
+          dresses: 0,
+          dupattas: 0,
+          unstitched: 0
+        };
+
+        GARMENTS.forEach(item => {
+          const cat = normalizeCategory(item.category);
+          if (counts[cat] !== undefined) {
+            counts[cat]++;
+          }
+        });
+
+        Object.keys(counts).forEach(k => {
+          const el = document.getElementById("count-" + k);
+          if (el) el.textContent = counts[k];
+        });
+      }
 
       function showToast(msg) {
         if (!toastEl || !toastText) return;
@@ -3952,21 +4132,42 @@
         return "₹" + Number(num).toLocaleString("en-IN");
       }
 
+      function getCategoryLabel(catKey) {
+        const map = {
+          all: "All Garments",
+          kurtis: "Pakistani Kurtis",
+          "kurta-sets": "Kurta Sets",
+          lehengas: "Lehengas",
+          dresses: "Dresses & Sets",
+          dupattas: "Dupattas & Stoles",
+          unstitched: "Unstitched Fabrics"
+        };
+        return map[catKey] || catKey;
+      }
+
       function filterAndSortGarments(resetPage = false) {
         if (resetPage) {
           visibleLimit = PAGE_SIZE;
         }
 
+        const normCurrent = normalizeCategory(currentCategory);
+
         let filtered = GARMENTS.filter(item => {
-          const matchesCat = currentCategory === "all" ||
-            item.category === currentCategory ||
-            ((currentCategory === "kurtis" || currentCategory === "sarees") && (item.category === "kurtis" || item.category === "sarees"));
+          const itemCat = normalizeCategory(item.category);
+          const matchesCat = normCurrent === "all" ||
+            itemCat === normCurrent ||
+            (normCurrent === "kurtis" && (itemCat === "kurtis" || itemCat === "sarees")) ||
+            (normCurrent === "kurta-sets" && (itemCat === "kurta-sets" || (item.title && item.title.toLowerCase().includes("anarkali"))));
+
           const q = searchQuery.toLowerCase().trim();
           const matchesSearch = !q || (
             (item.title && item.title.toLowerCase().includes(q)) ||
             (item.craft && item.craft.toLowerCase().includes(q)) ||
             (item.fabric && item.fabric.toLowerCase().includes(q)) ||
-            (item.origin && item.origin.toLowerCase().includes(q))
+            (item.origin && item.origin.toLowerCase().includes(q)) ||
+            (item.desc && item.desc.toLowerCase().includes(q)) ||
+            (item.category && item.category.toLowerCase().includes(q)) ||
+            (item.badge && item.badge.toLowerCase().includes(q))
           );
           const matchesNew = !isNewArrivalsOnly || (item.badge && item.badge.toLowerCase().includes("new")) || item.badge === "Heritage Edition" || item.badge === "Bestseller";
           return matchesCat && matchesSearch && matchesNew;
@@ -3981,6 +4182,49 @@
         }
 
         currentFilteredList = filtered;
+
+        // Update Search Clear Button visibility
+        if (searchClearBtn) {
+          searchClearBtn.style.display = searchQuery.trim().length > 0 ? "inline-flex" : "none";
+        }
+
+        // Update Active Filter Chip
+        if (filterActiveChip && filterActiveChipText) {
+          const hasFilter = normCurrent !== "all" || searchQuery.trim().length > 0;
+          if (hasFilter) {
+            filterActiveChip.style.display = "inline-flex";
+            const parts = [];
+            if (normCurrent !== "all") parts.push(getCategoryLabel(normCurrent));
+            if (searchQuery.trim().length > 0) parts.push(`"${searchQuery.trim()}"`);
+            filterActiveChipText.textContent = parts.join(" • ");
+          } else {
+            filterActiveChip.style.display = "none";
+          }
+        }
+
+        // Update Meta Title Label
+        if (activeFilterLabel) {
+          if (searchQuery.trim().length > 0 && normCurrent !== "all") {
+            activeFilterLabel.textContent = `Search results for "${searchQuery.trim()}" in ${getCategoryLabel(normCurrent)}`;
+          } else if (searchQuery.trim().length > 0) {
+            activeFilterLabel.textContent = `Search results for "${searchQuery.trim()}"`;
+          } else if (normCurrent !== "all") {
+            activeFilterLabel.textContent = `Displaying ${getCategoryLabel(normCurrent)}`;
+          } else {
+            activeFilterLabel.textContent = "Displaying all curated creations";
+          }
+        }
+
+        // URL state sync
+        try {
+          const newUrl = new URL(window.location);
+          if (normCurrent !== "all") newUrl.searchParams.set("category", normCurrent);
+          else newUrl.searchParams.delete("category");
+          if (searchQuery.trim()) newUrl.searchParams.set("q", searchQuery.trim());
+          else newUrl.searchParams.delete("q");
+          window.history.replaceState({}, "", newUrl.toString());
+        } catch(e) {}
+
         renderGarments(filtered);
       }
 
@@ -4194,17 +4438,32 @@
         filterTabsEl.addEventListener("click", e => {
           const btn = e.target.closest(".filter-tab");
           if (!btn) return;
-          currentCategory = btn.getAttribute("data-category");
+          currentCategory = normalizeCategory(btn.getAttribute("data-category"));
           isNewArrivalsOnly = false;
           updateTabButtons();
           filterAndSortGarments(true);
         });
       }
 
+      if (searchClearBtn) {
+        searchClearBtn.addEventListener("click", () => {
+          searchQuery = "";
+          if (searchInput) {
+            searchInput.value = "";
+            searchInput.focus();
+          }
+          filterAndSortGarments(true);
+        });
+      }
+
+      let searchDebounceTimer = null;
       if (searchInput) {
         searchInput.addEventListener("input", e => {
           searchQuery = e.target.value;
-          filterAndSortGarments(true);
+          if (searchDebounceTimer) clearTimeout(searchDebounceTimer);
+          searchDebounceTimer = setTimeout(() => {
+            filterAndSortGarments(true);
+          }, 60);
         });
       }
 

@@ -466,7 +466,6 @@ const server = http.createServer(async (req, res) => {
         if (Array.isArray(slides) && slides.length >= 2) {
           atelierData.carouselSlides = slides;
           saveData();
-          saveDocToFirestore('atelier_carousel', slides);
           res.writeHead(200, { 'Content-Type': 'application/json' });
           res.end(JSON.stringify({ success: true, message: 'Carousel slides updated live!', slides: atelierData.carouselSlides }));
           return;

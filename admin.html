@@ -1339,6 +1339,60 @@
       font-size: 13px;
     }
 
+    .carousel-sync-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 11px;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: rgba(34, 197, 94, 0.12);
+      border: 1px solid rgba(34, 197, 94, 0.35);
+      color: #4ade80;
+      font-weight: 600;
+      transition: all 0.25s ease;
+      user-select: none;
+    }
+
+    .carousel-sync-badge .sync-indicator-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 8px #22c55e;
+      display: inline-block;
+    }
+
+    .carousel-sync-badge.syncing {
+      background: rgba(201, 163, 95, 0.18);
+      border-color: rgba(201, 163, 95, 0.45);
+      color: #f7dfa3;
+    }
+
+    .carousel-sync-badge.syncing .sync-indicator-dot {
+      background: #e5bf78;
+      box-shadow: 0 0 8px #e5bf78;
+      animation: pulseSyncDot 0.8s ease-in-out infinite alternate;
+    }
+
+    .carousel-sync-badge.cached {
+      background: rgba(234, 179, 8, 0.12);
+      border-color: rgba(234, 179, 8, 0.35);
+      color: #facc15;
+    }
+
+    .carousel-sync-badge.cached .sync-indicator-dot {
+      background: #eab308;
+      box-shadow: 0 0 6px #eab308;
+    }
+
+    @keyframes pulseSyncDot {
+      from { opacity: 0.3; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1.2); }
+    }
+
     .cm-slides-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -3185,11 +3239,16 @@
       <div class="carousel-manager-card">
         <div class="cm-header">
           <div class="cm-title-group">
-            <h3>Homepage Full-Width Couture Slider</h3>
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 6px; flex-wrap: wrap;">
+              <h3 style="margin: 0;">Homepage Full-Width Couture Slider</h3>
+              <span id="carouselSyncBadge" class="carousel-sync-badge" title="Real-time bidirectional synchronization with cloud database and homepage sessions">
+                <span class="sync-indicator-dot"></span> Synced live to cloud &amp; homepage
+              </span>
+            </div>
             <p>Directly customize the haute couture slides, titles, crafts, descriptions, and links displayed in the
-              full-width slider on the homepage.</p>
+              full-width slider on the homepage. Changes broadcast live across all open visitor sessions in real time.</p>
           </div>
-          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
             <button type="button" class="admin-tab-btn" onclick="syncCarouselFromServer(); showToast('Synced latest slides from cloud');" title="Pull latest slides from cloud database">
               🔄 Sync Cloud
             </button>
@@ -3201,7 +3260,7 @@
               Add New Slide
             </button>
             <button type="button" class="admin-tab-btn" id="saveCarouselBtn"
-              style="background: linear-gradient(135deg, var(--gold) 0%, var(--gold-deep) 100%); color: #040906; border-color: var(--gold);">
+              style="background: linear-gradient(135deg, var(--gold) 0%, var(--gold-deep) 100%); color: #040906; border-color: var(--gold);" title="Save immediately to database & broadcast live to visitor tabs">
               ✦ Save Carousel Live
             </button>
             <button type="button" class="admin-tab-btn" id="resetCarouselBtn">
@@ -5279,9 +5338,54 @@
       const carouselGrid = document.getElementById("carouselSlidesGrid");
       window.carouselSlides = carouselSlides;
 
-      async function saveCarouselToServer() {
+      // Real-time synchronization broadcast channel
+      const carouselBroadcast = typeof BroadcastChannel !== 'undefined' ? new BroadcastChannel('aleen_carousel_realtime') : null;
+      let carouselSaveTimer = null;
+
+      function updateSyncBadgeState(state) {
+        const badge = document.getElementById("carouselSyncBadge");
+        if (!badge) return;
+        if (state === 'syncing') {
+          badge.className = "carousel-sync-badge syncing";
+          badge.innerHTML = `<span class="sync-indicator-dot"></span> Syncing to cloud &amp; homepage...`;
+        } else if (state === 'cached') {
+          badge.className = "carousel-sync-badge cached";
+          badge.innerHTML = `<span class="sync-indicator-dot"></span> Saved locally in cache`;
+        } else {
+          badge.className = "carousel-sync-badge";
+          badge.innerHTML = `<span class="sync-indicator-dot"></span> Synced live to cloud &amp; homepage`;
+        }
+      }
+
+      function triggerCarouselSave(instant = false) {
         localStorage.setItem("aleen_carousel_slides", JSON.stringify(carouselSlides));
         window.carouselSlides = carouselSlides;
+        if (carouselBroadcast) {
+          try {
+            carouselBroadcast.postMessage({ type: 'CAROUSEL_UPDATED', slides: carouselSlides, timestamp: Date.now() });
+          } catch(e) {}
+        }
+        updateSyncBadgeState('syncing');
+
+        if (instant) {
+          if (carouselSaveTimer) clearTimeout(carouselSaveTimer);
+          return saveCarouselToServer();
+        }
+        if (carouselSaveTimer) clearTimeout(carouselSaveTimer);
+        carouselSaveTimer = setTimeout(() => {
+          saveCarouselToServer();
+        }, 350);
+      }
+
+      async function saveCarouselToServer() {
+        updateSyncBadgeState('syncing');
+        localStorage.setItem("aleen_carousel_slides", JSON.stringify(carouselSlides));
+        window.carouselSlides = carouselSlides;
+        if (carouselBroadcast) {
+          try {
+            carouselBroadcast.postMessage({ type: 'CAROUSEL_UPDATED', slides: carouselSlides, timestamp: Date.now() });
+          } catch(e) {}
+        }
         const token = localStorage.getItem("atelier_admin_token") || "admin_session";
         try {
           // Primary serverless endpoint: /api/carousel (POST)
@@ -5306,29 +5410,31 @@
               body: JSON.stringify({ slides: carouselSlides })
             });
           }
+          updateSyncBadgeState('live');
         } catch (e) {
           console.warn("Carousel sync error:", e);
+          updateSyncBadgeState('cached');
         }
       }
 
       window.updateSlideHeadline = function (idx, val) {
         if (carouselSlides[idx]) {
           carouselSlides[idx].headline = val;
-          saveCarouselToServer();
+          triggerCarouselSave();
         }
       };
 
       window.updateSlideTitle = function (idx, val) {
         if (carouselSlides[idx]) {
           carouselSlides[idx].title = val;
-          saveCarouselToServer();
+          triggerCarouselSave();
         }
       };
 
       window.updateSlideDesc = function (idx, val) {
         if (carouselSlides[idx]) {
           carouselSlides[idx].desc = val;
-          saveCarouselToServer();
+          triggerCarouselSave();
         }
       };
 
@@ -5359,7 +5465,7 @@
         <div class="cm-field-group">
           <label class="cm-field-label">Slide Background Image</label>
           <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
-            <input type="text" class="cm-input cm-img-input" id="cmImgInput_${idx}" value="${escapeHtml(slide.img || "")}" placeholder="assets/... or https://..." oninput="updateSlideImg(${idx}, this.value); saveCarouselToServer();" style="flex: 1; min-width: 140px;">
+            <input type="text" class="cm-input cm-img-input" id="cmImgInput_${idx}" value="${escapeHtml(slide.img || "")}" placeholder="assets/... or https://..." oninput="updateSlideImg(${idx}, this.value);" style="flex: 1; min-width: 140px;">
             <label class="tbl-btn tbl-btn-edit" style="cursor: pointer; display: inline-flex; align-items: center; gap: 5px; padding: 7px 12px; margin: 0; white-space: nowrap;" title="Upload photo and open Crop Studio">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
               Upload &amp; Crop
@@ -5391,6 +5497,7 @@
         carouselSlides[idx].img = val;
         const preview = document.getElementById("cmPreview_" + idx);
         if (preview) preview.src = val;
+        triggerCarouselSave();
       };
 
       window.uploadDirectCarouselSlideImg = function (idx, fileInput) {
@@ -5423,7 +5530,7 @@
           updateSlideImg(idx, finalUrl);
           const inputEl = document.getElementById("cmImgInput_" + idx);
           if (inputEl) inputEl.value = finalUrl;
-          await saveCarouselToServer();
+          await triggerCarouselSave(true);
           renderCarouselManager();
           showToast("✦ Original photo applied at pristine 100% native quality!");
         };
@@ -5441,12 +5548,34 @@
             maxWidth: 2880,
             maxHeight: 1620,
             quality: 0.96,
-            onApply: (croppedUrl) => {
-              updateSlideImg(idx, croppedUrl);
+            onApply: async (croppedUrl) => {
+              let finalUrl = croppedUrl;
+              try {
+                const token = localStorage.getItem("atelier_admin_token") || "admin_session";
+                const upRes = await fetch("/api/admin/upload", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token
+                  },
+                  body: JSON.stringify({
+                    filename: file.name ? `slide_${Date.now()}_${file.name}` : `slide_cropped_${Date.now()}.jpg`,
+                    data: croppedUrl
+                  })
+                });
+                const upData = await upRes.json();
+                if (upData.success && upData.url) {
+                  finalUrl = upData.url;
+                }
+              } catch(err) {
+                console.warn("Cropped slide upload notice:", err);
+              }
+              updateSlideImg(idx, finalUrl);
               const inputEl = document.getElementById("cmImgInput_" + idx);
-              if (inputEl) inputEl.value = croppedUrl;
-              saveCarouselToServer();
+              if (inputEl) inputEl.value = finalUrl;
+              await triggerCarouselSave(true);
               renderCarouselManager();
+              showToast("✦ Slide cropped and saved live!");
             }
           });
         };
@@ -5464,12 +5593,34 @@
           maxWidth: 2880,
           maxHeight: 1620,
           quality: 0.96,
-          onApply: (croppedUrl) => {
-            updateSlideImg(idx, croppedUrl);
+          onApply: async (croppedUrl) => {
+            let finalUrl = croppedUrl;
+            try {
+              const token = localStorage.getItem("atelier_admin_token") || "admin_session";
+              const upRes = await fetch("/api/admin/upload", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  "Authorization": "Bearer " + token
+                },
+                body: JSON.stringify({
+                  filename: `slide_recropped_${Date.now()}.jpg`,
+                  data: croppedUrl
+                })
+              });
+              const upData = await upRes.json();
+              if (upData.success && upData.url) {
+                finalUrl = upData.url;
+              }
+            } catch(err) {
+              console.warn("Cropped slide upload notice:", err);
+            }
+            updateSlideImg(idx, finalUrl);
             const inputEl = document.getElementById("cmImgInput_" + idx);
-            if (inputEl) inputEl.value = croppedUrl;
-            saveCarouselToServer();
+            if (inputEl) inputEl.value = finalUrl;
+            await triggerCarouselSave(true);
             renderCarouselManager();
+            showToast("✦ Slide frame updated and saved live!");
           }
         });
       };
@@ -5483,7 +5634,13 @@
             if (list && list.length >= 2) {
               carouselSlides = list;
               localStorage.setItem("aleen_carousel_slides", JSON.stringify(carouselSlides));
+              if (carouselBroadcast) {
+                try {
+                  carouselBroadcast.postMessage({ type: 'CAROUSEL_UPDATED', slides: carouselSlides, timestamp: Date.now() });
+                } catch(e) {}
+              }
               renderCarouselManager();
+              updateSyncBadgeState('live');
             }
           })
           .catch((err) => {
@@ -5498,7 +5655,7 @@
         const temp = carouselSlides[idx];
         carouselSlides[idx] = carouselSlides[newIdx];
         carouselSlides[newIdx] = temp;
-        saveCarouselToServer();
+        triggerCarouselSave(true);
         renderCarouselManager();
       };
 
@@ -5508,7 +5665,7 @@
           return;
         }
         carouselSlides.splice(idx, 1);
-        saveCarouselToServer();
+        triggerCarouselSave(true);
         renderCarouselManager();
         showToast("Slide removed");
       };
@@ -5522,7 +5679,7 @@
           tag: "Ethnic Haute Couture",
           url: "collections.html"
         });
-        saveCarouselToServer();
+        triggerCarouselSave(true);
         renderCarouselManager();
         showToast("New carousel slide added!");
       });
@@ -5535,7 +5692,7 @@
       document.getElementById("resetCarouselBtn")?.addEventListener("click", () => {
         if (!confirm("Reset slider to default 5 haute couture slides?")) return;
         carouselSlides = JSON.parse(JSON.stringify(DEFAULT_CAROUSEL));
-        saveCarouselToServer();
+        triggerCarouselSave(true);
         renderCarouselManager();
         showToast("Carousel reset to default curation");
       });
@@ -5545,10 +5702,16 @@
       // ==========================================
       const womenCardsGrid = document.getElementById("womenCardsGrid");
       window.womenCollections = womenCollections;
+      const womenBroadcast = typeof BroadcastChannel !== 'undefined' ? new BroadcastChannel('aleen_women_realtime') : null;
 
       async function saveWomenCardsToServer() {
         localStorage.setItem("aleen_women_collections", JSON.stringify(womenCollections));
         window.womenCollections = womenCollections;
+        if (womenBroadcast) {
+          try {
+            womenBroadcast.postMessage({ type: 'WOMEN_CARDS_UPDATED', cards: womenCollections, timestamp: Date.now() });
+          } catch(e) {}
+        }
         const token = localStorage.getItem("atelier_admin_token") || "admin_session";
         try {
           const res = await fetch("/api/admin/women-collections", {
