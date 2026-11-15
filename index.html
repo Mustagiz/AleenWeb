@@ -9,16 +9,60 @@
 <meta property="og:title" content="Aleen Clothing — Consciously Curated">
 <meta property="og:description" content="Aleen Clothing — bespoke heritage fashion. Timeless. Ethical. Exquisite.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="./assets/preview-desktop.jpg">
-<meta property="og:url" content="https://aleen.clothing">
+<meta property="og:image" content="https://aleen.clothing/assets/preview-desktop.jpg">
+<meta property="og:url" content="https://aleen.clothing/">
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="Aleen Clothing">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Aleen Clothing — Consciously Curated">
 <meta name="twitter:description" content="Aleen Clothing — bespoke heritage fashion. Timeless. Ethical. Exquisite.">
-<meta name="twitter:image" content="./assets/preview-desktop.jpg">
+<meta name="twitter:image" content="https://aleen.clothing/assets/preview-desktop.jpg">
 <!-- SEO: Canonical URL -->
-<link rel="canonical" href="https://aleen.clothing">
+<link rel="canonical" href="https://aleen.clothing/">
+<!-- SEO: Structured Data (Schema.org) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ClothingStore",
+      "@id": "https://aleen.clothing/#organization",
+      "name": "Aleen Clothing",
+      "alternateName": "Aleen",
+      "url": "https://aleen.clothing/",
+      "logo": "https://aleen.clothing/assets/favicon-96x96.png",
+      "image": "https://aleen.clothing/assets/preview-desktop.jpg",
+      "description": "Bespoke heritage luxury ethnic fashion. Timeless silhouettes, authentic handloom weaves, Awadh zardozi artistry, and ethically handcrafted couture.",
+      "priceRange": "₹₹₹₹",
+      "currenciesAccepted": "INR, USD, AED, GBP, EUR",
+      "paymentAccepted": "Cash, Credit Card, UPI, Net Banking",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "IN"
+      },
+      "sameAs": [
+        "https://instagram.com/aleenclothing",
+        "https://facebook.com/aleenclothing"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://aleen.clothing/#website",
+      "url": "https://aleen.clothing/",
+      "name": "Aleen Clothing",
+      "description": "Bespoke Heritage Fashion — Consciously Curated",
+      "publisher": {
+        "@id": "https://aleen.clothing/#organization"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://aleen.clothing/collections?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+  ]
+}
+</script>
 <!-- End SEO -->
 <script>
 // Prevent broken intro animation state on reload when scrolled down
@@ -40,8 +84,43 @@ if (!window.location.hash) {
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Montserrat:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
-<link rel="preload" as="image" href="https://mahira2.netlify.app/assets/women-clean.jpg?v=3">
+<link rel="preload" as="image" href="https://mahira2.netlify.app/assets/women-clean.jpg?v=3" fetchpriority="high">
 <style>
+
+/* ================= ACCESSIBILITY SKIP LINK ================= */
+.skip-link {
+  position: absolute;
+  top: -120px;
+  left: 24px;
+  background: var(--gold, #c9a35f);
+  color: #040906;
+  font-family: var(--sans, sans-serif);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 12px 22px;
+  border-radius: 6px;
+  z-index: 100000;
+  transition: top 0.25s ease;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+}
+.skip-link:focus {
+  top: 24px;
+  outline: 2px solid #f7efdc;
+  outline-offset: 2px;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
 
 
 /* ================= GLOBAL HEADER & FOOTER LUXURY CSS ================= */
@@ -5388,6 +5467,7 @@ body.is-ready .brand, body.is-ready #brand {
 </style>
 </head>
 <body class="is-loading">
+<a href="#top" class="skip-link">Skip to main content</a>
 
 <!-- ======================= CINEMA (intro void + light) ======================= -->
 <div id="cinema" aria-hidden="true">
@@ -5674,7 +5754,7 @@ body.is-ready .brand, body.is-ready #brand {
   </section>
 
   <!-- ================= S03 · NEW COLLECTIONS FOR WOMEN ================= -->
-  <section id="women-new" aria-label="New collections for women">
+  <section id="women-new" role="region" aria-roledescription="carousel" aria-label="New collections for women">
     <div class="w-bg" aria-hidden="true">
       <picture>
         <source media="(max-width: 767px)" srcset="https://mahira2.netlify.app/assets/s3-bg-mobile.jpg?v=1">
@@ -5688,7 +5768,7 @@ body.is-ready .brand, body.is-ready #brand {
       <i class="sh-orna"><b></b></i>
       <p class="sh-sub">Fresh silhouettes. Timeless craftsmanship. Made for you.</p>
     </header>
-    <div class="w-track" id="womenTrack" tabindex="0">
+    <div class="w-track" id="womenTrack" tabindex="0" role="region" aria-label="Women Collections Arched Cards Carousel" aria-live="polite">
       <a class="w-card" href="collections.html?category=kurtis" aria-label="Pakistani Kurtis">
         <img src="assets/pakistani-kurti-1.jpg" alt="Pakistani Kurtis" loading="lazy" decoding="async">
         <span class="w-scrim"></span>
@@ -5812,10 +5892,10 @@ body.is-ready .brand, body.is-ready #brand {
   </section>
 
   <!-- ================= LUXURY FULL-WIDTH COUTURE SLIDER (FULL SCREEN BLENDED) ================= -->
-  <section id="garment-reel" class="fw-slider-section" aria-label="Haute Couture Curated Slider">
+  <section id="garment-reel" class="fw-slider-section" role="region" aria-roledescription="carousel" aria-label="Haute Couture Curated Slider">
     <div class="fw-slider-theater" id="fwSliderTheater">
       <!-- Slides Container -->
-      <div class="fw-slides-stage" id="fwSlidesStage">
+      <div class="fw-slides-stage" id="fwSlidesStage" aria-live="polite">
         <!-- Slide 1 -->
         <article class="fw-slide active" data-slide-index="0">
           <div class="fw-slide-img-wrap" aria-hidden="true">

@@ -2,9 +2,63 @@
 <html lang="en">
 <head>
   <title>Our Story — Aleen Clothing | Tradition Meets Tomorrow</title>
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Discover the heritage craftsmanship, ethical tailoring, and Awadh needlecraft artistry behind Aleen Clothing. Consciously Curated luxury.">
+  <!-- SEO: Open Graph & Twitter Cards -->
+  <meta property="og:title" content="Our Story — Aleen Clothing | Tradition Meets Tomorrow">
+  <meta property="og:description" content="Discover the heritage craftsmanship, ethical tailoring, and Awadh needlecraft artistry behind Aleen Clothing. Consciously Curated luxury.">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://aleen.clothing/assets/preview-desktop.jpg">
+  <meta property="og:url" content="https://aleen.clothing/our-story">
+  <meta property="og:locale" content="en">
+  <meta property="og:site_name" content="Aleen Clothing">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Our Story — Aleen Clothing | Tradition Meets Tomorrow">
+  <meta name="twitter:description" content="Discover the heritage craftsmanship, ethical tailoring, and Awadh needlecraft artistry behind Aleen Clothing. Consciously Curated luxury.">
+  <meta name="twitter:image" content="https://aleen.clothing/assets/preview-desktop.jpg">
+  <!-- SEO: Canonical URL -->
+  <link rel="canonical" href="https://aleen.clothing/our-story">
+  <!-- SEO: Structured Data (Schema.org) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "AboutPage",
+        "@id": "https://aleen.clothing/our-story#webpage",
+        "url": "https://aleen.clothing/our-story",
+        "name": "Our Story — Aleen Clothing",
+        "description": "Discover the heritage craftsmanship, ethical tailoring, and Awadh needlecraft artistry behind Aleen Clothing.",
+        "isPartOf": {
+          "@type": "WebSite",
+          "@id": "https://aleen.clothing/#website",
+          "name": "Aleen Clothing",
+          "url": "https://aleen.clothing/"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://aleen.clothing/our-story#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://aleen.clothing/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Our Story",
+            "item": "https://aleen.clothing/our-story"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <!-- End SEO -->
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon-96x96.png">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
@@ -17,6 +71,48 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
   <style>
+    /* ================= ACCESSIBILITY SKIP LINK ================= */
+    .skip-link {
+      position: absolute;
+      top: -120px;
+      left: 24px;
+      background: var(--gold, #c9a35f);
+      color: #040906;
+      font-family: var(--sans, sans-serif);
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 12px 22px;
+      border-radius: 6px;
+      z-index: 100000;
+      transition: top 0.25s ease;
+      text-decoration: none;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+    }
+    .skip-link:focus {
+      top: 24px;
+      outline: 2px solid #f7efdc;
+      outline-offset: 2px;
+    }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
     /* ================= GLOBAL HEADER & FOOTER LUXURY CSS ================= */
 :root {
   --void-0: #040906;
@@ -1751,6 +1847,7 @@
 </style>
 </head>
 <body>
+  <a href="#main" class="skip-link">Skip to main content</a>
 <!-- ======================= GLOBAL HEADER ======================= -->
 <header id="header">
   <button id="menuBtn" class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">

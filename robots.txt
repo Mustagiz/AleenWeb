@@ -1,0 +1,22 @@
+# Robots.txt for Aleen Clothing
+User-agent: *
+Allow: /
+Allow: /assets/
+Allow: /collections
+Allow: /dresses
+Allow: /our-story
+Allow: /the-complete-journey
+Allow: /contact-us
+Allow: /privacy
+Allow: /terms
+Allow: /sitemap
+
+# Disallow admin portal, internal APIs and data files
+Disallow: /admin.html
+Disallow: /admin
+Disallow: /api/
+Disallow: /atelier_data.json
+
+# Host & Sitemap
+Host: https://aleen.clothing
+Sitemap: https://aleen.clothing/sitemap.xml

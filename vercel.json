@@ -3,6 +3,32 @@
   "buildCommand": null,
   "cleanUrls": true,
   "trailingSlash": false,
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/(.*)\\.(ico|png|jpg|jpeg|webp|svg|woff|woff2|ttf)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/sitemap.xml",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=86400" }
+      ]
+    },
+    {
+      "source": "/robots.txt",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=86400" }
+      ]
+    }
+  ],
   "rewrites": [
     { "source": "/api/admin/catalog", "destination": "/api/catalog" },
     { "source": "/api/admin/women-collections", "destination": "/api/women-collections" },
