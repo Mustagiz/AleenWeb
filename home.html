@@ -5868,33 +5868,34 @@ body.is-ready .brand, body.is-ready #brand {
 
       <div class="b-cards">
       <a class="b-card b-c1" href="collections.html?category=kurtis">
-        <img src="assets/pakistani-kurti-1.jpg" alt="Model wearing luxury ivory Pakistani Kurti" loading="lazy" decoding="async">
+        <img src="https://mahira2.netlify.app/assets/s5-p1.jpg?v=1" alt="Model wearing luxury ivory Pakistani Kurti" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='assets/s5-p1.jpg';">
         <span class="b-veil"></span>
         <span class="b-txt"><span class="b-no">01</span><h3>Pakistani<br>Kurtis</h3><p>Royal grace in<br>every stitch.</p></span>
-        <span class="b-shop"><span>Shop Now</span><span class="b-go"><svg viewBox="0 0 16 12"><path d="M0 6h12M9 2l4 4-4 4"/></svg></span></span>
       </a>
       <a class="b-card b-c2" href="collections.html?category=kurta-sets">
-        <img src="https://mahira2.netlify.app/assets/s5-p2.jpg?v=1" alt="Sage green embroidered kurta on a wooden hanger" loading="lazy" decoding="async">
+        <img src="https://mahira2.netlify.app/assets/s5-p2.jpg?v=1" alt="Sage green embroidered kurta on a wooden hanger" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='assets/s5-p2.jpg';">
         <span class="b-veil"></span>
-        <i></i></span>
         <span class="b-txt"><span class="b-no">02</span><h3>Kurta Sets</h3><p>Everyday<br>elegance,<br>redefined.</p></span>
-        <span class="b-shop"><span>Shop Now</span><span class="b-go"><svg viewBox="0 0 16 12"><path d="M0 6h12M9 2l4 4-4 4"/></svg></span></span>
       </a>
       <a class="b-card b-c3" href="collections.html?category=kurtis">
-        <img src="assets/pakistani-kurti-3.jpg" alt="Organza Pakistani Kurti with pearl moti work" loading="lazy" decoding="async">
+        <img src="https://mahira2.netlify.app/assets/s5-p3.jpg?v=1" alt="Organza Pakistani Kurti with pearl moti work" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='assets/s5-p3.jpg';">
         <span class="b-veil"></span>
         <span class="b-txt"><span class="b-no">03</span><h3>Organza<br>Kurtis</h3><p>Art in<br>every thread.</p></span>
-        <span class="b-shop"><span>Shop Now</span><span class="b-go"><svg viewBox="0 0 16 12"><path d="M0 6h12M9 2l4 4-4 4"/></svg></span></span>
       </a>
-      <a class="b-card b-c4" href="#">
-        <img src="https://mahira2.netlify.app/assets/s5-p4.jpg?v=1" alt="Model in a deep red kalakaari drape" loading="lazy" decoding="async">
+      <a class="b-card b-c4" href="collections.html">
+        <img src="https://mahira2.netlify.app/assets/s5-p4.jpg?v=1" alt="Model in a deep red kalakaari drape" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='assets/s5-p4.jpg';">
         <span class="b-veil"></span>
         <span class="b-txt"><span class="b-no">04</span><h3>Kalakaari<br>Collection</h3><p>Stories<br>woven in<br>tradition.</p></span>
-        <span class="b-shop b-shop-flow"><span>Shop Now</span><span class="b-go"><svg viewBox="0 0 16 12"><path d="M0 6h12M9 2l4 4-4 4"/></svg></span></span>
       </a>
       </div>
 
-      
+      <div class="b-all">
+        <a class="btn btn-primary" href="collections.html">
+          <span class="fill"></span>
+          <span class="lbl">✦ EXPLORE BEST SELLERS</span>
+          <span class="arrow"><svg viewBox="0 0 28 10"><path d="M0 5h24M20 1l5 4-5 4"/></svg></span>
+        </a>
+      </div>
     </div>
   </section>
   <!-- ================= S06 · CRAFTSMANSHIP SEAL ================= -->
@@ -7078,6 +7079,61 @@ body.is-ready .brand, body.is-ready #brand {
   margin-top: 0 !important;
   margin-bottom: 0 !important;
   background: #040906 !important;
+  border-bottom: none !important;
+}
+
+/* Best Sellers: Bottom single centered CTA button */
+.b-all {
+  position: absolute !important;
+  z-index: 5 !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  bottom: 3.2cqw !important;
+  top: auto !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: auto !important;
+  pointer-events: auto !important;
+}
+.b-all .btn {
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 12px !important;
+  padding: 0 clamp(24px, 2.2vw, 42px) !important;
+  height: clamp(46px, 3.2cqw, 54px) !important;
+  letter-spacing: 0.22em !important;
+  background: rgba(15, 29, 21, 0.8) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  border: 1px solid var(--gold) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45) !important;
+}
+@media (max-width: 767px) {
+  .b-all {
+    position: static !important;
+    transform: none !important;
+    margin: 28px auto 0 !important;
+    padding: 0 7vw !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+}
+
+/* Ensure individual Shop Now buttons in Best Sellers cards remain removed */
+.b-shop, .b-shop-flow {
+  display: none !important;
+}
+
+/* Remove stray vertical lines and dividers at the bottom of Best Sellers section */
+#best .b-rail, #best .b-rail-l, #best .b-rail-r, #best .b-rail-line,
+#best .b-corner, #best .b-corner-l, #best .b-corner-r, #best .b-corner-orna,
+#best .c-sep, #craft .c-sep, #craft .c-orna-top,
+.c-orna.c-orna-top,
+.c-sep {
+  display: none !important;
 }
 
 </style>
