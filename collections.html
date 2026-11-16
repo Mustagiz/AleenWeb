@@ -2667,6 +2667,292 @@
         height: 24px;
       }
     }
+
+    /* ================= PREDICTIVE VISUAL LIVE SEARCH DROPDOWN ================= */
+    .ecom-refine-search-wrap {
+      flex: 1 1 auto;
+      min-width: 0;
+      width: auto;
+      margin: 0;
+      position: relative;
+    }
+
+    .visual-search-dropdown {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 0;
+      right: 0;
+      z-index: 120;
+      background: linear-gradient(165deg, rgba(14, 28, 20, 0.98) 0%, rgba(6, 13, 9, 0.98) 100%);
+      border: 1px solid rgba(201, 163, 95, 0.35);
+      border-radius: 14px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 24px rgba(201, 163, 95, 0.15);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 18px;
+      box-sizing: border-box;
+      max-height: 480px;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      animation: vsDropdownFadeIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes vsDropdownFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .visual-search-dropdown::-webkit-scrollbar {
+      width: 5px;
+    }
+    .visual-search-dropdown::-webkit-scrollbar-thumb {
+      background: rgba(201, 163, 95, 0.3);
+      border-radius: 10px;
+    }
+
+    .vs-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(201, 163, 95, 0.15);
+      margin-bottom: 12px;
+    }
+
+    .vs-kicker {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .vs-count-badge {
+      font-family: var(--sans);
+      font-size: 11px;
+      color: var(--cream-dim);
+      font-weight: 500;
+    }
+
+    .vs-quick-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(201, 163, 95, 0.1);
+    }
+
+    .vs-tag-pill {
+      background: rgba(20, 37, 27, 0.6);
+      border: 1px solid rgba(201, 163, 95, 0.22);
+      border-radius: 999px;
+      padding: 5px 12px;
+      font-family: var(--sans);
+      font-size: 11px;
+      color: var(--cream);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .vs-tag-pill:hover,
+    .vs-tag-pill.active {
+      background: var(--gold);
+      color: #040906;
+      border-color: var(--gold-spark);
+      transform: translateY(-1px);
+    }
+
+    .vs-results-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .vs-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      background: rgba(255, 255, 255, 0.02);
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      text-decoration: none;
+      outline: none;
+    }
+
+    .vs-item:hover,
+    .vs-item.is-selected,
+    .vs-item:focus {
+      background: rgba(20, 37, 27, 0.7);
+      border-color: rgba(201, 163, 95, 0.4);
+      transform: translateX(3px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .vs-thumb-frame {
+      width: 48px;
+      height: 64px;
+      border-radius: 6px;
+      overflow: hidden;
+      flex-shrink: 0;
+      border: 1px solid rgba(201, 163, 95, 0.25);
+      background: #040906;
+      position: relative;
+    }
+
+    .vs-thumb-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .vs-item:hover .vs-thumb-img {
+      transform: scale(1.08);
+    }
+
+    .vs-info {
+      flex: 1 1 auto;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .vs-item-origin {
+      font-family: var(--sans);
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      font-weight: 600;
+    }
+
+    .vs-item-title {
+      font-family: var(--serif);
+      font-size: 14.5px;
+      color: var(--cream-hi);
+      margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-weight: 500;
+    }
+
+    .vs-item-meta {
+      font-family: var(--sans);
+      font-size: 11px;
+      color: var(--cream-dim);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .vs-item-price {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--gold-spark);
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+
+    .vs-mark {
+      background: rgba(201, 163, 95, 0.45);
+      color: #ffffff;
+      padding: 1px 3px;
+      border-radius: 3px;
+      font-weight: 600;
+    }
+
+    .vs-empty-state {
+      text-align: center;
+      padding: 24px 12px;
+      color: var(--cream-dim);
+    }
+    .vs-empty-title {
+      font-family: var(--serif);
+      font-size: 16px;
+      color: var(--cream-hi);
+      margin: 0 0 6px 0;
+    }
+    .vs-empty-hint {
+      font-family: var(--sans);
+      font-size: 12px;
+      color: var(--champagne);
+      margin: 0;
+    }
+
+    .vs-footer {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(201, 163, 95, 0.15);
+      text-align: center;
+    }
+
+    .vs-view-all-btn {
+      width: 100%;
+      background: rgba(20, 37, 27, 0.5);
+      border: 1px solid rgba(201, 163, 95, 0.3);
+      border-radius: 8px;
+      padding: 10px;
+      font-family: var(--sans);
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.25s ease;
+    }
+
+    .vs-view-all-btn:hover {
+      background: var(--gold);
+      color: #040906;
+      border-color: var(--gold-spark);
+    }
+
+    @media (max-width: 640px) {
+      .visual-search-dropdown {
+        left: -8px;
+        right: -8px;
+        max-height: 65vh;
+        padding: 14px 12px;
+        border-radius: 12px;
+      }
+      .vs-item {
+        padding: 8px;
+        gap: 10px;
+      }
+      .vs-thumb-frame {
+        width: 42px;
+        height: 56px;
+      }
+      .vs-item-title {
+        font-size: 13.5px;
+      }
+      .vs-item-price {
+        font-size: 12px;
+      }
+    }
   </style>
   <style>
     /* ================= GLOBAL COMPONENTS CSS ================= */
@@ -4021,6 +4307,26 @@ html, body {
               <input type="text" id="searchInput" class="search-input" aria-label="Search garments by title, needlecraft, or material"
                 placeholder="Search by title, needlecraft, pure raw silk, velvet, zardozi..." autocomplete="off">
               <button type="button" class="search-clear-btn" id="searchClearBtn" aria-label="Clear search query" title="Clear search">✕</button>
+            </div>
+
+            <!-- Predictive Visual Search Overlay -->
+            <div class="visual-search-dropdown" id="visualSearchDropdown" role="listbox" aria-label="Visual Search Results" style="display: none;">
+              <div class="vs-header">
+                <span class="vs-kicker" id="vsKicker">Live Atelier Suggestions</span>
+                <span class="vs-count-badge" id="vsCountBadge">0 matches</span>
+              </div>
+              <div class="vs-quick-tags" id="vsQuickTags">
+                <!-- Quick filter pills injected via JavaScript -->
+              </div>
+              <div class="vs-results-list" id="vsResultsList">
+                <!-- Visual product cards injected via JavaScript -->
+              </div>
+              <div class="vs-footer" id="vsFooter">
+                <button type="button" class="vs-view-all-btn" id="vsViewAllBtn">
+                  <span>View all results in gallery</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -5903,6 +6209,246 @@ html, body {
         });
       });
 
+      // ==========================================
+      // PREDICTIVE VISUAL LIVE SEARCH ENGINE
+      // ==========================================
+      const vsDropdown = document.getElementById("visualSearchDropdown");
+      const vsKicker = document.getElementById("vsKicker");
+      const vsCountBadge = document.getElementById("vsCountBadge");
+      const vsQuickTags = document.getElementById("vsQuickTags");
+      const vsResultsList = document.getElementById("vsResultsList");
+      const vsViewAllBtn = document.getElementById("vsViewAllBtn");
+      let selectedVsIndex = -1;
+
+      const POPULAR_SEARCH_TAGS = [
+        { label: "Pakistani Kurtis", cat: "kurtis" },
+        { label: "Awadh Zardozi", craft: "zardozi" },
+        { label: "Pure Raw Silk", fabric: "silk" },
+        { label: "Royal Kurta Sets", cat: "kurta-sets" },
+        { label: "Banarasi Sarees", cat: "sarees" },
+        { label: "Micro Velvet", fabric: "velvet" }
+      ];
+
+      function highlightText(text, query) {
+        if (!text || !query) return text || "";
+        const words = query.trim().split(/\s+/).filter(w => w.length > 1);
+        if (words.length === 0) return text;
+        const pattern = new RegExp(`(${words.map(w => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`, 'gi');
+        return text.replace(pattern, '<mark class="vs-mark">$1</mark>');
+      }
+
+      function renderVisualSearch(query) {
+        if (!vsDropdown || !vsResultsList) return;
+        const cleanQ = (query || "").trim().toLowerCase();
+        selectedVsIndex = -1;
+
+        // Render quick tags
+        if (vsQuickTags) {
+          vsQuickTags.innerHTML = POPULAR_SEARCH_TAGS.map(t => `
+            <button type="button" class="vs-tag-pill" data-cat="${t.cat || ''}" data-craft="${t.craft || ''}" data-fabric="${t.fabric || ''}">
+              ${t.label}
+            </button>
+          `).join('');
+        }
+
+        if (!cleanQ) {
+          if (vsKicker) vsKicker.textContent = "Trending Atelier Curation";
+          const featuredItems = GARMENTS.slice(0, 4);
+          if (vsCountBadge) vsCountBadge.textContent = `${featuredItems.length} curated`;
+
+          vsResultsList.innerHTML = featuredItems.map((item, idx) => `
+            <div class="vs-item" data-id="${item.id}" role="option" tabindex="0" data-index="${idx}">
+              <div class="vs-thumb-frame">
+                <img src="${item.image}" alt="${item.title}" class="vs-thumb-img" loading="lazy">
+              </div>
+              <div class="vs-info">
+                <span class="vs-item-origin">${item.origin || 'Lucknow Atelier'}</span>
+                <h4 class="vs-item-title">${item.title}</h4>
+                <span class="vs-item-meta">${item.craft || 'Artisanal'} • ${item.fabric || 'Pure Silk'}</span>
+              </div>
+              <span class="vs-item-price">${formatPrice(item.price)}</span>
+            </div>
+          `).join('');
+
+          if (vsViewAllBtn) {
+            vsViewAllBtn.innerHTML = `<span>Explore All Curations</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
+          }
+          vsDropdown.style.display = "block";
+          return;
+        }
+
+        // Search match scoring
+        const queryTerms = cleanQ.split(/\s+/).filter(Boolean);
+        const matches = GARMENTS.filter(item => {
+          const searchable = [
+            item.title,
+            item.craft,
+            item.fabric,
+            item.category,
+            item.categoryLabel,
+            item.origin,
+            item.desc,
+            item.badge
+          ].join(" ").toLowerCase();
+
+          return queryTerms.every(term => searchable.includes(term));
+        });
+
+        if (vsKicker) vsKicker.textContent = `Matching Creations (${matches.length})`;
+        if (vsCountBadge) vsCountBadge.textContent = `${matches.length} found`;
+
+        if (matches.length === 0) {
+          vsResultsList.innerHTML = `
+            <div class="vs-empty-state">
+              <p class="vs-empty-title">No creations matched “${query}”</p>
+              <p class="vs-empty-hint">Try searching for <em>zardozi</em>, <em>pakistani kurti</em>, <em>chanderi</em>, or <em>raw silk</em>.</p>
+            </div>
+          `;
+          if (vsViewAllBtn) {
+            vsViewAllBtn.innerHTML = `<span>Reset Search & View All</span>`;
+          }
+        } else {
+          const topHits = matches.slice(0, 4);
+          vsResultsList.innerHTML = topHits.map((item, idx) => `
+            <div class="vs-item" data-id="${item.id}" role="option" tabindex="0" data-index="${idx}">
+              <div class="vs-thumb-frame">
+                <img src="${item.image}" alt="${item.title}" class="vs-thumb-img" loading="lazy">
+              </div>
+              <div class="vs-info">
+                <span class="vs-item-origin">${item.origin || 'Lucknow Atelier'}</span>
+                <h4 class="vs-item-title">${highlightText(item.title, query)}</h4>
+                <span class="vs-item-meta">${highlightText(item.craft || 'Artisanal', query)} • ${highlightText(item.fabric || 'Pure Silk', query)}</span>
+              </div>
+              <span class="vs-item-price">${formatPrice(item.price)}</span>
+            </div>
+          `).join('');
+
+          if (vsViewAllBtn) {
+            vsViewAllBtn.innerHTML = `<span>View all ${matches.length} creations in gallery</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
+          }
+        }
+
+        vsDropdown.style.display = "block";
+      }
+
+      function closeVisualSearch() {
+        if (vsDropdown) {
+          vsDropdown.style.display = "none";
+          selectedVsIndex = -1;
+        }
+      }
+
+      function updateVsSelection(items) {
+        items.forEach((item, idx) => {
+          if (idx === selectedVsIndex) {
+            item.classList.add("is-selected");
+            item.scrollIntoView({ block: "nearest" });
+          } else {
+            item.classList.remove("is-selected");
+          }
+        });
+      }
+
+      // Visual Search Click & Key Event Bindings
+      if (searchInput) {
+        searchInput.addEventListener("focus", () => {
+          renderVisualSearch(searchInput.value);
+        });
+
+        searchInput.addEventListener("keydown", e => {
+          if (!vsDropdown || vsDropdown.style.display === "none") return;
+          const items = vsDropdown.querySelectorAll(".vs-item");
+
+          if (e.key === "ArrowDown") {
+            e.preventDefault();
+            if (items.length > 0) {
+              selectedVsIndex = (selectedVsIndex + 1) % items.length;
+              updateVsSelection(items);
+            }
+          } else if (e.key === "ArrowUp") {
+            e.preventDefault();
+            if (items.length > 0) {
+              selectedVsIndex = (selectedVsIndex - 1 + items.length) % items.length;
+              updateVsSelection(items);
+            }
+          } else if (e.key === "Enter") {
+            if (selectedVsIndex >= 0 && items[selectedVsIndex]) {
+              e.preventDefault();
+              const id = items[selectedVsIndex].getAttribute("data-id");
+              if (id) {
+                openModal(id);
+                closeVisualSearch();
+              }
+            } else {
+              closeVisualSearch();
+              const grid = document.getElementById("garmentsGrid");
+              if (grid) grid.scrollIntoView({ behavior: "smooth" });
+            }
+          } else if (e.key === "Escape") {
+            closeVisualSearch();
+          }
+        });
+      }
+
+      // Dropdown interaction delegations
+      if (vsDropdown) {
+        vsDropdown.addEventListener("click", e => {
+          // 1. Quick Tag Click
+          const tagPill = e.target.closest(".vs-tag-pill");
+          if (tagPill) {
+            const cat = tagPill.getAttribute("data-cat");
+            const craft = tagPill.getAttribute("data-craft");
+            const fabric = tagPill.getAttribute("data-fabric");
+
+            if (cat) {
+              currentCategory = normalizeCategory(cat);
+              updateCategoryPillButtons();
+            }
+            if (craft) {
+              selectedCrafts.clear();
+              selectedCrafts.add(craft);
+              syncCraftChipsState();
+            }
+            if (fabric) {
+              selectedFabrics.clear();
+              selectedFabrics.add(fabric);
+              syncFabricChipsState();
+            }
+
+            filterAndSortGarments(true);
+            closeVisualSearch();
+            return;
+          }
+
+          // 2. Product Item Click
+          const vsItem = e.target.closest(".vs-item");
+          if (vsItem) {
+            const id = vsItem.getAttribute("data-id");
+            if (id) {
+              openModal(id);
+              closeVisualSearch();
+            }
+            return;
+          }
+
+          // 3. View All CTA Click
+          const viewAll = e.target.closest("#vsViewAllBtn");
+          if (viewAll) {
+            closeVisualSearch();
+            const grid = document.getElementById("garmentsGrid");
+            if (grid) grid.scrollIntoView({ behavior: "smooth" });
+            return;
+          }
+        });
+      }
+
+      // Close dropdown when clicking outside
+      document.addEventListener("click", e => {
+        if (!e.target.closest(".ecom-refine-search-wrap")) {
+          closeVisualSearch();
+        }
+      });
+
       if (searchClearBtn) {
         searchClearBtn.addEventListener("click", () => {
           searchQuery = "";
@@ -5911,6 +6457,7 @@ html, body {
             searchInput.focus();
           }
           filterAndSortGarments(true);
+          closeVisualSearch();
         });
       }
 
@@ -5921,7 +6468,8 @@ html, body {
           if (searchDebounceTimer) clearTimeout(searchDebounceTimer);
           searchDebounceTimer = setTimeout(() => {
             filterAndSortGarments(true);
-          }, 60);
+            renderVisualSearch(searchQuery);
+          }, 80);
         });
       }
 
@@ -6051,6 +6599,20 @@ html, body {
       syncSortChipsState();
       setGridColumns(currentGridCols || 5);
       filterAndSortGarments(true);
+
+      // Deep link query or search focus
+      if (searchParam && searchInput) {
+        searchInput.value = searchParam;
+        searchQuery = searchParam;
+        filterAndSortGarments(true);
+      }
+      const focusParam = urlParams.get("focus");
+      if (focusParam === "search" && searchInput) {
+        setTimeout(() => {
+          searchInput.focus();
+          renderVisualSearch(searchInput.value);
+        }, 200);
+      }
     })();
   </script>
   <!-- Floating VIP WhatsApp Concierge -->
