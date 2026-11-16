@@ -2,10 +2,11 @@
  * ALEEN ATELIER — FRESH LUXURY PALETTE (DESIGN SYSTEM v2.0)
  * Specification:
  * - Canvas / Background: #f7f5ef (Warm Alabaster / Organic Luxury Linen)
- * - Foreground / Accent:  #9caf88 (Muted Sage Green - Architectural Borders, Frames, Badges)
- * - Primary CTA Buttons:  #e8412c (Poppy Vermilion - High Visual Affordance)
- * - Typography Ink:       #162217 (Deep Forest Charcoal - WCAG 2.1 AAA 14.7:1 Contrast)
- * - Secondary Meta Ink:   #384e36 (Muted Sage Ink - WCAG AA Contrast)
+ * - Foreground / Accent:  #9caf88 (Muted Sage Green - Borders, Frames, Badges, Ornaments)
+ * - Primary CTA Buttons:  #e8412c (Poppy Vermilion - High Affordance)
+ * - Typography Ink:       #162217 (Deep Forest Charcoal - WCAG AAA 14.7:1)
+ * - Secondary Meta Ink:   #384e36 (Muted Sage Ink - WCAG AA)
+ * - Footer: White background (#ffffff) with #9caf88 decorative doodle & black navigation
  */
 
 :root {
@@ -84,43 +85,122 @@ p strong, h1 strong, h2 strong, h3 strong {
 }
 
 /* ========================================================
-   HEADER & NAVIGATION
+   1. INTRO LOADING ANIMATION — BOTTLE GREEN VELVET CURTAINS
    ======================================================== */
-#header, header {
-  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
+#curtains {
+  z-index: 990 !important;
+  pointer-events: none !important;
 }
 
-#header.is-scrolled, header.scrolled, #header.scrolled {
-  background: rgba(247, 245, 239, 0.94) !important;
+body.is-ready #curtains {
+  pointer-events: none !important;
+}
+
+.curtain .folds i {
+  background: linear-gradient(90deg,
+    #03140c 0%, #092617 16%, #0f3824 34%, #185237 48%,
+    #113d28 62%, #082517 82%, #020f08 100%) !important;
+}
+
+.curtain .hem {
+  background: linear-gradient(180deg, transparent 0%, rgba(2, 14, 8, 0.5) 78%, rgba(1, 10, 5, 0.85) 100%) !important;
+}
+
+.c-left .edge-shade {
+  background: linear-gradient(270deg, rgba(2, 12, 7, 0.8) 0%, transparent 100%) !important;
+}
+
+.c-right .edge-shade {
+  background: linear-gradient(90deg, rgba(2, 12, 7, 0.8) 0%, transparent 100%) !important;
+}
+
+.curtain-shadow.cs-left {
+  background: linear-gradient(90deg, rgba(3, 18, 10, 0.72) 0%, transparent 100%) !important;
+}
+
+.curtain-shadow.cs-right {
+  background: linear-gradient(270deg, rgba(3, 18, 10, 0.72) 0%, transparent 100%) !important;
+}
+
+.curtain-glow {
+  background: radial-gradient(46% 50% at 50% 50%, rgba(240, 214, 140, 0.45) 0%, rgba(156, 175, 136, 0.2) 45%, transparent 75%) !important;
+}
+
+#cinema {
+  display: block !important;
+  background: #04120a !important;
+}
+
+.cin-ambient {
+  background: radial-gradient(ellipse at 50% 45%, rgba(15, 56, 36, 0.65) 0%, rgba(3, 16, 10, 0.96) 100%) !important;
+}
+
+/* ========================================================
+   2. HEADER & NAVIGATION (NO WHITE BORDER, CRISP VISIBILITY)
+   ======================================================== */
+#header, header {
+  background: rgba(247, 245, 239, 0.96) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: none !important;
+  border-bottom: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  transition: background 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+#header::before, #header::after {
+  display: none !important;
+}
+
+#header.is-scrolled, header.scrolled, #header.scrolled, #header.is-solid {
+  background: rgba(247, 245, 239, 0.98) !important;
   backdrop-filter: blur(20px) !important;
   -webkit-backdrop-filter: blur(20px) !important;
-  border-bottom: 1px solid rgba(156, 175, 136, 0.35) !important;
-  box-shadow: 0 4px 20px rgba(22, 34, 23, 0.04) !important;
+  border: none !important;
+  border-bottom: none !important;
+  box-shadow: 0 4px 20px rgba(22, 34, 23, 0.05) !important;
+}
+
+.nav-side, .nav-center, .nav-l, .nav-r, nav {
+  border: none !important;
+  outline: none !important;
 }
 
 .nav-side a, .nav-center a, .sample-nav a, .nav-l a, .nav-r a,
-.nav-link, .hdr-link, .mn-acct, nav a {
+.nav-link, .hdr-link, .mn-acct, nav a, #header a {
   color: #162217 !important;
+  font-weight: 600 !important;
+  border: none !important;
+  outline: none !important;
   transition: color 0.2s ease !important;
 }
 
 .nav-side a:hover, .nav-center a:hover, .nav-l a:hover, .nav-r a:hover,
-.nav-link:hover, .hdr-link:hover, nav a:hover {
+.nav-link:hover, .hdr-link:hover, nav a:hover, #header a:hover {
   color: #e8412c !important;
 }
 
-/* Utilities Icons in Header */
+.nav-side a::after {
+  background: #e8412c !important;
+}
+
+/* Header Utilities & Hamburger */
 .util-btn svg, .menu-btn svg, .hdr-icon svg {
   stroke: #162217 !important;
 }
 .util-btn:hover svg, .menu-btn:hover svg {
   stroke: #e8412c !important;
 }
+.menu-btn span {
+  background: #162217 !important;
+}
 
 /* Mega Menu Dropdown */
 .mega-sheet {
   background: #fdfcf9 !important;
-  border-top: 1px solid rgba(156, 175, 136, 0.45) !important;
+  border-top: 1.5px solid #9caf88 !important;
+  border-bottom: none !important;
   box-shadow: 0 20px 48px rgba(22, 34, 23, 0.1) !important;
 }
 .mg-col h4 {
@@ -135,91 +215,565 @@ p strong, h1 strong, h2 strong, h3 strong {
 }
 
 /* ========================================================
-   INTRO CURTAINS & CINEMA
-   ======================================================== */
-#cinema, #curtains, #skipIntro {
-  display: none !important;
-}
-
-/* ========================================================
-   HERO SECTIONS
+   3. HOME PAGE HERO SECTION CARD ALIGNMENT
    ======================================================== */
 .catalog-hero, .editorial-hero, .story-hero, section#hero {
   background-color: #f7f5ef !important;
+  background: #f7f5ef !important;
 }
 
-.catalog-hero-bg-media, .story-hero-bg-media {
-  opacity: 0.18 !important;
-  filter: grayscale(40%) contrast(90%) !important;
+#hero::before, #hero::after {
+  display: none !important;
 }
 
-.catalog-hero-vignette {
-  background: radial-gradient(circle at 50% 50%, rgba(247, 245, 239, 0.3) 0%, rgba(247, 245, 239, 0.95) 100%) !important;
-}
-
-.catalog-kicker, .hero-kicker {
-  color: #384e36 !important;
-  background-color: transparent !important;
-  font-weight: 700 !important;
-  letter-spacing: 2px !important;
-  text-transform: uppercase !important;
-}
-
-.hero-orna-bar b {
-  background-color: #9caf88 !important;
-}
-
-/* Homepage Hero Specific */
 #hero .slide-content {
   position: absolute !important;
-  left: 6vw !important;
-  top: 20vh !important;
-  max-width: 520px !important;
+  left: clamp(20px, 6vw, 80px) !important;
+  top: 22vh !important;
+  max-width: 560px !important;
   z-index: 10 !important;
-  background: rgba(247, 245, 239, 0.92) !important;
+  background: rgba(255, 255, 255, 0.94) !important;
   backdrop-filter: blur(16px) !important;
   -webkit-backdrop-filter: blur(16px) !important;
-  padding: 36px 40px !important;
+  padding: clamp(24px, 3.5vw, 40px) !important;
   border-radius: 20px !important;
-  border: 1px solid rgba(156, 175, 136, 0.4) !important;
+  border: 1.5px solid #9caf88 !important;
   box-shadow: 0 16px 40px rgba(22, 34, 23, 0.08) !important;
 }
-#hero .headline {
+
+#hero .headline, #hero .headline * {
   color: #162217 !important;
-  font-size: clamp(34px, 3.8vw, 60px) !important;
+  font-size: clamp(32px, 3.6vw, 56px) !important;
   line-height: 1.15 !important;
-  margin-bottom: 14px !important;
+  margin-bottom: 12px !important;
 }
+
 #hero .eyebrow {
-  color: #384e36 !important;
+  color: #748c66 !important;
 }
+#hero .eyebrow .eb-text {
+  color: #748c66 !important;
+}
+#hero .eyebrow .eb-line {
+  background: #9caf88 !important;
+}
+
 #hero .tagline {
-  color: #485949 !important;
+  color: #162217 !important;
   font-style: italic !important;
 }
+
 #hero .hero-subtext {
   color: #384e36 !important;
   text-shadow: none !important;
-  font-size: 14px !important;
-  line-height: 1.7 !important;
-  margin: 14px 0 24px !important;
+  font-size: 14.5px !important;
+  line-height: 1.65 !important;
+  margin: 12px 0 24px !important;
+}
+
+#hero .hero-rail, #hero .hero-desc {
+  color: #384e36 !important;
 }
 
 /* ========================================================
-   PRIMARY & SECONDARY BUTTONS (FOCAL CTAs)
+   4. NEW COLLECTIONS FOR WOMEN SECTION & BUTTONS
    ======================================================== */
-.btn-primary, .auth-btn, .lock-btn, .btn-poppy, .btn-cta,
-.btn-card-inquire, .order-btn, .inquire-btn, .sh-btn,
-button.ecom-submit-btn, .add-to-bag-btn, .ecom-drawer-apply-btn,
-.see-more-btn, .btn-gold, .cta, .contact-wa-btn {
-  background-color: #e8412c !important;
+#women-new {
+  background-color: #f7f5ef !important;
+  background: #f7f5ef !important;
+  position: relative !important;
+  padding: 80px 0 !important;
+}
+
+#women-new::before, #women-new::after,
+#women-new .w-bg, #women-new .w-bg img, #women-new .w-bg-scrim {
+  display: none !important;
+}
+
+#women-new .sec-head .sh-eyebrow {
+  color: #748c66 !important;
+}
+#women-new .sec-head .sh-title {
+  color: #162217 !important;
+}
+#women-new .sec-head .sh-sub {
+  color: #384e36 !important;
+}
+#women-new .sec-head .sh-orna b {
+  background: #9caf88 !important;
+}
+
+#women-new .w-card {
+  background: #ffffff !important;
+  border: 1.5px solid rgba(156, 175, 136, 0.6) !important;
+  border-radius: 180px 180px 16px 16px !important;
+  box-shadow: 0 12px 32px rgba(22, 34, 23, 0.06) !important;
+  overflow: hidden !important;
+}
+
+#women-new .w-card:hover {
+  border-color: #9caf88 !important;
+  box-shadow: 0 18px 44px rgba(156, 175, 136, 0.28) !important;
+  transform: translateY(-6px) !important;
+}
+
+#women-new .w-caption h3 {
+  color: #162217 !important;
+}
+#women-new .w-caption .w-kicker {
+  color: #e8412c !important;
+  font-weight: 700 !important;
+}
+#women-new .w-caption .w-line {
+  color: #384e36 !important;
+}
+#women-new .w-scrim {
+  background: linear-gradient(180deg, transparent 40%, rgba(247, 245, 239, 0.95) 100%) !important;
+}
+
+/* ========================================================
+   5. EXPLORE THE COLLECTION SECTION & BUTTONS
+   ======================================================== */
+#explore, #explore .x-stage {
+  background-color: #f7f5ef !important;
+  background: #f7f5ef !important;
+  position: relative !important;
+  overflow: visible !important;
+}
+
+#explore::before, #explore::after,
+#explore .x-stage::before, #explore .x-stage::after,
+#explore .x-bgwrap, #explore .x-bg {
+  display: none !important;
+}
+
+#explore .x-eyebrow, #explore .x-eyebrow span {
+  color: #748c66 !important;
+}
+#explore .x-eyebrow i {
+  background: #9caf88 !important;
+}
+#explore .x-head h2 {
+  color: #162217 !important;
+}
+#explore .x-sub {
+  color: #384e36 !important;
+}
+
+#explore .x-card {
+  background: #ffffff !important;
+  border: 1.5px solid rgba(156, 175, 136, 0.6) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 10px 30px rgba(22, 34, 23, 0.05) !important;
+  overflow: hidden !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+#explore .x-card::after {
+  display: none !important;
+}
+
+#explore .x-card > img {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+#explore .x-card:hover {
+  border-color: #9caf88 !important;
+  box-shadow: 0 16px 40px rgba(156, 175, 136, 0.25) !important;
+  transform: translateY(-4px) !important;
+}
+
+#explore .x-copy > * {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+#explore .x-copy h3 {
+  color: #162217 !important;
+}
+#explore .x-copy p {
+  color: #384e36 !important;
+}
+#explore .x-rule {
+  background: #9caf88 !important;
+}
+
+/* ========================================================
+   6. HAUTE COUTURE SLIDER SECTION & CONTROLS
+   ======================================================== */
+#garment-reel, .fw-slider-section, .fw-slider-theater {
+  background-color: #f7f5ef !important;
+  background: #f7f5ef !important;
+}
+
+.fw-slide-veil {
+  background: linear-gradient(90deg, rgba(247, 245, 239, 0.95) 0%, rgba(247, 245, 239, 0.8) 45%, rgba(247, 245, 239, 0.25) 100%) !important;
+}
+
+.fw-slide-eyebrow {
+  color: #748c66 !important;
+}
+.fw-slide-headline {
+  color: #162217 !important;
+}
+.fw-slide-orna b {
+  background: #9caf88 !important;
+}
+.fw-slide-title {
+  color: #162217 !important;
+}
+.fw-slide-desc {
+  color: #384e36 !important;
+}
+
+.fw-slider-nav button, .slider-arrow, .carousel-arrow, .slider-nav button {
+  background: #e8412c !important;
   color: #ffffff !important;
   border: none !important;
+  box-shadow: 0 4px 14px rgba(232, 65, 44, 0.3) !important;
+}
+
+.slider-dot, .fw-dot {
+  background: #9caf88 !important;
+}
+.slider-dot.active, .fw-dot.active {
+  background: #e8412c !important;
+}
+
+/* Best Sellers Section */
+#best {
+  background-color: #edeae0 !important;
+  background: #edeae0 !important;
+  border-top: 1.5px solid rgba(156, 175, 136, 0.45) !important;
+  border-bottom: 1.5px solid rgba(156, 175, 136, 0.45) !important;
+}
+#best::before, #best::after {
+  display: none !important;
+}
+#best .b-room {
+  opacity: 0.12 !important;
+}
+.b-card {
+  border: 1.5px solid rgba(156, 175, 136, 0.5) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 8px 24px rgba(22, 34, 23, 0.08) !important;
+  background: #ffffff !important;
+}
+.b-card:hover {
+  border-color: #9caf88 !important;
+  box-shadow: 0 16px 36px rgba(156, 175, 136, 0.25) !important;
+}
+.b-card .b-txt h3 {
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.7) !important;
+}
+
+/* ========================================================
+   7. SECTION BELOW BEST SELLERS (CRAFTSMANSHIP SEAL #craft)
+   ======================================================== */
+#craft {
+  background-color: #f7f5ef !important;
+  background: #f7f5ef !important;
+  border-top: 1.5px solid rgba(156, 175, 136, 0.4) !important;
+  border-bottom: 1.5px solid rgba(156, 175, 136, 0.4) !important;
+  padding: 60px 0 !important;
+}
+
+#craft::before, #craft::after {
+  display: none !important;
+}
+
+.c-orna, .c-orna-top, .c-orna-bottom {
+  border-color: #9caf88 !important;
+  background-color: #9caf88 !important;
+}
+
+.c-item {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.c-item p, .c-item p span {
+  color: #162217 !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.04em !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.c-draw, .c-item svg path, .c-item svg rect, .c-item svg circle, .c-item svg g {
+  stroke: #9caf88 !important;
+  opacity: 1 !important;
+  stroke-dashoffset: 0 !important;
+}
+
+.c-sep {
+  background: #9caf88 !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* ========================================================
+   8. OUR STORY SECTION (#storyEd)
+   ======================================================== */
+#storyEd {
+  background-color: #f7f5ef !important;
+  background: #f7f5ef !important;
+  padding: 80px 0 !important;
+}
+
+#storyEd::before, #storyEd::after {
+  display: none !important;
+}
+
+#storyEd .se-copy > * {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+#storyEd .sh-eyebrow {
+  color: #748c66 !important;
+}
+
+#storyEd .se-copy h2, #storyEd h2 {
+  color: #162217 !important;
+  font-size: clamp(30px, 3.5vw, 54px) !important;
+}
+
+#storyEd .se-copy h2 em, #storyEd h2 em {
+  color: #9caf88 !important;
+  font-style: italic !important;
+}
+
+#storyEd .se-rule {
+  background: #9caf88 !important;
+}
+
+#storyEd .se-para {
+  color: #384e36 !important;
+  font-size: 15.5px !important;
+  line-height: 1.7 !important;
+  font-weight: 500 !important;
+}
+
+#storyEd .se-mask {
+  clip-path: inset(0% 0% 0% 0%) !important;
+  opacity: 1 !important;
+}
+
+#storyEd .se-frame {
+  border: 1.5px solid #9caf88 !important;
+  opacity: 1 !important;
+}
+
+/* ========================================================
+   9. FOOTER (WHITE BACKGROUND, SAGE DOODLE, #e8412c SOCIAL,
+      BLACK NAVIGATION LINKS, HIGH CONTRAST)
+   ======================================================== */
+footer, #footer, .site-footer {
+  background-color: #ffffff !important;
+  background-image: 
+    radial-gradient(#9caf88 0.75px, transparent 0.75px), 
+    radial-gradient(#9caf88 0.75px, #ffffff 0.75px) !important;
+  background-size: 28px 28px !important;
+  background-position: 0 0, 14px 14px !important;
+  border-top: 1.5px solid #9caf88 !important;
+  color: #000000 !important;
+  position: relative !important;
+  overflow: hidden !important;
+  padding: 60px 0 30px !important;
+}
+
+/* Remove background images in footer */
+.f-leaves, .f-arch, footer .f-leaves, footer .f-arch {
+  display: none !important;
+}
+
+/* Architectural Botanical Line Doodle Texture Overlay */
+#footer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg stroke='%239caf88' stroke-width='0.75' stroke-opacity='0.25'%3E%3Cpath d='M40 38v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-34V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 38v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3Ccircle cx='40' cy='40' r='4'/%3E%3Ccircle cx='6' cy='6' r='4'/%3E%3Cpath d='M20 20c5-5 15-5 20 0s5 15 0 20-15 5-20 0-5-15 0-20z' stroke-dasharray='2,2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") !important;
+  opacity: 0.85 !important;
+}
+
+/* Headings in Footer */
+.f-col h4, .f-news h4, footer h4, .ft-title {
+  color: #000000 !important;
+  font-weight: 700 !important;
+  font-size: 13px !important;
+  letter-spacing: 0.15em !important;
+  text-transform: uppercase !important;
+}
+
+/* Home, About, Shop and all footer links in deep BLACK */
+.f-col a, .f-col[aria-label="Shop Aleen"] a, .f-col[aria-label="About Aleen"] a,
+footer a, footer nav a, .f-about, .f-st-copy, .f-bottom p, .f-bottom a, .ft-link,
+#footer p, .f-news p, .f-agree {
+  color: #000000 !important;
+  font-weight: 600 !important;
+  transition: color 0.2s ease !important;
+}
+
+.f-col a:hover, footer a:hover, .f-bottom a:hover, .ft-link:hover {
+  color: #e8412c !important;
+}
+
+.f-st-line, .f-st-line2 {
+  color: #000000 !important;
+  font-weight: 700 !important;
+}
+
+.lotus path, svg.lotus path {
+  fill: #9caf88 !important;
+}
+
+.f-st-rule, .f-orna, .f-col i, .f-news i {
+  background: #9caf88 !important;
+}
+
+/* Email Address Bar in Footer */
+.f-field, #newsForm .f-field, #footer .f-field {
+  background: #f7f5ef !important;
+  border: 1.5px solid #9caf88 !important;
+  border-radius: 999px !important;
+  overflow: hidden !important;
+  box-shadow: 0 4px 14px rgba(22, 34, 23, 0.05) !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+#newsEmail, .f-field input, #footer .f-field input {
+  background: transparent !important;
+  color: #162217 !important;
+  font-size: 14.5px !important;
+  font-weight: 600 !important;
+  border: none !important;
+  outline: none !important;
+  padding: 12px 20px !important;
+  flex: 1 !important;
+}
+
+#newsEmail::placeholder, .f-field input::placeholder, #footer .f-field input::placeholder {
+  color: #485c45 !important;
+  font-weight: 500 !important;
+}
+
+.f-field button, #newsForm button, #footer .f-field button {
+  background: #e8412c !important;
+  color: #ffffff !important;
+  border: none !important;
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 50% !important;
+  margin: 3px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: background 0.2s ease, transform 0.2s ease !important;
+}
+
+.f-field button:hover, #newsForm button:hover, #footer .f-field button:hover {
+  background: #cf3420 !important;
+  transform: scale(1.05) !important;
+}
+
+.f-field button svg, #newsForm button svg, #footer .f-field button svg {
+  stroke: #ffffff !important;
+  fill: none !important;
+}
+
+/* Social Media Icon Set: #e8412c */
+#footer .f-social a,
+#footer .f-social .f-lock-btn,
+#footer #lockModalBtn,
+.f-social a,
+.f-social button {
+  background: #e8412c !important;
+  border: 1px solid #e8412c !important;
+  color: #ffffff !important;
+  width: 42px !important;
+  height: 42px !important;
+  min-width: 42px !important;
+  min-height: 42px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 50% !important;
+  transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease !important;
+  box-shadow: 0 4px 12px rgba(232, 65, 44, 0.28) !important;
+}
+
+#footer .f-social a svg,
+#footer .f-social .f-lock-btn svg,
+#footer #lockModalBtn svg,
+.f-social a svg,
+.f-social button svg {
+  fill: #ffffff !important;
+  stroke: #ffffff !important;
+  width: 18px !important;
+  height: 18px !important;
+}
+
+#footer .f-social a:hover,
+#footer .f-social .f-lock-btn:hover,
+#footer #lockModalBtn:hover,
+.f-social a:hover,
+.f-social button:hover {
+  background: #cf3420 !important;
+  border-color: #cf3420 !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 8px 18px rgba(232, 65, 44, 0.4) !important;
+}
+
+/* ========================================================
+   10. STRICT GLOBAL BUTTON RULE — ALL BUTTONS #e8412c
+   ======================================================== */
+button,
+.btn,
+.btn-primary,
+.btn-ghost,
+.btn-secondary,
+.btn-outline,
+.btn-gold,
+.cta,
+.w-all-cta,
+.tbl-btn,
+.b-all .btn,
+.w-bottom-action .btn,
+.x-bottom-action .btn,
+.auth-btn,
+.lock-btn,
+.btn-card-inquire,
+.order-btn,
+.inquire-btn,
+.sh-btn,
+.add-to-bag-btn,
+.ecom-submit-btn,
+.ecom-drawer-apply-btn,
+.ecom-price-apply-btn,
+.see-more-btn,
+.contact-wa-btn,
+.footer-btn,
+.newsletter-submit-btn,
+a.btn,
+a.cta,
+.button-primary {
+  background-color: #e8412c !important;
+  background: #e8412c !important;
+  color: #ffffff !important;
+  border: none !important;
+  outline: none !important;
   border-radius: 999px !important;
   font-family: var(--sans, sans-serif) !important;
   font-weight: 600 !important;
-  letter-spacing: 0.8px !important;
-  box-shadow: 0 4px 18px rgba(232, 65, 44, 0.28) !important;
+  letter-spacing: 0.6px !important;
+  box-shadow: 0 4px 16px rgba(232, 65, 44, 0.3) !important;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
   cursor: pointer !important;
   text-decoration: none !important;
@@ -228,46 +782,66 @@ button.ecom-submit-btn, .add-to-bag-btn, .ecom-drawer-apply-btn,
   justify-content: center !important;
 }
 
-.btn-primary:hover, .auth-btn:hover, .lock-btn:hover, .btn-poppy:hover,
-.btn-cta:hover, .btn-card-inquire:hover, .order-btn:hover,
-.inquire-btn:hover, button.ecom-submit-btn:hover, .ecom-drawer-apply-btn:hover,
-.see-more-btn:hover, .btn-gold:hover, .cta:hover, .contact-wa-btn:hover {
+button:hover,
+.btn:hover,
+.btn-primary:hover,
+.btn-ghost:hover,
+.btn-secondary:hover,
+.btn-outline:hover,
+.btn-gold:hover,
+.cta:hover,
+.w-all-cta:hover,
+.tbl-btn:hover,
+.b-all .btn:hover,
+.w-bottom-action .btn:hover,
+.x-bottom-action .btn:hover,
+.auth-btn:hover,
+.lock-btn:hover,
+.btn-card-inquire:hover,
+.order-btn:hover,
+.inquire-btn:hover,
+.sh-btn:hover,
+.add-to-bag-btn:hover,
+.ecom-submit-btn:hover,
+.ecom-drawer-apply-btn:hover,
+.ecom-price-apply-btn:hover,
+.see-more-btn:hover,
+.contact-wa-btn:hover,
+.footer-btn:hover,
+.newsletter-submit-btn:hover,
+a.btn:hover,
+a.cta:hover,
+.button-primary:hover {
   background-color: #cf3420 !important;
-  box-shadow: 0 8px 24px rgba(232, 65, 44, 0.4) !important;
-  transform: translateY(-2px) !important;
+  background: #cf3420 !important;
   color: #ffffff !important;
+  border: none !important;
+  outline: none !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 24px rgba(232, 65, 44, 0.45) !important;
 }
 
-.btn-primary svg, .auth-btn svg, .lock-btn svg, .see-more-btn svg, .cta svg, .contact-wa-btn svg {
+.btn .fill, .cta .fill, a.btn .fill, a.cta .fill {
+  background: #cf3420 !important;
+}
+.btn .lbl, .cta .lbl, a.btn .lbl, a.cta .lbl {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+.btn svg, .cta svg, a.btn svg, a.cta svg {
   stroke: #ffffff !important;
   fill: none !important;
 }
-
-/* Secondary / Ghost Buttons */
-.btn-ghost, .btn-secondary, .btn-outline, .btn-sage-outline,
-.ecom-drawer-clear-btn, .ecom-drawer-reset-btn {
-  background: transparent !important;
-  color: #162217 !important;
-  border: 1.5px solid #9caf88 !important;
-  border-radius: 999px !important;
-  transition: all 0.25s ease !important;
+.btn svg path, .cta svg path, a.btn svg path, a.cta svg path {
+  stroke: #ffffff !important;
 }
 
-.btn-ghost:hover, .btn-secondary:hover, .btn-outline:hover, .btn-sage-outline:hover,
-.ecom-drawer-clear-btn:hover, .ecom-drawer-reset-btn:hover {
-  background: rgba(156, 175, 136, 0.18) !important;
-  border-color: #748c66 !important;
-  color: #162217 !important;
-}
-
-/* ========================================================
-   CARDS & CATALOG TILES
-   ======================================================== */
+/* CARDS & CATALOG TILES */
 .garment-card, .ecom-card, .catalog-card, .w-card, .product-card,
 .ecom-arch-frame, .arch-card, .col-card, .story-card, .luxury-card,
 .contact-detail-card, .action-cta-box {
   background: #ffffff !important;
-  border: 1px solid rgba(156, 175, 136, 0.45) !important;
+  border: 1.5px solid rgba(156, 175, 136, 0.5) !important;
   border-radius: 180px 180px 16px 16px !important;
   box-shadow: 0 10px 30px rgba(22, 34, 23, 0.05) !important;
   transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
@@ -283,48 +857,16 @@ button.ecom-submit-btn, .add-to-bag-btn, .ecom-drawer-apply-btn,
   transform: translateY(-6px) !important;
 }
 
-.card-media {
-  background: #f4f1e8 !important;
-}
-
-.card-origin {
-  color: #384e36 !important;
-}
-
 .card-title, .garment-card-title, .ecom-card-title, .product-title {
   color: #162217 !important;
 }
-
 .card-foot-price, .card-price, .garment-price, .ecom-card-price, .price-display, .modal-price {
   color: #e8412c !important;
   font-weight: 700 !important;
 }
-
 .card-foot {
   border-top: 1px solid rgba(156, 175, 136, 0.35) !important;
 }
-
-.card-cat-badge {
-  color: #485949 !important;
-}
-
-.card-buying-meta div span {
-  color: #485949 !important;
-}
-
-.card-wish-btn {
-  background: rgba(247, 245, 239, 0.88) !important;
-  backdrop-filter: blur(8px) !important;
-  border: 1px solid rgba(156, 175, 136, 0.5) !important;
-  color: #162217 !important;
-}
-.card-wish-btn:hover, .card-wish-btn.liked {
-  background: #e8412c !important;
-  color: #ffffff !important;
-  border-color: #e8412c !important;
-}
-
-/* Tags & Badges */
 .card-tag, .edition-badge, .garment-tag-pill, .badge-pill, .vs-tag, .card-badge, .contact-card-badge {
   background: #f7f5ef !important;
   color: #2e432c !important;
@@ -332,56 +874,7 @@ button.ecom-submit-btn, .add-to-bag-btn, .ecom-drawer-apply-btn,
   font-weight: 700 !important;
 }
 
-/* ========================================================
-   HOMEPAGE SPECIFIC SECTIONS
-   ======================================================== */
-#women-new {
-  background-color: #f7f5ef !important;
-}
-#women-new .w-bg-scrim {
-  background: rgba(247, 245, 239, 0.88) !important;
-}
-
-#best {
-  background-color: #edeae0 !important;
-  border-top: 1px solid rgba(156, 175, 136, 0.35) !important;
-  border-bottom: 1px solid rgba(156, 175, 136, 0.35) !important;
-}
-#best .b-room {
-  opacity: 0.15 !important;
-}
-.b-card {
-  border: 1px solid rgba(156, 175, 136, 0.45) !important;
-  border-radius: 14px !important;
-  box-shadow: 0 8px 24px rgba(22, 34, 23, 0.08) !important;
-}
-
-#craft {
-  background-color: #f7f5ef !important;
-}
-.c-item p span {
-  color: #162217 !important;
-}
-.c-draw {
-  stroke: #9caf88 !important;
-}
-.c-sep {
-  background: #9caf88 !important;
-}
-
-#storyEd {
-  background-color: #f7f5ef !important;
-}
-.se-frame {
-  border: 1px solid #9caf88 !important;
-}
-.se-rule {
-  background: #9caf88 !important;
-}
-
-/* ========================================================
-   FILTER SYSTEM & SEARCH BAR
-   ======================================================== */
+/* Filter & Search elements */
 .ecom-refine-trigger-btn {
   background: rgba(156, 175, 136, 0.18) !important;
   border: 1px solid #9caf88 !important;
@@ -392,132 +885,17 @@ button.ecom-submit-btn, .add-to-bag-btn, .ecom-drawer-apply-btn,
   color: #ffffff !important;
   border-color: #748c66 !important;
 }
-.ecom-refine-trigger-btn svg {
-  stroke: #162217 !important;
-}
-.ecom-refine-trigger-btn:hover svg {
-  stroke: #ffffff !important;
-}
-
 .search-input {
   background: #ffffff !important;
   border: 1px solid #9caf88 !important;
   color: #162217 !important;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.03) !important;
 }
-.search-input:focus {
-  border-color: #748c66 !important;
-  box-shadow: 0 0 0 3px rgba(156, 175, 136, 0.25) !important;
-}
-.search-box svg.search-icon {
-  stroke: #485949 !important;
-}
-
-/* Filter Drawer */
 .ecom-filter-drawer, .filter-drawer {
   background-color: #f7f5ef !important;
   border-left: 1px solid rgba(156, 175, 136, 0.45) !important;
-  color: #162217 !important;
-  box-shadow: -10px 0 40px rgba(22, 34, 23, 0.12) !important;
-}
-.ecom-drawer-header {
-  border-bottom: 1px solid rgba(156, 175, 136, 0.3) !important;
-}
-.ecom-facet-title {
-  color: #2e432c !important;
-  font-weight: 700 !important;
-}
-.ecom-tag-chip, .filter-pill, .filter-radio-card, .filter-btn-pill {
-  background: #ffffff !important;
-  border: 1px solid rgba(156, 175, 136, 0.45) !important;
-  color: #162217 !important;
 }
 .ecom-tag-chip.active, .ecom-tag-chip.selected, .filter-pill.active {
   background: #9caf88 !important;
   color: #ffffff !important;
   border-color: #748c66 !important;
-}
-.ecom-price-brackets label {
-  background: #ffffff !important;
-  border: 1px solid rgba(156, 175, 136, 0.4) !important;
-  color: #162217 !important;
-}
-.ecom-price-input-wrap input {
-  background: #ffffff !important;
-  border: 1px solid #9caf88 !important;
-  color: #162217 !important;
-}
-.ecom-price-apply-btn {
-  background: #e8412c !important;
-  color: #ffffff !important;
-  border: none !important;
-}
-
-/* ========================================================
-   MODALS, DIALOGS & OVERLAYS
-   ======================================================== */
-.modal-card, .ecom-modal-dialog, .lock-modal-dialog, .quick-view-dialog, .auth-gate-card {
-  background: #f7f5ef !important;
-  border: 1px solid rgba(156, 175, 136, 0.45) !important;
-  box-shadow: 0 24px 60px rgba(22, 34, 23, 0.18) !important;
-  color: #162217 !important;
-}
-
-.modal-desc, .spec-label, .spec-val {
-  color: #384e36 !important;
-}
-
-.spec-item {
-  background: #ffffff !important;
-  border: 1px solid rgba(156, 175, 136, 0.3) !important;
-}
-
-.modal-overlay, .ecom-drawer-scrim, .admin-auth-gate {
-  background: rgba(22, 34, 23, 0.65) !important;
-  backdrop-filter: blur(8px) !important;
-}
-
-.auth-input, .lock-input, .modal-input, textarea.auth-input {
-  background: #ffffff !important;
-  border: 1px solid #9caf88 !important;
-  color: #162217 !important;
-}
-.auth-input:focus, .lock-input:focus {
-  border-color: #e8412c !important;
-  outline: none !important;
-}
-
-/* ========================================================
-   FOOTER (EDITORIAL PARCHMENT ACCENT)
-   ======================================================== */
-footer, #footer, .site-footer {
-  background-color: #edeae0 !important;
-  border-top: 1px solid rgba(156, 175, 136, 0.4) !important;
-  color: #162217 !important;
-}
-footer h3, footer h4, footer .foot-title, .ft-title {
-  color: #162217 !important;
-}
-footer p, footer .foot-desc, .ft-desc {
-  color: #485949 !important;
-}
-footer a, .ft-link {
-  color: #2e432c !important;
-  transition: color 0.2s ease !important;
-}
-footer a:hover, .ft-link:hover {
-  color: #e8412c !important;
-}
-.footer-input, .newsletter-input {
-  background: #ffffff !important;
-  border: 1px solid #9caf88 !important;
-  color: #162217 !important;
-}
-.footer-btn, .newsletter-submit-btn {
-  background: #e8412c !important;
-  color: #ffffff !important;
-  border: none !important;
-}
-.footer-btn:hover, .newsletter-submit-btn:hover {
-  background: #cf3420 !important;
 }
