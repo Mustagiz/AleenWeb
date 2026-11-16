@@ -22,6 +22,7 @@
     href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@300;400;500;600;700&family=Great+Vibes&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="assets/vendor/cropper.min.css">
+  <link rel="stylesheet" href="theme-fresh.css?v=2">
   <style>
     /* ================= GLOBAL HEADER & FOOTER LUXURY CSS ================= */
     :root {
@@ -4977,6 +4978,67 @@
       let womenCollections = JSON.parse(localStorage.getItem("aleen_women_collections") || "null") || DEFAULT_WOMEN_COLLECTIONS;
       let users = JSON.parse(localStorage.getItem("aleen_users") || "[]");
 
+      const DEFAULT_BEST_SELLERS = [
+        {
+          no: "01",
+          title: "Pakistani<br>Kurtis",
+          subtitle: "Royal grace in<br>every stitch.",
+          image: "assets/s5-p1.jpg?v=1",
+          url: "/collections?category=kurtis"
+        },
+        {
+          no: "02",
+          title: "Kurta Sets",
+          subtitle: "Everyday<br>elegance,<br>redefined.",
+          image: "assets/s5-p2.jpg?v=1",
+          url: "/collections?category=kurta-sets"
+        },
+        {
+          no: "03",
+          title: "Organza<br>Kurtis",
+          subtitle: "Art in<br>every thread.",
+          image: "assets/s5-p3.jpg?v=1",
+          url: "/collections?category=kurtis"
+        },
+        {
+          no: "04",
+          title: "Kalakaari<br>Collection",
+          subtitle: "Stories<br>woven in<br>tradition.",
+          image: "assets/s5-p4.jpg?v=1",
+          url: "/collections"
+        }
+      ];
+
+      let bestSellers = [];
+      try {
+        const stored = localStorage.getItem("aleen_bestsellers");
+        bestSellers = stored ? JSON.parse(stored) : JSON.parse(JSON.stringify(DEFAULT_BEST_SELLERS));
+      } catch (e) {
+        bestSellers = JSON.parse(JSON.stringify(DEFAULT_BEST_SELLERS));
+      }
+      window.bestSellers = bestSellers;
+
+      let bestsellersBroadcast = null;
+      try {
+        bestsellersBroadcast = new BroadcastChannel("aleen_bestsellers_realtime");
+      } catch (e) {}
+
+      async function syncBestsellersFromServer() {
+        try {
+          const res = await fetch("/api/best-sellers");
+          const data = await res.json();
+          if (res.ok && data.success && Array.isArray(data.bestSellers) && data.bestSellers.length) {
+            bestSellers = data.bestSellers;
+            window.bestSellers = bestSellers;
+            localStorage.setItem("aleen_bestsellers", JSON.stringify(bestSellers));
+            renderBestsellersManager();
+          }
+        } catch (e) {
+          console.warn("Could not sync bestsellers from server:", e);
+        }
+      }
+      syncBestsellersFromServer();
+
       // DOM Elements
       const authGate = document.getElementById("adminAuthGate");
       const authForm = document.getElementById("adminAuthForm");
@@ -5802,6 +5864,7 @@
         showToast("Garment removed from catalog");
       };
 
+      const addGarmentBtn = document.getElementById("addNewGarmentBtn");
       addGarmentBtn?.addEventListener("click", () => {
         garmentForm.reset();
         editIdInput.value = "";
@@ -6128,6 +6191,7 @@
       }
 
       function renderHeroManager() {
+        const heroGrid = document.getElementById("heroRotatorGrid");
         if (!heroGrid) return;
         updateHeroPreview(0);
         heroGrid.innerHTML = heroRotator.map((item, idx) => `
@@ -6314,6 +6378,7 @@
       };
 
       function renderCarouselManager() {
+        const carouselGrid = document.getElementById("carouselSlidesGrid");
         if (!carouselGrid) return;
         carouselGrid.innerHTML = carouselSlides.map((slide, idx) => `
       <div class="cm-slide-item" data-idx="${idx}">
@@ -7073,66 +7138,6 @@
       // ==========================================
       // BEST SELLERS MANAGER LOGIC
       // ==========================================
-      const DEFAULT_BEST_SELLERS = [
-        {
-          no: "01",
-          title: "Pakistani<br>Kurtis",
-          subtitle: "Royal grace in<br>every stitch.",
-          image: "assets/s5-p1.jpg?v=1",
-          url: "/collections?category=kurtis"
-        },
-        {
-          no: "02",
-          title: "Kurta Sets",
-          subtitle: "Everyday<br>elegance,<br>redefined.",
-          image: "assets/s5-p2.jpg?v=1",
-          url: "/collections?category=kurta-sets"
-        },
-        {
-          no: "03",
-          title: "Organza<br>Kurtis",
-          subtitle: "Art in<br>every thread.",
-          image: "assets/s5-p3.jpg?v=1",
-          url: "/collections?category=kurtis"
-        },
-        {
-          no: "04",
-          title: "Kalakaari<br>Collection",
-          subtitle: "Stories<br>woven in<br>tradition.",
-          image: "assets/s5-p4.jpg?v=1",
-          url: "/collections"
-        }
-      ];
-
-      let bestSellers = [];
-      try {
-        const stored = localStorage.getItem("aleen_bestsellers");
-        bestSellers = stored ? JSON.parse(stored) : JSON.parse(JSON.stringify(DEFAULT_BEST_SELLERS));
-      } catch (e) {
-        bestSellers = JSON.parse(JSON.stringify(DEFAULT_BEST_SELLERS));
-      }
-      window.bestSellers = bestSellers;
-
-      let bestsellersBroadcast = null;
-      try {
-        bestsellersBroadcast = new BroadcastChannel("aleen_bestsellers_realtime");
-      } catch (e) {}
-
-      async function syncBestsellersFromServer() {
-        try {
-          const res = await fetch("/api/best-sellers");
-          const data = await res.json();
-          if (res.ok && data.success && Array.isArray(data.bestSellers) && data.bestSellers.length) {
-            bestSellers = data.bestSellers;
-            window.bestSellers = bestSellers;
-            localStorage.setItem("aleen_bestsellers", JSON.stringify(bestSellers));
-            renderBestsellersManager();
-          }
-        } catch (e) {
-          console.warn("Could not sync bestsellers from server:", e);
-        }
-      }
-      syncBestsellersFromServer();
 
       function renderBestsellersManager() {
         const grid = document.getElementById("bestsellersGrid");
