@@ -28,11 +28,11 @@ module.exports = async (req, res) => {
   if (!admin) { res.status(403).json({ error: 'Admin role required' }); return; }
 
   if (req.method === 'POST') {
-    const { catalog } = req.body || {};
-    if (!Array.isArray(catalog)) { res.status(400).json({ error: 'catalog must be an array' }); return; }
+    const list = (req.body && (req.body.catalog || req.body.garments)) || (Array.isArray(req.body) ? req.body : null);
+    if (!Array.isArray(list)) { res.status(400).json({ error: 'catalog must be an array' }); return; }
     try {
-      await saveCatalog(catalog);
-      res.status(200).json({ success: true, message: 'Catalog updated!', count: catalog.length });
+      await saveCatalog(list);
+      res.status(200).json({ success: true, message: 'Catalog updated!', count: list.length, garments: list, catalog: list });
     } catch (err) {
       console.error('Error saving catalog:', err);
       res.status(500).json({ error: 'Failed to save catalog' });

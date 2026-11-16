@@ -66,7 +66,7 @@
               "item": {
                 "@type": "Product",
                 "name": "Gulmohar Chanderi Kurta Set",
-                "image": "https://mahira2.netlify.app/assets/s3-kurta.jpg?v=5",
+                "image": "assets/women-collections/card_1_kurta-sets.jpg",
                 "description": "Handwoven Chanderi silk kurta set with marodi gold needlecraft and scalloped organza dupatta.",
                 "brand": { "@type": "Brand", "name": "Aleen" },
                 "offers": {
@@ -1123,6 +1123,8 @@
     }
 
     /* Gallery Hero Section - Luxury Deep Emerald Awadh Curation */
+
+    /* Dynamic Animated Luxury Garments Hero */
     .catalog-hero {
       position: relative;
       width: 100%;
@@ -1130,10 +1132,93 @@
       box-sizing: border-box;
       padding: clamp(140px, 16.5vh, 175px) clamp(24px, 4.5vw, 70px) 48px;
       text-align: center;
-      background: radial-gradient(ellipse at 50% 20%, #173322 0%, #0d1e14 55%, #040906 100%);
+      overflow: hidden;
+      background: #060e08;
       border-bottom: 1px solid rgba(201, 163, 95, 0.32);
       box-shadow: 0 16px 45px rgba(0, 0, 0, 0.42);
     }
+    .catalog-hero-bg-media {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .catalog-hero-bg-img {
+      position: absolute;
+      top: -10%;
+      left: -10%;
+      width: 120%;
+      height: 120%;
+      object-fit: cover;
+      object-position: center 30%;
+      filter: brightness(0.55) contrast(1.15) saturate(1.12);
+      animation: kenBurnsHero 28s ease-in-out infinite alternate;
+    }
+    @keyframes kenBurnsHero {
+      0% { transform: scale(1.0) translate(0, 0); }
+      50% { transform: scale(1.08) translate(-1.5%, 1%); }
+      100% { transform: scale(1.04) translate(1.5%, -1%); }
+    }
+    .catalog-hero-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 30%, rgba(13, 30, 20, 0.72) 0%, rgba(6, 14, 8, 0.92) 65%, #040906 100%),
+                  linear-gradient(to bottom, rgba(4, 9, 6, 0.65) 0%, transparent 40%, rgba(4, 9, 6, 0.88) 85%, #040906 100%);
+      z-index: 2;
+    }
+    .catalog-hero-dust {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(2px 2px at 25px 35px, rgba(201, 163, 95, 0.45), rgba(0,0,0,0)),
+                        radial-gradient(2px 2px at 95px 115px, rgba(238, 228, 205, 0.3), rgba(0,0,0,0)),
+                        radial-gradient(1.5px 1.5px at 170px 65px, rgba(201, 163, 95, 0.4), rgba(0,0,0,0)),
+                        radial-gradient(2px 2px at 260px 180px, rgba(201, 163, 95, 0.28), rgba(0,0,0,0));
+      background-repeat: repeat;
+      background-size: 300px 300px;
+      animation: goldDustFloat 20s linear infinite;
+      opacity: 0.65;
+      pointer-events: none;
+      z-index: 2;
+    }
+    @keyframes goldDustFloat {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(-300px) rotate(1deg); }
+    }
+    .catalog-garment-tags {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 18px auto 0;
+      position: relative;
+      z-index: 3;
+    }
+    .catalog-garment-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(13, 30, 20, 0.75);
+      border: 1px solid rgba(201, 163, 95, 0.35);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--cream-hi);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .catalog-garment-tag:hover {
+      background: rgba(201, 163, 95, 0.22);
+      border-color: var(--gold-light);
+      transform: translateY(-2px);
+      color: #ffffff;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    }
+
 
     .catalog-hero::before {
       content: '';
@@ -3995,11 +4080,22 @@ html, body {
 
 
   <header class="catalog-hero">
+    <div class="catalog-hero-bg-media" aria-hidden="true">
+      <img src="assets/pakistani-kurti-1.jpg" alt="" class="catalog-hero-bg-img" loading="eager" decoding="async" onerror="this.src='assets/carousel-slide-1.jpg'">
+      <div class="catalog-hero-vignette"></div>
+      <div class="catalog-hero-dust"></div>
+    </div>
     <div class="catalog-hero-inner">
       <span class="catalog-kicker">✦ &nbsp; Atelier Curation &nbsp; ✦</span>
       <h1 class="catalog-title">The Grand Garments Gallery</h1>
       <p class="catalog-tagline">"From timeless Banarasi weaves to hand-cut modern drapes &mdash; explore our complete
         atelier portfolio."</p>
+      <div class="catalog-garment-tags">
+        <span class="catalog-garment-tag">✦ Hand-Embroidery Archive</span>
+        <span class="catalog-garment-tag">✦ Pure Raw Silk &amp; Chanderi</span>
+        <span class="catalog-garment-tag">✦ Mastercut Silhouettes</span>
+        <span class="catalog-garment-tag">✦ Worldwide Insured Dispatch</span>
+      </div>
 
       <!-- Controls: Luxury Minimal Refine Filters & Sort Bar -->
       <div class="ecom-refine-bar-card">
@@ -4876,7 +4972,7 @@ html, body {
           fabric: "Tissue Chanderi with Silk Organza",
           origin: "Chanderi Weavers Guild",
           badge: "Bestseller",
-          image: "https://mahira2.netlify.app/assets/s3-kurta.jpg?v=5",
+          image: "assets/women-collections/card_1_kurta-sets.jpg",
           desc: "Delicate dusty rose organza adorned with fine metallic badla and antique marodi needlecraft. Paired with straight-cut brocade trousers and scalloped veil."
         },
         {
@@ -4889,7 +4985,7 @@ html, body {
           fabric: "Raw Silk & Multilayered Tulle",
           origin: "Aleen Design Studio",
           badge: "New Silhouette",
-          image: "https://mahira2.netlify.app/assets/s3-dresses.jpg?v=5",
+          image: "assets/women-collections/card_2_dresses.jpg",
           desc: "Contemporary architectural drape meeting traditional hand-embroidery. A 32-meter flare cut structured for gala celebrations and grand occasions."
         },
         {
@@ -4902,7 +4998,7 @@ html, body {
           fabric: "Heritage Velvet & Tissue Silk",
           origin: "Lucknow Artisans",
           badge: "Royal Couture",
-          image: "https://mahira2.netlify.app/assets/women-clean.jpg?v=3",
+          image: "assets/women-collections/card_3_lehengas.jpg",
           desc: "Inspired by the mirrored halls of Amber Fort. Encased in genuine semi-precious bead embroidery, beaten metallic cord, and a dual tissue veil."
         },
         {
@@ -4928,7 +5024,7 @@ html, body {
           fabric: "Pure Mulberry Georgette",
           origin: "Awadh Atelier",
           badge: "Hand-Embroidered",
-          image: "https://mahira2.netlify.app/assets/s4-room.jpg?v=1",
+          image: "assets/women-collections/card_4_anarkalis.jpg",
           desc: "32 Kalis of handcrafted shadow-work Chikankari interspersed with silver mukaish dots that catch the light at every graceful turn."
         },
         {
@@ -4941,7 +5037,7 @@ html, body {
           fabric: "Grade-A Cashmere Pashmina",
           origin: "Srinagar Valley",
           badge: "Limited Craft",
-          image: "https://mahira2.netlify.app/assets/s5-room.jpg?v=1",
+          image: "assets/women-collections/card_5_dupattas.jpg",
           desc: "Featherlight warmth woven from Himalayan capra hircus fleece, detailed with single-needle botanical jaal borders."
         },
         {
@@ -4954,7 +5050,7 @@ html, body {
           fabric: "Pure Mulberry Silk 4.5m",
           origin: "Bespoke Loom 12",
           badge: "Mastercut",
-          image: "https://mahira2.netlify.app/assets/s3-bg.jpg?v=1",
+          image: "assets/women-collections/card_6_fabrics.jpg",
           desc: "Rare artisanal yardage crafted on hand-shuttle looms with alternating warp threads. Tailorable for bespoke lehengas or sherwanis."
         },
         {
@@ -4980,7 +5076,7 @@ html, body {
           fabric: "Mulberry Organza & Crepe",
           origin: "Aleen Design Studio",
           badge: "Signature Cut",
-          image: "https://mahira2.netlify.app/assets/women-clean.jpg?v=3",
+          image: "assets/women-collections/card_3_lehengas.jpg",
           desc: "A springtime dream composed of thousand-petal floral tapestries rendered in ombré pastel threads, crowned by an embroidered sweetheart bustier."
         },
         {
@@ -4993,7 +5089,7 @@ html, body {
           fabric: "Italian Crepe de Chine",
           origin: "Modern Atelier",
           badge: "Resort Couture",
-          image: "https://mahira2.netlify.app/assets/s3-dresses.jpg?v=5",
+          image: "assets/women-collections/card_2_dresses.jpg",
           desc: "Effortless luxury designed for intimate soirees. Relaxed silhouette cinched with an ornate hand-beaded bullion belt."
         },
         {
@@ -5006,7 +5102,7 @@ html, body {
           fabric: "Organic Handspun Chanderi",
           origin: "Madhya Pradesh Looms",
           badge: "Pure Natural",
-          image: "https://mahira2.netlify.app/assets/s3-kurta.jpg?v=5",
+          image: "assets/women-collections/card_1_kurta-sets.jpg",
           desc: "Includes 5 meters of pure chanderi with woven golden bootis alongside 2.5 meters of dyed satin lining and a matched organza drape."
         }
       ];
@@ -5431,7 +5527,7 @@ html, body {
               <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
             </svg>
           </button>
-          <img src="${formatImgSrc(item.image)}" alt="${item.title}" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='/assets/pakistani-kurti-1.jpg'" />
+          <img src="${formatImgSrc(item.image)}" alt="${item.title}" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='assets/pakistani-kurti-1.jpg'" />
           ${item.badge ? `<span class="card-badge">${item.badge}</span>` : ''}
         </div>
         <div class="card-info">
@@ -5946,12 +6042,12 @@ html, body {
       }
 
       function formatImgSrc(src) {
-        if (!src) return "/assets/pakistani-kurti-1.jpg";
+        if (!src) return "assets/pakistani-kurti-1.jpg";
         if (src.startsWith("http://") || src.startsWith("https://") || src.startsWith("data:")) {
           return src;
         }
-        if (!src.startsWith("/")) {
-          return "/" + src;
+        if (src.startsWith("/")) {
+          return src.substring(1);
         }
         return src;
       }
@@ -6011,7 +6107,7 @@ html, body {
           vsResultsList.innerHTML = topHits.map((item, idx) => `
             <div class="vs-item" data-id="${item.id}" role="option" tabindex="0" data-index="${idx}">
               <div class="vs-thumb-frame">
-                <img src="${formatImgSrc(item.image)}" alt="${item.title}" class="vs-thumb-img" loading="lazy" onerror="this.onerror=null;this.src='/assets/pakistani-kurti-1.jpg'">
+                <img src="${formatImgSrc(item.image)}" alt="${item.title}" class="vs-thumb-img" loading="lazy" onerror="this.onerror=null;this.src='assets/pakistani-kurti-1.jpg'">
               </div>
               <div class="vs-info">
                 <span class="vs-item-origin">${item.origin || 'Lucknow Atelier'}</span>
@@ -6339,6 +6435,44 @@ html, body {
     document.body.appendChild(s);
   }
 </script>
+
+<!-- Social Links Dynamic Hydration -->
+<script>
+  (function() {
+    function applySocialLinks(soc) {
+      if (!soc) return;
+      const ig = document.querySelector(".f-social a[aria-label='Instagram']") || document.querySelector("a[aria-label*='Instagram']");
+      if (ig && soc.instagram) ig.href = soc.instagram;
+      const fb = document.querySelector(".f-social a[aria-label='Facebook']") || document.querySelector("a[aria-label*='Facebook']");
+      if (fb && soc.facebook) fb.href = soc.facebook;
+      const yt = document.querySelector(".f-social a[aria-label='YouTube']") || document.querySelector("a[aria-label*='YouTube']");
+      if (yt && soc.youtube) yt.href = soc.youtube;
+      const wa = document.querySelector(".f-social a[aria-label*='WhatsApp']") || document.querySelector("a[aria-label*='WhatsApp']");
+      if (wa && soc.whatsapp) {
+        const clean = soc.whatsapp.replace(/[^0-9]/g, "");
+        const msg = encodeURIComponent(soc.whatsappMsg || "Hello Aleen Atelier, I would like to connect with a private stylist for bespoke curation.");
+        wa.href = `https://wa.me/${clean}?text=${msg}`;
+      }
+    }
+    try {
+      const cached = localStorage.getItem("aleen_social_links");
+      if (cached) applySocialLinks(JSON.parse(cached));
+    } catch(e) {}
+    fetch("/api/social-links").then(r => r.json()).then(d => {
+      if (d && d.success && d.socialLinks) {
+        applySocialLinks(d.socialLinks);
+        localStorage.setItem("aleen_social_links", JSON.stringify(d.socialLinks));
+      }
+    }).catch(() => {});
+    try {
+      const bc = new BroadcastChannel("aleen_social_realtime");
+      bc.onmessage = e => {
+        if (e.data && e.data.socialLinks) applySocialLinks(e.data.socialLinks);
+      };
+    } catch(e) {}
+  })();
+</script>
+
 </body>
 
 </html>

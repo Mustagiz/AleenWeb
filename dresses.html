@@ -2412,5 +2412,43 @@
     document.body.appendChild(s);
   }
 </script>
+
+<!-- Social Links Dynamic Hydration -->
+<script>
+  (function() {
+    function applySocialLinks(soc) {
+      if (!soc) return;
+      const ig = document.querySelector(".f-social a[aria-label='Instagram']") || document.querySelector("a[aria-label*='Instagram']");
+      if (ig && soc.instagram) ig.href = soc.instagram;
+      const fb = document.querySelector(".f-social a[aria-label='Facebook']") || document.querySelector("a[aria-label*='Facebook']");
+      if (fb && soc.facebook) fb.href = soc.facebook;
+      const yt = document.querySelector(".f-social a[aria-label='YouTube']") || document.querySelector("a[aria-label*='YouTube']");
+      if (yt && soc.youtube) yt.href = soc.youtube;
+      const wa = document.querySelector(".f-social a[aria-label*='WhatsApp']") || document.querySelector("a[aria-label*='WhatsApp']");
+      if (wa && soc.whatsapp) {
+        const clean = soc.whatsapp.replace(/[^0-9]/g, "");
+        const msg = encodeURIComponent(soc.whatsappMsg || "Hello Aleen Atelier, I would like to connect with a private stylist for bespoke curation.");
+        wa.href = `https://wa.me/${clean}?text=${msg}`;
+      }
+    }
+    try {
+      const cached = localStorage.getItem("aleen_social_links");
+      if (cached) applySocialLinks(JSON.parse(cached));
+    } catch(e) {}
+    fetch("/api/social-links").then(r => r.json()).then(d => {
+      if (d && d.success && d.socialLinks) {
+        applySocialLinks(d.socialLinks);
+        localStorage.setItem("aleen_social_links", JSON.stringify(d.socialLinks));
+      }
+    }).catch(() => {});
+    try {
+      const bc = new BroadcastChannel("aleen_social_realtime");
+      bc.onmessage = e => {
+        if (e.data && e.data.socialLinks) applySocialLinks(e.data.socialLinks);
+      };
+    } catch(e) {}
+  })();
+</script>
+
 </body>
 </html>

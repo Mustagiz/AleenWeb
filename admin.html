@@ -3186,6 +3186,26 @@
           </svg>
           ✦ Women's Arched Cards
         </button>
+        <button type="button" class="admin-tab-btn" data-tab="bestsellers">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+          </svg>
+          ✦ Best Sellers (Home)
+        </button>
+        <button type="button" class="admin-tab-btn" data-tab="contact-desk">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+          ✦ Contact Page Desk
+        </button>
+        <button type="button" class="admin-tab-btn" data-tab="social-links">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+          </svg>
+          ✦ Social &amp; Email Links
+        </button>
         <button type="button" class="admin-tab-btn" data-tab="settings">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="12" cy="12" r="3"></circle>
@@ -3216,7 +3236,10 @@
         Rotator</button>
       <button type="button" class="qj-btn qj-btn-gold" onclick="switchAdminTab('carousel')">🖼️ 3. Full-Width Couture Slider</button>
       <button type="button" class="qj-btn qj-btn-gold" onclick="switchAdminTab('women-collections')">🏛️ 4. Women's Arched Cards</button>
-      <button type="button" class="qj-btn" onclick="switchAdminTab('settings')">⚙️ 5. Staff &amp; Passwords</button>
+      <button type="button" class="qj-btn qj-btn-gold" onclick="switchAdminTab('bestsellers')">🏆 5. Best Sellers</button>
+      <button type="button" class="qj-btn qj-btn-gold" onclick="switchAdminTab('contact-desk')">📍 6. Contact Desk</button>
+      <button type="button" class="qj-btn qj-btn-gold" onclick="switchAdminTab('social-links')">🔗 7. Social &amp; Email</button>
+      <button type="button" class="qj-btn" onclick="switchAdminTab('settings')">⚙️ 8. Staff &amp; Passwords</button>
     </div>
 
     <!-- PANE 1: GARMENTS CATALOG -->
@@ -3583,6 +3606,229 @@
         </div>
       </div>
     </section>
+    <!-- PANE 5: BEST SELLERS (HOME BENTO CARDS) -->
+    <section class="admin-pane" id="paneBestsellers">
+      <div class="carousel-manager-card">
+        <div class="cm-header">
+          <div>
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 6px; flex-wrap: wrap;">
+              <h2 class="cm-title" style="margin: 0;">Home Page Best Sellers &mdash; 4 Bento Spotlight Cards</h2>
+              <span id="bestsellersSyncBadge" class="carousel-sync-badge" title="Real-time synchronized across visitor homepages and cloud database">
+                <span class="sync-indicator-dot"></span> Synced live to cloud &amp; homepage
+              </span>
+            </div>
+            <p class="cm-desc">
+              Manage the 4 spotlight creations featured in the "Best Sellers" section on the homepage. Update the card badge number, heading title, crafted subtitle, target collection URL, and high-resolution couture photography live.
+            </p>
+          </div>
+          <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <button type="button" class="admin-tab-btn" onclick="syncBestsellersFromServer(); showToast('Synced latest best sellers from cloud');" title="Pull latest best sellers from server">
+              🔄 Sync Cloud
+            </button>
+            <button type="button" class="admin-tab-btn" id="saveBestsellersBtn" onclick="saveBestsellersToServer()" style="background: linear-gradient(135deg, var(--gold) 0%, var(--gold-deep) 100%); color: #000; font-weight: 600; padding: 8px 18px;">
+              ✦ Save Best Sellers Live
+            </button>
+          </div>
+        </div>
+
+        <div class="cm-slides-grid" id="bestsellersGrid">
+          <!-- Rendered dynamically via JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- PANE 6: CONTACT PAGE & BOUTIQUE DESK -->
+    <section class="admin-pane" id="paneContactDesk">
+      <div class="carousel-manager-card">
+        <div class="cm-header">
+          <div>
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 6px; flex-wrap: wrap;">
+              <h2 class="cm-title" style="margin: 0;">Atelier Contact Desk &amp; Boutique Coordinates</h2>
+              <span id="contactSyncBadge" class="carousel-sync-badge" title="Real-time synchronized across contact-us.html and cloud database">
+                <span class="sync-indicator-dot"></span> Synced live to cloud &amp; contact page
+              </span>
+            </div>
+            <p class="cm-desc">
+              Update the Pune Flagship Boutique physical address, Google Maps direction link, electronic mail response SLA, and direct WhatsApp concierge coordinates displayed on the contact page.
+            </p>
+          </div>
+          <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <button type="button" class="admin-tab-btn" onclick="syncContactDetailsFromServer(); showToast('Synced contact coordinates from cloud');" title="Pull latest contact details">
+              🔄 Sync Cloud
+            </button>
+            <button type="button" class="admin-tab-btn" id="saveContactDetailsBtn" onclick="saveContactDetailsToServer()" style="background: linear-gradient(135deg, var(--gold) 0%, var(--gold-deep) 100%); color: #000; font-weight: 600; padding: 8px 18px;">
+              ✦ Save Contact Details Live
+            </button>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-top: 15px;">
+          <!-- Card 1: Flagship Boutique -->
+          <div class="cm-slide-item" style="border: 1px solid rgba(201, 163, 95, 0.35); border-radius: 12px; padding: 18px; background: rgba(5, 12, 7, 0.65);">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px; border-bottom: 1px solid rgba(201, 163, 95, 0.2); padding-bottom: 8px;">
+              <span style="color: var(--gold-light); font-size: 18px;">📍</span>
+              <h4 style="margin: 0; color: #fff; font-family: var(--serif); font-size: 18px;">Pune Flagship Boutique</h4>
+            </div>
+            <div class="cm-field-group">
+              <label class="cm-field-label">Boutique Badge / Eyebrow</label>
+              <input type="text" class="cm-input" id="ctBoutiqueBadge" placeholder="Pune Flagship Boutique" oninput="updateContactField('boutiqueBadge', this.value)">
+            </div>
+            <div class="cm-field-group">
+              <label class="cm-field-label">Boutique Name / Title</label>
+              <input type="text" class="cm-input" id="ctBoutiqueTitle" placeholder="Aleen Clothing Atelier" oninput="updateContactField('boutiqueTitle', this.value)">
+            </div>
+            <div class="cm-field-group">
+              <label class="cm-field-label">Address Line 1</label>
+              <input type="text" class="cm-input" id="ctAddress1" placeholder="Moti Building, Jaan Mohammad Street," oninput="updateContactField('addressLine1', this.value)">
+            </div>
+            <div class="cm-field-group">
+              <label class="cm-field-label">Address Line 2 (Landmark / Area)</label>
+              <input type="text" class="cm-input" id="ctAddress2" placeholder="Beside Parag wedding Mall, Babajaan Chawk," oninput="updateContactField('addressLine2', this.value)">
+            </div>
+            <div class="cm-field-group">
+              <label class="cm-field-label">Address Line 3 (City &amp; PIN)</label>
+              <input type="text" class="cm-input" id="ctAddress3" placeholder="Pune Maharashtra 411001" oninput="updateContactField('addressLine3', this.value)">
+            </div>
+            <div class="cm-field-group">
+              <label class="cm-field-label">Google Maps URL</label>
+              <input type="text" class="cm-input" id="ctMapsUrl" placeholder="https://maps.google.com/?q=..." oninput="updateContactField('mapsUrl', this.value)">
+            </div>
+          </div>
+
+          <!-- Card 2: Electronic Mail Desk -->
+          <div class="cm-slide-item" style="border: 1px solid rgba(201, 163, 95, 0.35); border-radius: 12px; padding: 18px; background: rgba(5, 12, 7, 0.65);">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px; border-bottom: 1px solid rgba(201, 163, 95, 0.2); padding-bottom: 8px;">
+              <span style="color: var(--gold-light); font-size: 18px;">✉️</span>
+              <h4 style="margin: 0; color: #fff; font-family: var(--serif); font-size: 18px;">Electronic Mail Desk</h4>
+            </div>
+            <div class="cm-field-group">
+              <label class="cm-field-label">Email Badge</label>
+              <input type="text" class="cm-input" id="ctEmailBadge" placeholder="Electronic Mail" oninput="updateContactField('emailBadge', this.value)">
+            </div>
+            <div class="cm-field-group">
+              <label class="cm-field-label">Official Atelier Email Address</label>
+              <input type="email" class="cm-input" id="ctEmail" placeholder="Contact@aleen.com" oninput="updateContactField('email', this.value)">
+            </div>
+            <div class="cm-field-group">
+              <label class="cm-field-label">Liaison Response SLA / Subtext</label>
+              <textarea class="cm-input" id="ctEmailSubtext" rows="3" style="resize:vertical;" placeholder="Our client liaison desk responds to all inquiries within 4 business hours." oninput="updateContactField('emailSubtext', this.value)"></textarea>
+            </div>
+          </div>
+
+          <!-- Card 3: Direct Concierge & WhatsApp -->
+          <div class="cm-slide-item" style="border: 1px solid rgba(201, 163, 95, 0.35); border-radius: 12px; padding: 18px; background: rgba(5, 12, 7, 0.65);">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px; border-bottom: 1px solid rgba(201, 163, 95, 0.2); padding-bottom: 8px;">
+              <span style="color: #25d366; font-size: 18px;">💬</span>
+              <h4 style="margin: 0; color: #fff; font-family: var(--serif); font-size: 18px;">Direct Concierge &amp; WhatsApp</h4>
+            </div>
+            <div class="cm-field-group">
+              <label class="cm-field-label">Concierge Badge</label>
+              <input type="text" class="cm-input" id="ctConciergeBadge" placeholder="Direct Concierge &amp; WhatsApp" oninput="updateContactField('conciergeBadge', this.value)">
+            </div>
+            <div class="cm-field-group">
+              <label class="cm-field-label">Concierge Phone / WhatsApp Number</label>
+              <input type="text" class="cm-input" id="ctPhone" placeholder="+91 98765 43210" oninput="updateContactField('phone', this.value)">
+            </div>
+            <div class="cm-field-group">
+              <label class="cm-field-label">Operating Schedule / Hours</label>
+              <input type="text" class="cm-input" id="ctHours" placeholder="Mon – Sat, 10:00 AM – 7:30 PM IST" oninput="updateContactField('hours', this.value)">
+            </div>
+            <div class="cm-field-group">
+              <label class="cm-field-label">Default WhatsApp Greeting Message</label>
+              <textarea class="cm-input" id="ctWhatsappMsg" rows="3" style="resize:vertical;" placeholder="Hello Aleen Atelier, I would like to inquire about your couture creations." oninput="updateContactField('whatsappMsg', this.value)"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PANE 7: SOCIAL MEDIA LINKS & FOOTER DESK -->
+    <section class="admin-pane" id="paneSocialLinks">
+      <div class="carousel-manager-card">
+        <div class="cm-header">
+          <div>
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 6px; flex-wrap: wrap;">
+              <h2 class="cm-title" style="margin: 0;">Social Media Links &amp; Stay In Touch Footer Desk</h2>
+              <span id="socialSyncBadge" class="carousel-sync-badge" title="Real-time synchronized across all page footers and cloud database">
+                <span class="sync-indicator-dot"></span> Synced live to cloud &amp; footers
+              </span>
+            </div>
+            <p class="cm-desc">
+              Manage the brand social profiles (Instagram, Facebook, YouTube, WhatsApp Concierge) and official contact email displayed in the "Stay In Touch" footer across all website pages.
+            </p>
+          </div>
+          <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <button type="button" class="admin-tab-btn" onclick="syncSocialLinksFromServer(); showToast('Synced social links from cloud');" title="Pull latest social links">
+              🔄 Sync Cloud
+            </button>
+            <button type="button" class="admin-tab-btn" id="saveSocialLinksBtn" onclick="saveSocialLinksToServer()" style="background: linear-gradient(135deg, var(--gold) 0%, var(--gold-deep) 100%); color: #000; font-weight: 600; padding: 8px 18px;">
+              ✦ Save Social &amp; Email Links Live
+            </button>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-top: 15px;">
+          <!-- Instagram -->
+          <div class="cm-slide-item" style="border: 1px solid rgba(201, 163, 95, 0.35); border-radius: 12px; padding: 18px; background: rgba(5, 12, 7, 0.65);">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+              <span style="color: #e1306c; font-size: 18px;">📸</span>
+              <h4 style="margin: 0; color: #fff; font-family: var(--serif); font-size: 17px;">Instagram Profile URL</h4>
+            </div>
+            <input type="url" class="cm-input" id="socInstagram" placeholder="https://instagram.com/aleenclothing" oninput="updateSocialField('instagram', this.value)">
+            <p style="font-size: 11.5px; color: rgba(238, 228, 205, 0.6); margin: 6px 0 0;">Linked on the footer Instagram icon across all pages.</p>
+          </div>
+
+          <!-- Facebook -->
+          <div class="cm-slide-item" style="border: 1px solid rgba(201, 163, 95, 0.35); border-radius: 12px; padding: 18px; background: rgba(5, 12, 7, 0.65);">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+              <span style="color: #1877f2; font-size: 18px;">📘</span>
+              <h4 style="margin: 0; color: #fff; font-family: var(--serif); font-size: 17px;">Facebook Page URL</h4>
+            </div>
+            <input type="url" class="cm-input" id="socFacebook" placeholder="https://facebook.com/aleenclothing" oninput="updateSocialField('facebook', this.value)">
+            <p style="font-size: 11.5px; color: rgba(238, 228, 205, 0.6); margin: 6px 0 0;">Linked on the footer Facebook icon across all pages.</p>
+          </div>
+
+          <!-- YouTube -->
+          <div class="cm-slide-item" style="border: 1px solid rgba(201, 163, 95, 0.35); border-radius: 12px; padding: 18px; background: rgba(5, 12, 7, 0.65);">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+              <span style="color: #ff0000; font-size: 18px;">▶️</span>
+              <h4 style="margin: 0; color: #fff; font-family: var(--serif); font-size: 17px;">YouTube Channel URL</h4>
+            </div>
+            <input type="url" class="cm-input" id="socYoutube" placeholder="https://youtube.com/@aleenclothing" oninput="updateSocialField('youtube', this.value)">
+            <p style="font-size: 11.5px; color: rgba(238, 228, 205, 0.6); margin: 6px 0 0;">Linked on the footer YouTube icon across all pages.</p>
+          </div>
+
+          <!-- WhatsApp Direct -->
+          <div class="cm-slide-item" style="border: 1px solid rgba(201, 163, 95, 0.35); border-radius: 12px; padding: 18px; background: rgba(5, 12, 7, 0.65);">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+              <span style="color: #25d366; font-size: 18px;">💬</span>
+              <h4 style="margin: 0; color: #fff; font-family: var(--serif); font-size: 17px;">WhatsApp Concierge Phone</h4>
+            </div>
+            <input type="text" class="cm-input" id="socWhatsapp" placeholder="+91 98765 43210" oninput="updateSocialField('whatsapp', this.value)">
+            <div style="margin-top: 10px;">
+              <label class="cm-field-label">Pre-filled Greeting Message</label>
+              <textarea class="cm-input" id="socWhatsappMsg" rows="2" style="resize:vertical;" placeholder="Hello Aleen Atelier, I would like to connect with a private stylist." oninput="updateSocialField('whatsappMsg', this.value)"></textarea>
+            </div>
+          </div>
+
+          <!-- Primary Contact Email -->
+          <div class="cm-slide-item" style="border: 1px solid rgba(201, 163, 95, 0.35); border-radius: 12px; padding: 18px; background: rgba(5, 12, 7, 0.65); grid-column: 1 / -1;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+              <span style="color: var(--gold); font-size: 18px;">📧</span>
+              <h4 style="margin: 0; color: #fff; font-family: var(--serif); font-size: 17px;">Official Contact / Concierge Email</h4>
+            </div>
+            <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+              <input type="email" class="cm-input" id="socEmail" placeholder="Contact@aleen.com" oninput="updateSocialField('email', this.value)" style="flex: 1; min-width: 260px;">
+              <button type="button" class="admin-tab-btn" onclick="saveSocialLinksToServer()" style="background: linear-gradient(135deg, var(--gold) 0%, var(--gold-deep) 100%); color: #000; font-weight: 600; padding: 8px 18px; white-space: nowrap;">
+                Save Email &amp; Links
+              </button>
+            </div>
+            <p style="font-size: 11.5px; color: rgba(238, 228, 205, 0.6); margin: 6px 0 0;">Synchronizes immediately across all website footers and inquiry desks.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <!-- ======================= MODAL: EDIT / ADD GARMENT ======================= -->
@@ -4366,14 +4612,14 @@
     "fabric": "Tissue Chanderi with Silk Organza",
     "origin": "Chanderi Weavers Guild",
     "badge": "Bestseller",
-    "image": "https://mahira2.netlify.app/assets/s3-kurta.jpg?v=5",
+    "image": "assets/women-collections/card_1_kurta-sets.jpg",
     "desc": "Delicate dusty rose organza adorned with fine metallic badla and antique marodi needlecraft. Paired with straight-cut brocade trousers and scalloped veil.",
     "weave": "Marodi & Aari Needlework",
     "delivery": "Express Insured Dispatch (3-5 Days)",
     "whatsapp": "+91 98765 43210",
     "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
     "images": [
-      "https://mahira2.netlify.app/assets/s3-kurta.jpg?v=5"
+      "assets/women-collections/card_1_kurta-sets.jpg"
     ]
   },
   {
@@ -4386,14 +4632,14 @@
     "fabric": "Raw Silk & Multilayered Tulle",
     "origin": "Aleen Design Studio",
     "badge": "New Silhouette",
-    "image": "https://mahira2.netlify.app/assets/s3-dresses.jpg?v=5",
+    "image": "assets/women-collections/card_2_dresses.jpg",
     "desc": "Contemporary architectural drape meeting traditional hand-embroidery. A 32-meter flare cut structured for gala celebrations and grand occasions.",
     "weave": "Pita Work & Micro Pleating",
     "delivery": "Express Insured Dispatch (3-5 Days)",
     "whatsapp": "+91 98765 43210",
     "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
     "images": [
-      "https://mahira2.netlify.app/assets/s3-dresses.jpg?v=5"
+      "assets/women-collections/card_2_dresses.jpg"
     ]
   },
   {
@@ -4406,14 +4652,14 @@
     "fabric": "Heritage Velvet & Tissue Silk",
     "origin": "Lucknow Artisans",
     "badge": "Royal Couture",
-    "image": "https://mahira2.netlify.app/assets/women-clean.jpg?v=3",
+    "image": "assets/women-collections/card_3_lehengas.jpg",
     "desc": "Inspired by the mirrored halls of Amber Fort. Encased in genuine semi-precious bead embroidery, beaten metallic cord, and a dual tissue veil.",
     "weave": "Zardozi & Dabka Resham",
     "delivery": "Express Insured Dispatch (3-5 Days)",
     "whatsapp": "+91 98765 43210",
     "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
     "images": [
-      "https://mahira2.netlify.app/assets/women-clean.jpg?v=3"
+      "assets/women-collections/card_3_lehengas.jpg"
     ]
   },
   {
@@ -4448,14 +4694,14 @@
     "fabric": "Pure Mulberry Georgette",
     "origin": "Awadh Atelier",
     "badge": "Hand-Embroidered",
-    "image": "https://mahira2.netlify.app/assets/s4-room.jpg?v=1",
+    "image": "assets/women-collections/card_4_anarkalis.jpg",
     "desc": "32 Kalis of handcrafted shadow-work Chikankari interspersed with silver mukaish dots that catch the light at every graceful turn.",
     "weave": "Lucknowi Chikankari & Mukaish",
     "delivery": "Express Insured Dispatch (3-5 Days)",
     "whatsapp": "+91 98765 43210",
     "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
     "images": [
-      "https://mahira2.netlify.app/assets/s4-room.jpg?v=1"
+      "assets/women-collections/card_4_anarkalis.jpg"
     ]
   },
   {
@@ -4468,14 +4714,14 @@
     "fabric": "Grade-A Cashmere Pashmina",
     "origin": "Srinagar Valley",
     "badge": "Limited Craft",
-    "image": "https://mahira2.netlify.app/assets/s5-room.jpg?v=1",
+    "image": "assets/women-collections/card_5_dupattas.jpg",
     "desc": "Featherlight warmth woven from Himalayan capra hircus fleece, detailed with single-needle botanical jaal borders.",
     "weave": "Sozni Hand Needlework",
     "delivery": "Express Insured Dispatch (3-5 Days)",
     "whatsapp": "+91 98765 43210",
     "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
     "images": [
-      "https://mahira2.netlify.app/assets/s5-room.jpg?v=1"
+      "assets/women-collections/card_5_dupattas.jpg"
     ]
   },
   {
@@ -4488,14 +4734,14 @@
     "fabric": "Pure Mulberry Silk 4.5m",
     "origin": "Bespoke Loom 12",
     "badge": "Mastercut",
-    "image": "https://mahira2.netlify.app/assets/s3-bg.jpg?v=1",
+    "image": "assets/women-collections/card_6_fabrics.jpg",
     "desc": "Rare artisanal yardage crafted on hand-shuttle looms with alternating warp threads. Tailorable for bespoke lehengas or sherwanis.",
     "weave": "Multi-warp Rangkat Weaving",
     "delivery": "Express Insured Dispatch (3-5 Days)",
     "whatsapp": "+91 98765 43210",
     "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
     "images": [
-      "https://mahira2.netlify.app/assets/s3-bg.jpg?v=1"
+      "assets/women-collections/card_6_fabrics.jpg"
     ]
   },
   {
@@ -4530,14 +4776,14 @@
     "fabric": "Mulberry Organza & Crepe",
     "origin": "Aleen Design Studio",
     "badge": "Signature Cut",
-    "image": "https://mahira2.netlify.app/assets/women-clean.jpg?v=3",
+    "image": "assets/women-collections/card_3_lehengas.jpg",
     "desc": "A springtime dream composed of thousand-petal floral tapestries rendered in ombré pastel threads, crowned by an embroidered sweetheart bustier.",
     "weave": "French Knot & Silk Floss",
     "delivery": "Express Insured Dispatch (3-5 Days)",
     "whatsapp": "+91 98765 43210",
     "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
     "images": [
-      "https://mahira2.netlify.app/assets/women-clean.jpg?v=3"
+      "assets/women-collections/card_3_lehengas.jpg"
     ]
   },
   {
@@ -4550,14 +4796,14 @@
     "fabric": "Italian Crepe de Chine",
     "origin": "Modern Atelier",
     "badge": "Resort Couture",
-    "image": "https://mahira2.netlify.app/assets/s3-dresses.jpg?v=5",
+    "image": "assets/women-collections/card_2_dresses.jpg",
     "desc": "Effortless luxury designed for intimate soirees. Relaxed silhouette cinched with an ornate hand-beaded bullion belt.",
     "weave": "Hand-rolled Zardozi Cords",
     "delivery": "Express Insured Dispatch (3-5 Days)",
     "whatsapp": "+91 98765 43210",
     "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
     "images": [
-      "https://mahira2.netlify.app/assets/s3-dresses.jpg?v=5"
+      "assets/women-collections/card_2_dresses.jpg"
     ]
   },
   {
@@ -4570,14 +4816,14 @@
     "fabric": "Organic Handspun Chanderi",
     "origin": "Madhya Pradesh Looms",
     "badge": "Pure Natural",
-    "image": "https://mahira2.netlify.app/assets/s3-kurta.jpg?v=5",
+    "image": "assets/women-collections/card_1_kurta-sets.jpg",
     "desc": "Includes 5 meters of pure chanderi with woven golden bootis alongside 2.5 meters of dyed satin lining and a matched organza drape.",
     "weave": "Jamdani Floral Insertion",
     "delivery": "Express Insured Dispatch (3-5 Days)",
     "whatsapp": "+91 98765 43210",
     "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
     "images": [
-      "https://mahira2.netlify.app/assets/s3-kurta.jpg?v=5"
+      "assets/women-collections/card_1_kurta-sets.jpg"
     ]
   }
 ];
@@ -4615,7 +4861,7 @@
           url: "collections.html?category=kurtis"
         },
         {
-          img: "https://mahira2.netlify.app/assets/s3-kurta.jpg?v=5",
+          img: "assets/women-collections/card_1_kurta-sets.jpg",
           headline: "Handspun Heritage Ensembles",
           title: "Gulmohar Chanderi Set",
           subtitle: "Handspun Tissue Chanderi with Antique Marodi Dori",
@@ -4625,7 +4871,7 @@
           url: "collections.html?category=kurta-sets"
         },
         {
-          img: "https://mahira2.netlify.app/assets/women-clean.jpg?v=3",
+          img: "assets/women-collections/card_3_lehengas.jpg",
           headline: "Imperial Bridal Masterpiece",
           title: "Sheesh Mahal Lehenga",
           subtitle: "Monumental Crimson Velvet with Semi-Precious Encrusting",
@@ -4674,7 +4920,7 @@
           kicker: "New Collection",
           title: "Kurta Sets",
           desc: "Everyday elegance, elevated.",
-          img: "https://mahira2.netlify.app/assets/s3-kurta.jpg?v=5",
+          img: "assets/women-collections/card_1_kurta-sets.jpg",
           url: "collections.html?category=kurta-sets"
         },
         {
@@ -4682,7 +4928,7 @@
           kicker: "New Collection",
           title: "Dresses & Sets",
           desc: "Modern silhouettes for every you.",
-          img: "https://mahira2.netlify.app/assets/s3-dresses.jpg?v=5",
+          img: "assets/women-collections/card_2_dresses.jpg",
           url: "dresses.html"
         },
         {
@@ -4690,7 +4936,7 @@
           kicker: "New Collection",
           title: "Lehengas",
           desc: "Royal silhouettes, timeless grace.",
-          img: "https://mahira2.netlify.app/assets/women-clean.jpg?v=3",
+          img: "assets/women-collections/card_3_lehengas.jpg",
           url: "collections.html?category=lehengas"
         },
         {
@@ -4698,7 +4944,7 @@
           kicker: "New Collection",
           title: "Anarkali Sets",
           desc: "Voluminous flares & royal grace.",
-          img: "https://mahira2.netlify.app/assets/s4-room.jpg?v=1",
+          img: "assets/women-collections/card_4_anarkalis.jpg",
           url: "collections.html?category=kurta-sets"
         },
         {
@@ -4767,6 +5013,9 @@
           renderHeroManager();
           renderCarouselManager();
           renderWomenCardsManager();
+          renderBestsellersManager();
+          renderContactDeskManager();
+          renderSocialLinksManager();
           renderUsersTable();
         } else {
           if (authGate) authGate.style.display = "flex";
@@ -4844,6 +5093,18 @@
           if (typeof renderWomenCardsManager === "function") renderWomenCardsManager();
         }
         if (target === "settings") document.getElementById("paneSettings")?.classList.add("active");
+        if (target === "bestsellers") {
+          document.getElementById("paneBestsellers")?.classList.add("active");
+          if (typeof renderBestsellersManager === "function") renderBestsellersManager();
+        }
+        if (target === "contact-desk") {
+          document.getElementById("paneContactDesk")?.classList.add("active");
+          if (typeof renderContactDeskManager === "function") renderContactDeskManager();
+        }
+        if (target === "social-links") {
+          document.getElementById("paneSocialLinks")?.classList.add("active");
+          if (typeof renderSocialLinksManager === "function") renderSocialLinksManager();
+        }
       };
 
       const tabBtns = document.querySelectorAll(".admin-tab-btn[data-tab]");
@@ -4888,7 +5149,7 @@
         catalogBody.innerHTML = filtered.map(item => `
       <tr>
         <td>
-          <img src="${item.image}" alt="${item.title}" class="tbl-img" onerror="this.src='https://mahira2.netlify.app/assets/s3-sarees.jpg?v=5'">
+          <img src="${item.image}" alt="${item.title}" class="tbl-img" onerror="this.src='assets/pakistani-kurti-1.jpg'">
         </td>
         <td>
           <div class="tbl-title">${item.title}</div>
@@ -5383,7 +5644,6 @@
         const file = fileInput.files[0];
         fileInput.value = "";
         showToast("✦ Preparing ultra-HD photo...");
-        // Pass original raw image directly to Crop Studio to completely avoid pre-crop downscaling & blur
         const reader = new FileReader();
         reader.onload = function(e) {
           openCropStudio(e.target.result, {
@@ -5391,9 +5651,36 @@
             maxWidth: 2400,
             maxHeight: 3200,
             quality: 0.96,
-            onApply: (croppedUrl) => {
+            onApply: async (croppedUrl) => {
+              showToast("✦ Uploading photo to server...");
+              const token = localStorage.getItem("atelier_admin_token") || "";
+              try {
+                const upRes = await fetch("/api/admin/upload", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token
+                  },
+                  body: JSON.stringify({
+                    filename: "garment_slot_" + idx + "_" + Date.now() + ".jpg",
+                    data: croppedUrl
+                  })
+                });
+                if (upRes.ok) {
+                  const upData = await upRes.json();
+                  if (upData.url) {
+                    updateGarmentSlotUrl(idx, upData.url);
+                    renderGarmentImageSlots();
+                    showToast("✦ Photo saved to server!");
+                    return;
+                  }
+                }
+              } catch (upErr) {
+                console.warn("Upload error, using cropped data:", upErr);
+              }
               updateGarmentSlotUrl(idx, croppedUrl);
               renderGarmentImageSlots();
+              showToast("✦ Photo cropped & ready!");
             }
           });
         };
@@ -5411,9 +5698,36 @@
           maxWidth: 2400,
           maxHeight: 3200,
           quality: 0.96,
-          onApply: (croppedUrl) => {
+          onApply: async (croppedUrl) => {
+            showToast("✦ Uploading cropped photo...");
+            const token = localStorage.getItem("atelier_admin_token") || "";
+            try {
+              const upRes = await fetch("/api/admin/upload", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  "Authorization": "Bearer " + token
+                },
+                body: JSON.stringify({
+                  filename: "garment_slot_" + idx + "_" + Date.now() + ".jpg",
+                  data: croppedUrl
+                })
+              });
+              if (upRes.ok) {
+                const upData = await upRes.json();
+                if (upData.url) {
+                  updateGarmentSlotUrl(idx, upData.url);
+                  renderGarmentImageSlots();
+                  showToast("✦ Photo updated on server!");
+                  return;
+                }
+              }
+            } catch (upErr) {
+              console.warn("Upload error, using cropped data:", upErr);
+            }
             updateGarmentSlotUrl(idx, croppedUrl);
             renderGarmentImageSlots();
+            showToast("✦ Photo cropped & ready!");
           }
         });
       };
@@ -5423,7 +5737,7 @@
           alert("Maximum 5 angle photos per garment reached.");
           return;
         }
-        currentGarmentImages.push(currentGarmentImages[currentGarmentImages.length - 1] || "/assets/pakistani-kurti-1.jpg");
+        currentGarmentImages.push(currentGarmentImages[currentGarmentImages.length - 1] || "assets/pakistani-kurti-1.jpg");
         renderGarmentImageSlots();
       });
 
@@ -5440,15 +5754,10 @@
           catInput.value = item.category;
           if (customCategoryWrap) customCategoryWrap.style.display = "none";
           if (customCategoryInput) customCategoryInput.value = "";
-        } else if (item.category) {
-          // Custom category
+        } else {
           catInput.value = "custom";
           if (customCategoryWrap) customCategoryWrap.style.display = "block";
           if (customCategoryInput) customCategoryInput.value = item.categoryLabel || item.category;
-        } else {
-          catInput.value = "sarees";
-          if (customCategoryWrap) customCategoryWrap.style.display = "none";
-          if (customCategoryInput) customCategoryInput.value = "";
         }
 
         priceInput.value = item.price || 0;
@@ -5458,29 +5767,29 @@
         if (originInput) originInput.value = item.origin || "";
         if (deliveryInput) deliveryInput.value = item.delivery || "Express Insured Dispatch (3-5 Days)";
         if (whatsappInput) whatsappInput.value = item.whatsapp || "+91 98765 43210";
-
-        // Multi-select sizes parsing
-        const rawSizes = (item.sizes || "Custom Bespoke, Standard S, Standard M, Standard L")
-          .split(",")
-          .map(s => s.trim())
-          .filter(Boolean);
-        selectedSizesList = [...rawSizes];
-        rawSizes.forEach(s => {
-          if (!allAvailableSizes.includes(s)) {
-            allAvailableSizes.push(s);
-          }
-        });
-        renderSizePills();
-
         descInput.value = item.desc || "";
 
-        // Multi-angle images
+        // Sizes Handling
+        if (item.sizes) {
+          const parsed = item.sizes.split(",").map(s => s.trim()).filter(Boolean);
+          selectedSizesList = parsed;
+          parsed.forEach(sz => {
+            if (!allAvailableSizes.includes(sz)) {
+              allAvailableSizes.push(sz);
+            }
+          });
+        } else {
+          selectedSizesList = ["Free Size", "Custom Bespoke"];
+        }
+        renderSizePills();
+
+        // Multi-angle Gallery Handling
         if (Array.isArray(item.images) && item.images.length > 0) {
           currentGarmentImages = [...item.images];
         } else if (item.image) {
           currentGarmentImages = [item.image];
         } else {
-          currentGarmentImages = ["/assets/pakistani-kurti-1.jpg"];
+          currentGarmentImages = ["assets/pakistani-kurti-1.jpg"];
         }
         renderGarmentImageSlots();
 
@@ -5489,33 +5798,20 @@
       };
 
       window.deleteGarment = function (id) {
-        if (!confirm("Are you sure you want to permanently delete this garment from the catalog?")) return;
+        if (!confirm("Are you sure you want to retire this garment from the live portfolio?")) return;
         catalog = catalog.filter(c => c.id !== id);
         saveCatalog();
         renderCatalog();
-        showToast("Garment deleted from catalog");
+        showToast("Garment removed from catalog");
       };
 
-      document.getElementById("addNewGarmentBtn")?.addEventListener("click", () => {
+      addGarmentBtn?.addEventListener("click", () => {
+        garmentForm.reset();
         editIdInput.value = "";
-        titleInput.value = "";
-        if (badgeInput) badgeInput.value = "New Season";
-        catInput.value = "sarees";
         if (customCategoryWrap) customCategoryWrap.style.display = "none";
-        if (customCategoryInput) customCategoryInput.value = "";
-        priceInput.value = 25000;
-        craftInput.value = "Artisanal Needlework";
-        fabricInput.value = "Pure Silk";
-        if (weaveInput) weaveInput.value = "Handloom Weave";
-        if (originInput) originInput.value = "Lahore Atelier";
-        if (deliveryInput) deliveryInput.value = "Express Insured Dispatch (3-5 Days)";
-        if (whatsappInput) whatsappInput.value = "+91 98765 43210";
-        
-        selectedSizesList = ["Custom Bespoke", "Standard S", "Standard M", "Standard L"];
+        selectedSizesList = ["Free Size", "Custom Bespoke"];
         renderSizePills();
-
-        descInput.value = "Bespoke handcrafted creation tailored with timeless artisanal grace.";
-        currentGarmentImages = ["/assets/pakistani-kurti-1.jpg"];
+        currentGarmentImages = ["assets/pakistani-kurti-1.jpg"];
         renderGarmentImageSlots();
         if (modalTitle) modalTitle.textContent = "Add New Garment to Atelier";
         if (garmentModal) garmentModal.classList.add("open");
@@ -5527,7 +5823,7 @@
       document.getElementById("closeGarmentModalBtn")?.addEventListener("click", closeGarmentModal);
       document.getElementById("cancelGarmentModalBtn")?.addEventListener("click", closeGarmentModal);
 
-      garmentForm?.addEventListener("submit", e => {
+      garmentForm?.addEventListener("submit", async e => {
         e.preventDefault();
         const id = editIdInput.value;
         let cat = catInput.value;
@@ -5545,9 +5841,38 @@
           }
         }
 
-        const finalImages = currentGarmentImages.map(s => (s || "").trim()).filter(Boolean);
+        showToast("✦ Processing and saving garment...");
+        const token = localStorage.getItem("atelier_admin_token") || "";
+        const finalImages = [];
+        for (let i = 0; i < currentGarmentImages.length; i++) {
+          let img = (currentGarmentImages[i] || "").trim();
+          if (img.startsWith("data:image")) {
+            try {
+              const safePrefix = (id || "new").replace(/[^a-zA-Z0-9_-]/g, "_");
+              const upRes = await fetch("/api/admin/upload", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  "Authorization": "Bearer " + token
+                },
+                body: JSON.stringify({
+                  filename: "garment_" + safePrefix + "_angle_" + i + "_" + Date.now() + ".jpg",
+                  data: img
+                })
+              });
+              if (upRes.ok) {
+                const upData = await upRes.json();
+                if (upData.url) img = upData.url;
+              }
+            } catch (upErr) {
+              console.warn("Angle upload error:", upErr);
+            }
+          }
+          if (img) finalImages.push(img);
+        }
+
         if (finalImages.length === 0) {
-          finalImages.push("/assets/pakistani-kurti-1.jpg");
+          finalImages.push("assets/pakistani-kurti-1.jpg");
         }
 
         const chosenSizes = selectedSizesList.length > 0 
@@ -5573,55 +5898,91 @@
         };
 
         if (id) {
-          // Update existing
           const idx = catalog.findIndex(c => c.id === id);
           if (idx > -1) {
-            catalog[idx] = { ...catalog[idx], ...itemData };
-            showToast("Garment & dialog details updated successfully!");
+            catalog[idx] = Object.assign({}, catalog[idx], itemData);
           }
         } else {
-          // Create new
           const newId = "ALN-" + cat.substring(0, 2).toUpperCase() + "-" + String(Date.now()).slice(-4);
-          catalog.unshift({
-            id: newId,
-            ...itemData
-          });
-          showToast("New garment added to catalog!");
+          catalog.unshift(Object.assign({ id: newId }, itemData));
         }
-        saveCatalog();
-        renderCatalog();
+        
         closeGarmentModal();
+        renderCatalog();
+        await saveCatalog();
       });
 
       const catalogBroadcast = typeof BroadcastChannel !== 'undefined' ? new BroadcastChannel('aleen_catalog_realtime') : null;
 
-      function saveCatalog() {
+      async function saveCatalog() {
         localStorage.setItem("aleen_master_catalog", JSON.stringify(catalog));
         if (catalogBroadcast) {
           try {
             catalogBroadcast.postMessage({ type: 'CATALOG_UPDATED', catalog: catalog, timestamp: Date.now() });
           } catch(e) {}
         }
-        const token = localStorage.getItem("atelier_admin_token") || "";
-        fetch("/api/catalog", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + token
-          },
-          body: JSON.stringify({ catalog: catalog, garments: catalog })
-        }).then(res => {
+
+        let token = localStorage.getItem("atelier_admin_token") || "";
+
+        async function doSave(authHeader) {
+          let res = await fetch("/api/catalog", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer " + authHeader
+            },
+            body: JSON.stringify({ catalog: catalog, garments: catalog })
+          });
           if (!res.ok) {
-            return fetch("/api/admin/catalog", {
+            res = await fetch("/api/admin/catalog", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer " + token
+                "Authorization": "Bearer " + authHeader
               },
-              body: JSON.stringify({ garments: catalog })
+              body: JSON.stringify({ garments: catalog, catalog: catalog })
             });
           }
-        }).catch(e => console.warn("Catalog sync error:", e));
+          return res;
+        }
+
+        try {
+          let res = await doSave(token);
+          if (res.status === 401 || res.status === 403) {
+            const pass = prompt("Atelier admin session required. Please enter admin passcode (aleen):") || "aleen";
+            const loginRes = await fetch("/api/auth/login", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ password: pass, username: "admin" })
+            });
+            if (loginRes.ok) {
+              const loginData = await loginRes.json();
+              token = loginData.token;
+              localStorage.setItem("atelier_admin_token", token);
+              res = await doSave(token);
+            }
+          }
+
+          if (res.ok) {
+            const result = await res.json();
+            const updated = result.garments || result.catalog;
+            if (Array.isArray(updated) && updated.length > 0) {
+              catalog = updated;
+              localStorage.setItem("aleen_master_catalog", JSON.stringify(catalog));
+              renderCatalog();
+            }
+            showToast("✦ Garment & catalog saved to server permanently!");
+            return true;
+          } else {
+            console.error("Save catalog error status:", res.status);
+            showToast("⚠ Notice: Saved to local draft (status " + res.status + ").");
+            return false;
+          }
+        } catch(err) {
+          console.error("Save catalog error:", err);
+          showToast("⚠ Saved to local storage draft.");
+          return false;
+        }
       }
 
       // Live load from server API on init
@@ -6710,6 +7071,421 @@
         }
       });
 
+
+
+      // ==========================================
+      // BEST SELLERS MANAGER LOGIC
+      // ==========================================
+      const DEFAULT_BEST_SELLERS = [
+        {
+          no: "01",
+          title: "Pakistani<br>Kurtis",
+          subtitle: "Royal grace in<br>every stitch.",
+          image: "https://mahira2.netlify.app/assets/s5-p1.jpg?v=1",
+          url: "/collections?category=kurtis"
+        },
+        {
+          no: "02",
+          title: "Kurta Sets",
+          subtitle: "Everyday<br>elegance,<br>redefined.",
+          image: "https://mahira2.netlify.app/assets/s5-p2.jpg?v=1",
+          url: "/collections?category=kurta-sets"
+        },
+        {
+          no: "03",
+          title: "Organza<br>Kurtis",
+          subtitle: "Art in<br>every thread.",
+          image: "https://mahira2.netlify.app/assets/s5-p3.jpg?v=1",
+          url: "/collections?category=kurtis"
+        },
+        {
+          no: "04",
+          title: "Kalakaari<br>Collection",
+          subtitle: "Stories<br>woven in<br>tradition.",
+          image: "https://mahira2.netlify.app/assets/s5-p4.jpg?v=1",
+          url: "/collections"
+        }
+      ];
+
+      let bestSellers = [];
+      try {
+        const stored = localStorage.getItem("aleen_bestsellers");
+        bestSellers = stored ? JSON.parse(stored) : JSON.parse(JSON.stringify(DEFAULT_BEST_SELLERS));
+      } catch (e) {
+        bestSellers = JSON.parse(JSON.stringify(DEFAULT_BEST_SELLERS));
+      }
+      window.bestSellers = bestSellers;
+
+      let bestsellersBroadcast = null;
+      try {
+        bestsellersBroadcast = new BroadcastChannel("aleen_bestsellers_realtime");
+      } catch (e) {}
+
+      async function syncBestsellersFromServer() {
+        try {
+          const res = await fetch("/api/best-sellers");
+          const data = await res.json();
+          if (res.ok && data.success && Array.isArray(data.bestSellers) && data.bestSellers.length) {
+            bestSellers = data.bestSellers;
+            window.bestSellers = bestSellers;
+            localStorage.setItem("aleen_bestsellers", JSON.stringify(bestSellers));
+            renderBestsellersManager();
+          }
+        } catch (e) {
+          console.warn("Could not sync bestsellers from server:", e);
+        }
+      }
+      syncBestsellersFromServer();
+
+      function renderBestsellersManager() {
+        const grid = document.getElementById("bestsellersGrid");
+        if (!grid) return;
+        grid.innerHTML = bestSellers.map((item, idx) => `
+          <div class="cm-slide-item" data-idx="${idx}" style="border: 1px solid rgba(201, 163, 95, 0.35); border-radius: 12px; padding: 18px; background: rgba(5, 12, 7, 0.65);">
+            <div class="cm-img-preview-wrap" style="aspect-ratio: 4/5; border-radius: 10px; overflow: hidden; max-height: 230px; position: relative;">
+              <span class="cm-slide-num">Spotlight #${item.no || (idx + 1)}</span>
+              <img src="${item.image}" alt="${escapeHtml(item.title ? item.title.replace(/<[^>]+>/g, " ") : "Best Seller")}" class="cm-img-preview" id="bsPreview_${idx}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='assets/s5-p1.jpg'">
+            </div>
+
+            <div class="cm-field-group" style="margin-top: 14px;">
+              <label class="cm-field-label">Card Number (e.g. 01, 02)</label>
+              <input type="text" class="cm-input" value="${escapeHtml(item.no || "")}" placeholder="01" oninput="updateBestsellerField(${idx}, 'no', this.value)">
+            </div>
+
+            <div class="cm-field-group">
+              <label class="cm-field-label">Garment Title (HTML/line breaks allowed)</label>
+              <input type="text" class="cm-input" value="${escapeHtml(item.title || "")}" placeholder="Pakistani<br>Kurtis" oninput="updateBestsellerField(${idx}, 'title', this.value)">
+            </div>
+
+            <div class="cm-field-group">
+              <label class="cm-field-label">Craft Subtitle</label>
+              <input type="text" class="cm-input" value="${escapeHtml(item.subtitle || "")}" placeholder="Royal grace in<br>every stitch." oninput="updateBestsellerField(${idx}, 'subtitle', this.value)">
+            </div>
+
+            <div class="cm-field-group">
+              <label class="cm-field-label">Target Collection Link</label>
+              <input type="text" class="cm-input" value="${escapeHtml(item.url || "/collections")}" placeholder="/collections?category=kurtis" oninput="updateBestsellerField(${idx}, 'url', this.value)">
+            </div>
+
+            <div class="cm-field-group">
+              <label class="cm-field-label">Garment Photo</label>
+              <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                <input type="text" class="cm-input cm-img-input" id="bsImgInput_${idx}" value="${escapeHtml(item.image || "")}" placeholder="assets/... or https://..." oninput="updateBestsellerField(${idx}, 'image', this.value)" style="flex: 1; min-width: 140px;">
+                <label class="tbl-btn tbl-btn-edit" style="cursor: pointer; display: inline-flex; align-items: center; gap: 5px; padding: 7px 12px; margin: 0; white-space: nowrap;" title="Upload photo directly at native quality">
+                  Direct Upload
+                  <input type="file" accept="image/*" style="display: none;" onchange="uploadDirectBestsellerImg(${idx}, this)">
+                </label>
+                <label class="tbl-btn tbl-btn-edit" style="cursor: pointer; display: inline-flex; align-items: center; gap: 5px; padding: 7px 12px; margin: 0; white-space: nowrap;" title="Upload photo and open Crop Studio">
+                  Upload &amp; Crop
+                  <input type="file" accept="image/*" style="display: none;" onchange="uploadAndCropBestsellerImg(${idx}, this)">
+                </label>
+                <button type="button" class="tbl-btn tbl-btn-edit" style="padding: 7px 12px; margin: 0; white-space: nowrap;" onclick="cropExistingBestsellerImg(${idx})" title="Frame and crop current photo">
+                  ✂ Crop / Frame
+                </button>
+              </div>
+            </div>
+          </div>
+        `).join("");
+      }
+
+      window.updateBestsellerField = function(idx, field, value) {
+        if (!bestSellers[idx]) return;
+        bestSellers[idx][field] = value;
+        if (field === "image") {
+          const img = document.getElementById(`bsPreview_${idx}`);
+          if (img) img.src = value;
+        }
+        localStorage.setItem("aleen_bestsellers", JSON.stringify(bestSellers));
+        window.bestSellers = bestSellers;
+        if (bestsellersBroadcast) {
+          try {
+            bestsellersBroadcast.postMessage({ type: "BEST_SELLERS_UPDATED", bestSellers, timestamp: Date.now() });
+          } catch (e) {}
+        }
+      };
+
+      window.uploadDirectBestsellerImg = function(idx, input) {
+        if (!input.files || !input.files[0]) return;
+        const file = input.files[0];
+        fastProcessImage(file, { maxWidth: 2000, maxHeight: 2500, quality: 0.94 }, dataUrl => {
+          updateBestsellerField(idx, "image", dataUrl);
+          const preview = document.getElementById(`bsPreview_${idx}`);
+          if (preview) preview.src = dataUrl;
+          const inputEl = document.getElementById(`bsImgInput_${idx}`);
+          if (inputEl) inputEl.value = dataUrl;
+          showToast(`Spotlight #${idx + 1} photo updated at ultra-high fidelity!`);
+        });
+      };
+
+      window.uploadAndCropBestsellerImg = function(idx, input) {
+        if (!input.files || !input.files[0]) return;
+        const file = input.files[0];
+        const reader = new FileReader();
+        reader.onload = e => {
+          openCropStudio(e.target.result, {
+            aspectRatio: 4 / 5,
+            aspectPreset: "4:5",
+            maxWidth: 1600,
+            maxHeight: 2000,
+            quality: 0.94,
+            onSave: croppedDataUrl => {
+              updateBestsellerField(idx, "image", croppedDataUrl);
+              const preview = document.getElementById(`bsPreview_${idx}`);
+              if (preview) preview.src = croppedDataUrl;
+              const inputEl = document.getElementById(`bsImgInput_${idx}`);
+              if (inputEl) inputEl.value = croppedDataUrl;
+              showToast(`Spotlight #${idx + 1} cropped and saved!`);
+            }
+          });
+        };
+        reader.readAsDataURL(file);
+      };
+
+      window.cropExistingBestsellerImg = function(idx) {
+        const item = bestSellers[idx];
+        if (!item || !item.image) {
+          alert("Please select or enter an image first.");
+          return;
+        }
+        openCropStudio(item.image, {
+          aspectRatio: 4 / 5,
+          aspectPreset: "4:5",
+          maxWidth: 1600,
+          maxHeight: 2000,
+          quality: 0.94,
+          onSave: croppedDataUrl => {
+            updateBestsellerField(idx, "image", croppedDataUrl);
+            const preview = document.getElementById(`bsPreview_${idx}`);
+            if (preview) preview.src = croppedDataUrl;
+            const inputEl = document.getElementById(`bsImgInput_${idx}`);
+            if (inputEl) inputEl.value = croppedDataUrl;
+            showToast(`Spotlight #${idx + 1} cropped and saved!`);
+          }
+        });
+      };
+
+      window.saveBestsellersToServer = async function() {
+        const token = localStorage.getItem("atelier_admin_token") || "";
+        localStorage.setItem("aleen_bestsellers", JSON.stringify(bestSellers));
+        window.bestSellers = bestSellers;
+        if (bestsellersBroadcast) {
+          try {
+            bestsellersBroadcast.postMessage({ type: "BEST_SELLERS_UPDATED", bestSellers, timestamp: Date.now() });
+          } catch (e) {}
+        }
+        try {
+          const res = await fetch("/api/best-sellers", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer " + token
+            },
+            body: JSON.stringify({ bestSellers })
+          });
+          const data = await res.json();
+          if (res.ok && data.success) {
+            showToast("✦ Best Sellers updated live across homepage!");
+          } else {
+            alert(data.error || "Failed to save Best Sellers");
+          }
+        } catch (e) {
+          showToast("Saved locally and broadcast live!");
+        }
+      };
+
+
+      // ==========================================
+      // CONTACT PAGE & BOUTIQUE DESK LOGIC
+      // ==========================================
+      let contactDetails = {
+        boutiqueBadge: "Pune Flagship Boutique",
+        boutiqueTitle: "Aleen Clothing Atelier",
+        addressLine1: "Moti Building, Jaan Mohammad Street,",
+        addressLine2: "Beside Parag wedding Mall, Babajaan Chawk,",
+        addressLine3: "Pune Maharashtra 411001",
+        mapsUrl: "https://maps.google.com/?q=Aleen+Clothing+Moti+Building+Jaan+Mohammad+Street+Pune+Maharashtra+411001",
+        emailBadge: "Electronic Mail",
+        email: "Contact@aleen.com",
+        emailSubtext: "Our client liaison desk responds to all inquiries within 4 business hours.",
+        conciergeBadge: "Direct Concierge & WhatsApp",
+        phone: "+91 98765 43210",
+        hours: "Mon – Sat, 10:00 AM – 7:30 PM IST",
+        whatsappMsg: "Hello Aleen Atelier, I would like to inquire about your couture creations."
+      };
+      try {
+        const storedCt = localStorage.getItem("aleen_contact_details");
+        if (storedCt) contactDetails = Object.assign(contactDetails, JSON.parse(storedCt));
+      } catch (e) {}
+      window.contactDetails = contactDetails;
+
+      let contactBroadcast = null;
+      try {
+        contactBroadcast = new BroadcastChannel("aleen_contact_realtime");
+      } catch (e) {}
+
+      async function syncContactDetailsFromServer() {
+        try {
+          const res = await fetch("/api/contact-details");
+          const data = await res.json();
+          if (res.ok && data.success && data.contactDetails) {
+            contactDetails = Object.assign(contactDetails, data.contactDetails);
+            window.contactDetails = contactDetails;
+            localStorage.setItem("aleen_contact_details", JSON.stringify(contactDetails));
+            renderContactDeskManager();
+          }
+        } catch (e) {}
+      }
+      syncContactDetailsFromServer();
+
+      function renderContactDeskManager() {
+        const setVal = (id, val) => {
+          const el = document.getElementById(id);
+          if (el && val !== undefined) el.value = val;
+        };
+        setVal("ctBoutiqueBadge", contactDetails.boutiqueBadge);
+        setVal("ctBoutiqueTitle", contactDetails.boutiqueTitle);
+        setVal("ctAddress1", contactDetails.addressLine1);
+        setVal("ctAddress2", contactDetails.addressLine2);
+        setVal("ctAddress3", contactDetails.addressLine3);
+        setVal("ctMapsUrl", contactDetails.mapsUrl);
+        setVal("ctEmailBadge", contactDetails.emailBadge);
+        setVal("ctEmail", contactDetails.email);
+        setVal("ctEmailSubtext", contactDetails.emailSubtext);
+        setVal("ctConciergeBadge", contactDetails.conciergeBadge);
+        setVal("ctPhone", contactDetails.phone);
+        setVal("ctHours", contactDetails.hours);
+        setVal("ctWhatsappMsg", contactDetails.whatsappMsg);
+      }
+
+      window.updateContactField = function(field, val) {
+        contactDetails[field] = val;
+        localStorage.setItem("aleen_contact_details", JSON.stringify(contactDetails));
+        window.contactDetails = contactDetails;
+        if (contactBroadcast) {
+          try {
+            contactBroadcast.postMessage({ type: "CONTACT_DETAILS_UPDATED", contactDetails, timestamp: Date.now() });
+          } catch (e) {}
+        }
+      };
+
+      window.saveContactDetailsToServer = async function() {
+        const token = localStorage.getItem("atelier_admin_token") || "";
+        localStorage.setItem("aleen_contact_details", JSON.stringify(contactDetails));
+        window.contactDetails = contactDetails;
+        if (contactBroadcast) {
+          try {
+            contactBroadcast.postMessage({ type: "CONTACT_DETAILS_UPDATED", contactDetails, timestamp: Date.now() });
+          } catch (e) {}
+        }
+        try {
+          const res = await fetch("/api/contact-details", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer " + token
+            },
+            body: JSON.stringify({ contactDetails })
+          });
+          const data = await res.json();
+          if (res.ok && data.success) {
+            showToast("✦ Contact page & boutique details saved live!");
+          } else {
+            alert(data.error || "Failed to save contact details");
+          }
+        } catch (e) {
+          showToast("Saved locally and broadcast live!");
+        }
+      };
+
+
+      // ==========================================
+      // SOCIAL MEDIA LINKS & FOOTER DESK LOGIC
+      // ==========================================
+      let socialLinks = {
+        instagram: "https://instagram.com",
+        facebook: "https://facebook.com",
+        youtube: "https://youtube.com",
+        whatsapp: "+91 98765 43210",
+        whatsappMsg: "Hello Aleen Atelier, I would like to connect with a private stylist for bespoke curation.",
+        email: "Contact@aleen.com"
+      };
+      try {
+        const storedSoc = localStorage.getItem("aleen_social_links");
+        if (storedSoc) socialLinks = Object.assign(socialLinks, JSON.parse(storedSoc));
+      } catch (e) {}
+      window.socialLinks = socialLinks;
+
+      let socialBroadcast = null;
+      try {
+        socialBroadcast = new BroadcastChannel("aleen_social_realtime");
+      } catch (e) {}
+
+      async function syncSocialLinksFromServer() {
+        try {
+          const res = await fetch("/api/social-links");
+          const data = await res.json();
+          if (res.ok && data.success && data.socialLinks) {
+            socialLinks = Object.assign(socialLinks, data.socialLinks);
+            window.socialLinks = socialLinks;
+            localStorage.setItem("aleen_social_links", JSON.stringify(socialLinks));
+            renderSocialLinksManager();
+          }
+        } catch (e) {}
+      }
+      syncSocialLinksFromServer();
+
+      function renderSocialLinksManager() {
+        const setVal = (id, val) => {
+          const el = document.getElementById(id);
+          if (el && val !== undefined) el.value = val;
+        };
+        setVal("socInstagram", socialLinks.instagram);
+        setVal("socFacebook", socialLinks.facebook);
+        setVal("socYoutube", socialLinks.youtube);
+        setVal("socWhatsapp", socialLinks.whatsapp);
+        setVal("socWhatsappMsg", socialLinks.whatsappMsg);
+        setVal("socEmail", socialLinks.email);
+      }
+
+      window.updateSocialField = function(field, val) {
+        socialLinks[field] = val;
+        localStorage.setItem("aleen_social_links", JSON.stringify(socialLinks));
+        window.socialLinks = socialLinks;
+        if (socialBroadcast) {
+          try {
+            socialBroadcast.postMessage({ type: "SOCIAL_LINKS_UPDATED", socialLinks, timestamp: Date.now() });
+          } catch (e) {}
+        }
+      };
+
+      window.saveSocialLinksToServer = async function() {
+        const token = localStorage.getItem("atelier_admin_token") || "";
+        localStorage.setItem("aleen_social_links", JSON.stringify(socialLinks));
+        window.socialLinks = socialLinks;
+        if (socialBroadcast) {
+          try {
+            socialBroadcast.postMessage({ type: "SOCIAL_LINKS_UPDATED", socialLinks, timestamp: Date.now() });
+          } catch (e) {}
+        }
+        try {
+          const res = await fetch("/api/social-links", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer " + token
+            },
+            body: JSON.stringify({ socialLinks })
+          });
+          const data = await res.json();
+          if (res.ok && data.success) {
+            showToast("✦ Social links & contact email updated live across all page footers!");
+          } else {
+            alert(data.error || "Failed to save social links");
+          }
+        } catch (e) {
+          showToast("Saved locally and broadcast live!");
+        }
+      };
 
       // Boot
       checkAuth();

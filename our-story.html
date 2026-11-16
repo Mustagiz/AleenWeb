@@ -849,18 +849,102 @@
       -webkit-font-smoothing: antialiased;
     }
 
+
+    /* Dynamic Animated Luxury Atelier Hero */
     .editorial-hero {
       position: relative;
-      min-height: 32vh;
+      min-height: 40vh;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: clamp(140px, 16vh, 175px) 24px 44px;
-      background: radial-gradient(circle at 50% 35%, #152c1e 0%, #091a11 50%, #040906 90%);
-      border-bottom: 1px solid rgba(201, 163, 95, 0.25);
+      padding: clamp(140px, 16vh, 175px) 24px 50px;
       overflow: hidden;
+      background: #060e08;
+      border-bottom: 1px solid rgba(201, 163, 95, 0.28);
     }
+    .story-hero-bg-media {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .story-hero-bg-img {
+      position: absolute;
+      top: -10%;
+      left: -10%;
+      width: 120%;
+      height: 120%;
+      object-fit: cover;
+      object-position: center 32%;
+      filter: brightness(0.8) contrast(1.15) saturate(1.18);
+      animation: kenBurnsHero 26s ease-in-out infinite alternate;
+    }
+    .story-hero-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 30%, rgba(13, 30, 20, 0.45) 0%, rgba(6, 14, 8, 0.78) 65%, #040906 100%),
+                  linear-gradient(to bottom, rgba(4, 9, 6, 0.55) 0%, transparent 35%, rgba(4, 9, 6, 0.8) 80%, #040906 100%);
+      z-index: 2;
+    }
+    .story-hero-dust {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(2px 2px at 20px 30px, rgba(201, 163, 95, 0.45), rgba(0,0,0,0)),
+                        radial-gradient(2px 2px at 80px 120px, rgba(238, 228, 205, 0.3), rgba(0,0,0,0)),
+                        radial-gradient(1.5px 1.5px at 150px 70px, rgba(201, 163, 95, 0.4), rgba(0,0,0,0)),
+                        radial-gradient(2px 2px at 240px 190px, rgba(201, 163, 95, 0.28), rgba(0,0,0,0));
+      background-repeat: repeat;
+      background-size: 280px 280px;
+      animation: goldDustFloat 18s linear infinite;
+      opacity: 0.65;
+      pointer-events: none;
+      z-index: 2;
+    }
+    @keyframes kenBurnsHero {
+      0% { transform: scale(1.0) translate(0, 0); }
+      50% { transform: scale(1.08) translate(-1.5%, 1%); }
+      100% { transform: scale(1.04) translate(1.5%, -1%); }
+    }
+    @keyframes goldDustFloat {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(-280px) rotate(1deg); }
+    }
+    .story-garment-tags {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 18px auto 0;
+      position: relative;
+      z-index: 3;
+    }
+    .story-garment-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(13, 30, 20, 0.75);
+      border: 1px solid rgba(201, 163, 95, 0.35);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--cream-hi);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .story-garment-tag:hover {
+      background: rgba(201, 163, 95, 0.22);
+      border-color: var(--gold-light);
+      transform: translateY(-2px);
+      color: #ffffff;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    }
+
     .editorial-hero::before {
       content: '';
       position: absolute;
@@ -1966,11 +2050,21 @@
 
 <main id="main">
   <section class="editorial-hero">
-    <div>
+    <div class="story-hero-bg-media" aria-hidden="true">
+      <img src="assets/pakistani-kurti-3.jpg" alt="" class="story-hero-bg-img" loading="eager" decoding="async" onerror="this.src='https://mahira2.netlify.app/assets/s5-room.jpg?v=1'">
+      <div class="story-hero-vignette"></div>
+      <div class="story-hero-dust"></div>
+    </div>
+    <div style="position: relative; z-index: 3;">
       <span class="hero-kicker">The Atelier Chronicle</span>
       <div class="hero-orna-bar"><b></b></div>
       <h1 class="hero-title">Tradition Lives Beautifully</h1>
       <p class="hero-subtitle">"A slow fashion sanctuary celebrating India's artisanal lineage with a contemporary editorial soul."</p>
+      <div class="story-garment-tags">
+        <span class="story-garment-tag">✦ Master Weaver Guilds</span>
+        <span class="story-garment-tag">✦ Handloom Heritage</span>
+        <span class="story-garment-tag">✦ Consciously Curated Couture</span>
+      </div>
     </div>
   </section>
 
@@ -2369,5 +2463,43 @@
     document.body.appendChild(s);
   }
 </script>
+
+<!-- Social Links Dynamic Hydration -->
+<script>
+  (function() {
+    function applySocialLinks(soc) {
+      if (!soc) return;
+      const ig = document.querySelector(".f-social a[aria-label='Instagram']") || document.querySelector("a[aria-label*='Instagram']");
+      if (ig && soc.instagram) ig.href = soc.instagram;
+      const fb = document.querySelector(".f-social a[aria-label='Facebook']") || document.querySelector("a[aria-label*='Facebook']");
+      if (fb && soc.facebook) fb.href = soc.facebook;
+      const yt = document.querySelector(".f-social a[aria-label='YouTube']") || document.querySelector("a[aria-label*='YouTube']");
+      if (yt && soc.youtube) yt.href = soc.youtube;
+      const wa = document.querySelector(".f-social a[aria-label*='WhatsApp']") || document.querySelector("a[aria-label*='WhatsApp']");
+      if (wa && soc.whatsapp) {
+        const clean = soc.whatsapp.replace(/[^0-9]/g, "");
+        const msg = encodeURIComponent(soc.whatsappMsg || "Hello Aleen Atelier, I would like to connect with a private stylist for bespoke curation.");
+        wa.href = `https://wa.me/${clean}?text=${msg}`;
+      }
+    }
+    try {
+      const cached = localStorage.getItem("aleen_social_links");
+      if (cached) applySocialLinks(JSON.parse(cached));
+    } catch(e) {}
+    fetch("/api/social-links").then(r => r.json()).then(d => {
+      if (d && d.success && d.socialLinks) {
+        applySocialLinks(d.socialLinks);
+        localStorage.setItem("aleen_social_links", JSON.stringify(d.socialLinks));
+      }
+    }).catch(() => {});
+    try {
+      const bc = new BroadcastChannel("aleen_social_realtime");
+      bc.onmessage = e => {
+        if (e.data && e.data.socialLinks) applySocialLinks(e.data.socialLinks);
+      };
+    } catch(e) {}
+  })();
+</script>
+
 </body>
 </html>

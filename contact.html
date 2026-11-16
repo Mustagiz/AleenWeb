@@ -849,17 +849,107 @@
       -webkit-font-smoothing: antialiased;
     }
 
+    
+    /* Dynamic Animated Luxury Garments Hero */
     .editorial-hero {
       position: relative;
-      min-height: 52vh;
+      min-height: 56vh;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 140px 24px 60px;
-      background: radial-gradient(circle at 50% 30%, #15271c 0%, #060e08 85%);
-      border-bottom: 1px solid rgba(201, 163, 95, 0.25);
+      padding: 150px 24px 70px;
+      overflow: hidden;
+      background: #060e08;
+      border-bottom: 1px solid rgba(201, 163, 95, 0.28);
     }
+    .hero-bg-media-wrap {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .hero-bg-img {
+      position: absolute;
+      top: -10%;
+      left: -10%;
+      width: 120%;
+      height: 120%;
+      object-fit: cover;
+      object-position: center 38%;
+      filter: brightness(0.82) contrast(1.15) saturate(1.18);
+      animation: kenBurnsHero 26s ease-in-out infinite alternate;
+    }
+    @keyframes kenBurnsHero {
+      0% { transform: scale(1.0) translate(0, 0); }
+      50% { transform: scale(1.09) translate(-1.5%, 1%); }
+      100% { transform: scale(1.05) translate(1.5%, -1%); }
+    }
+    .hero-bg-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 40%, rgba(13, 30, 20, 0.42) 0%, rgba(6, 14, 8, 0.78) 65%, #060e08 100%),
+                  linear-gradient(to bottom, rgba(4, 9, 6, 0.55) 0%, transparent 35%, rgba(4, 9, 6, 0.8) 80%, #060e08 100%);
+      z-index: 2;
+    }
+    .hero-shimmer-particles {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(2px 2px at 20px 30px, rgba(201, 163, 95, 0.5), rgba(0,0,0,0)),
+                        radial-gradient(2px 2px at 80px 120px, rgba(238, 228, 205, 0.35), rgba(0,0,0,0)),
+                        radial-gradient(1.5px 1.5px at 150px 70px, rgba(201, 163, 95, 0.45), rgba(0,0,0,0)),
+                        radial-gradient(2px 2px at 240px 190px, rgba(201, 163, 95, 0.3), rgba(0,0,0,0));
+      background-repeat: repeat;
+      background-size: 280px 280px;
+      animation: goldDustFloat 18s linear infinite;
+      opacity: 0.65;
+      pointer-events: none;
+      z-index: 2;
+    }
+    @keyframes goldDustFloat {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(-280px) rotate(1deg); }
+    }
+    .hero-content-wrap {
+      position: relative;
+      z-index: 3;
+      max-width: 920px;
+      margin: 0 auto;
+    }
+    .hero-garment-pills {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+    .hero-garment-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 16px;
+      border-radius: 999px;
+      background: rgba(13, 30, 20, 0.72);
+      border: 1px solid rgba(201, 163, 95, 0.35);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--cream-hi);
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .hero-garment-pill:hover {
+      background: rgba(201, 163, 95, 0.2);
+      border-color: var(--gold-light);
+      transform: translateY(-2px);
+      color: #ffffff;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+    }
+
     .hero-kicker {
       font-family: var(--sans);
       font-size: 11px;
@@ -2125,10 +2215,21 @@
 
 <main id="main">
   <section class="editorial-hero">
-    <div>
+    <div class="hero-bg-media-wrap" aria-hidden="true">
+      <img src="assets/pakistani-kurti-2.jpg" alt="" class="hero-bg-img" loading="eager" decoding="async" onerror="this.src='https://mahira2.netlify.app/assets/s5-room.jpg?v=1'">
+      <div class="hero-bg-vignette"></div>
+      <div class="hero-shimmer-particles"></div>
+    </div>
+    <div class="hero-content-wrap">
       <span class="hero-kicker">✦ Private Appointments &amp; Couture Inquiries ✦</span>
       <h1 class="hero-title">Atelier Concierge &amp; Boutique</h1>
       <p class="hero-subtitle">"We welcome you to converse with our master stylists, reserve bespoke bridal fittings, or arrange worldwide insured couture dispatch."</p>
+      <div class="hero-garment-pills">
+        <a href="collections.html?category=kurtis" class="hero-garment-pill">✦ Pakistani Kurtis</a>
+        <a href="collections.html?category=kurta-sets" class="hero-garment-pill">✦ Awadh Zardozi Kurta Sets</a>
+        <a href="collections.html?category=lehengas" class="hero-garment-pill">✦ Handcrafted Bridal Heirlooms</a>
+        <a href="collections.html?category=dupattas" class="hero-garment-pill">✦ Pashmina &amp; Tissue Silk</a>
+      </div>
     </div>
   </section>
 
@@ -2150,15 +2251,15 @@
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
             </div>
             <div class="contact-card-info">
-              <span class="contact-card-badge">Pune Flagship Boutique</span>
-              <h5 class="contact-card-title">Aleen Clothing Atelier</h5>
-              <p class="contact-card-text">
+              <span class="contact-card-badge" id="contactBoutiqueBadge">Pune Flagship Boutique</span>
+              <h5 class="contact-card-title" id="contactBoutiqueTitle">Aleen Clothing Atelier</h5>
+              <p class="contact-card-text" id="contactAddress">
                 Moti Building, Jaan Mohammad Street,<br>
                 Beside Parag wedding Mall, Babajaan Chawk,<br>
                 Pune Maharashtra 411001
               </p>
               <div style="margin-top: 10px;">
-                <a href="https://maps.google.com/?q=Aleen+Clothing+Moti+Building+Jaan+Mohammad+Street+Pune+Maharashtra+411001" target="_blank" rel="noopener" class="contact-sublink">
+                <a href="https://maps.google.com/?q=Aleen+Clothing+Moti+Building+Jaan+Mohammad+Street+Pune+Maharashtra+411001" target="_blank" rel="noopener" class="contact-sublink" id="contactMapsLink">
                   <span>Open in Google Maps</span>
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
                 </a>
@@ -2172,11 +2273,11 @@
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
             </div>
             <div class="contact-card-info">
-              <span class="contact-card-badge">Electronic Mail</span>
-              <h5 class="contact-card-title"><a href="mailto:Contact@aleen.com" style="color: inherit; text-decoration: none;">Contact@aleen.com</a></h5>
-              <p class="contact-card-text" style="font-size: 13px;">Our client liaison desk responds to all inquiries within 4 business hours.</p>
+              <span class="contact-card-badge" id="contactEmailBadge">Electronic Mail</span>
+              <h5 class="contact-card-title"><a href="mailto:Contact@aleen.com" style="color: inherit; text-decoration: none;" id="contactEmailText">Contact@aleen.com</a></h5>
+              <p class="contact-card-text" style="font-size: 13px;" id="contactEmailSubtext">Our client liaison desk responds to all inquiries within 4 business hours.</p>
               <div style="margin-top: 8px;">
-                <a href="mailto:Contact@aleen.com" class="contact-sublink">
+                <a href="mailto:Contact@aleen.com" class="contact-sublink" id="contactEmailLink">
                   <span>Send Direct Email</span>
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </a>
@@ -2190,11 +2291,11 @@
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
             </div>
             <div class="contact-card-info">
-              <span class="contact-card-badge">Direct Concierge &amp; WhatsApp</span>
-              <h5 class="contact-card-title">+91 98765 43210</h5>
-              <p class="contact-card-text">Mon &ndash; Sat, 10:00 AM &ndash; 7:30 PM IST</p>
+              <span class="contact-card-badge" id="contactConciergeBadge">Direct Concierge &amp; WhatsApp</span>
+              <h5 class="contact-card-title" id="contactPhoneText">+91 98765 43210</h5>
+              <p class="contact-card-text" id="contactHoursText">Mon &ndash; Sat, 10:00 AM &ndash; 7:30 PM IST</p>
               <div style="margin-top: 10px;">
-                <a href="https://wa.me/919876543210?text=Hello%20Aleen%20Atelier,%20I%20would%20like%20to%20inquire%20about%20your%20couture%20creations." target="_blank" rel="noopener" class="contact-wa-btn">
+                <a href="https://wa.me/919876543210?text=Hello%20Aleen%20Atelier,%20I%20would%20like%20to%20inquire%20about%20your%20couture%20creations." target="_blank" rel="noopener" class="contact-wa-btn" id="contactWhatsappLink">
                   <span>Chat with Stylist on WhatsApp</span>
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </a>
@@ -2640,5 +2741,98 @@
     document.body.appendChild(s);
   }
 </script>
+
+<!-- Dynamic Live Hydration for Contact Details & Social Links -->
+<script>
+  (function() {
+    function applyContactDetails(data) {
+      if (!data) return;
+      const bBadge = document.getElementById("contactBoutiqueBadge");
+      if (bBadge && data.boutiqueBadge) bBadge.textContent = data.boutiqueBadge;
+      const bTitle = document.getElementById("contactBoutiqueTitle");
+      if (bTitle && data.boutiqueTitle) bTitle.textContent = data.boutiqueTitle;
+      const addr = document.getElementById("contactAddress");
+      if (addr && (data.addressLine1 || data.addressLine2 || data.addressLine3)) {
+        addr.innerHTML = `${data.addressLine1 || ""}<br>${data.addressLine2 || ""}<br>${data.addressLine3 || ""}`;
+      }
+      const maps = document.getElementById("contactMapsLink");
+      if (maps && data.mapsUrl) maps.href = data.mapsUrl;
+
+      const emBadge = document.getElementById("contactEmailBadge");
+      if (emBadge && data.emailBadge) emBadge.textContent = data.emailBadge;
+      const emText = document.getElementById("contactEmailText");
+      if (emText && data.email) {
+        emText.textContent = data.email;
+        emText.href = "mailto:" + data.email;
+      }
+      const emLink = document.getElementById("contactEmailLink");
+      if (emLink && data.email) emLink.href = "mailto:" + data.email;
+      const emSub = document.getElementById("contactEmailSubtext");
+      if (emSub && data.emailSubtext) emSub.textContent = data.emailSubtext;
+
+      const cBadge = document.getElementById("contactConciergeBadge");
+      if (cBadge && data.conciergeBadge) cBadge.textContent = data.conciergeBadge;
+      const cPhone = document.getElementById("contactPhoneText");
+      if (cPhone && data.phone) cPhone.textContent = data.phone;
+      const cHours = document.getElementById("contactHoursText");
+      if (cHours && data.hours) cHours.textContent = data.hours;
+      const cWa = document.getElementById("contactWhatsappLink");
+      if (cWa && data.phone) {
+        const cleanPhone = data.phone.replace(/[^0-9]/g, "");
+        const msg = encodeURIComponent(data.whatsappMsg || "Hello Aleen Atelier, I would like to inquire about your couture creations.");
+        cWa.href = `https://wa.me/${cleanPhone}?text=${msg}`;
+      }
+    }
+
+    function applySocialLinks(soc) {
+      if (!soc) return;
+      const ig = document.querySelector(".f-social a[aria-label='Instagram']") || document.querySelector("a[aria-label*='Instagram']");
+      if (ig && soc.instagram) ig.href = soc.instagram;
+      const fb = document.querySelector(".f-social a[aria-label='Facebook']") || document.querySelector("a[aria-label*='Facebook']");
+      if (fb && soc.facebook) fb.href = soc.facebook;
+      const yt = document.querySelector(".f-social a[aria-label='YouTube']") || document.querySelector("a[aria-label*='YouTube']");
+      if (yt && soc.youtube) yt.href = soc.youtube;
+      const wa = document.querySelector(".f-social a[aria-label*='WhatsApp']") || document.querySelector("a[aria-label*='WhatsApp']");
+      if (wa && soc.whatsapp) {
+        const clean = soc.whatsapp.replace(/[^0-9]/g, "");
+        const msg = encodeURIComponent(soc.whatsappMsg || "Hello Aleen Atelier, I would like to connect with a private stylist for bespoke curation.");
+        wa.href = `https://wa.me/${clean}?text=${msg}`;
+      }
+    }
+
+    try {
+      const cachedCt = localStorage.getItem("aleen_contact_details");
+      if (cachedCt) applyContactDetails(JSON.parse(cachedCt));
+      const cachedSoc = localStorage.getItem("aleen_social_links");
+      if (cachedSoc) applySocialLinks(JSON.parse(cachedSoc));
+    } catch(e) {}
+
+    fetch("/api/contact-details").then(r => r.json()).then(d => {
+      if (d && d.success && d.contactDetails) {
+        applyContactDetails(d.contactDetails);
+        localStorage.setItem("aleen_contact_details", JSON.stringify(d.contactDetails));
+      }
+    }).catch(() => {});
+
+    fetch("/api/social-links").then(r => r.json()).then(d => {
+      if (d && d.success && d.socialLinks) {
+        applySocialLinks(d.socialLinks);
+        localStorage.setItem("aleen_social_links", JSON.stringify(d.socialLinks));
+      }
+    }).catch(() => {});
+
+    try {
+      const bcCt = new BroadcastChannel("aleen_contact_realtime");
+      bcCt.onmessage = e => {
+        if (e.data && e.data.contactDetails) applyContactDetails(e.data.contactDetails);
+      };
+      const bcSoc = new BroadcastChannel("aleen_social_realtime");
+      bcSoc.onmessage = e => {
+        if (e.data && e.data.socialLinks) applySocialLinks(e.data.socialLinks);
+      };
+    } catch(e) {}
+  })();
+</script>
+
 </body>
 </html>

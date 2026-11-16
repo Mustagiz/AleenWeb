@@ -6111,7 +6111,7 @@ html, body {
         <p class="b-sub">The pieces our customers reach for most.</p>
       </header>
 
-      <div class="b-cards">
+      <div class="b-cards" id="homeBestCards">
       <a class="b-card b-c1" href="/collections?category=kurtis">
         <img src="https://mahira2.netlify.app/assets/s5-p1.jpg?v=1" alt="Model wearing luxury ivory Pakistani Kurti" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='assets/s5-p1.jpg';">
         <span class="b-veil"></span>
@@ -8442,47 +8442,76 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
   }
 </script>
 
+
+<!-- Dynamic Real-Time Hydration for Best Sellers & Social Links -->
+<script>
+  (function() {
+    function applyBestSellers(cards) {
+      if (!Array.isArray(cards) || !cards.length) return;
+      const container = document.getElementById('homeBestCards');
+      if (!container) return;
+      const classNames = ['b-c1', 'b-c2', 'b-c3', 'b-c4'];
+      container.innerHTML = cards.slice(0, 4).map((card, idx) => `
+        <a class="b-card ${classNames[idx] || 'b-c1'}" href="${card.url || '/collections'}">
+          <img src="${card.image}" alt="${card.title ? card.title.replace(/<[^>]+>/g, ' ') : 'Best Seller'}" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='assets/s5-p${idx + 1}.jpg';">
+          <span class="b-veil"></span>
+          <span class="b-txt"><span class="b-no">${card.no || ('0' + (idx + 1))}</span><h3>${card.title || ''}</h3><p>${card.subtitle || ''}</p></span>
+        </a>
+      `).join('');
+    }
+
+    function applySocialLinks(soc) {
+      if (!soc) return;
+      const ig = document.querySelector(".f-social a[aria-label='Instagram']");
+      if (ig && soc.instagram) ig.href = soc.instagram;
+      const fb = document.querySelector(".f-social a[aria-label='Facebook']");
+      if (fb && soc.facebook) fb.href = soc.facebook;
+      const yt = document.querySelector(".f-social a[aria-label='YouTube']");
+      if (yt && soc.youtube) yt.href = soc.youtube;
+      const wa = document.querySelector(".f-social a[aria-label*='WhatsApp']");
+      if (wa && soc.whatsapp) {
+        const clean = soc.whatsapp.replace(/[^0-9]/g, '');
+        const msg = encodeURIComponent(soc.whatsappMsg || 'Hello Aleen Atelier, I would like to connect with a private stylist for bespoke curation.');
+        wa.href = `https://wa.me/${clean}?text=${msg}`;
+      }
+    }
+
+    // Cached LocalStorage first for instant paint
+    try {
+      const cachedBest = localStorage.getItem('aleen_bestsellers');
+      if (cachedBest) applyBestSellers(JSON.parse(cachedBest));
+      const cachedSoc = localStorage.getItem('aleen_social_links');
+      if (cachedSoc) applySocialLinks(JSON.parse(cachedSoc));
+    } catch(e) {}
+
+    // Fetch live from server API
+    fetch('/api/best-sellers').then(r => r.json()).then(d => {
+      if (d && d.success && Array.isArray(d.bestSellers) && d.bestSellers.length) {
+        applyBestSellers(d.bestSellers);
+        localStorage.setItem('aleen_bestsellers', JSON.stringify(d.bestSellers));
+      }
+    }).catch(() => {});
+
+    fetch('/api/social-links').then(r => r.json()).then(d => {
+      if (d && d.success && d.socialLinks) {
+        applySocialLinks(d.socialLinks);
+        localStorage.setItem('aleen_social_links', JSON.stringify(d.socialLinks));
+      }
+    }).catch(() => {});
+
+    // Listen to real-time BroadcastChannel updates from Admin Panel
+    try {
+      const bcBest = new BroadcastChannel('aleen_bestsellers_realtime');
+      bcBest.onmessage = e => {
+        if (e.data && e.data.bestSellers) applyBestSellers(e.data.bestSellers);
+      };
+      const bcSoc = new BroadcastChannel('aleen_social_realtime');
+      bcSoc.onmessage = e => {
+        if (e.data && e.data.socialLinks) applySocialLinks(e.data.socialLinks);
+      };
+    } catch(e) {}
+  })();
+</script>
+
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

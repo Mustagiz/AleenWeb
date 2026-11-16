@@ -26,6 +26,59 @@ const DEFAULT_DATA = {
   heroRotator: [],
   carouselSlides: [],
   catalog: [],
+    socialLinks: {
+    instagram: "https://instagram.com",
+    facebook: "https://facebook.com",
+    youtube: "https://youtube.com",
+    whatsapp: "+91 98765 43210",
+    whatsappMsg: "Hello Aleen Atelier, I would like to connect with a private stylist for bespoke curation.",
+    email: "Contact@aleen.com"
+  },
+  contactDetails: {
+    boutiqueBadge: "Pune Flagship Boutique",
+    boutiqueTitle: "Aleen Clothing Atelier",
+    addressLine1: "Moti Building, Jaan Mohammad Street,",
+    addressLine2: "Beside Parag wedding Mall, Babajaan Chawk,",
+    addressLine3: "Pune Maharashtra 411001",
+    mapsUrl: "https://maps.google.com/?q=Aleen+Clothing+Moti+Building+Jaan+Mohammad+Street+Pune+Maharashtra+411001",
+    emailBadge: "Electronic Mail",
+    email: "Contact@aleen.com",
+    emailSubtext: "Our client liaison desk responds to all inquiries within 4 business hours.",
+    conciergeBadge: "Direct Concierge & WhatsApp",
+    phone: "+91 98765 43210",
+    hours: "Mon – Sat, 10:00 AM – 7:30 PM IST",
+    whatsappMsg: "Hello Aleen Atelier, I would like to inquire about your couture creations."
+  },
+  bestSellers: [
+    {
+      no: "01",
+      title: "Pakistani<br>Kurtis",
+      subtitle: "Royal grace in<br>every stitch.",
+      image: "https://mahira2.netlify.app/assets/s5-p1.jpg?v=1",
+      url: "/collections?category=kurtis"
+    },
+    {
+      no: "02",
+      title: "Kurta Sets",
+      subtitle: "Everyday<br>elegance,<br>redefined.",
+      image: "https://mahira2.netlify.app/assets/s5-p2.jpg?v=1",
+      url: "/collections?category=kurta-sets"
+    },
+    {
+      no: "03",
+      title: "Organza<br>Kurtis",
+      subtitle: "Art in<br>every thread.",
+      image: "https://mahira2.netlify.app/assets/s5-p3.jpg?v=1",
+      url: "/collections?category=kurtis"
+    },
+    {
+      no: "04",
+      title: "Kalakaari<br>Collection",
+      subtitle: "Stories<br>woven in<br>tradition.",
+      image: "https://mahira2.netlify.app/assets/s5-p4.jpg?v=1",
+      url: "/collections"
+    }
+  ],
   womenCollections: [
     {
       id: "kurtis",
