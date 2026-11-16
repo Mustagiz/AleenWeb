@@ -1442,6 +1442,8 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: auto;
     }
 
     .cm-slide-num {
@@ -1763,6 +1765,8 @@
       background: #040906;
       border: 1px solid rgba(201, 163, 95, 0.4);
       flex-shrink: 0;
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: auto;
     }
 
     .admin-modal-close {
@@ -3743,7 +3747,7 @@
 
       <!-- Cropper Viewport -->
       <div style="width: 100%; height: 420px; background: #040906; border-radius: 12px; overflow: hidden; border: 1px solid rgba(201, 163, 95, 0.35); display: flex; align-items: center; justify-content: center; position: relative;">
-        <img id="cropperTargetImg" src="" alt="Crop target" style="max-width: 100%; max-height: 100%; display: block;">
+        <img id="cropperTargetImg" src="" alt="Crop target" style="max-width: 100%; max-height: 100%; display: block; image-rendering: -webkit-optimize-contrast;">
       </div>
 
       <!-- Toolbar: Aspect Ratio Presets & Controls -->
@@ -4931,19 +4935,20 @@
       const ratioBtns = document.querySelectorAll(".crop-ratio-btn");
       let currentCropOptions = {};
 
-      // Ultra-fast client-side pre-compression to prevent multi-MB lag and upload delays
+      // Ultra-fast client-side pre-compression to prevent multi-MB lag and upload delays,
+      // while preserving pristine ultra-HD retina sharpness (up to 3840px @ 0.96 quality)
       function fastProcessImage(file, opts = {}) {
         return new Promise((resolve) => {
           if (!file) return resolve(null);
-          const maxW = opts.maxWidth || 1920;
-          const maxH = opts.maxHeight || 1920;
-          const quality = opts.quality || 0.88;
+          const maxW = opts.maxWidth || 2560;
+          const maxH = opts.maxHeight || 2560;
+          const quality = opts.quality || 0.96;
 
           const reader = new FileReader();
           reader.onerror = () => resolve(null);
           reader.onload = function(e) {
             const dataUri = e.target.result;
-            if (file.type === "image/svg+xml" || (file.size < 250 * 1024 && !opts.forceResize)) {
+            if (file.type === "image/svg+xml" || (file.size < 600 * 1024 && !opts.forceResize)) {
               return resolve(dataUri);
             }
             const img = new Image();
@@ -4951,7 +4956,8 @@
             img.onload = function() {
               let w = img.naturalWidth || img.width;
               let h = img.naturalHeight || img.height;
-              if (w <= maxW && h <= maxH && file.size < 350 * 1024) {
+              // If already within HD dimensions and reasonable file size, preserve 100% pristine data without recompression
+              if (w <= maxW && h <= maxH && file.size < 3 * 1024 * 1024 && !opts.forceResize) {
                 return resolve(dataUri);
               }
               const ratio = Math.min(maxW / w, maxH / h, 1);
@@ -5060,9 +5066,10 @@
         applyCropBtn.textContent = "Processing Crop...";
 
         try {
-          const maxW = currentCropOptions.maxWidth || (currentCropOptions.ratio && currentCropOptions.ratio > 1 ? 1920 : 1000);
-          const maxH = currentCropOptions.maxHeight || (currentCropOptions.ratio && currentCropOptions.ratio > 1 ? 1080 : 1333);
-          const quality = currentCropOptions.quality || 0.88;
+          const isLandscape = currentCropOptions.ratio && currentCropOptions.ratio > 1;
+          const maxW = currentCropOptions.maxWidth || (isLandscape ? 3840 : 2400);
+          const maxH = currentCropOptions.maxHeight || (isLandscape ? 2160 : 3200);
+          const quality = currentCropOptions.quality || 0.96;
 
           const canvas = cropperInstance.getCroppedCanvas({
             maxWidth: maxW,
@@ -5297,7 +5304,12 @@
               </div>
               <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
                 <input type="text" class="form-control" style="flex: 1; min-width: 140px; padding: 6px 10px; font-size: 12px; height: 32px;" value="${escapeHtml(src)}" placeholder="assets/... or https://..." oninput="updateGarmentSlotUrl(${idx}, this.value)">
-                <label class="tbl-btn tbl-btn-edit" style="cursor: pointer; padding: 6px 10px; font-size: 11px; margin: 0; white-space: nowrap; height: 32px; display: inline-flex; align-items: center; gap: 4px;" title="Upload new photo and open Crop Studio">
+                <label class="tbl-btn tbl-btn-edit" style="cursor: pointer; padding: 6px 10px; font-size: 11px; margin: 0; white-space: nowrap; height: 32px; display: inline-flex; align-items: center; gap: 4px;" title="Upload original photo directly in pristine HD without crop">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                  <span>Upload Direct</span>
+                  <input type="file" accept="image/*" style="display: none;" onchange="uploadDirectGarmentSlot(${idx}, this)">
+                </label>
+                <label class="tbl-btn tbl-btn-edit" style="cursor: pointer; padding: 6px 10px; font-size: 11px; margin: 0; white-space: nowrap; height: 32px; display: inline-flex; align-items: center; gap: 4px;" title="Upload photo and open High-Res Crop Studio">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
                   <span>Upload &amp; Crop</span>
                   <input type="file" accept="image/*" style="display: none;" onchange="uploadAndCropGarmentSlot(${idx}, this)">
@@ -5324,22 +5336,58 @@
         renderGarmentImageSlots();
       };
 
+      window.uploadDirectGarmentSlot = async function(idx, fileInput) {
+        if (!fileInput.files || !fileInput.files[0]) return;
+        const file = fileInput.files[0];
+        fileInput.value = "";
+        showToast("✦ Uploading original HD photo...");
+        const optimizedDataUrl = await fastProcessImage(file, { maxWidth: 2560, maxHeight: 3413, quality: 0.96 });
+        let finalUrl = optimizedDataUrl;
+        try {
+          const token = localStorage.getItem("atelier_admin_token") || "admin_session";
+          const upRes = await fetch("/api/admin/upload", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer " + token
+            },
+            body: JSON.stringify({
+              filename: file.name || ("garment_" + Date.now() + ".jpg"),
+              data: optimizedDataUrl
+            })
+          });
+          const upData = await upRes.json();
+          if (upData.success && upData.url) {
+            finalUrl = upData.url;
+          }
+        } catch (err) {
+          console.warn("Direct garment upload error:", err);
+        }
+        updateGarmentSlotUrl(idx, finalUrl);
+        renderGarmentImageSlots();
+        showToast("✦ Pristine HD photo applied live!");
+      };
+
       window.uploadAndCropGarmentSlot = async function(idx, fileInput) {
         if (!fileInput.files || !fileInput.files[0]) return;
         const file = fileInput.files[0];
         fileInput.value = "";
-        showToast("✦ Preparing photo...");
-        const optimizedData = await fastProcessImage(file, { maxWidth: 1200, maxHeight: 1600, quality: 0.88 });
-        openCropStudio(optimizedData, {
-          ratio: 0.75, // 3:4 portrait for garment arch
-          maxWidth: 1000,
-          maxHeight: 1333,
-          quality: 0.88,
-          onApply: (croppedUrl) => {
-            updateGarmentSlotUrl(idx, croppedUrl);
-            renderGarmentImageSlots();
-          }
-        });
+        showToast("✦ Preparing ultra-HD photo...");
+        // Pass original raw image directly to Crop Studio to completely avoid pre-crop downscaling & blur
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          openCropStudio(e.target.result, {
+            ratio: 0.75, // 3:4 portrait for garment arch
+            maxWidth: 2400,
+            maxHeight: 3200,
+            quality: 0.96,
+            onApply: (croppedUrl) => {
+              updateGarmentSlotUrl(idx, croppedUrl);
+              renderGarmentImageSlots();
+            }
+          });
+        };
+        reader.readAsDataURL(file);
       };
 
       window.cropExistingGarmentSlot = function(idx) {
@@ -5350,6 +5398,9 @@
         }
         openCropStudio(cur, {
           ratio: 0.75, // 3:4
+          maxWidth: 2400,
+          maxHeight: 3200,
+          quality: 0.96,
           onApply: (croppedUrl) => {
             updateGarmentSlotUrl(idx, croppedUrl);
             renderGarmentImageSlots();
@@ -5960,8 +6011,8 @@
         if (!fileInput.files || !fileInput.files[0]) return;
         const file = fileInput.files[0];
         fileInput.value = "";
-        showToast("✦ Processing image...");
-        const optimizedDataUrl = await fastProcessImage(file, { maxWidth: 2560, maxHeight: 1440, quality: 0.90 });
+        showToast("✦ Processing image in 4K Ultra-HD...");
+        const optimizedDataUrl = await fastProcessImage(file, { maxWidth: 3840, maxHeight: 2160, quality: 0.96 });
         let finalUrl = optimizedDataUrl;
         try {
           const token = localStorage.getItem("atelier_admin_token") || "admin_session";
@@ -5988,29 +6039,32 @@
         if (inputEl) inputEl.value = finalUrl;
         triggerCarouselSave(true);
         renderCarouselManager();
-        showToast("✦ Original photo applied at pristine quality!");
+        showToast("✦ Original photo applied at pristine 4K quality!");
       };
 
       window.uploadAndCropCarouselSlideImg = async function (idx, fileInput) {
         if (!fileInput.files || !fileInput.files[0]) return;
         const file = fileInput.files[0];
         fileInput.value = "";
-        showToast("✦ Opening Crop Studio...");
-        const optimizedDataUrl = await fastProcessImage(file, { maxWidth: 2560, maxHeight: 1440, quality: 0.92 });
-        openCropStudio(optimizedDataUrl, {
-          ratio: 16 / 9, // 16:9 full-width slider
-          maxWidth: 2048,
-          maxHeight: 1152,
-          quality: 0.88,
-          onApply: async (croppedUrl) => {
-            updateSlideImg(idx, croppedUrl);
-            const inputEl = document.getElementById("cmImgInput_" + idx);
-            if (inputEl) inputEl.value = croppedUrl;
-            triggerCarouselSave(true);
-            renderCarouselManager();
-            showToast("✦ Slide cropped and saved live!");
-          }
-        });
+        showToast("✦ Opening Crop Studio in Ultra-HD...");
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          openCropStudio(e.target.result, {
+            ratio: 16 / 9, // 16:9 full-width slider
+            maxWidth: 3840,
+            maxHeight: 2160,
+            quality: 0.96,
+            onApply: async (croppedUrl) => {
+              updateSlideImg(idx, croppedUrl);
+              const inputEl = document.getElementById("cmImgInput_" + idx);
+              if (inputEl) inputEl.value = croppedUrl;
+              triggerCarouselSave(true);
+              renderCarouselManager();
+              showToast("✦ Slide cropped and saved live in 4K!");
+            }
+          });
+        };
+        reader.readAsDataURL(file);
       };
 
       window.cropExistingCarouselSlideImg = function (idx) {
@@ -6020,16 +6074,16 @@
         }
         openCropStudio(carouselSlides[idx].img, {
           ratio: 16 / 9,
-          maxWidth: 2048,
-          maxHeight: 1152,
-          quality: 0.88,
+          maxWidth: 3840,
+          maxHeight: 2160,
+          quality: 0.96,
           onApply: async (croppedUrl) => {
             updateSlideImg(idx, croppedUrl);
             const inputEl = document.getElementById("cmImgInput_" + idx);
             if (inputEl) inputEl.value = croppedUrl;
             triggerCarouselSave(true);
             renderCarouselManager();
-            showToast("✦ Slide frame updated and saved live!");
+            showToast("✦ Slide frame updated and saved live in 4K!");
           }
         });
       };
@@ -6228,8 +6282,8 @@
         if (!fileInput.files || !fileInput.files[0]) return;
         const file = fileInput.files[0];
         fileInput.value = "";
-        showToast("✦ Processing image...");
-        const optimizedDataUrl = await fastProcessImage(file, { maxWidth: 1200, maxHeight: 1600, quality: 0.90 });
+        showToast("✦ Processing image in Ultra-HD...");
+        const optimizedDataUrl = await fastProcessImage(file, { maxWidth: 2400, maxHeight: 3200, quality: 0.96 });
         let finalUrl = optimizedDataUrl;
         try {
           const token = localStorage.getItem("atelier_admin_token") || "admin_session";
@@ -6263,22 +6317,25 @@
         if (!fileInput.files || !fileInput.files[0]) return;
         const file = fileInput.files[0];
         fileInput.value = "";
-        showToast("✦ Opening Crop Studio...");
-        const optimizedDataUrl = await fastProcessImage(file, { maxWidth: 1600, maxHeight: 2133, quality: 0.92 });
-        openCropStudio(optimizedDataUrl, {
-          ratio: 0.75, // 3:4 Arched silhouette
-          maxWidth: 1000,
-          maxHeight: 1333,
-          quality: 0.88,
-          onApply: async (croppedUrl) => {
-            updateWomenCardImg(idx, croppedUrl);
-            const inputEl = document.getElementById("wcImgInput_" + idx);
-            if (inputEl) inputEl.value = croppedUrl;
-            triggerWomenSave(true);
-            renderWomenCardsManager();
-            showToast("✦ Arched card cropped and saved live!");
-          }
-        });
+        showToast("✦ Opening Crop Studio in Ultra-HD...");
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          openCropStudio(e.target.result, {
+            ratio: 0.75, // 3:4 Arched silhouette
+            maxWidth: 2400,
+            maxHeight: 3200,
+            quality: 0.96,
+            onApply: async (croppedUrl) => {
+              updateWomenCardImg(idx, croppedUrl);
+              const inputEl = document.getElementById("wcImgInput_" + idx);
+              if (inputEl) inputEl.value = croppedUrl;
+              triggerWomenSave(true);
+              renderWomenCardsManager();
+              showToast("✦ Arched card cropped and saved live in Ultra-HD!");
+            }
+          });
+        };
+        reader.readAsDataURL(file);
       };
 
       window.cropExistingWomenCardImg = function (idx) {
@@ -6288,16 +6345,16 @@
         }
         openCropStudio(womenCollections[idx].img, {
           ratio: 0.75,
-          maxWidth: 1000,
-          maxHeight: 1333,
-          quality: 0.88,
+          maxWidth: 2400,
+          maxHeight: 3200,
+          quality: 0.96,
           onApply: async (croppedUrl) => {
             updateWomenCardImg(idx, croppedUrl);
             const inputEl = document.getElementById("wcImgInput_" + idx);
             if (inputEl) inputEl.value = croppedUrl;
             triggerWomenSave(true);
             renderWomenCardsManager();
-            showToast("✦ Arched card frame updated and saved live!");
+            showToast("✦ Arched card frame updated and saved live in Ultra-HD!");
           }
         });
       };

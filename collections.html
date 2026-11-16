@@ -1930,6 +1930,11 @@
       object-fit: cover;
       display: block;
       transition: transform 0.6s var(--ease);
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: auto;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      transform: translateZ(0);
     }
 
     .garment-card:hover .card-media img {
@@ -2101,6 +2106,11 @@
       object-fit: cover;
       display: block;
       transition: opacity 0.22s ease;
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: auto;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      transform: translateZ(0);
     }
 
     .modal-gallery-arrow {
@@ -2530,6 +2540,11 @@
       object-fit: cover;
       display: block;
       transition: transform 0.3s ease;
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: auto;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      transform: translateZ(0);
     }
 
     .vs-item:hover .vs-thumb-img {
@@ -4838,7 +4853,7 @@ html, body {
           fabric: "Pure Raw Silk with Organza Lace Trims",
           origin: "Lahore Atelier",
           badge: "Heritage Edition",
-          image: "/assets/pakistani-kurti-1.jpg",
+          image: "assets/pakistani-kurti-1.jpg",
           desc: "Tailored royal ivory raw silk Pakistani kurti accented with heirloom gold zardozi adda embroidery, intricate hand-cut lace sleeve trims, and pearl button plackets."
         },
         {
@@ -4890,7 +4905,7 @@ html, body {
           fabric: "Micro Velvet with Pure Silk Lining",
           origin: "Old City Lahore",
           badge: "Artisanal",
-          image: "/assets/pakistani-kurti-2.jpg",
+          image: "assets/pakistani-kurti-2.jpg",
           desc: "Opulent forest emerald micro-velvet silhouette enriched with antique metallic tilla cord, dabka floral bouquets, and scalloped hem border work."
         },
         {
@@ -4942,7 +4957,7 @@ html, body {
           fabric: "Pure Tissue Silk Organza",
           origin: "Karachi Design House",
           badge: "Trending",
-          image: "/assets/pakistani-kurti-3.jpg",
+          image: "assets/pakistani-kurti-3.jpg",
           desc: "Weightless blush peach tissue organza Pakistani kurti featuring hand-placed pearl droplets, gossamer cutwork sleeves, and fine badla embroidery."
         },
         {
@@ -5567,7 +5582,7 @@ html, body {
         activeModalItem = item;
 
         // Multi-angle gallery setup
-        const itemImages = (Array.isArray(item.images) && item.images.length > 0) ? item.images : [item.image || '/assets/pakistani-kurti-1.jpg'];
+        const itemImages = (Array.isArray(item.images) && item.images.length > 0) ? item.images : [item.image || 'assets/pakistani-kurti-1.jpg'];
         let currentAngleIdx = 0;
 
         function setModalAngle(idx) {
@@ -5900,11 +5915,14 @@ html, body {
       }
 
       function formatImgSrc(src) {
-        if (!src) return "/assets/pakistani-kurti-1.jpg";
-        if (src.startsWith("http://") || src.startsWith("https://") || src.startsWith("data:") || src.startsWith("/")) {
+        if (!src) return "assets/pakistani-kurti-1.jpg";
+        if (src.startsWith("http://") || src.startsWith("https://") || src.startsWith("data:")) {
           return src;
         }
-        return "/" + src;
+        if (src.startsWith("/")) {
+          return src.replace(/^\/+/, "");
+        }
+        return src;
       }
 
       function renderVisualSearch(query) {
@@ -5962,7 +5980,7 @@ html, body {
           vsResultsList.innerHTML = topHits.map((item, idx) => `
             <div class="vs-item" data-id="${item.id}" role="option" tabindex="0" data-index="${idx}">
               <div class="vs-thumb-frame">
-                <img src="${formatImgSrc(item.image)}" alt="${item.title}" class="vs-thumb-img" loading="lazy" onerror="this.onerror=null;this.src='/assets/pakistani-kurti-1.jpg'">
+                <img src="${formatImgSrc(item.image)}" alt="${item.title}" class="vs-thumb-img" loading="lazy" onerror="this.onerror=null;this.src='https://mahira2.netlify.app/assets/s3-kurta.jpg?v=5'">
               </div>
               <div class="vs-info">
                 <span class="vs-item-origin">${item.origin || 'Lucknow Atelier'}</span>

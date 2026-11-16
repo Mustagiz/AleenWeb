@@ -2083,7 +2083,7 @@ section { position: relative; }
 }
 .w-card:hover, .w-card.is-focus { border-color: rgba(236, 207, 139, 0.95); box-shadow: 0 34px 80px rgba(10, 18, 12, 0.5); }
 .w-card.is-focus > img { transform: scale(1.04); }
-.w-card > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.1s var(--ease); will-change: transform; }
+.w-card > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.1s var(--ease); will-change: transform; image-rendering: -webkit-optimize-contrast; image-rendering: auto; backface-visibility: hidden; -webkit-backface-visibility: hidden; transform: translateZ(0); }
 .w-card:hover > img { transform: scale(1.04); }
 .w-scrim { position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(4, 9, 6, 0) 25%, rgba(4, 9, 6, 0.65) 58%, rgba(4, 9, 6, 0.96) 94%); }
 .w-caption { position: absolute; z-index: 2; left: 6%; right: 6%; bottom: 5.5%; text-align: center; }
@@ -3899,6 +3899,11 @@ button:hover,
   object-position: 65% 25%;
   transform: scale(1.05);
   transition: transform 3.5s ease-out;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: auto;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
 }
 .fw-slide.active .fw-slide-img {
   transform: scale(1);
