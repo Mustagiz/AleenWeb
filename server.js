@@ -373,7 +373,7 @@ const server = http.createServer(async (req, res) => {
 
       if (!matchedUser) {
         res.writeHead(401);
-        res.end(JSON.stringify({ error: 'Invalid credentials. Access denied.' }));
+        res.end(JSON.stringify({ error: 'Invalid password. Please try again.' }));
         return;
       }
 

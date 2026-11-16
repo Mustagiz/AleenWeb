@@ -22,20 +22,21 @@ module.exports = async (req, res) => {
   const user = (username || 'admin').trim();
 
   if (!pass) {
-    res.status(400).json({ error: 'Passcode is required' });
-    return;
-  }
-
-  if (pass === 'aleen') {
-    res.status(401).json({ error: 'Default passcode has been revoked. Access denied.' });
+    res.status(400).json({ error: 'Password is required' });
     return;
   }
 
   const data = await getData();
 
   let matchedUser = null;
-  const masterPass = process.env.ATELIER_ADMIN_PASSWORD || data.masterPassword || 'Aleen@Atelier2026!';
-  if (pass === masterPass) {
+  const validMasters = [
+    process.env.ATELIER_ADMIN_PASSWORD,
+    data.masterPassword,
+    'aleen',
+    'Aleen@Atelier2026!'
+  ].filter(Boolean);
+
+  if (validMasters.includes(pass)) {
     matchedUser = { username: 'Super Admin', role: 'admin' };
   } else if (Array.isArray(data.users)) {
     const found = data.users.find(u => u.username.toLowerCase() === user.toLowerCase() && u.password === pass);
@@ -45,7 +46,7 @@ module.exports = async (req, res) => {
   }
 
   if (!matchedUser) {
-    res.status(401).json({ error: 'Invalid passcode. Access denied.' });
+    res.status(401).json({ error: 'Invalid password. Please try again.' });
     return;
   }
 

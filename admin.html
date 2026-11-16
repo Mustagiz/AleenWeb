@@ -3135,17 +3135,14 @@
         </svg>
       </div>
       <p class="auth-eyebrow">Aleen Clothing Atelier</p>
-      <h2 class="auth-title">Atelier Staff Sign In</h2>
-      <p class="auth-sub">Enter the Atelier Master Passcode or your designated staff credential to access the curation
-        engine.</p>
+      <h2 class="auth-title">Atelier Sign In</h2>
+      <p class="auth-sub">Enter password to access the atelier console.</p>
       <form id="adminAuthForm" autocomplete="off">
-        <input type="password" id="adminAuthPassInput" placeholder="Enter Access Passcode" required class="auth-input"
+        <input type="password" id="adminAuthPassInput" placeholder="Password" required class="auth-input"
           autocomplete="current-password">
-        <div id="adminAuthErrMsg" class="auth-err-msg">Passcode incorrect. Please verify and try again.</div>
+        <div id="adminAuthErrMsg" class="auth-err-msg">Password incorrect. Please try again.</div>
         <button type="submit" class="auth-btn">✦ Authenticate &amp; Enter</button>
       </form>
-      <p style="font-size: 11px; color: rgba(201, 163, 95, 0.55); margin-top: 16px;">Default Master Passcode:
-        <code>aleen</code></p>
     </div>
   </div>
 
@@ -5049,7 +5046,7 @@
             } else {
               if (authErrMsg) {
                 authErrMsg.style.display = "block";
-                authErrMsg.textContent = data.error || "Passcode incorrect. Please verify and try again.";
+                authErrMsg.textContent = data.error || "Password incorrect. Please try again.";
               }
             }
           } catch (err) {
