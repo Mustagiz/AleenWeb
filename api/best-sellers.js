@@ -29,7 +29,7 @@ module.exports = async (req, res) => {
       no: item.no || `0${idx + 1}`,
       title: item.title || 'Haute Couture',
       subtitle: item.subtitle || 'Everyday elegance, redefined.',
-      image: item.image || 'https://mahira2.netlify.app/assets/s5-p1.jpg?v=1',
+      image: item.image || 'assets/s5-p1.jpg?v=1',
       url: item.url || '/collections'
     }));
     await saveData(data);

@@ -47,6 +47,9 @@
   ],
   "rewrites": [
     { "source": "/api/admin/catalog", "destination": "/api/catalog" },
+    { "source": "/api/social-links", "destination": "/api/social-links.js" },
+    { "source": "/api/contact-details", "destination": "/api/contact-details.js" },
+    { "source": "/api/best-sellers", "destination": "/api/best-sellers.js" },
     { "source": "/api/admin/women-collections", "destination": "/api/women-collections" },
     { "source": "/api/admin/carousel", "destination": "/api/carousel" },
     { "source": "/api/admin/hero-rotator", "destination": "/api/hero-rotator" },

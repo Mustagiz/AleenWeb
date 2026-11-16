@@ -1,0 +1,12 @@
+# Netlify clean URL rewrites
+/collections              /collections.html              200
+/our-story                /our-story.html                200
+/contact-us               /contact-us.html               200
+/contact                  /contact-us.html               200
+/admin                    /admin.html                    200
+/dresses                  /dresses.html                  200
+/the-complete-journey     /the-complete-journey.html     200
+/privacy                  /privacy.html                  200
+/terms                    /terms.html                    200
+/sitemap                  /sitemap.html                  200
+/home                     /home.html                     200

@@ -17,7 +17,7 @@ const DEFAULT_DATA = {
     { username: 'admin', role: 'admin', password: process.env.ATELIER_ADMIN_PASSWORD || 'Aleen@Atelier2026!', createdAt: '14 Nov 2026' }
   ],
   megaMenuBanner: {
-    img: 'https://mahira2.netlify.app/assets/s2-card-women.jpg?v=2',
+    img: 'assets/s2-card-women.jpg?v=2',
     badge: 'CURATED HAUTE COUTURE',
     title: "The Women's Edit",
     line: 'Handcrafted Banarasi weaves & royal silhouettes',
@@ -54,28 +54,28 @@ const DEFAULT_DATA = {
       no: "01",
       title: "Pakistani<br>Kurtis",
       subtitle: "Royal grace in<br>every stitch.",
-      image: "https://mahira2.netlify.app/assets/s5-p1.jpg?v=1",
+      image: "assets/s5-p1.jpg?v=1",
       url: "/collections?category=kurtis"
     },
     {
       no: "02",
       title: "Kurta Sets",
       subtitle: "Everyday<br>elegance,<br>redefined.",
-      image: "https://mahira2.netlify.app/assets/s5-p2.jpg?v=1",
+      image: "assets/s5-p2.jpg?v=1",
       url: "/collections?category=kurta-sets"
     },
     {
       no: "03",
       title: "Organza<br>Kurtis",
       subtitle: "Art in<br>every thread.",
-      image: "https://mahira2.netlify.app/assets/s5-p3.jpg?v=1",
+      image: "assets/s5-p3.jpg?v=1",
       url: "/collections?category=kurtis"
     },
     {
       no: "04",
       title: "Kalakaari<br>Collection",
       subtitle: "Stories<br>woven in<br>tradition.",
-      image: "https://mahira2.netlify.app/assets/s5-p4.jpg?v=1",
+      image: "assets/s5-p4.jpg?v=1",
       url: "/collections"
     }
   ],

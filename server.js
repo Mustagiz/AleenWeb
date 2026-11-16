@@ -43,7 +43,7 @@ let atelierData = {
     { username: 'admin', role: 'admin', password: process.env.ATELIER_ADMIN_PASSWORD || 'Aleen@Atelier2026!', createdAt: '14 Nov 2026' }
   ],
   megaMenuBanner: {
-    img: 'https://mahira2.netlify.app/assets/s2-card-women.jpg?v=2',
+    img: 'assets/s2-card-women.jpg?v=2',
     badge: 'CURATED HAUTE COUTURE',
     title: "The Women's Edit",
     line: 'Handcrafted Banarasi weaves & royal silhouettes',
@@ -103,7 +103,7 @@ let atelierData = {
       url: 'collections.html?category=kurtis'
     },
     {
-      img: 'https://mahira2.netlify.app/assets/s3-kurta.jpg?v=5',
+      img: 'assets/s3-kurta.jpg?v=5',
       headline: 'Handspun Heritage Ensembles',
       title: 'Gulmohar Chanderi Set',
       subtitle: 'Handspun Tissue Chanderi with Antique Marodi Dori',
@@ -113,7 +113,7 @@ let atelierData = {
       url: 'collections.html?category=kurta-sets'
     },
     {
-      img: 'https://mahira2.netlify.app/assets/women-clean.jpg?v=3',
+      img: 'assets/women-clean.jpg?v=3',
       headline: 'Imperial Bridal Masterpiece',
       title: 'Sheesh Mahal Lehenga',
       subtitle: 'Monumental Crimson Velvet with Semi-Precious Encrusting',
@@ -131,7 +131,7 @@ if (fs.existsSync(DATA_FILE)) {
     atelierData = { ...atelierData, ...loaded };
     if (!atelierData.megaMenuBanner) {
       atelierData.megaMenuBanner = {
-        img: 'https://mahira2.netlify.app/assets/s2-card-women.jpg?v=2',
+        img: 'assets/s2-card-women.jpg?v=2',
         badge: 'CURATED HAUTE COUTURE',
         title: "The Women's Edit",
         line: 'Handcrafted Banarasi weaves & royal silhouettes',
@@ -617,7 +617,7 @@ const server = http.createServer(async (req, res) => {
             no: item.no || `0${idx + 1}`,
             title: item.title || 'Haute Couture',
             subtitle: item.subtitle || 'Everyday elegance, redefined.',
-            image: item.image || 'https://mahira2.netlify.app/assets/s5-p1.jpg?v=1',
+            image: item.image || 'assets/s5-p1.jpg?v=1',
             url: item.url || '/collections'
           }));
           saveData();
