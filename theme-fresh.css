@@ -87,13 +87,57 @@ p strong, h1 strong, h2 strong, h3 strong {
 /* ========================================================
    1. INTRO LOADING ANIMATION — BOTTLE GREEN VELVET CURTAINS
    ======================================================== */
-#curtains {
-  z-index: 990 !important;
+#curtains,
+#cinema {
+  z-index: 99990 !important;
+}
+
+body.is-loading #curtains {
+  pointer-events: auto !important;
+}
+
+body.is-loading #header,
+body.is-loading header {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+body.is-loading .nav-side,
+body.is-loading .nav-center,
+body.is-loading .nav-l,
+body.is-loading .nav-r,
+body.is-loading .util,
+body.is-loading .menu-btn,
+body.is-loading .hero-rail,
+body.is-loading .hero-indicators,
+body.is-loading .hero-desc {
+  opacity: 0 !important;
   pointer-events: none !important;
+  visibility: hidden !important;
+}
+
+/* Brand logo during intro is on top of curtains */
+body.is-loading .brand,
+body.is-loading #brand {
+  z-index: 99995 !important;
+  position: relative !important;
 }
 
 body.is-ready #curtains {
   pointer-events: none !important;
+}
+
+body.is-ready .nav-side,
+body.is-ready .nav-center,
+body.is-ready .nav-l,
+body.is-ready .nav-r,
+body.is-ready .util,
+body.is-ready .menu-btn {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  transition: opacity 0.6s ease;
 }
 
 .curtain .folds i {
@@ -185,6 +229,13 @@ body.is-ready #curtains {
   background: #e8412c !important;
 }
 
+/* Brand Logo High Contrast */
+#brandLogo,
+.brand svg,
+#brand svg {
+  filter: contrast(130%) brightness(0.7) drop-shadow(0 1px 2px rgba(22, 34, 23, 0.25)) !important;
+}
+
 /* Header Utilities & Hamburger */
 .util-btn svg, .menu-btn svg, .hdr-icon svg {
   stroke: #162217 !important;
@@ -197,21 +248,65 @@ body.is-ready #curtains {
 }
 
 /* Mega Menu Dropdown */
-.mega-sheet {
-  background: #fdfcf9 !important;
+.mega,
+.mega-sheet,
+#mega,
+#megaSheet {
+  background: #ffffff !important;
   border-top: 1.5px solid #9caf88 !important;
-  border-bottom: none !important;
-  box-shadow: 0 20px 48px rgba(22, 34, 23, 0.1) !important;
-}
-.mg-col h4 {
-  color: #384e36 !important;
   border-bottom: 1px solid rgba(156, 175, 136, 0.3) !important;
+  box-shadow: 0 20px 48px rgba(22, 34, 23, 0.12) !important;
 }
+.mega-group h4,
+.mg-col h4 {
+  color: #748c66 !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.22em !important;
+  border-bottom: 1px solid rgba(156, 175, 136, 0.35) !important;
+  padding-bottom: 8px !important;
+  margin-bottom: 14px !important;
+}
+.mega-group a,
 .mg-col a {
   color: #162217 !important;
+  font-weight: 600 !important;
+  font-size: 13.5px !important;
+  padding: 8px 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  transition: all 0.2s ease !important;
 }
-.mg-col a:hover {
+.mega-group a span,
+.mg-col a span {
+  color: #162217 !important;
+  font-weight: 600 !important;
+  transition: color 0.2s ease !important;
+}
+.mega-group a:hover,
+.mega-group a:hover span,
+.mg-col a:hover,
+.mg-col a:hover span {
   color: #e8412c !important;
+  transform: translateX(4px);
+}
+.mega-arr {
+  stroke: #9caf88 !important;
+  stroke-width: 1.8px !important;
+  fill: none !important;
+  transition: stroke 0.2s ease, transform 0.2s ease !important;
+}
+.mega-group a:hover .mega-arr {
+  stroke: #e8412c !important;
+  transform: translateX(2px) !important;
+}
+.mega-group-line {
+  background: rgba(156, 175, 136, 0.35) !important;
+}
+.mega-promo-wide {
+  border: 1.5px solid #9caf88 !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
 }
 
 /* ========================================================
@@ -290,6 +385,20 @@ body.is-ready #curtains {
   display: none !important;
 }
 
+#women-new,
+#women-new *,
+#women-new .sec-head *,
+#women-new .w-card *,
+#women-new .w-caption *,
+#women-new .w-kicker,
+#women-new .w-caption h3,
+#women-new .w-line,
+#women-new .sh-title,
+#women-new .sh-eyebrow,
+#women-new .sh-sub {
+  text-shadow: none !important;
+}
+
 #women-new .sec-head .sh-eyebrow {
   color: #748c66 !important;
 }
@@ -319,13 +428,16 @@ body.is-ready #curtains {
 
 #women-new .w-caption h3 {
   color: #162217 !important;
+  text-shadow: none !important;
 }
 #women-new .w-caption .w-kicker {
   color: #e8412c !important;
   font-weight: 700 !important;
+  text-shadow: none !important;
 }
 #women-new .w-caption .w-line {
   color: #384e36 !important;
+  text-shadow: none !important;
 }
 #women-new .w-scrim {
   background: linear-gradient(180deg, transparent 40%, rgba(247, 245, 239, 0.95) 100%) !important;
@@ -390,14 +502,24 @@ body.is-ready #curtains {
   visibility: visible !important;
 }
 
+/* Luminous high contrast text over dark card photography */
 #explore .x-copy h3 {
-  color: #162217 !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.85) !important;
 }
-#explore .x-copy p {
-  color: #384e36 !important;
+#explore .x-copy p,
+#explore .x-copy em {
+  color: #ffffff !important;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.85) !important;
+}
+#explore .x-copy p em {
+  font-style: italic !important;
+  color: #f7f5ef !important;
 }
 #explore .x-rule {
-  background: #9caf88 !important;
+  background: #ffffff !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6) !important;
 }
 
 /* ========================================================
@@ -444,16 +566,28 @@ body.is-ready #curtains {
 
 /* Best Sellers Section */
 #best {
-  background-color: #edeae0 !important;
-  background: #edeae0 !important;
-  border-top: 1.5px solid rgba(156, 175, 136, 0.45) !important;
-  border-bottom: 1.5px solid rgba(156, 175, 136, 0.45) !important;
+  background-color: #f7f5ef !important;
+  background: #f7f5ef !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  padding-top: 20px !important;
+  padding-bottom: 24px !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
 }
-#best::before, #best::after {
+#best::before, #best::after,
+.b-stage::before, .b-stage::after,
+#best .b-room,
+.b-orna,
+.b-head i.b-orna {
   display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  background: none !important;
 }
-#best .b-room {
-  opacity: 0.12 !important;
+.b-stage {
+  background: #f7f5ef !important;
 }
 .b-card {
   border: 1.5px solid rgba(156, 175, 136, 0.5) !important;
@@ -469,10 +603,96 @@ body.is-ready #curtains {
   color: #ffffff !important;
   text-shadow: 0 2px 8px rgba(0,0,0,0.7) !important;
 }
+.b-all {
+  margin-top: 16px !important;
+  margin-bottom: 0 !important;
+}
 
 /* ========================================================
    7. SECTION BELOW BEST SELLERS (CRAFTSMANSHIP SEAL #craft)
    ======================================================== */
+#craft {
+  background-color: #f7f5ef !important;
+  background: #f7f5ef !important;
+  border-top: 1.5px solid rgba(156, 175, 136, 0.35) !important;
+  border-bottom: 1.5px solid rgba(156, 175, 136, 0.35) !important;
+  padding: 32px 0 28px !important;
+  margin-top: 0 !important;
+}
+
+#craft::before, #craft::after {
+  display: none !important;
+}
+
+.c-orna, .c-orna-top, .c-orna-bottom {
+  border-color: #9caf88 !important;
+  background-color: #9caf88 !important;
+}
+
+.c-item {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.c-item p, .c-item p span {
+  color: #162217 !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.04em !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transition: color 0.3s ease !important;
+}
+
+.c-draw, .c-item svg path, .c-item svg rect, .c-item svg circle, .c-item svg g {
+  stroke: #9caf88 !important;
+  opacity: 1 !important;
+  stroke-dashoffset: 0 !important;
+  transition: stroke 0.3s ease !important;
+}
+
+.c-sep {
+  background: #9caf88 !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Floating animation for the 4 craftsmanship icons */
+@keyframes craftIconFloat {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-6px) scale(1.06);
+  }
+}
+
+.c-item svg {
+  animation: craftIconFloat 3.6s ease-in-out infinite;
+  transition: transform 0.3s ease, stroke 0.3s ease;
+}
+
+.c-row .c-item:nth-child(1) svg { animation-delay: 0s; }
+.c-row .c-item:nth-child(3) svg { animation-delay: 0.8s; }
+.c-row .c-item:nth-child(5) svg { animation-delay: 1.6s; }
+.c-row .c-item:nth-child(7) svg { animation-delay: 2.4s; }
+
+.c-item:hover svg {
+  transform: translateY(-8px) scale(1.15) !important;
+  animation-play-state: paused;
+}
+
+.c-item:hover .c-draw,
+.c-item:hover svg path,
+.c-item:hover svg rect,
+.c-item:hover svg circle,
+.c-item:hover svg g {
+  stroke: #e8412c !important;
+}
+
+.c-item:hover p,
+.c-item:hover p span {
+  color: #e8412c !important;
+}
 #craft {
   background-color: #f7f5ef !important;
   background: #f7f5ef !important;
@@ -688,25 +908,35 @@ footer a, footer nav a, .f-about, .f-st-copy, .f-bottom p, .f-bottom a, .ft-link
   fill: none !important;
 }
 
-/* Social Media Icon Set: #e8412c */
+/* Social Media Icon Set: Refined Minimalist Luxury */
+#footer .f-social,
+.f-social {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  margin-top: 20px !important;
+}
+
 #footer .f-social a,
 #footer .f-social .f-lock-btn,
 #footer #lockModalBtn,
 .f-social a,
 .f-social button {
-  background: #e8412c !important;
-  border: 1px solid #e8412c !important;
-  color: #ffffff !important;
-  width: 42px !important;
-  height: 42px !important;
-  min-width: 42px !important;
-  min-height: 42px !important;
+  background: #ffffff !important;
+  border: 1.5px solid #9caf88 !important;
+  color: #e8412c !important;
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
   border-radius: 50% !important;
-  transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease !important;
-  box-shadow: 0 4px 12px rgba(232, 65, 44, 0.28) !important;
+  transition: all 0.25s ease !important;
+  box-shadow: 0 2px 8px rgba(22, 34, 23, 0.06) !important;
+  cursor: pointer !important;
+  padding: 0 !important;
 }
 
 #footer .f-social a svg,
@@ -714,10 +944,12 @@ footer a, footer nav a, .f-about, .f-st-copy, .f-bottom p, .f-bottom a, .ft-link
 #footer #lockModalBtn svg,
 .f-social a svg,
 .f-social button svg {
-  fill: #ffffff !important;
-  stroke: #ffffff !important;
+  fill: none !important;
+  stroke: #e8412c !important;
+  stroke-width: 1.6 !important;
   width: 18px !important;
   height: 18px !important;
+  transition: all 0.2s ease !important;
 }
 
 #footer .f-social a:hover,
@@ -725,10 +957,101 @@ footer a, footer nav a, .f-about, .f-st-copy, .f-bottom p, .f-bottom a, .ft-link
 #footer #lockModalBtn:hover,
 .f-social a:hover,
 .f-social button:hover {
-  background: #cf3420 !important;
-  border-color: #cf3420 !important;
-  transform: translateY(-3px) !important;
-  box-shadow: 0 8px 18px rgba(232, 65, 44, 0.4) !important;
+  background: #e8412c !important;
+  border-color: #e8412c !important;
+  transform: translateY(-3px) scale(1.06) !important;
+  box-shadow: 0 6px 16px rgba(232, 65, 44, 0.35) !important;
+}
+
+#footer .f-social a:hover svg,
+#footer .f-social .f-lock-btn:hover svg,
+#footer #lockModalBtn:hover svg,
+.f-social a:hover svg,
+.f-social button:hover svg {
+  stroke: #ffffff !important;
+  fill: none !important;
+}
+
+/* Back to Top button alignment with footer bottom bar */
+.f-bottom {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-wrap: wrap !important;
+  padding: 24px 0 32px !important;
+  gap: 16px !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.f-bottom * {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+#footer #backTop,
+.f-bottom #backTop,
+#backTop {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  background: #ffffff !important;
+  border: 1.5px solid #9caf88 !important;
+  color: #162217 !important;
+  padding: 8px 18px !important;
+  border-radius: 999px !important;
+  font-size: 11.5px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  cursor: pointer !important;
+  box-shadow: 0 2px 8px rgba(22, 34, 23, 0.05) !important;
+  transition: all 0.25s ease !important;
+  height: auto !important;
+  width: auto !important;
+  margin: 0 !important;
+}
+
+#footer #backTop svg,
+.f-bottom #backTop svg,
+#backTop svg {
+  width: 10px !important;
+  height: 7px !important;
+  stroke: #162217 !important;
+  stroke-width: 2 !important;
+  fill: none !important;
+  transition: stroke 0.2s ease, transform 0.2s ease !important;
+}
+
+#footer #backTop span,
+.f-bottom #backTop span,
+#backTop span {
+  color: #162217 !important;
+  transition: color 0.2s ease !important;
+}
+
+#footer #backTop:hover,
+.f-bottom #backTop:hover,
+#backTop:hover {
+  background: #e8412c !important;
+  border-color: #e8412c !important;
+  color: #ffffff !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 14px rgba(232, 65, 44, 0.3) !important;
+}
+
+#footer #backTop:hover svg,
+.f-bottom #backTop:hover svg,
+#backTop:hover svg {
+  stroke: #ffffff !important;
+  transform: translateY(-2px) !important;
+}
+
+#footer #backTop:hover span,
+.f-bottom #backTop:hover span,
+#backTop:hover span {
+  color: #ffffff !important;
 }
 
 /* ========================================================
