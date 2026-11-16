@@ -1605,16 +1605,108 @@
     }
 
     .admin-modal-card {
-      background: #0f2115;
-      border: 1px solid var(--gold);
+      background: linear-gradient(180deg, #102417 0%, #0a170f 100%);
+      border: 1.5px solid rgba(201, 163, 95, 0.65);
       border-radius: 20px;
-      padding: 36px;
-      max-width: 740px;
-      width: 100%;
+      padding: 32px 36px 36px;
+      max-width: 860px;
+      width: 95vw;
       max-height: 90vh;
       overflow-y: auto;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.75), 0 0 35px rgba(201, 163, 95, 0.12);
       position: relative;
+    }
+
+    .form-grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px 20px;
+    }
+
+    .modal-section-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: var(--gold-spark);
+      margin-bottom: 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid rgba(201, 163, 95, 0.25);
+      width: 100%;
+    }
+
+    .size-pills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .size-check-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 14px;
+      background: rgba(4, 9, 6, 0.85);
+      border: 1px solid rgba(201, 163, 95, 0.35);
+      border-radius: 999px;
+      color: rgba(238, 228, 205, 0.88);
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s ease;
+    }
+
+    .size-check-pill:hover {
+      border-color: var(--gold-light);
+      color: #ffffff;
+      background: rgba(201, 163, 95, 0.12);
+    }
+
+    .size-check-pill.active {
+      background: rgba(201, 163, 95, 0.22);
+      border-color: var(--gold-spark);
+      color: #ffffff;
+      box-shadow: 0 0 10px rgba(201, 163, 95, 0.25);
+    }
+
+    .size-check-pill input[type="checkbox"] {
+      accent-color: var(--gold-spark);
+      cursor: pointer;
+      width: 14px;
+      height: 14px;
+      margin: 0;
+    }
+
+    .size-check-pill .pill-del-btn {
+      color: rgba(238, 228, 205, 0.5);
+      margin-left: 4px;
+      font-size: 13px;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      padding: 0;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .size-check-pill .pill-del-btn:hover {
+      color: #ff6b6b;
+    }
+
+    @media (max-width: 680px) {
+      .form-grid-2col {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+      }
+      .admin-modal-card {
+        padding: 24px 16px !important;
+      }
     }
 
     .crop-ratio-btn {
@@ -3492,13 +3584,18 @@
   <!-- ======================= MODAL: EDIT / ADD GARMENT ======================= -->
   <div class="admin-modal-overlay" id="garmentModal">
     <div class="admin-modal-card">
-      <button type="button" class="admin-modal-close" id="closeGarmentModalBtn">&times;</button>
-      <h3 style="font-family: var(--serif); font-size: 22px; color: #ffffff; margin-bottom: 16px;"
-        id="garmentModalTitle">Edit Garment</h3>
+      <button type="button" class="admin-modal-close" id="closeGarmentModalBtn" aria-label="Close dialog">&times;</button>
+      <div style="margin-bottom: 22px; padding-bottom: 14px; border-bottom: 1px solid rgba(201, 163, 95, 0.25);">
+        <h3 style="font-family: var(--serif); font-size: 23px; color: #ffffff; margin: 0 0 4px;" id="garmentModalTitle">Edit Garment</h3>
+        <p style="font-size: 12.5px; color: rgba(238, 228, 205, 0.7); margin: 0;">Configure atelier garment details, custom specifications, sizing, and multi-angle gallery.</p>
+      </div>
+
       <form id="garmentForm">
         <input type="hidden" id="editGarmentId">
 
-        <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 14px;">
+        <!-- Section: Essential Identification -->
+        <span class="modal-section-badge">✦ Garment Identification &amp; Value</span>
+        <div class="form-grid-2col">
           <div class="form-group">
             <label class="form-label">Garment Title</label>
             <input type="text" id="garmentTitle" class="form-control"
@@ -3510,17 +3607,22 @@
           </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+        <div class="form-grid-2col">
           <div class="form-group">
             <label class="form-label">Category</label>
             <select id="garmentCategory" class="form-control" style="cursor: pointer;">
+              <option value="sarees">Sarees</option>
               <option value="kurtis">Pakistani Kurtis</option>
               <option value="kurta-sets">Kurta Sets</option>
               <option value="lehengas">Heritage Lehengas</option>
               <option value="dresses">Dresses &amp; Sets</option>
-              <option value="dupattas">Dupattas</option>
+              <option value="dupattas">Dupattas &amp; Stoles</option>
               <option value="unstitched">Unstitched Fabrics</option>
+              <option value="custom">+ Custom Category...</option>
             </select>
+            <div id="customCategoryWrap" style="display: none; margin-top: 8px;">
+              <input type="text" id="garmentCustomCategory" class="form-control" placeholder="Enter custom category name (e.g. Anarkalis, Bridal Shawls)...">
+            </div>
           </div>
           <div class="form-group">
             <label class="form-label">Price (₹ INR)</label>
@@ -3528,36 +3630,34 @@
           </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+        <!-- Section: Craft & Provenance -->
+        <span class="modal-section-badge" style="margin-top: 8px;">✦ Artisanal Craft &amp; Provenance Specifications</span>
+        <div class="form-grid-2col">
           <div class="form-group">
             <label class="form-label">Craft / Needlework Subtitle (Kicker)</label>
-            <input type="text" id="garmentCraft" class="form-control" placeholder="e.g. Pure Zari &amp; Adda Needlework"
-              required>
+            <input type="text" id="garmentCraft" class="form-control" placeholder="e.g. Pure Zari &amp; Adda Needlework" required>
           </div>
           <div class="form-group">
             <label class="form-label">Fabric (Modal Spec)</label>
-            <input type="text" id="garmentFabric" class="form-control" placeholder="e.g. Pure Raw Silk with Organza"
-              required>
+            <input type="text" id="garmentFabric" class="form-control" placeholder="e.g. Pure Raw Silk with Organza" required>
           </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+        <div class="form-grid-2col">
           <div class="form-group">
             <label class="form-label">Weave / Craft Technique (Modal Spec)</label>
             <input type="text" id="garmentWeave" class="form-control" placeholder="e.g. Kalamkari &amp; Zardozi">
           </div>
           <div class="form-group">
             <label class="form-label">Origin / Looms (Modal Spec)</label>
-            <input type="text" id="garmentOrigin" class="form-control"
-              placeholder="e.g. Lahore Atelier, Varanasi Looms">
+            <input type="text" id="garmentOrigin" class="form-control" placeholder="e.g. Lahore Atelier, Varanasi Looms">
           </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+        <div class="form-grid-2col">
           <div class="form-group">
             <label class="form-label">Atelier Delivery Dispatch (Modal Spec)</label>
-            <input type="text" id="garmentDelivery" class="form-control"
-              placeholder="e.g. Express Insured Dispatch (3-5 Days)">
+            <input type="text" id="garmentDelivery" class="form-control" placeholder="e.g. Express Insured Dispatch (3-5 Days)">
           </div>
           <div class="form-group">
             <label class="form-label">Inquiry WhatsApp Number (Direct Contact)</label>
@@ -3565,15 +3665,35 @@
           </div>
         </div>
 
-        <div class="form-group">
-          <label class="form-label">Available Sizing Options (Comma-separated)</label>
-          <input type="text" id="garmentSizes" class="form-control"
-            placeholder="Custom Bespoke, Standard S, Standard M, Standard L">
+        <!-- Section: Sizing Options -->
+        <span class="modal-section-badge" style="margin-top: 8px;">✦ Available Sizing Options</span>
+        <div class="form-group" style="background: rgba(4, 9, 6, 0.45); border: 1px solid rgba(201, 163, 95, 0.25); border-radius: 12px; padding: 14px 16px; margin-bottom: 18px;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 6px;">
+            <label class="form-label" style="margin: 0;">Select Available Sizes (Multi-select)</label>
+            <span style="font-size: 11px; color: rgba(238, 228, 205, 0.65);">Toggle checkboxes or add custom sizes</span>
+          </div>
+
+          <div class="size-pills-grid" id="sizePillsGrid">
+            <!-- Rendered dynamically via JavaScript with checkboxes & removal buttons -->
+          </div>
+
+          <div class="custom-size-add-row" style="display: flex; gap: 8px; margin-top: 12px;">
+            <input type="text" id="newCustomSizeInput" class="form-control" placeholder="Type custom size (e.g. Plus 4XL, Bespoke 38, Kids 10Y)..." style="flex: 1; padding: 8px 12px; font-size: 12.5px;">
+            <button type="button" id="addCustomSizeBtn" class="tbl-btn tbl-btn-edit" style="white-space: nowrap; padding: 8px 16px; font-size: 12px; font-weight: 600;">+ Add Custom Size</button>
+          </div>
+
+          <!-- Stored comma-separated string for compatibility -->
+          <input type="hidden" id="garmentSizes" value="Custom Bespoke, Standard S, Standard M, Standard L">
+          <div id="selectedSizesPreview" style="font-size: 11.5px; color: var(--gold-light); margin-top: 8px; font-style: italic;">
+            Selected: Custom Bespoke, Standard S, Standard M, Standard L
+          </div>
         </div>
 
-        <div class="form-group">
+        <!-- Section: Multi-Angle Gallery -->
+        <span class="modal-section-badge">✦ Multi-Angle Garment Imagery</span>
+        <div class="form-group" style="background: rgba(4, 9, 6, 0.45); border: 1px solid rgba(201, 163, 95, 0.25); border-radius: 12px; padding: 14px 16px; margin-bottom: 18px;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-            <label class="form-label" style="margin: 0;">Garment Multi-Angle Gallery (Up to 5 Images)</label>
+            <label class="form-label" style="margin: 0;">Multi-Angle Gallery (Up to 5 Images)</label>
             <span style="font-size: 11px; color: var(--gold-light); font-weight: 600;" id="imageSlotsCountText">1 of 5 angles</span>
           </div>
           <p style="font-size: 12px; color: rgba(238, 228, 205, 0.7); margin-bottom: 12px; line-height: 1.4;">
@@ -3592,14 +3712,15 @@
           </div>
         </div>
 
+        <!-- Section: Description -->
         <div class="form-group">
           <label class="form-label">Atelier Description</label>
-          <textarea id="garmentDesc" class="form-control" rows="3" style="resize: vertical;"></textarea>
+          <textarea id="garmentDesc" class="form-control" rows="3" style="resize: vertical;" placeholder="Artisanal narrative, weave provenance, silhouette details..."></textarea>
         </div>
 
-        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
-          <button type="button" class="admin-tab-btn" id="cancelGarmentModalBtn">Cancel</button>
-          <button type="submit" class="pane-add-btn">Save Garment</button>
+        <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; padding-top: 16px; border-top: 1px solid rgba(201, 163, 95, 0.2);">
+          <button type="button" class="admin-tab-btn" id="cancelGarmentModalBtn" style="padding: 10px 22px;">Cancel</button>
+          <button type="submit" class="pane-add-btn" style="padding: 10px 26px; font-weight: 600;">✦ Save Garment &amp; Sync Live</button>
         </div>
       </form>
     </div>
@@ -5014,6 +5135,7 @@
       const descInput = document.getElementById("garmentDesc");
 
       const catLabels = {
+        "sarees": "Sarees",
         "kurtis": "Pakistani Kurtis",
         "kurta-sets": "Kurta Sets",
         "lehengas": "Heritage Lehengas",
@@ -5021,6 +5143,120 @@
         "dupattas": "Dupattas",
         "unstitched": "Unstitched Fabrics"
       };
+
+      // Custom Category & Sizing Checkbox Controls
+      const customCategoryWrap = document.getElementById("customCategoryWrap");
+      const customCategoryInput = document.getElementById("garmentCustomCategory");
+
+      if (catInput) {
+        catInput.addEventListener("change", () => {
+          if (catInput.value === "custom") {
+            if (customCategoryWrap) customCategoryWrap.style.display = "block";
+            if (customCategoryInput) customCategoryInput.focus();
+          } else {
+            if (customCategoryWrap) customCategoryWrap.style.display = "none";
+          }
+        });
+      }
+
+      const STANDARD_SIZES = [
+        "Custom Bespoke",
+        "Free Size",
+        "XS",
+        "Standard S",
+        "Standard M",
+        "Standard L",
+        "Standard XL",
+        "XXL",
+        "3XL",
+        "Unstitched"
+      ];
+
+      const sizePillsGrid = document.getElementById("sizePillsGrid");
+      const newCustomSizeInput = document.getElementById("newCustomSizeInput");
+      const addCustomSizeBtn = document.getElementById("addCustomSizeBtn");
+      const selectedSizesPreview = document.getElementById("selectedSizesPreview");
+
+      let allAvailableSizes = [...STANDARD_SIZES];
+      let selectedSizesList = ["Custom Bespoke", "Standard S", "Standard M", "Standard L"];
+
+      function syncSizingInputs() {
+        if (sizesInput) {
+          sizesInput.value = selectedSizesList.join(", ");
+        }
+        if (selectedSizesPreview) {
+          selectedSizesPreview.textContent = selectedSizesList.length > 0
+            ? "Selected: " + selectedSizesList.join(", ")
+            : "No sizes selected (check one or more sizes)";
+        }
+      }
+
+      function renderSizePills() {
+        if (!sizePillsGrid) return;
+        sizePillsGrid.innerHTML = allAvailableSizes.map(sz => {
+          const isChecked = selectedSizesList.includes(sz);
+          const isCustom = !STANDARD_SIZES.includes(sz);
+          const safeSz = escapeHtml(sz);
+          return `
+            <label class="size-check-pill ${isChecked ? "active" : ""}">
+              <input type="checkbox" value="${safeSz}" ${isChecked ? "checked" : ""} onchange="window.toggleAdminSize('${safeSz}', this.checked)">
+              <span>${safeSz}</span>
+              ${isCustom ? `<button type="button" class="pill-del-btn" onclick="window.removeAdminCustomSize('${safeSz}', event)" title="Remove custom size">&times;</button>` : ""}
+            </label>
+          `;
+        }).join("");
+        syncSizingInputs();
+      }
+
+      window.toggleAdminSize = function(size, checked) {
+        if (checked) {
+          if (!selectedSizesList.includes(size)) {
+            selectedSizesList.push(size);
+          }
+        } else {
+          selectedSizesList = selectedSizesList.filter(s => s !== size);
+        }
+        renderSizePills();
+      };
+
+      window.removeAdminCustomSize = function(size, ev) {
+        if (ev) ev.stopPropagation();
+        allAvailableSizes = allAvailableSizes.filter(s => s !== size);
+        selectedSizesList = selectedSizesList.filter(s => s !== size);
+        renderSizePills();
+      };
+
+      window.addAdminCustomSize = function() {
+        if (!newCustomSizeInput) return;
+        const val = newCustomSizeInput.value.trim();
+        if (!val) {
+          newCustomSizeInput.focus();
+          return;
+        }
+        if (!allAvailableSizes.includes(val)) {
+          allAvailableSizes.push(val);
+        }
+        if (!selectedSizesList.includes(val)) {
+          selectedSizesList.push(val);
+        }
+        newCustomSizeInput.value = "";
+        renderSizePills();
+      };
+
+      if (addCustomSizeBtn) {
+        addCustomSizeBtn.addEventListener("click", window.addAdminCustomSize);
+      }
+      if (newCustomSizeInput) {
+        newCustomSizeInput.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            window.addAdminCustomSize();
+          }
+        });
+      }
+
+      // Initial size pills render
+      renderSizePills();
 
       // Garment Multi-Angle Gallery Management (Up to 5 images)
       let currentGarmentImages = [];
@@ -5136,7 +5372,24 @@
         editIdInput.value = item.id;
         titleInput.value = item.title || "";
         if (badgeInput) badgeInput.value = item.badge || "";
-        catInput.value = item.category || "kurtis";
+        
+        // Category Handling (including custom categories)
+        const standardCats = Object.keys(catLabels);
+        if (standardCats.includes(item.category)) {
+          catInput.value = item.category;
+          if (customCategoryWrap) customCategoryWrap.style.display = "none";
+          if (customCategoryInput) customCategoryInput.value = "";
+        } else if (item.category) {
+          // Custom category
+          catInput.value = "custom";
+          if (customCategoryWrap) customCategoryWrap.style.display = "block";
+          if (customCategoryInput) customCategoryInput.value = item.categoryLabel || item.category;
+        } else {
+          catInput.value = "sarees";
+          if (customCategoryWrap) customCategoryWrap.style.display = "none";
+          if (customCategoryInput) customCategoryInput.value = "";
+        }
+
         priceInput.value = item.price || 0;
         craftInput.value = item.craft || "";
         fabricInput.value = item.fabric || "";
@@ -5144,7 +5397,20 @@
         if (originInput) originInput.value = item.origin || "";
         if (deliveryInput) deliveryInput.value = item.delivery || "Express Insured Dispatch (3-5 Days)";
         if (whatsappInput) whatsappInput.value = item.whatsapp || "+91 98765 43210";
-        if (sizesInput) sizesInput.value = item.sizes || "Custom Bespoke, Standard S, Standard M, Standard L";
+
+        // Multi-select sizes parsing
+        const rawSizes = (item.sizes || "Custom Bespoke, Standard S, Standard M, Standard L")
+          .split(",")
+          .map(s => s.trim())
+          .filter(Boolean);
+        selectedSizesList = [...rawSizes];
+        rawSizes.forEach(s => {
+          if (!allAvailableSizes.includes(s)) {
+            allAvailableSizes.push(s);
+          }
+        });
+        renderSizePills();
+
         descInput.value = item.desc || "";
 
         // Multi-angle images
@@ -5173,7 +5439,9 @@
         editIdInput.value = "";
         titleInput.value = "";
         if (badgeInput) badgeInput.value = "New Season";
-        catInput.value = "kurtis";
+        catInput.value = "sarees";
+        if (customCategoryWrap) customCategoryWrap.style.display = "none";
+        if (customCategoryInput) customCategoryInput.value = "";
         priceInput.value = 25000;
         craftInput.value = "Artisanal Needlework";
         fabricInput.value = "Pure Silk";
@@ -5181,7 +5449,10 @@
         if (originInput) originInput.value = "Lahore Atelier";
         if (deliveryInput) deliveryInput.value = "Express Insured Dispatch (3-5 Days)";
         if (whatsappInput) whatsappInput.value = "+91 98765 43210";
-        if (sizesInput) sizesInput.value = "Custom Bespoke, Standard S, Standard M, Standard L";
+        
+        selectedSizesList = ["Custom Bespoke", "Standard S", "Standard M", "Standard L"];
+        renderSizePills();
+
         descInput.value = "Bespoke handcrafted creation tailored with timeless artisanal grace.";
         currentGarmentImages = ["assets/pakistani-kurti-1.jpg"];
         renderGarmentImageSlots();
@@ -5198,17 +5469,35 @@
       garmentForm?.addEventListener("submit", e => {
         e.preventDefault();
         const id = editIdInput.value;
-        const cat = catInput.value;
+        let cat = catInput.value;
+        let catLabel = catLabels[cat] || "Curated Couture";
+
+        if (cat === "custom") {
+          const customVal = customCategoryInput ? customCategoryInput.value.trim() : "";
+          if (customVal) {
+            cat = customVal.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || "custom-curation";
+            catLabel = customVal;
+            catLabels[cat] = catLabel;
+          } else {
+            cat = "custom-curation";
+            catLabel = "Custom Curation";
+          }
+        }
+
         const finalImages = currentGarmentImages.map(s => (s || "").trim()).filter(Boolean);
         if (finalImages.length === 0) {
           finalImages.push("assets/pakistani-kurti-1.jpg");
         }
 
+        const chosenSizes = selectedSizesList.length > 0 
+          ? selectedSizesList.join(", ") 
+          : "Free Size, Custom Bespoke";
+
         const itemData = {
           title: titleInput.value.trim(),
           badge: badgeInput ? badgeInput.value.trim() : "",
           category: cat,
-          categoryLabel: catLabels[cat] || "Curated Couture",
+          categoryLabel: catLabel,
           price: Number(priceInput.value),
           craft: craftInput.value.trim(),
           fabric: fabricInput.value.trim(),
@@ -5216,7 +5505,7 @@
           origin: (originInput ? originInput.value.trim() : "") || "Aleen Atelier Looms",
           delivery: (deliveryInput ? deliveryInput.value.trim() : "") || "Express Insured Dispatch (3-5 Days)",
           whatsapp: (whatsappInput ? whatsappInput.value.trim() : "") || "+91 98765 43210",
-          sizes: (sizesInput ? sizesInput.value.trim() : "") || "Custom Bespoke, Standard S, Standard M, Standard L",
+          sizes: chosenSizes,
           images: finalImages,
           image: finalImages[0],
           desc: descInput.value.trim()
