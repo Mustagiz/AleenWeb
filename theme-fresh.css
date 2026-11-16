@@ -9,6 +9,17 @@
  * - Footer: White background (#ffffff) with #9caf88 decorative doodle & black navigation
  */
 
+/* ========================================================
+   GLOBAL ZERO TEXT-SHADOW ENFORCEMENT
+   ======================================================== */
+*, *::before, *::after,
+h1, h2, h3, h4, h5, h6, p, span, a, button, input, label, em, b, strong,
+.sh-title, .sh-eyebrow, .sh-sub, .w-caption *, .w-kicker, .b-txt h3,
+#explore .x-copy *, .catalog-title, .catalog-kicker, .hero-title, .hero-kicker,
+.hero-subtitle, .se-copy * {
+  text-shadow: none !important;
+}
+
 :root {
   /* Core Foundation Tokens */
   --void-0: #f7f5ef;
@@ -98,9 +109,11 @@ body.is-loading #curtains {
 
 body.is-loading #header,
 body.is-loading header {
+  z-index: 99995 !important;
   background: transparent !important;
   box-shadow: none !important;
   border: none !important;
+  pointer-events: none !important;
 }
 
 body.is-loading .nav-side,
@@ -109,23 +122,42 @@ body.is-loading .nav-l,
 body.is-loading .nav-r,
 body.is-loading .util,
 body.is-loading .menu-btn,
+body.is-loading .nav-utils,
+body.is-loading .nav-desk,
 body.is-loading .hero-rail,
 body.is-loading .hero-indicators,
-body.is-loading .hero-desc {
+body.is-loading .hero-desc,
+body.is-loading .mega {
+  display: none !important;
   opacity: 0 !important;
   pointer-events: none !important;
   visibility: hidden !important;
 }
 
-/* Brand logo during intro is on top of curtains */
+/* Brand logo during intro is proudly centered on top of curtains */
+body.is-loading .brand-slot,
 body.is-loading .brand,
 body.is-loading #brand {
-  z-index: 99995 !important;
+  z-index: 99996 !important;
   position: relative !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: block !important;
+}
+
+body.is-loading #brand svg,
+body.is-loading #brandLogo,
+body.is-loading .brand svg {
+  filter: brightness(2.6) contrast(145%) drop-shadow(0 6px 24px rgba(0, 0, 0, 0.7)) drop-shadow(0 0 20px rgba(247, 245, 239, 0.5)) !important;
 }
 
 body.is-ready #curtains {
   pointer-events: none !important;
+}
+
+body.is-ready #header,
+body.is-ready header {
+  z-index: 1000 !important;
 }
 
 body.is-ready .nav-side,
@@ -134,6 +166,7 @@ body.is-ready .nav-l,
 body.is-ready .nav-r,
 body.is-ready .util,
 body.is-ready .menu-btn {
+  display: flex !important;
   opacity: 1 !important;
   visibility: visible !important;
   pointer-events: auto !important;
@@ -230,10 +263,13 @@ body.is-ready .menu-btn {
 }
 
 /* Brand Logo High Contrast */
-#brandLogo,
-.brand svg,
-#brand svg {
-  filter: contrast(130%) brightness(0.7) drop-shadow(0 1px 2px rgba(22, 34, 23, 0.25)) !important;
+body:not(.is-loading) #brandLogo,
+body:not(.is-loading) .brand svg,
+body:not(.is-loading) #brand svg,
+body.is-ready #brandLogo,
+body.is-ready .brand svg,
+body.is-ready #brand svg {
+  filter: contrast(150%) brightness(0.55) drop-shadow(0 1px 2px rgba(22, 34, 23, 0.2)) !important;
 }
 
 /* Header Utilities & Hamburger */
@@ -430,9 +466,21 @@ body.is-ready .menu-btn {
   color: #162217 !important;
   text-shadow: none !important;
 }
-#women-new .w-caption .w-kicker {
-  color: #e8412c !important;
-  font-weight: 700 !important;
+#women-new .w-caption .w-kicker,
+.w-card .w-kicker,
+.w-kicker {
+  display: inline-block !important;
+  background: rgba(247, 245, 239, 0.96) !important;
+  color: #162217 !important;
+  border: 1px solid #9caf88 !important;
+  padding: 4px 14px !important;
+  border-radius: 999px !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  letter-spacing: 2px !important;
+  text-transform: uppercase !important;
+  box-shadow: 0 2px 8px rgba(22, 34, 23, 0.1) !important;
+  margin-bottom: 8px !important;
   text-shadow: none !important;
 }
 #women-new .w-caption .w-line {
@@ -506,12 +554,12 @@ body.is-ready .menu-btn {
 #explore .x-copy h3 {
   color: #ffffff !important;
   font-weight: 700 !important;
-  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.85) !important;
+  text-shadow: none !important;
 }
 #explore .x-copy p,
 #explore .x-copy em {
   color: #ffffff !important;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.85) !important;
+  text-shadow: none !important;
 }
 #explore .x-copy p em {
   font-style: italic !important;
@@ -601,7 +649,7 @@ body.is-ready .menu-btn {
 }
 .b-card .b-txt h3 {
   color: #ffffff !important;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.7) !important;
+  text-shadow: none !important;
 }
 .b-all {
   margin-top: 16px !important;
@@ -610,13 +658,15 @@ body.is-ready .menu-btn {
 
 /* ========================================================
    7. SECTION BELOW BEST SELLERS (CRAFTSMANSHIP SEAL #craft)
+   - Completely remove the 2 big lines & diamond ornaments
    ======================================================== */
 #craft {
   background-color: #f7f5ef !important;
   background: #f7f5ef !important;
-  border-top: 1.5px solid rgba(156, 175, 136, 0.35) !important;
-  border-bottom: 1.5px solid rgba(156, 175, 136, 0.35) !important;
-  padding: 32px 0 28px !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  border: none !important;
+  padding: 36px 0 32px !important;
   margin-top: 0 !important;
 }
 
@@ -624,9 +674,22 @@ body.is-ready .menu-btn {
   display: none !important;
 }
 
-.c-orna, .c-orna-top, .c-orna-bottom {
-  border-color: #9caf88 !important;
-  background-color: #9caf88 !important;
+.c-orna,
+.c-orna-top,
+.c-orna-bottom,
+#craft .c-orna,
+#craft .c-orna-top,
+#craft .c-orna-bottom,
+.c-orna::before,
+.c-orna::after {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  background: none !important;
 }
 
 .c-item {
@@ -989,28 +1052,45 @@ footer a, footer nav a, .f-about, .f-st-copy, .f-bottom p, .f-bottom a, .ft-link
   visibility: visible !important;
 }
 
+/* Footer Aleen Brand Logo Visibility */
+.foot-brand-logo,
+#footer .f-logo-link svg,
+.f-brand .f-logo-link svg {
+  filter: contrast(165%) brightness(0.42) drop-shadow(0 1px 2px rgba(22, 34, 23, 0.2)) !important;
+  opacity: 1 !important;
+  transition: filter 0.3s ease !important;
+}
+.f-brand .f-logo-link:hover svg {
+  filter: contrast(175%) brightness(0.35) drop-shadow(0 2px 6px rgba(232, 65, 44, 0.25)) !important;
+}
+
 #footer #backTop,
 .f-bottom #backTop,
 #backTop {
   display: inline-flex !important;
+  flex-direction: row !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 8px !important;
+  gap: 10px !important;
   background: #ffffff !important;
   border: 1.5px solid #9caf88 !important;
   color: #162217 !important;
-  padding: 8px 18px !important;
+  padding: 10px 22px !important;
   border-radius: 999px !important;
-  font-size: 11.5px !important;
-  font-weight: 600 !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
   letter-spacing: 0.12em !important;
   text-transform: uppercase !important;
   cursor: pointer !important;
+  white-space: nowrap !important;
+  min-width: 154px !important;
+  flex-shrink: 0 !important;
   box-shadow: 0 2px 8px rgba(22, 34, 23, 0.05) !important;
   transition: all 0.25s ease !important;
   height: auto !important;
   width: auto !important;
   margin: 0 !important;
+  line-height: 1 !important;
 }
 
 #footer #backTop svg,
@@ -1021,6 +1101,7 @@ footer a, footer nav a, .f-about, .f-st-copy, .f-bottom p, .f-bottom a, .ft-link
   stroke: #162217 !important;
   stroke-width: 2 !important;
   fill: none !important;
+  flex-shrink: 0 !important;
   transition: stroke 0.2s ease, transform 0.2s ease !important;
 }
 
@@ -1028,6 +1109,8 @@ footer a, footer nav a, .f-about, .f-st-copy, .f-bottom p, .f-bottom a, .ft-link
 .f-bottom #backTop span,
 #backTop span {
   color: #162217 !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
   transition: color 0.2s ease !important;
 }
 
@@ -1054,48 +1137,39 @@ footer a, footer nav a, .f-about, .f-st-copy, .f-bottom p, .f-bottom a, .ft-link
   color: #ffffff !important;
 }
 
-/* Footer Region Selector (India) High Visibility & Alignment */
-.f-bottom .f-region,
-.f-region,
-footer .f-region {
+/* Footer Lower Bar Animated Indian Flag */
+.f-flag-badge {
   display: inline-flex !important;
   align-items: center !important;
-  gap: 7px !important;
-  color: #162217 !important;
-  font-size: 13px !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.04em !important;
+  justify-content: center !important;
   vertical-align: middle !important;
-  cursor: pointer !important;
-  padding: 5px 12px !important;
-  border-radius: 999px !important;
-  background: rgba(156, 175, 136, 0.16) !important;
-  border: 1.5px solid #9caf88 !important;
-  transition: all 0.22s ease !important;
+  margin-left: 6px !important;
+  text-decoration: none !important;
+  line-height: 1 !important;
 }
-.f-bottom .f-region:hover,
-.f-region:hover,
-footer .f-region:hover {
-  background: #9caf88 !important;
-  color: #ffffff !important;
-  border-color: #748c66 !important;
-}
-.f-bottom .f-region svg,
-.f-region svg,
-footer .f-region svg {
-  width: 10px !important;
-  height: 7px !important;
-  fill: none !important;
-  stroke: #162217 !important;
-  stroke-width: 2.2 !important;
+.indian-flag-icon {
+  width: 24px !important;
+  height: 16px !important;
+  border-radius: 2px !important;
+  box-shadow: 0 1px 4px rgba(22, 34, 23, 0.25) !important;
+  border: 0.5px solid rgba(0, 0, 0, 0.12) !important;
+  transform-origin: left center;
+  animation: indianFlagBreeze 2.8s ease-in-out infinite !important;
   display: inline-block !important;
-  transition: stroke 0.2s ease, transform 0.2s ease !important;
 }
-.f-bottom .f-region:hover svg,
-.f-region:hover svg,
-footer .f-region:hover svg {
-  stroke: #ffffff !important;
-  transform: translateY(1px) !important;
+@keyframes indianFlagBreeze {
+  0%, 100% {
+    transform: perspective(120px) rotateY(0deg) skewY(0deg);
+  }
+  25% {
+    transform: perspective(120px) rotateY(8deg) skewY(1deg);
+  }
+  50% {
+    transform: perspective(120px) rotateY(-3deg) skewY(-0.8deg);
+  }
+  75% {
+    transform: perspective(120px) rotateY(6deg) skewY(0.4deg);
+  }
 }
 
 /* ========================================================
@@ -2108,23 +2182,38 @@ header.scrolled a:hover {
 }
 
 .ecom-refine-trigger-btn {
-  background: #ffffff !important;
-  border: 1.5px solid #9caf88 !important;
-  color: #162217 !important;
+  background: #e8412c !important;
+  background-color: #e8412c !important;
+  border: 1.5px solid #e8412c !important;
+  color: #ffffff !important;
   border-radius: 999px !important;
   font-weight: 700 !important;
-  box-shadow: 0 2px 8px rgba(22, 34, 23, 0.04) !important;
+  box-shadow: 0 4px 14px rgba(232, 65, 44, 0.28) !important;
+  padding: 11px 22px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  transition: all 0.25s ease !important;
+  text-shadow: none !important;
 }
 .ecom-refine-trigger-btn:hover {
-  border-color: #e8412c !important;
-  color: #e8412c !important;
-  background: rgba(232, 65, 44, 0.05) !important;
+  background: #cf3320 !important;
+  background-color: #cf3320 !important;
+  border-color: #cf3320 !important;
+  color: #ffffff !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 18px rgba(232, 65, 44, 0.4) !important;
 }
 .ecom-refine-trigger-btn svg {
-  stroke: #162217 !important;
+  stroke: #ffffff !important;
 }
 .ecom-refine-trigger-btn:hover svg {
-  stroke: #e8412c !important;
+  stroke: #ffffff !important;
+}
+.ecom-refine-badge {
+  background: #ffffff !important;
+  color: #e8412c !important;
+  font-weight: 800 !important;
 }
 
 .search-input {
@@ -2291,7 +2380,6 @@ a.card-wa-btn:hover,
 #lockCloseBtn,
 #closeGarmentModalBtn,
 #closeCropModalBtn,
-.ecom-refine-trigger-btn,
 .ecom-tag-chip,
 .tbl-btn-edit,
 #resetCatalogBtn,
