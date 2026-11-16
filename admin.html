@@ -4127,7 +4127,7 @@
           passcode. Please try again.</div>
         <button type="submit" class="lock-btn">✦ Enter Dashboard</button>
       </form>
-      <p class="lock-hint">Default Passcode: <code>aleen</code></p>
+      
     </div>
   </div>
 
@@ -4318,14 +4318,11 @@
               }
             }
           } catch (err) {
-            if (pass === 'aleen') {
-              localStorage.setItem('atelier_admin_token', 'offline_admin');
-              window.location.href = 'admin.html';
-            } else if (lockErrorMsg) {
-              lockErrorMsg.textContent = 'Connection error. Try passcode: aleen';
-              lockErrorMsg.style.display = 'block';
-            }
-          }
+        if (lockErrorMsg) {
+          lockErrorMsg.textContent = "Server unavailable. Please verify connection and retry.";
+          lockErrorMsg.style.display = "block";
+        }
+      }
         });
       }
     })();
@@ -4347,16 +4344,16 @@
     "fabric": "Pure Raw Silk with Organza Lace Trims",
     "origin": "Lahore Atelier",
     "badge": "Heritage Edition",
-    "image": "assets/pakistani-kurti-1.jpg",
+    "image": "/assets/pakistani-kurti-1.jpg",
     "desc": "Tailored royal ivory raw silk Pakistani kurti accented with heirloom gold zardozi adda embroidery, intricate hand-cut lace sleeve trims, and pearl button plackets.",
     "weave": "Pure Zari & Adda Needlework",
     "delivery": "Express Insured Dispatch (3-5 Days)",
     "whatsapp": "+91 98765 43210",
     "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
     "images": [
-      "assets/pakistani-kurti-1.jpg",
-      "assets/pakistani-kurti-2.jpg",
-      "assets/pakistani-kurti-3.jpg"
+      "/assets/pakistani-kurti-1.jpg",
+      "/assets/pakistani-kurti-2.jpg",
+      "/assets/pakistani-kurti-3.jpg"
     ]
   },
   {
@@ -4429,16 +4426,16 @@
     "fabric": "Micro Velvet with Pure Silk Lining",
     "origin": "Old City Lahore",
     "badge": "Artisanal",
-    "image": "assets/pakistani-kurti-2.jpg",
+    "image": "/assets/pakistani-kurti-2.jpg",
     "desc": "Opulent forest emerald micro-velvet silhouette enriched with antique metallic tilla cord, dabka floral bouquets, and scalloped hem border work.",
     "weave": "Tilla & Dabka Hand Embroidery",
     "delivery": "Express Insured Dispatch (3-5 Days)",
     "whatsapp": "+91 98765 43210",
     "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
     "images": [
-      "assets/pakistani-kurti-2.jpg",
-      "assets/pakistani-kurti-1.jpg",
-      "assets/pakistani-kurti-3.jpg"
+      "/assets/pakistani-kurti-2.jpg",
+      "/assets/pakistani-kurti-1.jpg",
+      "/assets/pakistani-kurti-3.jpg"
     ]
   },
   {
@@ -4511,16 +4508,16 @@
     "fabric": "Pure Tissue Silk Organza",
     "origin": "Karachi Design House",
     "badge": "Trending",
-    "image": "assets/pakistani-kurti-3.jpg",
+    "image": "/assets/pakistani-kurti-3.jpg",
     "desc": "Weightless blush peach tissue organza Pakistani kurti featuring hand-placed pearl droplets, gossamer cutwork sleeves, and fine badla embroidery.",
     "weave": "Pearl Moti & Scalloped Cutwork",
     "delivery": "Express Insured Dispatch (3-5 Days)",
     "whatsapp": "+91 98765 43210",
     "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
     "images": [
-      "assets/pakistani-kurti-3.jpg",
-      "assets/pakistani-kurti-1.jpg",
-      "assets/pakistani-kurti-2.jpg"
+      "/assets/pakistani-kurti-3.jpg",
+      "/assets/pakistani-kurti-1.jpg",
+      "/assets/pakistani-kurti-2.jpg"
     ]
   },
   {
@@ -4588,7 +4585,7 @@
       // Default Carousel / Slider Slides
       const DEFAULT_CAROUSEL = [
         {
-          img: "assets/pakistani-kurti-1.jpg",
+          img: "/assets/pakistani-kurti-1.jpg",
           headline: "Curated Haute Couture",
           title: "Zeenat Raw Silk Kurti",
           subtitle: "Heirloom Gold Zardozi & Hand-Adda Bullion Embroidery",
@@ -4598,7 +4595,7 @@
           url: "collections.html?category=kurtis"
         },
         {
-          img: "assets/pakistani-kurti-2.jpg",
+          img: "/assets/pakistani-kurti-2.jpg",
           headline: "The Royal Awadh Edit",
           title: "Gul-e-Rana Velvet Kurti",
           subtitle: "Forest Emerald Micro-Velvet with Antique Kashmiri Tilla",
@@ -4608,7 +4605,7 @@
           url: "collections.html?category=kurtis"
         },
         {
-          img: "assets/pakistani-kurti-3.jpg",
+          img: "/assets/pakistani-kurti-3.jpg",
           headline: "Festive Organza Reverie",
           title: "Noor Festive Organza",
           subtitle: "Blush Peach Tissue Organza with Gossamer Cutwork",
@@ -4669,7 +4666,7 @@
           kicker: "New Collection",
           title: "Pakistani Kurtis",
           desc: "Royal silhouettes in pure raw silk & velvet.",
-          img: "assets/pakistani-kurti-1.jpg",
+          img: "/assets/pakistani-kurti-1.jpg",
           url: "collections.html?category=kurtis"
         },
         {
@@ -4709,7 +4706,7 @@
           kicker: "Heirloom Weaves",
           title: "Dupattas & Stoles",
           desc: "Handwoven organza & metallic gossamer.",
-          img: "assets/pakistani-kurti-3.jpg",
+          img: "/assets/pakistani-kurti-3.jpg",
           url: "collections.html?category=dupattas"
         },
         {
@@ -4725,7 +4722,7 @@
           kicker: "Limited Edition",
           title: "Royal Velvet Edit",
           desc: "Opulent micro-velvet with antique tilla.",
-          img: "assets/pakistani-kurti-2.jpg",
+          img: "/assets/pakistani-kurti-2.jpg",
           url: "collections.html?category=kurtis"
         }
       ];
@@ -4779,24 +4776,37 @@
       }
 
       if (authForm) {
-        authForm.addEventListener("submit", e => {
+        authForm.addEventListener("submit", async e => {
           e.preventDefault();
           const entered = authPassInput.value.trim();
-          const masterPass = localStorage.getItem("aleen_admin_password") || "aleen";
-          const foundUser = users.find(u => u.password === entered);
+          if (!entered) return;
 
-          if (entered === masterPass || entered === "aleen" || foundUser) {
-            localStorage.setItem("atelier_admin_token", "admin_session");
-            sessionStorage.setItem("aleen_admin_logged", "true");
-            sessionStorage.setItem("aleen_admin_user", foundUser ? foundUser.username : "Master Admin");
-            sessionStorage.setItem("aleen_admin_role", foundUser ? foundUser.role : "Super Admin");
-            if (authErrMsg) authErrMsg.style.display = "none";
-            checkAuth();
-            showToast("Authenticated successfully. Welcome to the Atelier.");
-          } else {
+          try {
+            const res = await fetch("/api/auth/login", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ passcode: entered, username: "admin" })
+            });
+            const data = await res.json();
+            if (res.ok && data.success && data.token) {
+              localStorage.setItem("atelier_admin_token", data.token);
+              localStorage.setItem("atelier_admin_user", JSON.stringify(data.user || { username: "Admin", role: "admin" }));
+              sessionStorage.setItem("aleen_admin_logged", "true");
+              sessionStorage.setItem("aleen_admin_user", data.user?.username || "Master Admin");
+              sessionStorage.setItem("aleen_admin_role", data.user?.role || "admin");
+              if (authErrMsg) authErrMsg.style.display = "none";
+              checkAuth();
+              showToast("Authenticated successfully. Welcome to the Atelier.");
+            } else {
+              if (authErrMsg) {
+                authErrMsg.style.display = "block";
+                authErrMsg.textContent = data.error || "Passcode incorrect. Please verify and try again.";
+              }
+            }
+          } catch (err) {
             if (authErrMsg) {
               authErrMsg.style.display = "block";
-              authErrMsg.textContent = "Passcode incorrect. Please verify and try again.";
+              authErrMsg.textContent = "Server unreachable. Please check connection and retry.";
             }
           }
         });
@@ -5089,7 +5099,7 @@
 
           let finalUrl = croppedData;
           try {
-            const token = localStorage.getItem("atelier_admin_token") || "admin_session";
+            const token = localStorage.getItem("atelier_admin_token") || "";
             const upRes = await fetch("/api/admin/upload", {
               method: "POST",
               headers: {
@@ -5282,7 +5292,7 @@
       function renderGarmentImageSlots() {
         if (!imageSlotsContainer) return;
         if (!Array.isArray(currentGarmentImages) || currentGarmentImages.length === 0) {
-          currentGarmentImages = ["assets/pakistani-kurti-1.jpg"];
+          currentGarmentImages = ["/assets/pakistani-kurti-1.jpg"];
         }
 
         if (imageSlotsCountText) {
@@ -5294,7 +5304,7 @@
 
         imageSlotsContainer.innerHTML = currentGarmentImages.map((src, idx) => `
           <div class="garment-image-slot" data-slot="${idx}">
-            <img src="${src || "assets/pakistani-kurti-1.jpg"}" alt="Angle ${idx + 1}" class="garment-slot-thumb" id="garmentSlotThumb_${idx}" onerror="this.src='assets/pakistani-kurti-1.jpg'">
+            <img src="${src || "/assets/pakistani-kurti-1.jpg"}" alt="Angle ${idx + 1}" class="garment-slot-thumb" id="garmentSlotThumb_${idx}" onerror="this.src='/assets/pakistani-kurti-1.jpg'">
             <div style="flex: 1; min-width: 0;">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
                 <span style="font-size: 11px; font-weight: 700; color: var(--gold); letter-spacing: 0.5px;">${angleNames[idx] || ("Angle #" + (idx + 1))}</span>
@@ -5327,7 +5337,7 @@
         if (!currentGarmentImages[idx] && currentGarmentImages[idx] !== "") return;
         currentGarmentImages[idx] = val;
         const thumb = document.getElementById("garmentSlotThumb_" + idx);
-        if (thumb) thumb.src = val || "assets/pakistani-kurti-1.jpg";
+        if (thumb) thumb.src = val || "/assets/pakistani-kurti-1.jpg";
       };
 
       window.removeGarmentImageSlot = function(idx) {
@@ -5344,7 +5354,7 @@
         const optimizedDataUrl = await fastProcessImage(file, { maxWidth: 2560, maxHeight: 3413, quality: 0.96 });
         let finalUrl = optimizedDataUrl;
         try {
-          const token = localStorage.getItem("atelier_admin_token") || "admin_session";
+          const token = localStorage.getItem("atelier_admin_token") || "";
           const upRes = await fetch("/api/admin/upload", {
             method: "POST",
             headers: {
@@ -5413,7 +5423,7 @@
           alert("Maximum 5 angle photos per garment reached.");
           return;
         }
-        currentGarmentImages.push(currentGarmentImages[currentGarmentImages.length - 1] || "assets/pakistani-kurti-1.jpg");
+        currentGarmentImages.push(currentGarmentImages[currentGarmentImages.length - 1] || "/assets/pakistani-kurti-1.jpg");
         renderGarmentImageSlots();
       });
 
@@ -5470,7 +5480,7 @@
         } else if (item.image) {
           currentGarmentImages = [item.image];
         } else {
-          currentGarmentImages = ["assets/pakistani-kurti-1.jpg"];
+          currentGarmentImages = ["/assets/pakistani-kurti-1.jpg"];
         }
         renderGarmentImageSlots();
 
@@ -5505,7 +5515,7 @@
         renderSizePills();
 
         descInput.value = "Bespoke handcrafted creation tailored with timeless artisanal grace.";
-        currentGarmentImages = ["assets/pakistani-kurti-1.jpg"];
+        currentGarmentImages = ["/assets/pakistani-kurti-1.jpg"];
         renderGarmentImageSlots();
         if (modalTitle) modalTitle.textContent = "Add New Garment to Atelier";
         if (garmentModal) garmentModal.classList.add("open");
@@ -5537,7 +5547,7 @@
 
         const finalImages = currentGarmentImages.map(s => (s || "").trim()).filter(Boolean);
         if (finalImages.length === 0) {
-          finalImages.push("assets/pakistani-kurti-1.jpg");
+          finalImages.push("/assets/pakistani-kurti-1.jpg");
         }
 
         const chosenSizes = selectedSizesList.length > 0 
@@ -5592,7 +5602,7 @@
             catalogBroadcast.postMessage({ type: 'CATALOG_UPDATED', catalog: catalog, timestamp: Date.now() });
           } catch(e) {}
         }
-        const token = localStorage.getItem("atelier_admin_token") || "admin_session";
+        const token = localStorage.getItem("atelier_admin_token") || "";
         fetch("/api/catalog", {
           method: "POST",
           headers: {
@@ -5690,7 +5700,7 @@
             heroBroadcast.postMessage({ type: 'HERO_UPDATED', rotator: heroRotator, timestamp: Date.now() });
           } catch(e) {}
         }
-        const token = localStorage.getItem("atelier_admin_token") || "admin_session";
+        const token = localStorage.getItem("atelier_admin_token") || "";
         try {
           const res = await fetch("/api/admin/hero-rotator", {
             method: "POST",
@@ -5893,7 +5903,7 @@
             carouselBroadcast.postMessage({ type: 'CAROUSEL_UPDATED', slides: carouselSlides, timestamp: Date.now() });
           } catch(e) {}
         }
-        const token = localStorage.getItem("atelier_admin_token") || "admin_session";
+        const token = localStorage.getItem("atelier_admin_token") || "";
         try {
           // Primary serverless endpoint: /api/carousel (POST)
           const res = await fetch("/api/carousel", {
@@ -6015,7 +6025,7 @@
         const optimizedDataUrl = await fastProcessImage(file, { maxWidth: 3840, maxHeight: 2160, quality: 0.96 });
         let finalUrl = optimizedDataUrl;
         try {
-          const token = localStorage.getItem("atelier_admin_token") || "admin_session";
+          const token = localStorage.getItem("atelier_admin_token") || "";
           const upRes = await fetch("/api/admin/upload", {
             method: "POST",
             headers: {
@@ -6212,7 +6222,7 @@
             womenBroadcast.postMessage({ type: 'WOMEN_CARDS_UPDATED', cards: womenCollections, timestamp: Date.now() });
           } catch(e) {}
         }
-        const token = localStorage.getItem("atelier_admin_token") || "admin_session";
+        const token = localStorage.getItem("atelier_admin_token") || "";
         try {
           // Primary serverless endpoint: /api/women-collections (POST)
           const res = await fetch("/api/women-collections", {
@@ -6286,7 +6296,7 @@
         const optimizedDataUrl = await fastProcessImage(file, { maxWidth: 2400, maxHeight: 3200, quality: 0.96 });
         let finalUrl = optimizedDataUrl;
         try {
-          const token = localStorage.getItem("atelier_admin_token") || "admin_session";
+          const token = localStorage.getItem("atelier_admin_token") || "";
           const upRes = await fetch("/api/admin/upload", {
             method: "POST",
             headers: {

@@ -2090,7 +2090,7 @@
       <div id="lockErrorMsg" style="display:none; color: #ff6b6b; font-size: 12.5px; margin-top: 8px; font-family: var(--sans);">Invalid passcode. Please try again.</div>
       <button type="submit" class="lock-btn">✦ Enter Dashboard</button>
     </form>
-    <p class="lock-hint">Default Passcode: <code>aleen</code></p>
+    
   </div>
 </div>
 
@@ -2306,15 +2306,9 @@
           }
         }
       } catch (err) {
-        if (pass === 'aleen' || pass === (localStorage.getItem('aleen_admin_password') || 'aleen')) {
-          sessionStorage.setItem('aleen_admin_logged', 'true');
-          sessionStorage.setItem('aleen_admin_user', 'Master Admin');
-          sessionStorage.setItem('aleen_admin_role', 'Super Admin');
-          localStorage.setItem('atelier_admin_token', 'offline_admin');
-          window.location.href = 'admin.html';
-        } else if (lockErrorMsg) {
-          lockErrorMsg.textContent = 'Invalid passcode. Default passcode: aleen';
-          lockErrorMsg.style.display = 'block';
+        if (lockErrorMsg) {
+          lockErrorMsg.textContent = "Server unavailable. Please verify connection and retry.";
+          lockErrorMsg.style.display = "block";
         }
       }
     });
@@ -2331,16 +2325,16 @@
 
   const fallbackMap = {
     "sarees": [
-      { title: "Zeenat Embroidered Pakistani Kurti", price: 34500, craft: "Pure Zari & Adda Needlework", fabric: "Pure Raw Silk with Organza Lace Trims", image: "assets/pakistani-kurti-1.jpg" },
-      { title: "Gul-e-Rana Velvet Pakistani Kurti", price: 38200, craft: "Tilla & Dabka Hand Embroidery", fabric: "Micro Velvet with Pure Silk Lining", image: "assets/pakistani-kurti-2.jpg" },
-      { title: "Noor Organza Festive Pakistani Kurti", price: 29800, craft: "Pearl Moti & Scalloped Cutwork", fabric: "Pure Tissue Silk Organza", image: "assets/pakistani-kurti-3.jpg" },
-      { title: "Zari Vanya Tussar Kurti", price: 32000, craft: "Kadwa Zari Weave", fabric: "Wild Vanya Silk", image: "assets/pakistani-kurti-1.jpg" }
+      { title: "Zeenat Embroidered Pakistani Kurti", price: 34500, craft: "Pure Zari & Adda Needlework", fabric: "Pure Raw Silk with Organza Lace Trims", image: "/assets/pakistani-kurti-1.jpg" },
+      { title: "Gul-e-Rana Velvet Pakistani Kurti", price: 38200, craft: "Tilla & Dabka Hand Embroidery", fabric: "Micro Velvet with Pure Silk Lining", image: "/assets/pakistani-kurti-2.jpg" },
+      { title: "Noor Organza Festive Pakistani Kurti", price: 29800, craft: "Pearl Moti & Scalloped Cutwork", fabric: "Pure Tissue Silk Organza", image: "/assets/pakistani-kurti-3.jpg" },
+      { title: "Zari Vanya Tussar Kurti", price: 32000, craft: "Kadwa Zari Weave", fabric: "Wild Vanya Silk", image: "/assets/pakistani-kurti-1.jpg" }
     ],
     "kurtis": [
-      { title: "Zeenat Embroidered Pakistani Kurti", price: 34500, craft: "Pure Zari & Adda Needlework", fabric: "Pure Raw Silk with Organza Lace Trims", image: "assets/pakistani-kurti-1.jpg" },
-      { title: "Gul-e-Rana Velvet Pakistani Kurti", price: 38200, craft: "Tilla & Dabka Hand Embroidery", fabric: "Micro Velvet with Pure Silk Lining", image: "assets/pakistani-kurti-2.jpg" },
-      { title: "Noor Organza Festive Pakistani Kurti", price: 29800, craft: "Pearl Moti & Scalloped Cutwork", fabric: "Pure Tissue Silk Organza", image: "assets/pakistani-kurti-3.jpg" },
-      { title: "Zari Vanya Tussar Kurti", price: 32000, craft: "Kadwa Zari Weave", fabric: "Wild Vanya Silk", image: "assets/pakistani-kurti-1.jpg" }
+      { title: "Zeenat Embroidered Pakistani Kurti", price: 34500, craft: "Pure Zari & Adda Needlework", fabric: "Pure Raw Silk with Organza Lace Trims", image: "/assets/pakistani-kurti-1.jpg" },
+      { title: "Gul-e-Rana Velvet Pakistani Kurti", price: 38200, craft: "Tilla & Dabka Hand Embroidery", fabric: "Micro Velvet with Pure Silk Lining", image: "/assets/pakistani-kurti-2.jpg" },
+      { title: "Noor Organza Festive Pakistani Kurti", price: 29800, craft: "Pearl Moti & Scalloped Cutwork", fabric: "Pure Tissue Silk Organza", image: "/assets/pakistani-kurti-3.jpg" },
+      { title: "Zari Vanya Tussar Kurti", price: 32000, craft: "Kadwa Zari Weave", fabric: "Wild Vanya Silk", image: "/assets/pakistani-kurti-1.jpg" }
     ],
     "kurta-sets": [
       { title: "Gulmohar Chanderi Kurta Set", price: 26800, craft: "Marodi & Aari Needlework", fabric: "Tissue Chanderi with Silk Organza", image: "https://mahira2.netlify.app/assets/s3-kurta.jpg?v=5" },

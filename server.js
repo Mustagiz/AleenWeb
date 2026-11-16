@@ -33,12 +33,14 @@ const MIME = {
   '.ttf': 'font/ttf'
 };
 
+const { signToken, verifyToken, verifyAdmin } = require('./api/_auth');
+
 // In-memory / file-persisted admin data
 const DATA_FILE = path.join(ROOT, 'atelier_data.json');
 let atelierData = {
-  masterPassword: 'aleen',
+  masterPassword: process.env.ATELIER_ADMIN_PASSWORD || 'Aleen@Atelier2026!',
   users: [
-    { username: 'admin', role: 'admin', password: 'aleen', createdAt: '14 Nov 2026' }
+    { username: 'admin', role: 'admin', password: process.env.ATELIER_ADMIN_PASSWORD || 'Aleen@Atelier2026!', createdAt: '14 Nov 2026' }
   ],
   megaMenuBanner: {
     img: 'https://mahira2.netlify.app/assets/s2-card-women.jpg?v=2',
@@ -71,7 +73,7 @@ let atelierData = {
   ],
   carouselSlides: [
     {
-      img: 'assets/pakistani-kurti-1.jpg',
+      img: '/assets/pakistani-kurti-1.jpg',
       headline: 'Curated Haute Couture',
       title: 'Zeenat Raw Silk Kurti',
       subtitle: 'Heirloom Gold Zardozi & Hand-Adda Bullion Embroidery',
@@ -81,7 +83,7 @@ let atelierData = {
       url: 'collections.html?category=kurtis'
     },
     {
-      img: 'assets/pakistani-kurti-2.jpg',
+      img: '/assets/pakistani-kurti-2.jpg',
       headline: 'The Royal Awadh Edit',
       title: 'Gul-e-Rana Velvet Kurti',
       subtitle: 'Forest Emerald Micro-Velvet with Antique Kashmiri Tilla',
@@ -91,7 +93,7 @@ let atelierData = {
       url: 'collections.html?category=kurtis'
     },
     {
-      img: 'assets/pakistani-kurti-3.jpg',
+      img: '/assets/pakistani-kurti-3.jpg',
       headline: 'Festive Organza Reverie',
       title: 'Noor Festive Organza',
       subtitle: 'Blush Peach Tissue Organza with Gossamer Cutwork',
@@ -226,6 +228,16 @@ fetchFirestoreDoc('atelier_data', (remote) => {
     delete remote.carouselSlides;
     delete remote.catalog;
     delete remote.womenCollections;
+    if (!remote.masterPassword || remote.masterPassword === 'aleen') {
+      remote.masterPassword = process.env.ATELIER_ADMIN_PASSWORD || 'Aleen@Atelier2026!';
+      // Persist the upgraded secure password back to Firestore
+      setTimeout(() => saveData(), 1000);
+    }
+    if (Array.isArray(remote.users)) {
+      remote.users.forEach(u => {
+        if (u.password === 'aleen') u.password = process.env.ATELIER_ADMIN_PASSWORD || 'Aleen@Atelier2026!';
+      });
+    }
     atelierData = { ...atelierData, ...remote };
     console.log('✦ Synced live data from Firebase Firestore atelier_data');
   }
@@ -253,7 +265,15 @@ fetchFirestoreDoc('atelier_carousel', (slides) => {
 
 fetchFirestoreDoc('atelier_catalog', (catalog) => {
   if (Array.isArray(catalog) && catalog.length > 0) {
-    atelierData.catalog = catalog;
+    atelierData.catalog = catalog.map(item => {
+      if (item.image && item.image.startsWith('assets/')) {
+        item.image = '/' + item.image;
+      }
+      if (Array.isArray(item.images)) {
+        item.images = item.images.map(img => (typeof img === 'string' && img.startsWith('assets/')) ? '/' + img : img);
+      }
+      return item;
+    });
     console.log('✦ Synced ' + catalog.length + ' garments from Firestore atelier_catalog');
   }
 });
@@ -295,23 +315,9 @@ function parseBody(req) {
   });
 }
 
-function verifyAdmin(req) {
-  const authHeader = req.headers['authorization'] || '';
-  const token = authHeader.replace(/^Bearer\s+/i, '').trim();
-  if (!token) return null;
-  if (token === 'offline_admin' || token === 'admin_session') {
-    return { username: 'Super Admin', role: 'admin' };
-  }
-  const session = activeSessions.get(token);
-  if (!session) return null;
-  if (session.expires < Date.now()) {
-    activeSessions.delete(token);
-    return null;
-  }
-  if (session.role !== 'admin' && session.role !== 'Super Admin') {
-    return false; // User exists but is NOT admin
-  }
-  return session;
+function verifyAdminReq(req) {
+  // Use cryptographically signed token verification
+  return verifyAdmin(req);
 }
 
 const server = http.createServer(async (req, res) => {
@@ -347,11 +353,18 @@ const server = http.createServer(async (req, res) => {
       const pass = passcode || password;
       const user = username ? username.trim() : 'admin';
 
+      // Explicitly reject revoked default password
+      if (pass === 'aleen') {
+        res.writeHead(401);
+        res.end(JSON.stringify({ error: 'Default passcode has been revoked. Access denied.' }));
+        return;
+      }
+
       // Verify against master or user list
       let matchedUser = null;
-      if (pass === atelierData.masterPassword || pass === 'aleen') {
+      if (pass && pass === atelierData.masterPassword) {
         matchedUser = { username: 'Super Admin', role: 'admin' };
-      } else {
+      } else if (pass && Array.isArray(atelierData.users)) {
         const found = atelierData.users.find(u => u.username.toLowerCase() === user.toLowerCase() && u.password === pass);
         if (found) {
           matchedUser = found;
@@ -375,7 +388,10 @@ const server = http.createServer(async (req, res) => {
         return;
       }
 
-      const token = 'aln_' + Math.random().toString(36).substring(2) + Date.now().toString(36);
+      const token = signToken({
+        username: matchedUser.username,
+        role: 'admin'
+      });
       activeSessions.set(token, {
         username: matchedUser.username,
         role: 'admin',
@@ -413,7 +429,15 @@ const server = http.createServer(async (req, res) => {
     // 2.5 Master Catalog Endpoints (Synced between Admin & Website)
     if (reqPath === '/api/catalog' && req.method === 'GET') {
       res.writeHead(200);
-      res.end(JSON.stringify({ success: true, garments: atelierData.catalog || [] }));
+      const garments = (atelierData.catalog || []).map(item => {
+        const g = { ...item };
+        if (g.image && g.image.startsWith('assets/')) g.image = '/' + g.image;
+        if (Array.isArray(g.images)) {
+          g.images = g.images.map(img => (typeof img === 'string' && img.startsWith('assets/')) ? '/' + img : img);
+        }
+        return g;
+      });
+      res.end(JSON.stringify({ success: true, garments }));
       return;
     }
 

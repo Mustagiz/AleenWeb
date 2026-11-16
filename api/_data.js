@@ -12,9 +12,9 @@ const BASE_FIRESTORE = `https://firestore.googleapis.com/v1/projects/${PROJECT_I
 const DATA_FILE = path.join(process.cwd(), 'atelier_data.json');
 
 const DEFAULT_DATA = {
-  masterPassword: 'aleen',
+  masterPassword: process.env.ATELIER_ADMIN_PASSWORD || 'Aleen@Atelier2026!',
   users: [
-    { username: 'admin', role: 'admin', password: 'aleen', createdAt: '14 Nov 2026' }
+    { username: 'admin', role: 'admin', password: process.env.ATELIER_ADMIN_PASSWORD || 'Aleen@Atelier2026!', createdAt: '14 Nov 2026' }
   ],
   megaMenuBanner: {
     img: 'https://mahira2.netlify.app/assets/s2-card-women.jpg?v=2',
@@ -32,7 +32,7 @@ const DEFAULT_DATA = {
       kicker: "New Collection",
       title: "Pakistani Kurtis",
       desc: "Royal silhouettes in pure raw silk & velvet.",
-      img: "assets/pakistani-kurti-1.jpg",
+      img: "/assets/pakistani-kurti-1.jpg",
       url: "collections.html?category=kurtis"
     },
     {
@@ -72,7 +72,7 @@ const DEFAULT_DATA = {
       kicker: "Heirloom Weaves",
       title: "Dupattas & Stoles",
       desc: "Handwoven organza & metallic gossamer.",
-      img: "assets/pakistani-kurti-3.jpg",
+      img: "/assets/pakistani-kurti-3.jpg",
       url: "collections.html?category=dupattas"
     },
     {
@@ -88,7 +88,7 @@ const DEFAULT_DATA = {
       kicker: "Limited Edition",
       title: "Royal Velvet Edit",
       desc: "Opulent micro-velvet with antique tilla.",
-      img: "assets/pakistani-kurti-2.jpg",
+      img: "/assets/pakistani-kurti-2.jpg",
       url: "collections.html?category=kurtis"
     }
   ]

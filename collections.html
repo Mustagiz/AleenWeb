@@ -4244,6 +4244,22 @@ html, body {
           <button type="button" class="size-chip">Standard L</button>
         </div>
 
+        <!-- Buying Guarantees & Answers -->
+        <div class="modal-buying-trust" style="display: flex; flex-direction: column; gap: 8px; margin: 16px 0; padding: 12px 14px; background: rgba(20, 37, 27, 0.45); border: 1px solid rgba(201, 163, 95, 0.25); border-radius: 8px; font-size: 11.5px; color: rgba(239, 228, 200, 0.85);">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold-spark)" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <span><strong>Express Insured Delivery:</strong> 3–5 Business Days across India • 5–7 Days Worldwide</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold-spark)" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span><strong>Fitting &amp; Exchange:</strong> 7-Day Size Exchange with personal styling consultation</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold-spark)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <span><strong>Atelier Availability:</strong> In Stock • Tailored to your measurements upon order</span>
+          </div>
+        </div>
+
         <div class="modal-action-row">
           <button type="button" class="modal-inquire-btn" id="modalInquireBtn">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -4605,7 +4621,7 @@ html, body {
           passcode. Please try again.</div>
         <button type="submit" class="lock-btn">✦ Enter Dashboard</button>
       </form>
-      <p class="lock-hint">Default Passcode: <code>aleen</code></p>
+      
     </div>
   </div>
 
@@ -4821,17 +4837,11 @@ html, body {
               }
             }
           } catch (err) {
-            if (pass === 'aleen' || pass === (localStorage.getItem('aleen_admin_password') || 'aleen')) {
-              sessionStorage.setItem('aleen_admin_logged', 'true');
-              sessionStorage.setItem('aleen_admin_user', 'Master Admin');
-              sessionStorage.setItem('aleen_admin_role', 'Super Admin');
-              localStorage.setItem('atelier_admin_token', 'offline_admin');
-              window.location.href = 'admin.html';
-            } else if (lockErrorMsg) {
-              lockErrorMsg.textContent = 'Invalid passcode. Default passcode: aleen';
-              lockErrorMsg.style.display = 'block';
-            }
-          }
+        if (lockErrorMsg) {
+          lockErrorMsg.textContent = "Server unavailable. Please verify connection and retry.";
+          lockErrorMsg.style.display = "block";
+        }
+      }
         });
       }
     })();
@@ -4853,7 +4863,7 @@ html, body {
           fabric: "Pure Raw Silk with Organza Lace Trims",
           origin: "Lahore Atelier",
           badge: "Heritage Edition",
-          image: "assets/pakistani-kurti-1.jpg",
+          image: "/assets/pakistani-kurti-1.jpg",
           desc: "Tailored royal ivory raw silk Pakistani kurti accented with heirloom gold zardozi adda embroidery, intricate hand-cut lace sleeve trims, and pearl button plackets."
         },
         {
@@ -4905,7 +4915,7 @@ html, body {
           fabric: "Micro Velvet with Pure Silk Lining",
           origin: "Old City Lahore",
           badge: "Artisanal",
-          image: "assets/pakistani-kurti-2.jpg",
+          image: "/assets/pakistani-kurti-2.jpg",
           desc: "Opulent forest emerald micro-velvet silhouette enriched with antique metallic tilla cord, dabka floral bouquets, and scalloped hem border work."
         },
         {
@@ -4957,7 +4967,7 @@ html, body {
           fabric: "Pure Tissue Silk Organza",
           origin: "Karachi Design House",
           badge: "Trending",
-          image: "assets/pakistani-kurti-3.jpg",
+          image: "/assets/pakistani-kurti-3.jpg",
           desc: "Weightless blush peach tissue organza Pakistani kurti featuring hand-placed pearl droplets, gossamer cutwork sleeves, and fine badla embroidery."
         },
         {
@@ -5412,6 +5422,8 @@ html, body {
           card.setAttribute("role", "button");
           card.setAttribute("tabindex", "0");
           card.setAttribute("aria-label", `View details for ${item.title}`);
+          const cleanPhone = (item.whatsapp || "919876543210").replace(/[^0-9]/g, '');
+          const waMsg = encodeURIComponent(`Hello Aleen Atelier, I am inquiring about: ${item.title} (${item.id}) - ${formatPrice(item.price)}. Please share availability and custom sizing details.`);
           card.innerHTML = `
         <div class="card-media">
           <button class="card-wish-btn ${isLiked ? 'liked' : ''}" data-id="${item.id}" aria-label="Save to Wishlist">
@@ -5419,15 +5431,34 @@ html, body {
               <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
             </svg>
           </button>
-          <img src="${item.image}" alt="${item.title}" loading="lazy" decoding="async" />
+          <img src="${formatImgSrc(item.image)}" alt="${item.title}" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='/assets/pakistani-kurti-1.jpg'" />
           ${item.badge ? `<span class="card-badge">${item.badge}</span>` : ''}
         </div>
         <div class="card-info">
           <span class="card-origin">${item.craft || 'Artisanal Needlework'}</span>
           <h3 class="card-title">${item.title}</h3>
-          <div class="card-foot">
-            <span class="card-cat-badge">${item.categoryLabel || item.category}</span>
-            <span class="card-foot-price">${formatPrice(item.price)}</span>
+          <div class="card-buying-meta" style="display: flex; flex-direction: column; gap: 4px; margin: 6px 0 8px; font-size: 11px; color: rgba(239, 228, 200, 0.7);">
+            <div style="display: flex; align-items: center; gap: 5px;">
+              <span style="color: var(--gold-spark); font-weight: 600;">Sizes:</span>
+              <span style="letter-spacing: 0.02em;">XS–XXL • Bespoke Ready</span>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 4px; font-size: 10.5px;">
+              <span style="color: #6ee7b7; display: flex; align-items: center; gap: 4px;">
+                <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #10b981;"></span>
+                3–5 Days Dispatch
+              </span>
+              <span style="color: rgba(239, 228, 200, 0.55);">7-Day Exchange</span>
+            </div>
+          </div>
+          <div class="card-foot" style="display: flex; align-items: center; justify-content: space-between; margin-top: 6px; gap: 8px;">
+            <div style="display: flex; flex-direction: column;">
+              <span class="card-cat-badge">${item.categoryLabel || item.category}</span>
+              <span class="card-foot-price" style="margin-top: 2px;">${formatPrice(item.price)}</span>
+            </div>
+            <a href="https://wa.me/${cleanPhone}?text=${waMsg}" target="_blank" rel="noopener" class="card-wa-btn" style="display: inline-flex; align-items: center; gap: 5px; background: rgba(37, 211, 102, 0.15); border: 1px solid rgba(37, 211, 102, 0.5); color: #25d366; padding: 5px 10px; border-radius: 999px; font-size: 11px; font-weight: 600; text-decoration: none; transition: all 0.25s ease;" onclick="event.stopPropagation();" title="Inquire on WhatsApp">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.82.49 3.53 1.34 5L2 22l5.16-1.31C8.59 21.49 10.25 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18.2c-1.57 0-3.05-.44-4.32-1.21l-.31-.19-3.06.78.82-2.98-.2-.33A8.17 8.17 0 0 1 3.8 12c0-4.52 3.68-8.2 8.2-8.2s8.2 3.68 8.2 8.2-3.68 8.2-8.2 8.2zm4.52-6.13c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.12-.14.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43l-.48-.01c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1s.9 2.44 1.03 2.61c.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.22-.16-.47-.29z"/></svg>
+              <span>Inquire</span>
+            </a>
           </div>
         </div>
       `;
@@ -5915,12 +5946,12 @@ html, body {
       }
 
       function formatImgSrc(src) {
-        if (!src) return "assets/pakistani-kurti-1.jpg";
+        if (!src) return "/assets/pakistani-kurti-1.jpg";
         if (src.startsWith("http://") || src.startsWith("https://") || src.startsWith("data:")) {
           return src;
         }
-        if (src.startsWith("/")) {
-          return src.replace(/^\/+/, "");
+        if (!src.startsWith("/")) {
+          return "/" + src;
         }
         return src;
       }
@@ -5980,7 +6011,7 @@ html, body {
           vsResultsList.innerHTML = topHits.map((item, idx) => `
             <div class="vs-item" data-id="${item.id}" role="option" tabindex="0" data-index="${idx}">
               <div class="vs-thumb-frame">
-                <img src="${formatImgSrc(item.image)}" alt="${item.title}" class="vs-thumb-img" loading="lazy" onerror="this.onerror=null;this.src='https://mahira2.netlify.app/assets/s3-kurta.jpg?v=5'">
+                <img src="${formatImgSrc(item.image)}" alt="${item.title}" class="vs-thumb-img" loading="lazy" onerror="this.onerror=null;this.src='/assets/pakistani-kurti-1.jpg'">
               </div>
               <div class="vs-info">
                 <span class="vs-item-origin">${item.origin || 'Lucknow Atelier'}</span>

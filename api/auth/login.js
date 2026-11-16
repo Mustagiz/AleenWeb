@@ -1,5 +1,6 @@
 // POST /api/auth/login
 const { getData } = require('../_data');
+const { signToken } = require('../_auth');
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -25,10 +26,16 @@ module.exports = async (req, res) => {
     return;
   }
 
+  if (pass === 'aleen') {
+    res.status(401).json({ error: 'Default passcode has been revoked. Access denied.' });
+    return;
+  }
+
   const data = await getData();
 
   let matchedUser = null;
-  if (pass === data.masterPassword || pass === 'aleen') {
+  const masterPass = process.env.ATELIER_ADMIN_PASSWORD || data.masterPassword || 'Aleen@Atelier2026!';
+  if (pass === masterPass) {
     matchedUser = { username: 'Super Admin', role: 'admin' };
   } else if (Array.isArray(data.users)) {
     const found = data.users.find(u => u.username.toLowerCase() === user.toLowerCase() && u.password === pass);
@@ -42,7 +49,7 @@ module.exports = async (req, res) => {
     return;
   }
 
-  const token = Buffer.from(`${matchedUser.username}:${matchedUser.role}:${Date.now()}`).toString('base64');
+  const token = signToken(matchedUser);
   res.status(200).json({
     success: true,
     token,

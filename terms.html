@@ -2033,7 +2033,7 @@
       <div id="lockErrorMsg" style="display:none; color: #ff6b6b; font-size: 12.5px; margin-top: 8px; font-family: var(--sans);">Invalid passcode. Please try again.</div>
       <button type="submit" class="lock-btn">✦ Enter Dashboard</button>
     </form>
-    <p class="lock-hint">Default Passcode: <code>aleen</code></p>
+    
   </div>
 </div>
 
@@ -2249,15 +2249,9 @@
           }
         }
       } catch (err) {
-        if (pass === 'aleen' || pass === (localStorage.getItem('aleen_admin_password') || 'aleen')) {
-          sessionStorage.setItem('aleen_admin_logged', 'true');
-          sessionStorage.setItem('aleen_admin_user', 'Master Admin');
-          sessionStorage.setItem('aleen_admin_role', 'Super Admin');
-          localStorage.setItem('atelier_admin_token', 'offline_admin');
-          window.location.href = 'admin.html';
-        } else if (lockErrorMsg) {
-          lockErrorMsg.textContent = 'Invalid passcode. Default passcode: aleen';
-          lockErrorMsg.style.display = 'block';
+        if (lockErrorMsg) {
+          lockErrorMsg.textContent = "Server unavailable. Please verify connection and retry.";
+          lockErrorMsg.style.display = "block";
         }
       }
     });
