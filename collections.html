@@ -247,11 +247,11 @@
     #header.scrolled {
       height: clamp(104px, 11.5vh, 126px);
       --logo-h: clamp(62px, 7vh, 76px);
-      background: rgba(4, 9, 6, 0.94) !important;
+      background: rgba(247, 245, 239, 0.98) !important;
       backdrop-filter: blur(16px) !important;
       -webkit-backdrop-filter: blur(16px) !important;
-      border-bottom: 1px solid rgba(201, 163, 95, 0.22) !important;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45) !important;
+      border-bottom: 1.5px solid rgba(156, 175, 136, 0.4) !important;
+      box-shadow: 0 4px 20px rgba(22, 34, 23, 0.05) !important;
     }
 
     .brand-slot {
@@ -2816,11 +2816,11 @@
     #header.scrolled {
       height: clamp(104px, 11.5vh, 126px) !important;
       --logo-h: clamp(62px, 7vh, 76px);
-      background: rgba(4, 9, 6, 0.94) !important;
+      background: rgba(247, 245, 239, 0.98) !important;
       backdrop-filter: blur(18px) !important;
       -webkit-backdrop-filter: blur(18px) !important;
-      border-bottom: 1px solid rgba(201, 163, 95, 0.22) !important;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45) !important;
+      border-bottom: 1.5px solid rgba(156, 175, 136, 0.4) !important;
+      box-shadow: 0 4px 20px rgba(22, 34, 23, 0.05) !important;
     }
 
     .brand-slot {
@@ -5523,28 +5523,28 @@ html, body {
           ${item.badge ? `<span class="card-badge">${item.badge}</span>` : ''}
         </div>
         <div class="card-info">
-          <span class="card-origin">${item.craft || 'Artisanal Needlework'}</span>
-          <h3 class="card-title">${item.title}</h3>
-          <div class="card-buying-meta" style="display: flex; flex-direction: column; gap: 4px; margin: 6px 0 8px; font-size: 11px; color: rgba(239, 228, 200, 0.7);">
+          <span class="card-origin" style="color: #748c66; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 1.2px;">${item.craft || 'Artisanal Needlework'}</span>
+          <h3 class="card-title" style="color: #162217; font-family: var(--serif); font-size: 19px; font-weight: 600; margin: 4px 0 6px;">${item.title}</h3>
+          <div class="card-buying-meta" style="display: flex; flex-direction: column; gap: 5px; margin: 6px 0 8px; font-size: 11.5px; color: #162217;">
             <div style="display: flex; align-items: center; gap: 5px;">
-              <span style="color: var(--gold-spark); font-weight: 600;">Sizes:</span>
-              <span style="letter-spacing: 0.02em;">XS–XXL • Bespoke Ready</span>
+              <span style="color: #162217; font-weight: 700;">Sizes:</span>
+              <span style="letter-spacing: 0.02em; color: #162217; font-weight: 600;">XS–XXL • Bespoke Ready</span>
             </div>
-            <div style="display: flex; align-items: center; justify-content: space-between; gap: 4px; font-size: 10.5px;">
-              <span style="color: #6ee7b7; display: flex; align-items: center; gap: 4px;">
-                <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #10b981;"></span>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 4px; font-size: 11px;">
+              <span style="color: #1b4d2e; font-weight: 700; display: flex; align-items: center; gap: 5px;">
+                <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #1b4d2e;"></span>
                 3–5 Days Dispatch
               </span>
-              <span style="color: rgba(239, 228, 200, 0.55);">7-Day Exchange</span>
+              <span style="color: #384e36; font-weight: 600;">7-Day Exchange</span>
             </div>
           </div>
           <div class="card-foot" style="display: flex; align-items: center; justify-content: space-between; margin-top: 6px; gap: 8px;">
             <div style="display: flex; flex-direction: column;">
-              <span class="card-cat-badge">${item.categoryLabel || item.category}</span>
-              <span class="card-foot-price" style="margin-top: 2px;">${formatPrice(item.price)}</span>
+              <span class="card-cat-badge" style="background: #f7f5ef; border: 1px solid #9caf88; color: #2e432c; font-weight: 700;">${item.categoryLabel || item.category}</span>
+              <span class="card-foot-price" style="margin-top: 2px; color: #e8412c; font-weight: 700; font-family: var(--serif); font-size: 21px;">${formatPrice(item.price)}</span>
             </div>
-            <a href="https://wa.me/${cleanPhone}?text=${waMsg}" target="_blank" rel="noopener" class="card-wa-btn" style="display: inline-flex; align-items: center; gap: 5px; background: rgba(37, 211, 102, 0.15); border: 1px solid rgba(37, 211, 102, 0.5); color: #25d366; padding: 5px 10px; border-radius: 999px; font-size: 11px; font-weight: 600; text-decoration: none; transition: all 0.25s ease;" onclick="event.stopPropagation();" title="Inquire on WhatsApp">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.82.49 3.53 1.34 5L2 22l5.16-1.31C8.59 21.49 10.25 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18.2c-1.57 0-3.05-.44-4.32-1.21l-.31-.19-3.06.78.82-2.98-.2-.33A8.17 8.17 0 0 1 3.8 12c0-4.52 3.68-8.2 8.2-8.2s8.2 3.68 8.2 8.2-3.68 8.2-8.2 8.2zm4.52-6.13c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.12-.14.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43l-.48-.01c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1s.9 2.44 1.03 2.61c.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.22-.16-.47-.29z"/></svg>
+            <a href="https://wa.me/${cleanPhone}?text=${waMsg}" target="_blank" rel="noopener" class="card-wa-btn" style="display: inline-flex; align-items: center; gap: 6px; background: #e8412c; border: none; color: #ffffff; padding: 7px 16px; border-radius: 999px; font-size: 11.5px; font-weight: 700; text-decoration: none; box-shadow: 0 4px 12px rgba(232, 65, 44, 0.3); transition: all 0.25s ease;" onclick="event.stopPropagation();" title="Inquire on WhatsApp">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="#ffffff"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.82.49 3.53 1.34 5L2 22l5.16-1.31C8.59 21.49 10.25 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18.2c-1.57 0-3.05-.44-4.32-1.21l-.31-.19-3.06.78.82-2.98-.2-.33A8.17 8.17 0 0 1 3.8 12c0-4.52 3.68-8.2 8.2-8.2s8.2 3.68 8.2 8.2-3.68 8.2-8.2 8.2zm4.52-6.13c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.12-.14.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43l-.48-.01c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1s.9 2.44 1.03 2.61c.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.22-.16-.47-.29z"/></svg>
               <span>Inquire</span>
             </a>
           </div>

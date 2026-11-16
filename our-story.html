@@ -156,7 +156,7 @@
 }
 
 #header.is-solid, #header.scrolled {
-  background: rgba(4, 9, 6, 0.92) !important;
+  background: rgba(247, 245, 239, 0.98) !important; border-bottom: 1.5px solid rgba(156, 175, 136, 0.4) !important; box-shadow: 0 4px 20px rgba(22, 34, 23, 0.05) !important;
   backdrop-filter: blur(16px) !important;
   -webkit-backdrop-filter: blur(16px) !important;
   border-bottom: 1px solid rgba(201, 163, 95, 0.22) !important;
@@ -1198,7 +1198,7 @@
 #header.is-solid, #header.scrolled {
   height: clamp(104px, 11.5vh, 126px) !important;
   --logo-h: clamp(62px, 7vh, 76px);
-  background: rgba(4, 9, 6, 0.94) !important;
+  background: rgba(247, 245, 239, 0.98) !important; border-bottom: 1.5px solid rgba(156, 175, 136, 0.4) !important; box-shadow: 0 4px 20px rgba(22, 34, 23, 0.05) !important;
   backdrop-filter: blur(18px) !important;
   -webkit-backdrop-filter: blur(18px) !important;
   border-bottom: 1px solid rgba(201, 163, 95, 0.22) !important;
@@ -2053,14 +2053,28 @@
   <section class="editorial-hero">
     <div class="story-hero-bg-media" aria-hidden="true">
       <img src="assets/pakistani-kurti-3.jpg" alt="" class="story-hero-bg-img" loading="eager" decoding="async" onerror="this.src='assets/s5-room.jpg?v=1'">
-      <div class="story-hero-vignette"></div>
       <div class="story-hero-dust"></div>
     </div>
-    <div style="position: relative; z-index: 3;">
-      <span class="hero-kicker">The Atelier Chronicle</span>
-      <div class="hero-orna-bar"><b></b></div>
-      <h1 class="hero-title">Tradition Lives Beautifully</h1>
-      <p class="hero-subtitle">"A slow fashion sanctuary celebrating India's artisanal lineage with a contemporary editorial soul."</p>
+
+    <!-- 1 Big Flowing Botanical / Silk Doodle SVG -->
+    <div class="story-big-flow-doodle-wrap" aria-hidden="true">
+      <svg class="story-big-flow-doodle" viewBox="0 0 1440 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M-60 480 C 180 540, 240 180, 520 280 C 800 380, 880 80, 1160 160 C 1320 210, 1400 90, 1520 40" stroke="#9caf88" stroke-width="2.5" stroke-opacity="0.45" stroke-linecap="round"/>
+        <path d="M-30 320 C 160 140, 360 420, 640 200 C 920 -20, 1080 340, 1460 140" stroke="#9caf88" stroke-width="3.5" stroke-opacity="0.32" stroke-linecap="round"/>
+        <!-- Graceful Petal / Ribbon loops -->
+        <path d="M520 280 C 550 200, 620 190, 640 240 C 650 265, 620 310, 560 295 C 535 288, 525 282, 520 280 Z" stroke="#9caf88" stroke-width="2" stroke-opacity="0.4" fill="rgba(156, 175, 136, 0.09)"/>
+        <path d="M880 80 C 910 20, 980 20, 995 70 C 1005 105, 960 135, 915 115 C 890 105, 882 85, 880 80 Z" stroke="#9caf88" stroke-width="2" stroke-opacity="0.4" fill="rgba(156, 175, 136, 0.09)"/>
+        <path d="M240 180 C 270 120, 330 130, 340 170 C 350 200, 310 230, 270 210 C 250 200, 242 185, 240 180 Z" stroke="#9caf88" stroke-width="1.8" stroke-opacity="0.35" fill="rgba(156, 175, 136, 0.06)"/>
+        <circle cx="1160" cy="160" r="18" stroke="#9caf88" stroke-width="1.8" stroke-opacity="0.4" fill="none"/>
+        <circle cx="1160" cy="160" r="7" fill="#9caf88" fill-opacity="0.35"/>
+      </svg>
+    </div>
+
+    <div class="story-hero-text-wrap" style="position: relative; z-index: 3;">
+      <span class="hero-kicker story-anim-1">The Atelier Chronicle</span>
+      <div class="hero-orna-bar story-anim-2"><b></b></div>
+      <h1 class="hero-title story-anim-3">Tradition Lives Beautifully</h1>
+      <p class="hero-subtitle story-anim-4">"A slow fashion sanctuary celebrating India's artisanal lineage with a contemporary editorial soul."</p>
     </div>
   </section>
 
