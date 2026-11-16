@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aleen Atelier &mdash; Fresh Palette Visual Sample</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* User Specified Palette */
+      --sample-bg: #f7f5ef;
+      --sample-sage: #9caf88;
+      --sample-button: #e8412c;
+      --sample-button-hover: #cf3420;
+      
+      /* UX Contrast Optimized Text Roles */
+      --sample-dark-ink: #162217;
+      --sample-muted-ink: #485949;
+      --sample-card-bg: #ffffff;
+      --sample-card-border: rgba(156, 175, 136, 0.35);
+      --sample-gold-foil: #c9a35f;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--sample-bg);
+      color: var(--sample-dark-ink);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding: 40px 24px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Top Notice Bar */
+    .eval-banner {
+      background: #ffffff;
+      border: 1px solid var(--sample-sage);
+      border-radius: 12px;
+      padding: 18px 24px;
+      margin-bottom: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    }
+    .eval-title {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--sample-dark-ink);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .eval-badge {
+      background: rgba(156, 175, 136, 0.25);
+      color: #384e36;
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    /* Swatch Palette Row */
+    .swatches-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .swatch-card {
+      background: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(156, 175, 136, 0.25);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.03);
+    }
+    .swatch-color {
+      height: 90px;
+      width: 100%;
+    }
+    .swatch-info {
+      padding: 14px 16px;
+    }
+    .swatch-role {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700;
+      color: #647565;
+    }
+    .swatch-hex {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--sample-dark-ink);
+      font-family: monospace;
+      margin: 2px 0;
+    }
+    .swatch-notes {
+      font-size: 12px;
+      color: #666;
+    }
+
+    /* Mockup Luxury Header */
+    .sample-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(156, 175, 136, 0.3);
+      margin-bottom: 40px;
+    }
+    .sample-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      letter-spacing: 4px;
+      font-weight: 600;
+      color: var(--sample-dark-ink);
+      text-transform: uppercase;
+    }
+    .sample-nav {
+      display: flex;
+      gap: 28px;
+    }
+    .sample-nav a {
+      text-decoration: none;
+      color: var(--sample-dark-ink);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .sample-nav a:hover {
+      color: var(--sample-button);
+    }
+
+    /* Hero Section Mockup */
+    .sample-hero {
+      background: linear-gradient(135deg, #ffffff 0%, rgba(247, 245, 239, 0.6) 100%);
+      border: 1px solid var(--sample-card-border);
+      border-radius: 20px;
+      padding: 50px 48px;
+      margin-bottom: 48px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 40px;
+      align-items: center;
+      box-shadow: 0 10px 40px rgba(156, 175, 136, 0.12);
+    }
+    @media (max-width: 860px) {
+      .sample-hero {
+        grid-template-columns: 1fr;
+        padding: 32px 24px;
+      }
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #4b6148;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(38px, 4vw, 54px);
+      line-height: 1.15;
+      font-weight: 500;
+      color: var(--sample-dark-ink);
+      margin-bottom: 18px;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: #384e36;
+    }
+    .hero-desc {
+      font-size: 15px;
+      color: var(--sample-muted-ink);
+      margin-bottom: 28px;
+      max-width: 480px;
+    }
+    .hero-btn-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* Button Styles Requested */
+    .btn-poppy {
+      background-color: var(--sample-button);
+      color: #ffffff;
+      padding: 14px 28px;
+      border-radius: 999px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(232, 65, 44, 0.28);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+    .btn-poppy:hover {
+      background-color: var(--sample-button-hover);
+      box-shadow: 0 8px 25px rgba(232, 65, 44, 0.4);
+      transform: translateY(-2px);
+    }
+    .btn-sage-outline {
+      background-color: transparent;
+      color: #324330;
+      border: 1.5px solid var(--sample-sage);
+      padding: 13px 26px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+    }
+    .btn-sage-outline:hover {
+      background: rgba(156, 175, 136, 0.15);
+      border-color: #748c66;
+    }
+
+    .hero-image-card {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 2px solid rgba(156, 175, 136, 0.4);
+      box-shadow: 0 16px 36px rgba(0,0,0,0.08);
+      aspect-ratio: 4/5;
+      background: #eed;
+    }
+    .hero-image-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .hero-floating-badge {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background: rgba(247, 245, 239, 0.94);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--sample-sage);
+      border-radius: 10px;
+      padding: 10px 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+    .badge-sub {
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: #4b6148;
+    }
+    .badge-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--sample-dark-ink);
+    }
+
+    /* Product Grid Mockup */
+    .section-head {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .section-head h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px;
+      font-weight: 500;
+      color: var(--sample-dark-ink);
+    }
+    .section-head p {
+      font-size: 14px;
+      color: var(--sample-muted-ink);
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+    .product-card {
+      background: #ffffff;
+      border-radius: 16px;
+      border: 1px solid var(--sample-card-border);
+      padding: 16px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.03);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(156, 175, 136, 0.2);
+      border-color: var(--sample-sage);
+    }
+    .card-thumb {
+      width: 100%;
+      aspect-ratio: 3/4;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .card-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .card-tag {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--sample-bg);
+      color: #384e36;
+      border: 1px solid var(--sample-sage);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .card-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .card-craft {
+      font-size: 11px;
+      font-weight: 600;
+      color: #647565;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 4px;
+    }
+    .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--sample-dark-ink);
+      margin-bottom: 8px;
+    }
+    .card-price-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-top: auto;
+      padding-top: 14px;
+      border-top: 1px solid rgba(156, 175, 136, 0.2);
+    }
+    .card-price {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--sample-button);
+    }
+    .btn-card-inquire {
+      background: var(--sample-button);
+      color: #ffffff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: background 0.2s;
+    }
+    .btn-card-inquire:hover {
+      background: var(--sample-button-hover);
+    }
+
+    /* UX & Accessibility Diagnostic Box */
+    .ux-audit-box {
+      background: #ffffff;
+      border-left: 4px solid var(--sample-button);
+      border-radius: 12px;
+      padding: 24px;
+      margin-top: 40px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+    }
+    .ux-audit-box h3 {
+      font-size: 16px;
+      color: var(--sample-dark-ink);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .ux-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+      margin-top: 16px;
+    }
+    .ux-item {
+      padding: 14px;
+      border-radius: 8px;
+      background: #faf9f5;
+      border: 1px solid rgba(156, 175, 136, 0.2);
+    }
+    .ux-item-title {
+      font-weight: 700;
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+    .pass { color: #2e7d32; }
+    .warning { color: #e65100; }
+    .ux-item-desc {
+      font-size: 12.5px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- Prototype Header -->
+    <div class="eval-banner">
+      <div>
+        <div class="eval-title">
+          <span>✦ Design Evaluation Prototype &mdash; Fresh Color Palette Preview</span>
+        </div>
+        <p style="font-size: 13px; color: #555; margin-top: 4px;">
+          Previewing requested combination: Foreground <code style="background:#eee; padding:2px 6px; border-radius:4px;">#9caf88</code> &bull; Background <code style="background:#eee; padding:2px 6px; border-radius:4px;">#f7f5ef</code> &bull; Buttons <code style="background:#eee; padding:2px 6px; border-radius:4px;">#e8412c</code>. Production code is untouched.
+        </p>
+      </div>
+      <div class="eval-badge">STANDALONE PREVIEW</div>
+    </div>
+
+    <!-- Color Tokens Swatch Bar -->
+    <div class="swatches-grid">
+      <div class="swatch-card">
+        <div class="swatch-color" style="background-color: #f7f5ef; border-bottom: 1px solid #e0ded5;"></div>
+        <div class="swatch-info">
+          <div class="swatch-role">Canvas / Background</div>
+          <div class="swatch-hex">#f7f5ef</div>
+          <div class="swatch-notes">Warm alabaster / luxury parchment cream. Creates an organic, airy, high-fashion vibe.</div>
+        </div>
+      </div>
+
+      <div class="swatch-card">
+        <div class="swatch-color" style="background-color: #9caf88;"></div>
+        <div class="swatch-info">
+          <div class="swatch-role">Sage Accent / Borders</div>
+          <div class="swatch-hex">#9caf88</div>
+          <div class="swatch-notes">Muted sage leaf. Best as architectural borders, badges, and card frames.</div>
+        </div>
+      </div>
+
+      <div class="swatch-card">
+        <div class="swatch-color" style="background-color: #e8412c;"></div>
+        <div class="swatch-info">
+          <div class="swatch-role">Primary Action / Buttons</div>
+          <div class="swatch-hex">#e8412c</div>
+          <div class="swatch-notes">Vermilion / poppy red. High energy CTA with strong visual affordance.</div>
+        </div>
+      </div>
+
+      <div class="swatch-card">
+        <div class="swatch-color" style="background-color: #162217;"></div>
+        <div class="swatch-info">
+          <div class="swatch-role">Typography (Deep Forest Ink)</div>
+          <div class="swatch-hex">#162217</div>
+          <div class="swatch-notes">14.7:1 WCAG AAA contrast ratio on #f7f5ef for effortless legibility.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Mockup of Aleen Atelier with this Palette -->
+    <header class="sample-header">
+      <div class="sample-logo">Aleen</div>
+      <nav class="sample-nav">
+        <a href="#garments">Garments</a>
+        <a href="#ourstory">Our Story</a>
+        <a href="#contact">Contact Us</a>
+      </nav>
+      <a href="#book" class="btn-poppy" style="padding: 10px 20px; font-size: 11px;">Book Fitting</a>
+    </header>
+
+    <!-- Hero Mockup -->
+    <section class="sample-hero">
+      <div class="hero-left">
+        <span class="hero-eyebrow">✦ Awadh Artisanal Lineage ✦</span>
+        <h1 class="hero-title">Couture Crafted for <em>Timeless Elegance</em></h1>
+        <p class="hero-desc">
+          Pure raw silks, hand-embroidered Zardozi, and breathable Chanderi weaves designed with contemporary editorial soul.
+        </p>
+        <div class="hero-btn-row">
+          <a href="#explore" class="btn-poppy">
+            <span>Explore Garments</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#consultation" class="btn-sage-outline">Concierge WhatsApp</a>
+        </div>
+      </div>
+
+      <div class="hero-image-card">
+        <img src="assets/women-clean.jpg?v=3" alt="Model in Champagne Kurta">
+        <div class="hero-floating-badge">
+          <div class="badge-sub">Handcrafted Edition</div>
+          <div class="badge-title">Pakistani Heritage Kurti</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Product Grid Mockup -->
+    <div class="section-head">
+      <h2>Curated Garments Gallery</h2>
+      <p>Showcasing the soft sage borders and vermilion CTA buttons</p>
+    </div>
+
+    <div class="product-grid">
+      <!-- Card 1 -->
+      <div class="product-card">
+        <div class="card-thumb">
+          <img src="assets/pakistani-kurti-1.jpg" alt="Zeenat Embroidered Pakistani Kurti">
+          <span class="card-tag">Pure Raw Silk</span>
+        </div>
+        <div class="card-info">
+          <div class="card-craft">Pure Zari &amp; Adda Needlework</div>
+          <h3 class="card-title">Zeenat Embroidered Pakistani Kurti</h3>
+          <div class="card-price-row">
+            <span class="card-price">&#8377;34,500</span>
+            <button class="btn-card-inquire">Inquire</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="product-card">
+        <div class="card-thumb">
+          <img src="assets/pakistani-kurti-2.jpg" alt="Gulmohar Chanderi Kurta Set">
+          <span class="card-tag">Tissue Chanderi</span>
+        </div>
+        <div class="card-info">
+          <div class="card-craft">Marodi &amp; Aari Needlework</div>
+          <h3 class="card-title">Gulmohar Chanderi Kurta Set</h3>
+          <div class="card-price-row">
+            <span class="card-price">&#8377;26,800</span>
+            <button class="btn-card-inquire">Inquire</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="product-card">
+        <div class="card-thumb">
+          <img src="assets/pakistani-kurti-3.jpg" alt="Gul-e-Rana Velvet Kurti">
+          <span class="card-tag">Micro Velvet</span>
+        </div>
+        <div class="card-info">
+          <div class="card-craft">Tilla &amp; Dabka Hand Embroidery</div>
+          <h3 class="card-title">Gul-e-Rana Velvet Kurti</h3>
+          <div class="card-price-row">
+            <span class="card-price">&#8377;38,200</span>
+            <button class="btn-card-inquire">Inquire</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- UX/UI Diagnostic Report -->
+    <div class="ux-audit-box">
+      <h3>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        UI/UX Designer &amp; Accessibility (WCAG 2.1) Evaluation
+      </h3>
+      <p style="font-size: 13px; color: #666;">
+        Professional assessment of the requested color combination for high-end luxury fashion e-commerce:
+      </p>
+
+      <div class="ux-grid">
+        <div class="ux-item">
+          <div class="ux-item-title pass">&check; Background (#f7f5ef) &mdash; Excellent</div>
+          <div class="ux-item-desc">
+            The warm alabaster/linen background brings an editorial, warm luxury feel reminiscent of European fashion houses (Celine, The Row, Jacquemus). Much softer on the eyes than harsh pure white (#ffffff).
+          </div>
+        </div>
+
+        <div class="ux-item">
+          <div class="ux-item-title warning">&excl; Sage (#9caf88) as Text &mdash; Readability Watchout</div>
+          <div class="ux-item-desc">
+            Contrast of #9caf88 text on #f7f5ef background is only <strong>2.16:1</strong> (fails WCAG AA 4.5:1 minimum). For optimal UX, #9caf88 should be used for <em>borders, tags, decorative lines, and architectural surfaces</em>, while text uses deep forest ink (#162217) or deep sage (#384e36).
+          </div>
+        </div>
+
+        <div class="ux-item">
+          <div class="ux-item-title pass">&check; Buttons (#e8412c) &mdash; High Affordance</div>
+          <div class="ux-item-desc">
+            The poppy vermilion creates an immediate focal point that draws user eyes to key actions ("Shop Collection", "Inquire", "Book Fitting"). It gives warmth and vitality to the soft organic background.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
