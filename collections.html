@@ -4836,7 +4836,7 @@ html, body {
           fabric: "Pure Raw Silk with Organza Lace Trims",
           origin: "Lahore Atelier",
           badge: "Heritage Edition",
-          image: "assets/pakistani-kurti-1.jpg",
+          image: "/assets/pakistani-kurti-1.jpg",
           desc: "Tailored royal ivory raw silk Pakistani kurti accented with heirloom gold zardozi adda embroidery, intricate hand-cut lace sleeve trims, and pearl button plackets."
         },
         {
@@ -4888,7 +4888,7 @@ html, body {
           fabric: "Micro Velvet with Pure Silk Lining",
           origin: "Old City Lahore",
           badge: "Artisanal",
-          image: "assets/pakistani-kurti-2.jpg",
+          image: "/assets/pakistani-kurti-2.jpg",
           desc: "Opulent forest emerald micro-velvet silhouette enriched with antique metallic tilla cord, dabka floral bouquets, and scalloped hem border work."
         },
         {
@@ -4940,7 +4940,7 @@ html, body {
           fabric: "Pure Tissue Silk Organza",
           origin: "Karachi Design House",
           badge: "Trending",
-          image: "assets/pakistani-kurti-3.jpg",
+          image: "/assets/pakistani-kurti-3.jpg",
           desc: "Weightless blush peach tissue organza Pakistani kurti featuring hand-placed pearl droplets, gossamer cutwork sleeves, and fine badla embroidery."
         },
         {
@@ -5569,7 +5569,7 @@ html, body {
         activeModalItem = item;
 
         // Multi-angle gallery setup
-        const itemImages = (Array.isArray(item.images) && item.images.length > 0) ? item.images : [item.image || 'assets/pakistani-kurti-1.jpg'];
+        const itemImages = (Array.isArray(item.images) && item.images.length > 0) ? item.images : [item.image || '/assets/pakistani-kurti-1.jpg'];
         let currentAngleIdx = 0;
 
         function setModalAngle(idx) {
@@ -5901,10 +5901,24 @@ html, body {
         return text.replace(pattern, '<mark class="vs-mark">$1</mark>');
       }
 
+      function formatImgSrc(src) {
+        if (!src) return "/assets/pakistani-kurti-1.jpg";
+        if (src.startsWith("http://") || src.startsWith("https://") || src.startsWith("data:") || src.startsWith("/")) {
+          return src;
+        }
+        return "/" + src;
+      }
+
       function renderVisualSearch(query) {
         if (!vsDropdown || !vsResultsList) return;
         const cleanQ = (query || "").trim().toLowerCase();
         selectedVsIndex = -1;
+
+        // Show suggestions ONLY after the user starts typing
+        if (!cleanQ) {
+          closeVisualSearch();
+          return;
+        }
 
         // Render quick tags
         if (vsQuickTags) {
@@ -5913,32 +5927,6 @@ html, body {
               ${t.label}
             </button>
           `).join('');
-        }
-
-        if (!cleanQ) {
-          if (vsKicker) vsKicker.textContent = "Trending Atelier Curation";
-          const featuredItems = GARMENTS.slice(0, 4);
-          if (vsCountBadge) vsCountBadge.textContent = `${featuredItems.length} curated`;
-
-          vsResultsList.innerHTML = featuredItems.map((item, idx) => `
-            <div class="vs-item" data-id="${item.id}" role="option" tabindex="0" data-index="${idx}">
-              <div class="vs-thumb-frame">
-                <img src="${item.image}" alt="${item.title}" class="vs-thumb-img" loading="lazy">
-              </div>
-              <div class="vs-info">
-                <span class="vs-item-origin">${item.origin || 'Lucknow Atelier'}</span>
-                <h4 class="vs-item-title">${item.title}</h4>
-                <span class="vs-item-meta">${item.craft || 'Artisanal'} • ${item.fabric || 'Pure Silk'}</span>
-              </div>
-              <span class="vs-item-price">${formatPrice(item.price)}</span>
-            </div>
-          `).join('');
-
-          if (vsViewAllBtn) {
-            vsViewAllBtn.innerHTML = `<span>Explore All Curations</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
-          }
-          vsDropdown.style.display = "block";
-          return;
         }
 
         // Search match scoring
@@ -5976,7 +5964,7 @@ html, body {
           vsResultsList.innerHTML = topHits.map((item, idx) => `
             <div class="vs-item" data-id="${item.id}" role="option" tabindex="0" data-index="${idx}">
               <div class="vs-thumb-frame">
-                <img src="${item.image}" alt="${item.title}" class="vs-thumb-img" loading="lazy">
+                <img src="${formatImgSrc(item.image)}" alt="${item.title}" class="vs-thumb-img" loading="lazy" onerror="this.onerror=null;this.src='/assets/pakistani-kurti-1.jpg'">
               </div>
               <div class="vs-info">
                 <span class="vs-item-origin">${item.origin || 'Lucknow Atelier'}</span>
@@ -6016,7 +6004,12 @@ html, body {
       // Visual Search Click & Key Event Bindings
       if (searchInput) {
         searchInput.addEventListener("focus", () => {
-          renderVisualSearch(searchInput.value);
+          const q = (searchInput.value || "").trim();
+          if (q.length > 0) {
+            renderVisualSearch(q);
+          } else {
+            closeVisualSearch();
+          }
         });
 
         searchInput.addEventListener("keydown", e => {
@@ -6132,7 +6125,12 @@ html, body {
           if (searchDebounceTimer) clearTimeout(searchDebounceTimer);
           searchDebounceTimer = setTimeout(() => {
             filterAndSortGarments(true);
-            renderVisualSearch(searchQuery);
+            const q = (searchQuery || "").trim();
+            if (q.length > 0) {
+              renderVisualSearch(q);
+            } else {
+              closeVisualSearch();
+            }
           }, 80);
         });
       }
@@ -6274,7 +6272,12 @@ html, body {
       if (focusParam === "search" && searchInput) {
         setTimeout(() => {
           searchInput.focus();
-          renderVisualSearch(searchInput.value);
+          const q = (searchInput.value || "").trim();
+          if (q.length > 0) {
+            renderVisualSearch(q);
+          } else {
+            closeVisualSearch();
+          }
         }, 200);
       }
     })();

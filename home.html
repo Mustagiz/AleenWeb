@@ -8247,18 +8247,13 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
 
   function paintSearch(q) {
     searchList.innerHTML = '';
-    var rows;
     if (!q) {
-      spLabel.textContent = 'Popular Searches';
-      rows = POPULAR.map(function (p) {
-        var hit = SEARCH_INDEX.filter(function (r) { return r.label.toLowerCase() === p.toLowerCase(); })[0];
-        return hit || { label: p, href: '#women-new', ctx: 'Women' };
-      });
-    } else {
-      var needle = q.toLowerCase();
-      rows = SEARCH_INDEX.filter(function (r) { return r.label.toLowerCase().indexOf(needle) > -1; }).slice(0, 12);
-      spLabel.textContent = rows.length ? 'Suggestions' : 'No Matches';
+      spLabel.textContent = '';
+      return;
     }
+    var needle = q.toLowerCase();
+    var rows = SEARCH_INDEX.filter(function (r) { return r.label.toLowerCase().indexOf(needle) > -1; }).slice(0, 12);
+    spLabel.textContent = rows.length ? 'Suggestions' : 'No Matches';
     if (!rows.length) {
       searchList.appendChild(mk('span', 'sp-none', 'Nothing in the collection matches that — try “sarees” or “kalamkari”.'));
       return;
