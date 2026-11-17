@@ -384,8 +384,14 @@ body.is-ready .menu-btn {
 /* ========================================================
    2. HEADER & NAVIGATION (NO WHITE BORDER, CRISP VISIBILITY)
    ======================================================== */
+/* The bar is pinned on every page. Each page's own sheet used to repeat this,
+   so the sticky behaviour was only as reliable as the page that forgot it. */
 #header,
 header.site-header {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
   background: rgba(247, 245, 239, 0.96) !important;
   backdrop-filter: blur(16px) !important;
   -webkit-backdrop-filter: blur(16px) !important;

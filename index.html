@@ -5567,7 +5567,7 @@ html, body {
 }
 
 </style>
-  <link rel="stylesheet" href="theme-fresh.css?v=14">
+  <link rel="stylesheet" href="theme-fresh.css?v=15">
 </head>
 <body class="is-loading has-intro">
 <a href="#top" class="skip-link">Skip to main content</a>
@@ -7396,18 +7396,14 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
      header could disagree with itself for a few pixels. */
   (function () {
     var SOLID_AFTER = 46;      // px scrolled before the header becomes the solid sheet
-    var ticking = false;
     function apply() {
-      ticking = false;
       var solid = window.scrollY > SOLID_AFTER;
       header.classList.toggle('is-solid', solid);
       header.classList.toggle('scrolled', solid);
     }
-    window.addEventListener('scroll', function () {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(apply);
-    }, { passive: true });
+    /* Direct, not rAF-deferred: a throttled or backgrounded frame loop can stall
+       the pending callback, which would leave the pinned bar stuck transparent. */
+    window.addEventListener('scroll', apply, { passive: true });
     apply();
   })();
 
