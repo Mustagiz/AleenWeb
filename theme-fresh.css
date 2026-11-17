@@ -416,6 +416,20 @@ header.site-header.is-solid {
   box-shadow: 0 4px 20px rgba(22, 34, 23, 0.05) !important;
 }
 
+/* Home only: the header floats transparent over the hero until the page is
+   scrolled. `is-solid` is the same class the home script sets past its small
+   scroll threshold, so the cream sheet arrives exactly there and inner pages,
+   which never carry `has-intro`, keep their opaque header. */
+body.has-intro #header:not(.is-solid),
+body.has-intro header:not(.is-solid) {
+  background: transparent !important;
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
 .nav-side,
 .nav-center,
 .nav-l,
@@ -453,19 +467,19 @@ nav a:hover,
   color: #e8412c !important;
 }
 
-/* While the film runs the header is transparent over the dark curtain, so ink
-   links would be ink-on-ink and seem to change colour as the cream header
-   arrives. They keep the light treatment until `intro-done`, which is set on
-   the same frame the curtain is hidden; the switch itself is never visible. */
-body.has-intro:not(.intro-done) #header .nav-side a,
-body.has-intro:not(.intro-done) #header .nav-center a,
-body.has-intro:not(.intro-done) #header nav a {
+/* Whenever the home header is transparent — the film over the dark curtain and
+   the hero after it — the links take the light treatment. They only turn ink
+   once the cream sheet arrives with `is-solid`, so the colour always matches
+   the surface behind it and never flips on its own. */
+body.has-intro #header:not(.is-solid) .nav-side a,
+body.has-intro #header:not(.is-solid) .nav-center a,
+body.has-intro #header:not(.is-solid) nav a {
   color: rgba(240, 232, 210, 0.96) !important;
 }
 
-body.has-intro:not(.intro-done) #header .nav-side a:hover,
-body.has-intro:not(.intro-done) #header .nav-center a:hover,
-body.has-intro:not(.intro-done) #header nav a:hover {
+body.has-intro #header:not(.is-solid) .nav-side a:hover,
+body.has-intro #header:not(.is-solid) .nav-center a:hover,
+body.has-intro #header:not(.is-solid) nav a:hover {
   color: #e8412c !important;
 }
 
@@ -480,14 +494,23 @@ body.intro-done #brand svg {
   filter: contrast(150%) brightness(0.55) drop-shadow(0 1px 2px rgba(22, 34, 23, 0.2)) !important;
 }
 
+/* Over the hero the home header is transparent and the mark keeps the light
+   gold treatment it was designed on; the ink filter above takes over with the
+   cream header on scroll. */
+body.has-intro #header:not(.is-solid) #brandLogo,
+body.has-intro #header:not(.is-solid) .brand svg,
+body.has-intro #header:not(.is-solid) #brand svg {
+  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.75)) drop-shadow(0 1px 5px rgba(201, 163, 95, 0.3)) !important;
+}
+
 /* Header Utilities */
 .util-btn svg,
 .hdr-icon svg {
   stroke: #162217 !important;
 }
 
-body.has-intro:not(.intro-done) #header .util-btn svg,
-body.has-intro:not(.intro-done) #header .hdr-icon svg {
+body.has-intro #header:not(.is-solid) .util-btn svg,
+body.has-intro #header:not(.is-solid) .hdr-icon svg {
   stroke: rgba(240, 232, 210, 0.92) !important;
 }
 
