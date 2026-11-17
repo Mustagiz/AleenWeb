@@ -5567,7 +5567,7 @@ html, body {
 }
 
 </style>
-  <link rel="stylesheet" href="theme-fresh.css?v=6">
+  <link rel="stylesheet" href="theme-fresh.css?v=7">
 </head>
 <body class="is-loading">
 <a href="#top" class="skip-link">Skip to main content</a>
@@ -6704,7 +6704,11 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
       .to(curt.shR, { xPercent: 560, opacity: 0, duration: 1.84, ease: 'drape' }, 'open')
       .to(curt.glow, { opacity: 0, scaleX: 3, duration: 1.0, ease: 'sine.out' }, 'open+=0.5')
       .to(imgs[0], { scale: 1, duration: 2.3, ease: 'power2.out' }, 'open+=0.35')
-      .set(curtains, { visibility: 'hidden' }, 'open+=2.0');
+      .set(curtains, { visibility: 'hidden' }, 'open+=2.0')
+      /* Only now may the header return to the page's normal stacking order; until
+         the panels are gone it must stay above them so the flying identity is
+         never painted behind the curtain. */
+      .add(function () { body.classList.add('intro-done'); }, 'open+=2.0');
 
     /* —— the hero settles and the site becomes live —— */
     tl.add(function () { contents[0].classList.add('in'); }, 1.72)
@@ -6751,6 +6755,7 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
     gsap.set(imgs[0], { scale: 1, xPercent: 0 });
 
     body.classList.add('is-ready');
+    body.classList.add('intro-done');
     body.classList.remove('is-loading');
     document.documentElement.style.overflow = '';
     contents[0].classList.add('in');

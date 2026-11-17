@@ -295,6 +295,17 @@ body.is-ready header {
   z-index: 1000 !important;
 }
 
+/* The travelling identity is a child of the header, so the header has to stay
+   above the curtain for the whole film. `is-ready` is added at travel+0.06,
+   while the panels are still parting for another two seconds; dropping the
+   header to its normal stacking order there painted the logo underneath the
+   closed curtain, so it vanished mid-flight. `intro-done` is set once the
+   panels are gone. */
+body:not(.intro-done) #header,
+body:not(.intro-done) header {
+  z-index: 99995 !important;
+}
+
 body.is-ready .nav-side,
 body.is-ready .nav-center,
 body.is-ready .nav-l,
