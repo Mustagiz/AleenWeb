@@ -224,6 +224,13 @@ body.is-ready #cinema {
   right: -2vw !important;
 }
 
+/* Solid velvet back for each panel. The drape slides the whole sheet, but any
+   transparent pixel in the folds would let the bright hero show through the
+   closed curtain as vertical gaps, so the panel is never see-through. */
+#curtains .curtain {
+  background: #082518 !important;
+}
+
 body.is-loading #curtains {
   pointer-events: auto !important;
 }
@@ -231,8 +238,8 @@ body.is-loading #curtains {
 /* Transparent header for the WHOLE film, not just while `is-loading`: the
    identity is white during the flight and would otherwise turn invisible the
    moment the header went back to its opaque cream background at 2.0s. */
-body:not(.intro-done) #header,
-body:not(.intro-done) header {
+body.has-intro:not(.intro-done) #header,
+body.has-intro:not(.intro-done) header {
   z-index: 99995 !important;
   background: transparent !important;
   background-color: transparent !important;
@@ -243,10 +250,10 @@ body:not(.intro-done) header {
   pointer-events: none !important;
 }
 
-body:not(.intro-done) #header::before,
-body:not(.intro-done) #header::after,
-body:not(.intro-done) header::before,
-body:not(.intro-done) header::after {
+body.has-intro:not(.intro-done) #header::before,
+body.has-intro:not(.intro-done) #header::after,
+body.has-intro:not(.intro-done) header::before,
+body.has-intro:not(.intro-done) header::after {
   display: none !important;
   opacity: 0 !important;
   visibility: hidden !important;
@@ -296,9 +303,9 @@ body.is-loading .brand-slot {
 /* The identity sits on the DARK curtain for the whole film — including its flight
    to the header — so it keeps the light treatment until the panels are gone.
    Keying this on `is-loading` cut it off at 2.0s while it was still mid-flight. */
-body:not(.intro-done) #brand svg,
-body:not(.intro-done) #brandLogo,
-body:not(.intro-done) .brand svg {
+body.has-intro:not(.intro-done) #brand svg,
+body.has-intro:not(.intro-done) #brandLogo,
+body.has-intro:not(.intro-done) .brand svg {
   filter: brightness(2.6) contrast(145%) drop-shadow(0 6px 24px rgba(0, 0, 0, 0.7)) drop-shadow(0 0 20px rgba(247, 245, 239, 0.5)) !important;
 }
 
@@ -317,8 +324,8 @@ body.is-ready header {
    header to its normal stacking order there painted the logo underneath the
    closed curtain, so it vanished mid-flight. `intro-done` is set once the
    panels are gone. */
-body:not(.intro-done) #header,
-body:not(.intro-done) header {
+body.has-intro:not(.intro-done) #header,
+body.has-intro:not(.intro-done) header {
   z-index: 99995 !important;
 }
 
@@ -446,6 +453,22 @@ nav a:hover,
   color: #e8412c !important;
 }
 
+/* While the film runs the header is transparent over the dark curtain, so ink
+   links would be ink-on-ink and seem to change colour as the cream header
+   arrives. They keep the light treatment until `intro-done`, which is set on
+   the same frame the curtain is hidden; the switch itself is never visible. */
+body.has-intro:not(.intro-done) #header .nav-side a,
+body.has-intro:not(.intro-done) #header .nav-center a,
+body.has-intro:not(.intro-done) #header nav a {
+  color: rgba(240, 232, 210, 0.96) !important;
+}
+
+body.has-intro:not(.intro-done) #header .nav-side a:hover,
+body.has-intro:not(.intro-done) #header .nav-center a:hover,
+body.has-intro:not(.intro-done) #header nav a:hover {
+  color: #e8412c !important;
+}
+
 .nav-side a::after {
   background: #e8412c !important;
 }
@@ -461,6 +484,11 @@ body.intro-done #brand svg {
 .util-btn svg,
 .hdr-icon svg {
   stroke: #162217 !important;
+}
+
+body.has-intro:not(.intro-done) #header .util-btn svg,
+body.has-intro:not(.intro-done) #header .hdr-icon svg {
+  stroke: rgba(240, 232, 210, 0.92) !important;
 }
 
 .util-btn:hover svg {

@@ -5567,9 +5567,9 @@ html, body {
 }
 
 </style>
-  <link rel="stylesheet" href="theme-fresh.css?v=11">
+  <link rel="stylesheet" href="theme-fresh.css?v=13">
 </head>
-<body class="is-loading">
+<body class="is-loading has-intro">
 <a href="#top" class="skip-link">Skip to main content</a>
 
 <!-- ======================= CINEMA (intro void + light) ======================= -->
@@ -6584,7 +6584,6 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
   var flare = { line: $('.flare-line'), vert: $('.flare-vert'), core: $('.flare-core'), floor: $('.cin-floor'), wrap: $('.cin-flare') };
   var curt = {
     left: $('.c-left'), right: $('.c-right'),
-    foldsL: $$('.c-left .folds i'), foldsR: $$('.c-right .folds i'),
     glow: $('.curtain-glow'), shL: $('.cs-left'), shR: $('.cs-right')
   };
 
@@ -6693,8 +6692,9 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
       .to(curt.glow, { opacity: 0.9, scaleX: 0.4, duration: 0.45, ease: 'luxIO' }, 'open')
       .to(curt.left, { xPercent: -112, duration: 1.84, ease: 'drape' }, 'open')
       .to(curt.right, { xPercent: 112, duration: 1.84, ease: 'drape' }, 'open')
-      .to(curt.foldsL, { scaleX: 0.62, duration: 1.84, ease: 'drape', stagger: { each: 0.035, from: 'end' }, transformOrigin: '0% 50%' }, 'open')
-      .to(curt.foldsR, { scaleX: 0.62, duration: 1.84, ease: 'drape', stagger: { each: 0.035, from: 'start' }, transformOrigin: '100% 50%' }, 'open')
+      /* The panels slide as whole sheets. Scaling each fold individually used
+         to punch transparent stripes through the panel, so the bright hero
+         showed through the closed curtain as vertical gaps while it opened. */
       .to([curt.left, curt.right], { skewY: 0.4, duration: 0.55, ease: 'sine.inOut', yoyo: true, repeat: 1 }, 'open+=0.5')
       .to(curt.shL, { xPercent: -560, opacity: 0, duration: 1.84, ease: 'drape' }, 'open')
       .to(curt.shR, { xPercent: 560, opacity: 0, duration: 1.84, ease: 'drape' }, 'open')
