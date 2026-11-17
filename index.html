@@ -5567,7 +5567,7 @@ html, body {
 }
 
 </style>
-  <link rel="stylesheet" href="theme-fresh.css?v=5">
+  <link rel="stylesheet" href="theme-fresh.css?v=6">
 </head>
 <body class="is-loading">
 <a href="#top" class="skip-link">Skip to main content</a>
@@ -6683,7 +6683,7 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
     tl.addLabel('travel', 1.0)
       .fromTo(brand,
         { x: centred.x, y: centred.y, scale: centred.scale },
-        { x: 0, y: 0, scale: 1, duration: 0.98, ease: 'luxIO', immediateRender: false },
+        { x: 0, y: 0, scale: 1, duration: 1.6, ease: 'luxIO', immediateRender: false },
         'travel')
       .add(function () { body.classList.add('is-ready'); }, 'travel+=0.06');
 
@@ -6691,7 +6691,9 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
        separate sweep meant the first tween decelerated to a standstill just
        as the second accelerated up from one, and the curtain visibly stuck at
        the hand-over. The nudge now lives inside the 'drape' curve instead. */
-    tl.addLabel('open', 1.05)
+    /* The curtains start parting only once the identity is already on its way
+       home; starting both together hid the flight inside the curtain sweep. */
+    tl.addLabel('open', 1.5)
       .to(curt.glow, { opacity: 0.9, scaleX: 0.4, duration: 0.45, ease: 'luxIO' }, 'open')
       .to(curt.left, { xPercent: -112, duration: 1.84, ease: 'drape' }, 'open')
       .to(curt.right, { xPercent: 112, duration: 1.84, ease: 'drape' }, 'open')

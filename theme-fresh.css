@@ -195,9 +195,13 @@ h3 strong {
   pointer-events: none !important;
 }
 
+/* #curtains is deliberately NOT hidden here. `body.is-ready` is added at
+   travel+0.06 — the moment the logo starts flying home — so hiding the panels
+   on that class snapped them away before the drape could play, which made the
+   whole reveal look like a cut. The timeline hides the panels itself once the
+   drape finishes, and applyFinalState() hides them on skip. */
 #cinema,
-body.is-ready #cinema,
-body.is-ready #curtains {
+body.is-ready #cinema {
   display: none !important;
   pointer-events: none !important;
 }
