@@ -6,3 +6,7 @@ node_modules/
 .env
 .env.local
 .env.*.local
+
+# Service account keys
+service-account*.json
+*-firebase-adminsdk-*.json

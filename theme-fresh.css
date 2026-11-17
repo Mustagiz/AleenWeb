@@ -113,6 +113,14 @@ p strong, h1 strong, h2 strong, h3 strong {
   height: 100svh !important;
   z-index: 99990 !important;
   overflow: hidden !important;
+  pointer-events: none !important;
+}
+
+#cinema,
+body.is-ready #cinema,
+body.is-ready #curtains {
+  display: none !important;
+  pointer-events: none !important;
 }
 
 #curtains .curtain {
@@ -382,11 +390,11 @@ header .menu-btn,
 .mega-inner {
   position: relative !important;
   max-width: 1380px !important;
+  width: 100% !important;
   margin: 0 auto !important;
-  padding: 40px 48px !important;
-  display: grid !important;
-  grid-template-columns: 3.2fr 1.8fr !important;
-  gap: 56px !important;
+  padding: 36px 48px !important;
+  display: block !important;
+  box-sizing: border-box !important;
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
@@ -394,7 +402,7 @@ header .menu-btn,
 
 .mega-layout {
   display: grid !important;
-  grid-template-columns: 1fr 1.6fr !important;
+  grid-template-columns: 280px 1fr !important;
   gap: 40px !important;
   align-items: center !important;
   background: transparent !important;
@@ -469,6 +477,7 @@ header .menu-btn,
 }
 
 .mega-promo-wide-wrap {
+  width: 100% !important;
   border-radius: 14px !important;
   overflow: hidden !important;
   border: 1.5px solid #9caf88 !important;
@@ -480,7 +489,9 @@ header .menu-btn,
   position: relative !important;
   display: block !important;
   width: 100% !important;
-  height: 100% !important;
+  height: clamp(250px, 30vh, 320px) !important;
+  min-height: 250px !important;
+  aspect-ratio: 16 / 7 !important;
   border-radius: 14px !important;
   overflow: hidden !important;
   border: none !important;
@@ -490,12 +501,42 @@ header .menu-btn,
   width: 100% !important;
   height: 100% !important;
   object-fit: cover !important;
+  object-position: center 25% !important;
   display: block !important;
   transition: transform 0.4s ease !important;
 }
 
 .mega-promo-wide:hover img {
   transform: scale(1.03) !important;
+}
+
+.mega-promos-grid {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 20px !important;
+  width: 100% !important;
+}
+
+.mega-promo-card {
+  width: 100% !important;
+  border-radius: 14px !important;
+  overflow: hidden !important;
+  border: 1.5px solid #9caf88 !important;
+  background: #f7f5ef !important;
+}
+
+.mega-promo-img-wrap {
+  width: 100% !important;
+  height: clamp(200px, 24vh, 260px) !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+}
+
+.mega-promo-img-wrap img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center 25% !important;
 }
 
 .promo-overlay {
@@ -1798,55 +1839,58 @@ a.cta:hover,
 }
 
 /* ========================================================
-   3. CONTACT US HERO SECTION & PAGE REDESIGN
+   3. CONTACT US & OUR STORY HERO SECTION (LIL BIG EDITORIAL SCALE)
    ======================================================== */
 .editorial-hero,
 .contact-hero,
+.story-hero,
 #contactHero {
   background: #f7f5ef !important;
   border-bottom: 1.5px solid rgba(156, 175, 136, 0.4) !important;
-  min-height: auto !important;
-  padding: clamp(100px, 12vh, 126px) 24px clamp(24px, 3.5vh, 36px) !important;
+  min-height: 42vh !important;
+  padding: clamp(135px, 15vh, 165px) 24px clamp(46px, 5.5vh, 65px) !important;
   position: relative !important;
 }
 
-.hero-bg-media-wrap {
+.hero-bg-media-wrap,
+.story-hero-bg-media {
   opacity: 0.12 !important;
   filter: grayscale(80%) contrast(90%) !important;
 }
-.hero-bg-vignette {
+.hero-bg-vignette,
+.story-hero-vignette {
   background: radial-gradient(circle at 50% 50%, rgba(247, 245, 239, 0.2) 0%, rgba(247, 245, 239, 0.95) 100%) !important;
 }
 
-.hero-kicker, .hero-content-wrap .hero-kicker {
+.hero-kicker, .hero-content-wrap .hero-kicker, .story-hero-text-wrap .hero-kicker {
   font-family: var(--sans) !important;
-  font-size: 10.5px !important;
+  font-size: 11px !important;
   letter-spacing: 0.24em !important;
   text-transform: uppercase !important;
   color: #748c66 !important;
   font-weight: 700 !important;
-  margin-bottom: 8px !important;
+  margin-bottom: 10px !important;
   display: inline-block !important;
 }
 
-.hero-title, .hero-content-wrap .hero-title {
+.hero-title, .hero-content-wrap .hero-title, .story-hero-text-wrap .hero-title {
   font-family: var(--serif) !important;
-  font-size: clamp(26px, 3.2vw, 42px) !important;
+  font-size: clamp(30px, 3.6vw, 48px) !important;
   color: #162217 !important;
   font-weight: 700 !important;
   letter-spacing: 0.5px !important;
-  line-height: 1.15 !important;
-  margin-bottom: 8px !important;
+  line-height: 1.16 !important;
+  margin-bottom: 12px !important;
 }
 
-.hero-subtitle, .hero-content-wrap .hero-subtitle {
+.hero-subtitle, .hero-content-wrap .hero-subtitle, .story-hero-text-wrap .hero-subtitle {
   font-family: var(--serif-i) !important;
-  font-size: clamp(14px, 1.1vw, 17px) !important;
+  font-size: clamp(15px, 1.25vw, 19px) !important;
   color: #384e36 !important;
   font-style: italic !important;
-  max-width: 640px !important;
+  max-width: 680px !important;
   margin: 0 auto !important;
-  line-height: 1.45 !important;
+  line-height: 1.55 !important;
 }
 
 .content-block h3 {
@@ -2296,23 +2340,27 @@ header.scrolled a:hover {
 }
 
 
-/* --- 2. GARMENT PAGES HERO SECTIONS (#f7f5ef, NEVER BLACK) --- */
+/* --- 2. GARMENT PAGES HERO SECTIONS (#f7f5ef, NEVER BLACK, NO BACKGROUND IMAGE) --- */
 .catalog-hero,
 .ethnic-hero {
   background-color: #f7f5ef !important;
   background: #f7f5ef !important;
+  background-image: none !important;
   color: #162217 !important;
   border-bottom: 1.5px solid #9caf88 !important;
   box-shadow: none !important;
 }
 
-.catalog-hero-vignette {
+.catalog-hero-bg-media,
+.catalog-hero-bg-img,
+.catalog-hero-vignette,
+.catalog-hero-dust,
+.catalog-hero::before,
+.catalog-hero::after {
   display: none !important;
-}
-
-.catalog-hero-bg-img {
-  opacity: 0.12 !important;
-  filter: grayscale(100%) !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  background: none !important;
 }
 
 .catalog-kicker,
