@@ -36,10 +36,7 @@
     html.admin-logged-in #adminAuthGate { display: none !important; }
     html.admin-logged-in #adminApp { display: block !important; }
     .carousel-sync-badge.syncing .sync-indicator-dot { animation: none !important; }
-    .admin-pane, .admin-pane.active, .table-card, .admin-table, #paneCatalog, .stat-card {
-      animation: none !important;
-      transition: none !important;
-    }
+    .admin-pane.active { animation: none !important; }
   </style>
   <style>
     /* ================= GLOBAL HEADER & FOOTER LUXURY CSS ================= */
@@ -5039,16 +5036,16 @@
     "fabric": "Pure Raw Silk with Organza Lace Trims",
     "origin": "Lahore Atelier",
     "badge": "Heritage Edition",
-    "image": "assets/pakistani-kurti-1.jpg",
+    "image": "/assets/pakistani-kurti-1.jpg",
     "desc": "Tailored royal ivory raw silk Pakistani kurti accented with heirloom gold zardozi adda embroidery, intricate hand-cut lace sleeve trims, and pearl button plackets.",
     "weave": "Pure Zari & Adda Needlework",
     "delivery": "Express Insured Dispatch (3-5 Days)",
     "whatsapp": "+91 98765 43210",
     "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
     "images": [
-      "assets/pakistani-kurti-1.jpg",
-      "assets/pakistani-kurti-2.jpg",
-      "assets/pakistani-kurti-3.jpg"
+      "/assets/pakistani-kurti-1.jpg",
+      "/assets/pakistani-kurti-2.jpg",
+      "/assets/pakistani-kurti-3.jpg"
     ]
   },
   {
@@ -5659,7 +5656,7 @@
         catalogBody.innerHTML = filtered.map(item => `
       <tr>
         <td>
-          <img src="${item.image}" alt="${escapeHtml(item.title)}" class="tbl-img" onerror="this.onerror=null; this.src='assets/pakistani-kurti-1.jpg';">
+          <img src="${item.image}" alt="${item.title}" class="tbl-img" onerror="this.src='assets/pakistani-kurti-1.jpg'">
         </td>
         <td>
           <div class="tbl-title">${item.title}</div>
@@ -6063,7 +6060,7 @@
       function renderGarmentImageSlots() {
         if (!imageSlotsContainer) return;
         if (!Array.isArray(currentGarmentImages) || currentGarmentImages.length === 0) {
-          currentGarmentImages = ["assets/pakistani-kurti-1.jpg"];
+          currentGarmentImages = ["/assets/pakistani-kurti-1.jpg"];
         }
 
         if (imageSlotsCountText) {
@@ -6075,7 +6072,7 @@
 
         imageSlotsContainer.innerHTML = currentGarmentImages.map((src, idx) => `
           <div class="garment-image-slot" data-slot="${idx}">
-            <img src="${src || "assets/pakistani-kurti-1.jpg"}" alt="Angle ${idx + 1}" class="garment-slot-thumb" id="garmentSlotThumb_${idx}" onerror="this.onerror=null; this.src='assets/pakistani-kurti-1.jpg';">
+            <img src="${src || "/assets/pakistani-kurti-1.jpg"}" alt="Angle ${idx + 1}" class="garment-slot-thumb" id="garmentSlotThumb_${idx}" onerror="this.src='/assets/pakistani-kurti-1.jpg'">
             <div style="flex: 1; min-width: 0;">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
                 <span style="font-size: 11px; font-weight: 700; color: var(--gold); letter-spacing: 0.5px;">${angleNames[idx] || ("Angle #" + (idx + 1))}</span>
@@ -6108,7 +6105,7 @@
         if (!currentGarmentImages[idx] && currentGarmentImages[idx] !== "") return;
         currentGarmentImages[idx] = val;
         const thumb = document.getElementById("garmentSlotThumb_" + idx);
-        if (thumb) thumb.src = val || "assets/pakistani-kurti-1.jpg";
+        if (thumb) thumb.src = val || "/assets/pakistani-kurti-1.jpg";
       };
 
       window.removeGarmentImageSlot = function(idx) {
@@ -6502,19 +6499,15 @@
         }
       }
 
-      // Live load from server API on init (only re-render if data differs)
+      // Live load from server API on init
       fetch("/api/catalog?t=" + Date.now())
         .then(r => r.json())
         .then(data => {
           const list = Array.isArray(data.catalog) ? data.catalog : (Array.isArray(data.garments) ? data.garments : null);
           if (list && list.length > 0) {
-            const currentStr = JSON.stringify(catalog);
-            const newStr = JSON.stringify(list);
-            if (currentStr !== newStr) {
-              catalog = list;
-              localStorage.setItem("aleen_master_catalog", JSON.stringify(catalog));
-              renderCatalog();
-            }
+            catalog = list;
+            localStorage.setItem("aleen_master_catalog", JSON.stringify(catalog));
+            renderCatalog();
           }
         })
         .catch(() => { });
@@ -6845,7 +6838,7 @@
       <div class="cm-slide-item" data-idx="${idx}">
         <div class="cm-img-preview-wrap">
           <span class="cm-slide-num">Slide #${idx + 1}</span>
-          <img src="${slide.img}" alt="${slide.title || "Slide Image"}" class="cm-img-preview" id="cmPreview_${idx}" onerror="this.onerror=null; this.src='assets/s4-p1.jpg?v=3';">
+          <img src="${slide.img}" alt="${slide.title || "Slide Image"}" class="cm-img-preview" id="cmPreview_${idx}" onerror="this.src='assets/s4-p1.jpg?v=3'">
         </div>
 
         <div class="cm-field-group">
@@ -7259,7 +7252,7 @@
           <div class="cm-slide-item" data-idx="${idx}">
             <div class="cm-img-preview-wrap" style="aspect-ratio: 3/4; border-radius: 999px 999px 12px 12px; overflow: hidden; max-height: 220px;">
               <span class="cm-slide-num">Card #${idx + 1}</span>
-              <img src="${card.img}" alt="${escapeHtml(card.title || 'Arched Card')}" class="cm-img-preview" id="wcPreview_${idx}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.onerror=null; this.src='assets/s4-p1.jpg?v=3';">
+              <img src="${card.img}" alt="${escapeHtml(card.title || 'Arched Card')}" class="cm-img-preview" id="wcPreview_${idx}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='assets/s4-p1.jpg?v=3'">
             </div>
 
             <div class="cm-field-group">
@@ -7607,7 +7600,7 @@
           <div class="cm-slide-item" data-idx="${idx}" style="border: 1px solid rgba(201, 163, 95, 0.35); border-radius: 12px; padding: 18px; background: rgba(5, 12, 7, 0.65);">
             <div class="cm-img-preview-wrap" style="aspect-ratio: 4/5; border-radius: 10px; overflow: hidden; max-height: 230px; position: relative;">
               <span class="cm-slide-num">Spotlight #${item.no || (idx + 1)}</span>
-              <img src="${item.image}" alt="${escapeHtml(item.title ? item.title.replace(/<[^>]+>/g, " ") : "Best Seller")}" class="cm-img-preview" id="bsPreview_${idx}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.onerror=null; this.src='assets/s5-p1.jpg';">
+              <img src="${item.image}" alt="${escapeHtml(item.title ? item.title.replace(/<[^>]+>/g, " ") : "Best Seller")}" class="cm-img-preview" id="bsPreview_${idx}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='assets/s5-p1.jpg'">
             </div>
 
             <div class="cm-field-group" style="margin-top: 14px;">
