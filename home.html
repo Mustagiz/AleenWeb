@@ -6590,6 +6590,8 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
 
   var hero = { idx: 0, busy: false, timer: 0, started: false, token: 0, unlock: 0 };
   var introDone = false;
+  var introStarted = false;
+  var introAborted = false;
 
   /* ============================================================
      INTRO — the identity is formed, then opens the house
@@ -6626,6 +6628,11 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
 
   var introResize = null;
   function buildIntro() {
+    /* The boot watchdog may already have revealed the page (for example when a
+       backgrounded or slow tab deferred this callback past its deadline).
+       Starting the film now would animate a page the viewer has already seen,
+       leaving the logo parked mid-travel. */
+    if (introAborted) return null;
     centerBrand();
 
     introResize = function () {
@@ -6689,6 +6696,12 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
       }, 2.0)
       .add(function () { startHeroLoop(); }, 2.85);
 
+    /* Once the film is running it owns its own deadline. The boot watchdog only
+       rescues a film that never started, so a long load can no longer cut the
+       logo animation short. */
+    setTimeout(function () { if (!introDone) applyFinalState(); }, (tl.duration() * 1000) + 1500);
+    introStarted = true;
+
     return tl;
   }
 
@@ -6696,6 +6709,7 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
      FINAL STATE (skip / reduced motion)
      ============================================================ */
   function applyFinalState() {
+    introAborted = true;
     if (window.__introTl) { window.__introTl.kill(); window.__introTl = null; }
     dust.stop();
     cinema.style.display = 'none';
@@ -7448,12 +7462,13 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
         requestAnimationFrame(function () { buildIntro(); });
       });
     });
-    // Watchdog fallback: never keep curtains stuck closed
+    // Watchdog fallback: never keep curtains stuck closed — but only rescue a
+    // film that never started. If it did start, buildIntro() owns its deadline.
     setTimeout(function () {
-      if (!introDone) {
+      if (!introDone && !introStarted) {
         applyFinalState();
       }
-    }, 4500);
+    }, 6000);
   }
 
   window.addEventListener('beforeunload', function () {
@@ -7753,19 +7768,26 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
       var sec = $('#craft'); if (!sec) return;
       var ornT = $('.c-orna-top', sec), ornB = $('.c-orna-bottom', sec);
       var items = $$('.c-item', sec), seps = $$('.c-sep', sec);
-      gsap.set([ornT, ornB], { scaleX: 0 });
+      /* Neither flanking ornament exists in this markup. gsap throws on a null
+         target, which aborted every animation declared after this block. */
+      if (ornT) gsap.set(ornT, { scaleX: 0 });
+      if (ornB) gsap.set(ornB, { scaleX: 0 });
       gsap.set(seps, { scaleY: 0 });
       var tl = gsap.timeline({ scrollTrigger: { trigger: sec, start: 'top 78%' }, defaults: { ease: 'sine.inOut' } });
-      tl.to(ornT, { scaleX: 1, duration: 1.0 }, 0);
+      if (ornT) tl.to(ornT, { scaleX: 1, duration: 1.0 }, 0);
       items.forEach(function (it, i) {
         var t0 = 0.3 + i * 0.26;
         drawPaths(tl, $$('svg path, svg rect, svg circle', it), t0, 0.9, 0.06);
         var p = $('p', it);
-        gsap.set(p, { y: 12, opacity: 0 });
-        tl.to(p, { y: 0, opacity: 1, duration: 0.6, ease: 'luxOut' }, t0 + 0.3);
+        /* Not every craft seal carries a caption; passing null to gsap throws
+           and aborts the rest of this block's animations. */
+        if (p) {
+          gsap.set(p, { y: 12, opacity: 0 });
+          tl.to(p, { y: 0, opacity: 1, duration: 0.6, ease: 'luxOut' }, t0 + 0.3);
+        }
         if (seps[i]) tl.to(seps[i], { scaleY: 1, duration: 0.5 }, t0 + 0.4);
       });
-      tl.to(ornB, { scaleX: 1, duration: 1.0 }, 1.5);
+      if (ornB) tl.to(ornB, { scaleX: 1, duration: 1.0 }, 1.5);
     })();
 
     /* S07 · STORY — the image is revealed left to right */
