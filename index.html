@@ -6620,7 +6620,10 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
     var targetH = mobile
       ? Math.min(vh * 0.42, vw * 0.80 * (1351 / 1600))
       : Math.min(vh * 0.54, vw * 0.44 * (1351 / 1600));
-    var scale = targetH / r.height;
+    /* A zero-height box (hidden slot, logo not rendered yet) would make this
+       Infinity, and gsap silently drops an invalid transform — leaving the logo
+       un-centred for the whole intro. */
+    var scale = r.height > 0 ? targetH / r.height : 1;
     var dx = vw / 2 - (r.left + r.width / 2);
     var dy = vh * 0.5 - (r.top + r.height / 2);
     gsap.set(brand, { x: dx, y: dy, scale: scale, transformOrigin: '50% 50%' });
@@ -6634,6 +6637,17 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
        leaving the logo parked mid-travel. */
     if (introAborted) return null;
     centerBrand();
+
+    /* Capture the centred geometry now. The travel tween used to rely on gsap
+       reading the element's live transform when it reached 'travel'; if anything
+       cleared that transform first (a reflow, a late resize, a zero-size box), it
+       animated identity to identity and the logo simply appeared in the header
+       with no journey. Explicit from-values make the travel unconditional. */
+    var centred = {
+      x: +gsap.getProperty(brand, 'x') || 0,
+      y: +gsap.getProperty(brand, 'y') || 0,
+      scale: +gsap.getProperty(brand, 'scale') || 1
+    };
 
     introResize = function () {
       var t = window.__introTl;
@@ -6667,7 +6681,10 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
     /* —— 1.00s · the logo travels to the exact centre of the header,
            the navigation forms around it, the curtain starts to part —— */
     tl.addLabel('travel', 1.0)
-      .to(brand, { x: 0, y: 0, scale: 1, duration: 0.98, ease: 'luxIO' }, 'travel')
+      .fromTo(brand,
+        { x: centred.x, y: centred.y, scale: centred.scale },
+        { x: 0, y: 0, scale: 1, duration: 0.98, ease: 'luxIO', immediateRender: false },
+        'travel')
       .add(function () { body.classList.add('is-ready'); }, 'travel+=0.06');
 
     /* The panels part in one tween. Splitting it into a short "crack" and a
