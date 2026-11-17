@@ -23,6 +23,21 @@
     rel="stylesheet">
   <link rel="stylesheet" href="assets/vendor/cropper.min.css">
   <link rel="stylesheet" href="theme-fresh.css?v=2">
+  <script>
+    (function () {
+      try {
+        if (sessionStorage.getItem('aleen_admin_logged') === 'true' || localStorage.getItem('atelier_admin_token')) {
+          document.documentElement.classList.add('admin-logged-in');
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <style>
+    html.admin-logged-in #adminAuthGate { display: none !important; }
+    html.admin-logged-in #adminApp { display: block !important; }
+    .carousel-sync-badge.syncing .sync-indicator-dot { animation: none !important; }
+    .admin-pane.active { animation: none !important; }
+  </style>
   <style>
     /* ================= GLOBAL HEADER & FOOTER LUXURY CSS ================= */
     :root {
@@ -3213,9 +3228,7 @@
 
   <!-- ======================= GLOBAL HEADER ======================= -->
   <header id="header">
-    <button id="menuBtn" class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
-      <span></span><span></span>
-    </button>
+    <!-- Menu button removed -->
 
     <div class="nav-center">
       <nav class="nav-side nav-l" aria-label="Primary">
@@ -4261,13 +4274,25 @@
         <span class="modal-section-badge">✦ Garment Identification &amp; Value</span>
         <div class="form-grid-2col">
           <div class="form-group">
+            <label class="form-label">Garment Atelier Code / SKU (e.g. ALN-PK-01)</label>
+            <input type="text" id="garmentCodeInput" class="form-control"
+              placeholder="e.g. ALN-PK-01, ALN-KS-02, or custom code..." required>
+          </div>
+          <div class="form-group">
             <label class="form-label">Garment Title</label>
             <input type="text" id="garmentTitle" class="form-control"
               placeholder="e.g. Zeenat Embroidered Pakistani Kurti" required>
           </div>
+        </div>
+
+        <div class="form-grid-2col">
           <div class="form-group">
             <label class="form-label">Collection Badge / Edition</label>
             <input type="text" id="garmentBadge" class="form-control" placeholder="e.g. Heritage Edition, Bestseller">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Price (₹ INR)</label>
+            <input type="number" id="garmentPrice" class="form-control" min="1000" step="500" required>
           </div>
         </div>
 
@@ -4289,8 +4314,8 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="form-label">Price (₹ INR)</label>
-            <input type="number" id="garmentPrice" class="form-control" min="1000" step="500" required>
+            <label class="form-label">Inquiry WhatsApp Direct Number</label>
+            <input type="text" id="garmentWhatsapp" class="form-control" placeholder="+91 98765 43210" value="+91 98765 43210">
           </div>
         </div>
 
@@ -6227,6 +6252,8 @@
         const item = catalog.find(c => c.id === id);
         if (!item) return;
         editIdInput.value = item.id;
+        const codeInput = document.getElementById("garmentCodeInput");
+        if (codeInput) codeInput.value = item.id || "";
         titleInput.value = item.title || "";
         if (badgeInput) badgeInput.value = item.badge || "";
         
@@ -6291,6 +6318,8 @@
       addGarmentBtn?.addEventListener("click", () => {
         garmentForm.reset();
         editIdInput.value = "";
+        const codeInput = document.getElementById("garmentCodeInput");
+        if (codeInput) codeInput.value = "ALN-PK-" + String(catalog.length + 1).padStart(2, '0');
         if (customCategoryWrap) customCategoryWrap.style.display = "none";
         selectedSizesList = ["Free Size", "Custom Bespoke"];
         renderSizePills();
@@ -6380,14 +6409,16 @@
           desc: descInput.value.trim()
         };
 
+        const customCode = (document.getElementById("garmentCodeInput")?.value || "").trim();
+        const finalId = customCode || id || ("ALN-" + cat.substring(0, 2).toUpperCase() + "-" + String(Date.now()).slice(-4));
+
         if (id) {
           const idx = catalog.findIndex(c => c.id === id);
           if (idx > -1) {
-            catalog[idx] = Object.assign({}, catalog[idx], itemData);
+            catalog[idx] = Object.assign({}, catalog[idx], itemData, { id: finalId });
           }
         } else {
-          const newId = "ALN-" + cat.substring(0, 2).toUpperCase() + "-" + String(Date.now()).slice(-4);
-          catalog.unshift(Object.assign({ id: newId }, itemData));
+          catalog.unshift(Object.assign({ id: finalId }, itemData));
         }
         
         closeGarmentModal();
