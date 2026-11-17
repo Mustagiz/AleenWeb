@@ -100,7 +100,37 @@ p strong, h1 strong, h2 strong, h3 strong {
    ======================================================== */
 #curtains,
 #cinema {
+  position: fixed !important;
+  inset: 0 !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  width: 100% !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  height: 100svh !important;
   z-index: 99990 !important;
+  overflow: hidden !important;
+}
+
+#curtains .curtain {
+  position: absolute !important;
+  top: -4vh !important;
+  bottom: -4vh !important;
+  height: 108vh !important;
+  height: 108dvh !important;
+  min-height: 100% !important;
+  width: 58vw !important;
+}
+
+#curtains .c-left {
+  left: -2vw !important;
+}
+
+#curtains .c-right {
+  right: -2vw !important;
 }
 
 body.is-loading #curtains {
@@ -111,9 +141,23 @@ body.is-loading #header,
 body.is-loading header {
   z-index: 99995 !important;
   background: transparent !important;
+  background-color: transparent !important;
   box-shadow: none !important;
   border: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   pointer-events: none !important;
+}
+
+body.is-loading #header::before,
+body.is-loading #header::after,
+body.is-loading header::before,
+body.is-loading header::after {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  background: transparent !important;
+  content: none !important;
 }
 
 body.is-loading .nav-side,
@@ -1756,10 +1800,13 @@ a.cta:hover,
 /* ========================================================
    3. CONTACT US HERO SECTION & PAGE REDESIGN
    ======================================================== */
-.editorial-hero {
+.editorial-hero,
+.contact-hero,
+#contactHero {
   background: #f7f5ef !important;
   border-bottom: 1.5px solid rgba(156, 175, 136, 0.4) !important;
-  padding: 150px 24px 70px !important;
+  min-height: auto !important;
+  padding: clamp(100px, 12vh, 126px) 24px clamp(24px, 3.5vh, 36px) !important;
   position: relative !important;
 }
 
@@ -1773,33 +1820,33 @@ a.cta:hover,
 
 .hero-kicker, .hero-content-wrap .hero-kicker {
   font-family: var(--sans) !important;
-  font-size: 11px !important;
+  font-size: 10.5px !important;
   letter-spacing: 0.24em !important;
   text-transform: uppercase !important;
   color: #748c66 !important;
   font-weight: 700 !important;
-  margin-bottom: 14px !important;
+  margin-bottom: 8px !important;
   display: inline-block !important;
 }
 
 .hero-title, .hero-content-wrap .hero-title {
   font-family: var(--serif) !important;
-  font-size: clamp(34px, 4vw, 54px) !important;
+  font-size: clamp(26px, 3.2vw, 42px) !important;
   color: #162217 !important;
   font-weight: 700 !important;
   letter-spacing: 0.5px !important;
-  line-height: 1.18 !important;
-  margin-bottom: 14px !important;
+  line-height: 1.15 !important;
+  margin-bottom: 8px !important;
 }
 
 .hero-subtitle, .hero-content-wrap .hero-subtitle {
   font-family: var(--serif-i) !important;
-  font-size: clamp(16px, 1.3vw, 20px) !important;
+  font-size: clamp(14px, 1.1vw, 17px) !important;
   color: #384e36 !important;
   font-style: italic !important;
-  max-width: 740px !important;
+  max-width: 640px !important;
   margin: 0 auto !important;
-  line-height: 1.6 !important;
+  line-height: 1.45 !important;
 }
 
 .content-block h3 {
