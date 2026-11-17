@@ -36,7 +36,14 @@
     html.admin-logged-in #adminAuthGate { display: none !important; }
     html.admin-logged-in #adminApp { display: block !important; }
     .carousel-sync-badge.syncing .sync-indicator-dot { animation: none !important; }
-    .admin-pane.active { animation: none !important; }
+    .admin-pane, .admin-pane.active, .table-card, .admin-table, #paneCatalog, .stat-card {
+      animation: none !important;
+      transition: none !important;
+    }
+    #cinema, body.is-ready #cinema, #curtains, .cinema-wrap {
+      display: none !important;
+      pointer-events: none !important;
+    }
   </style>
   <style>
     /* ================= GLOBAL HEADER & FOOTER LUXURY CSS ================= */
@@ -3041,10 +3048,20 @@
       font-weight: 700 !important;
     }
     .tbl-price {
-      color: #e8412c !important;
-      font-weight: 700 !important;
-      font-family: var(--serif) !important;
-      font-size: 16px !important;
+      color: #162217 !important;
+      font-weight: 600 !important;
+      font-family: var(--sans, 'Montserrat', sans-serif) !important;
+      font-size: 14.5px !important;
+      font-variant-numeric: tabular-nums !important;
+      letter-spacing: 0.3px !important;
+      white-space: nowrap !important;
+    }
+    .tbl-btn,
+    .tbl-btn-edit,
+    .tbl-btn-del,
+    table .tbl-btn {
+      box-shadow: none !important;
+      filter: none !important;
     }
     .tbl-btn-edit {
       background: #ffffff !important;
@@ -3052,10 +3069,12 @@
       color: #162217 !important;
       border-radius: 999px !important;
       font-weight: 600 !important;
+      box-shadow: none !important;
     }
     .tbl-btn-edit:hover {
       background: #9caf88 !important;
       color: #ffffff !important;
+      box-shadow: none !important;
     }
     .tbl-btn-del {
       background: rgba(232, 65, 44, 0.08) !important;
@@ -3063,10 +3082,12 @@
       color: #e8412c !important;
       border-radius: 999px !important;
       font-weight: 600 !important;
+      box-shadow: none !important;
     }
     .tbl-btn-del:hover {
       background: #e8412c !important;
       color: #ffffff !important;
+      box-shadow: none !important;
     }
 
     /* All 8 Panes Manager Cards & Surfaces */
@@ -6499,15 +6520,19 @@
         }
       }
 
-      // Live load from server API on init
+      // Live load from server API on init (only re-render if data differs to prevent table blink)
       fetch("/api/catalog?t=" + Date.now())
         .then(r => r.json())
         .then(data => {
           const list = Array.isArray(data.catalog) ? data.catalog : (Array.isArray(data.garments) ? data.garments : null);
           if (list && list.length > 0) {
-            catalog = list;
-            localStorage.setItem("aleen_master_catalog", JSON.stringify(catalog));
-            renderCatalog();
+            const currentStr = JSON.stringify(catalog);
+            const newStr = JSON.stringify(list);
+            if (currentStr !== newStr) {
+              catalog = list;
+              localStorage.setItem("aleen_master_catalog", newStr);
+              renderCatalog();
+            }
           }
         })
         .catch(() => { });

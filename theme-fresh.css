@@ -267,7 +267,7 @@ body.is-ready .menu-btn {
 /* ========================================================
    2. HEADER & NAVIGATION (NO WHITE BORDER, CRISP VISIBILITY)
    ======================================================== */
-#header, header {
+#header, header.site-header {
   background: rgba(247, 245, 239, 0.96) !important;
   backdrop-filter: blur(16px) !important;
   -webkit-backdrop-filter: blur(16px) !important;
@@ -278,11 +278,12 @@ body.is-ready .menu-btn {
   transition: background 0.3s ease, box-shadow 0.3s ease !important;
 }
 
-#header::before, #header::after {
+#header::before, #header::after,
+header.site-header::before, header.site-header::after {
   display: none !important;
 }
 
-#header.is-scrolled, header.scrolled, #header.scrolled, #header.is-solid {
+#header.is-scrolled, header.site-header.scrolled, #header.scrolled, #header.is-solid, header.site-header.is-solid {
   background: rgba(247, 245, 239, 0.98) !important;
   backdrop-filter: blur(20px) !important;
   -webkit-backdrop-filter: blur(20px) !important;
@@ -379,7 +380,8 @@ header .menu-btn,
 #megaSheet {
   position: absolute !important;
   inset: 0 !important;
-  background: rgba(247, 245, 239, 0.98) !important;
+  background-color: #f7f5ef !important;
+  background: #f7f5ef !important;
   backdrop-filter: blur(24px) saturate(1.2) !important;
   -webkit-backdrop-filter: blur(24px) saturate(1.2) !important;
   border-bottom: 2px solid #9caf88 !important;
@@ -2244,24 +2246,47 @@ a.cta:hover,
   font-weight: 600 !important;
 }
 
+.tbl-btn,
+.tbl-btn-edit,
+.tbl-btn-del,
+table .tbl-btn,
+.admin-table .tbl-btn {
+  box-shadow: none !important;
+  filter: none !important;
+}
+
 .tbl-btn-edit {
   background: #ffffff !important;
   border: 1.5px solid #9caf88 !important;
   color: #162217 !important;
+  box-shadow: none !important;
 }
 .tbl-btn-edit:hover {
   background: #9caf88 !important;
   color: #ffffff !important;
+  box-shadow: none !important;
 }
 
 .tbl-btn-del {
-  background: rgba(232, 65, 44, 0.1) !important;
+  background: rgba(232, 65, 44, 0.08) !important;
   border: 1.5px solid #e8412c !important;
   color: #e8412c !important;
+  box-shadow: none !important;
 }
 .tbl-btn-del:hover {
   background: #e8412c !important;
   color: #ffffff !important;
+  box-shadow: none !important;
+}
+
+.tbl-price {
+  color: #162217 !important;
+  font-family: var(--sans, 'Montserrat', sans-serif) !important;
+  font-size: 14.5px !important;
+  font-weight: 600 !important;
+  font-variant-numeric: tabular-nums !important;
+  letter-spacing: 0.3px !important;
+  white-space: nowrap !important;
 }
 
 .pane-add-btn, .form-btn, .admin-primary-btn {
@@ -2284,11 +2309,11 @@ a.cta:hover,
 
 /* --- 1. GLOBAL HEADER & MEGA MENU NEVER BLACK ON SCROLL --- */
 #header,
-header,
+header.site-header,
 #header.is-solid,
 #header.scrolled,
-header.is-solid,
-header.scrolled,
+header.site-header.is-solid,
+header.site-header.scrolled,
 .site-header.is-solid,
 .site-header.scrolled {
   background-color: rgba(247, 245, 239, 0.98) !important;
@@ -2301,8 +2326,8 @@ header.scrolled,
 
 #header::before,
 #header::after,
-header::before,
-header::after,
+header.site-header::before,
+header.site-header::after,
 #header.is-solid::before,
 #header.is-solid::after,
 #header.scrolled::before,
@@ -2315,19 +2340,57 @@ header::after,
 #header a,
 #header.is-solid a,
 #header.scrolled a,
-header a,
-header.is-solid a,
-header.scrolled a {
+header.site-header a,
+header.site-header.is-solid a,
+header.site-header.scrolled a {
   color: #162217 !important;
 }
 
 #header a:hover,
 #header.is-solid a:hover,
 #header.scrolled a:hover,
-header a:hover,
-header.is-solid a:hover,
-header.scrolled a:hover {
+header.site-header a:hover,
+header.site-header.is-solid a:hover,
+header.site-header.scrolled a:hover {
   color: #e8412c !important;
+}
+
+/* Ensure content headers and section titles never inherit nav header border/shadow styles */
+.sec-head,
+header.sec-head,
+.x-head,
+header.x-head,
+#explore header,
+#women-new header,
+.b-head,
+header.b-head,
+#explore .x-head,
+#women-new .sec-head {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.sec-head::before,
+.sec-head::after,
+.x-head::before,
+.x-head::after,
+#explore header::before,
+#explore header::after,
+#women-new header::before,
+#women-new header::after {
+  display: none !important;
+  content: none !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
 #header .util-btn svg,
