@@ -5567,7 +5567,7 @@ html, body {
 }
 
 </style>
-  <link rel="stylesheet" href="theme-fresh.css?v=7">
+  <link rel="stylesheet" href="theme-fresh.css?v=11">
 </head>
 <body class="is-loading">
 <a href="#top" class="skip-link">Skip to main content</a>
@@ -6589,9 +6589,8 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
   };
 
   var hero = { idx: 0, busy: false, timer: 0, started: false, token: 0, unlock: 0 };
-  var introDone = false;
-  var introStarted = false;
-  var introAborted = false;
+  var introDone = false;      // the page has reached its final state
+  var introDeadline = null;   // the single rescue timer for the whole launch
 
   /* ============================================================
      INTRO — the identity is formed, then opens the house
@@ -6635,7 +6634,7 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
        backgrounded or slow tab deferred this callback past its deadline).
        Starting the film now would animate a page the viewer has already seen,
        leaving the logo parked mid-travel. */
-    if (introAborted) return null;
+    if (introDone) return null;   // the deadline already finished the page
     centerBrand();
 
     /* Capture the centred geometry now. The travel tween used to rely on gsap
@@ -6658,10 +6657,7 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
 
     var tl = gsap.timeline({
       defaults: { ease: 'power2.inOut' },
-      onComplete: function () {
-        introDone = true;
-        if (introResize) window.removeEventListener('resize', introResize);
-      }
+      onComplete: finishIntro
     });
     window.__introTl = tl;
 
@@ -6719,20 +6715,20 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
       }, 2.0)
       .add(function () { startHeroLoop(); }, 2.85);
 
-    /* Once the film is running it owns its own deadline. The boot watchdog only
-       rescues a film that never started, so a long load can no longer cut the
-       logo animation short. */
-    setTimeout(function () { if (!introDone) applyFinalState(); }, (tl.duration() * 1000) + 1500);
-    introStarted = true;
-
     return tl;
   }
 
   /* ============================================================
      FINAL STATE (skip / reduced motion)
      ============================================================ */
-  function applyFinalState() {
-    introAborted = true;
+  /* The single path to the finished page: the film completing, the skip button,
+     reduced motion, a deep link and the launch deadline all end up here. It is
+     idempotent, so whichever arrives first wins and the rest are no-ops. */
+  function finishIntro() {
+    if (introDone) return;
+    introDone = true;
+    clearTimeout(introDeadline);
+    if (introResize) { window.removeEventListener('resize', introResize); introResize = null; }
     if (window.__introTl) { window.__introTl.kill(); window.__introTl = null; }
     dust.stop();
     cinema.style.display = 'none';
@@ -6741,6 +6737,7 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
     skipBtn.classList.remove('is-shown');
     skipBtn.style.display = 'none';
 
+    if (window.gsap) {
     gsap.set(brand, { clearProps: 'transform' });
     gsap.set(brandSvg, { opacity: 1, scale: 1 });
     gsap.set('#lgMFill', { opacity: 1 });
@@ -6753,17 +6750,17 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
     gsap.set(['.lg-line-0', '.lg-line-1'], { scaleX: 1 });
     gsap.set(slides[0], { xPercent: 0 });
     gsap.set(imgs[0], { scale: 1, xPercent: 0 });
+    }
 
     body.classList.add('is-ready');
     body.classList.add('intro-done');
     body.classList.remove('is-loading');
     document.documentElement.style.overflow = '';
     contents[0].classList.add('in');
-    introDone = true;
     startHeroLoop();
   }
 
-  skipBtn.addEventListener('click', applyFinalState);
+  skipBtn.addEventListener('click', finishIntro);
   if (document.body.classList.contains('hero-only')) skipBtn.style.display = 'none';
 
   /* ============================================================
@@ -7470,15 +7467,9 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
   var isScrolledOrAnchor = (window.location.hash && window.location.hash.length > 1 && !window.location.hash.includes('top'));
 
   if (!window.gsap) {
-    document.addEventListener('DOMContentLoaded', function () {
-      cinema.style.display = 'none';
-      curtains.style.display = 'none';
-      body.classList.add('is-ready');
-      body.classList.remove('is-loading');
-      contents[0].classList.add('in');
-    });
+    document.addEventListener('DOMContentLoaded', finishIntro);
   } else if (reduced || isScrolledOrAnchor) {
-    applyFinalState();
+    finishIntro();
   } else {
     setIntroInitialStates();   // hide logo parts immediately — no flash before the film
     capped.then(function () {
@@ -7486,13 +7477,10 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
         requestAnimationFrame(function () { buildIntro(); });
       });
     });
-    // Watchdog fallback: never keep curtains stuck closed — but only rescue a
-    // film that never started. If it did start, buildIntro() owns its deadline.
-    setTimeout(function () {
-      if (!introDone && !introStarted) {
-        applyFinalState();
-      }
-    }, 6000);
+    /* One deadline for the whole launch, armed once. The film finishes itself;
+       this only rescues a page that never gets there — a frozen tab, a dead
+       asset — and is deliberately generous so it can never truncate the film. */
+    introDeadline = setTimeout(finishIntro, 12000);
   }
 
   window.addEventListener('beforeunload', function () {
@@ -7913,7 +7901,7 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
   })();
 
   /* dev hook */
-  window.__aleen = window.__mahira = { goTo: goTo, hero: hero, applyFinalState: applyFinalState };
+  window.__aleen = window.__mahira = { goTo: goTo, hero: hero, finishIntro: finishIntro };
 })();
 
 

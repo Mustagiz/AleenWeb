@@ -228,8 +228,11 @@ body.is-loading #curtains {
   pointer-events: auto !important;
 }
 
-body.is-loading #header,
-body.is-loading header {
+/* Transparent header for the WHOLE film, not just while `is-loading`: the
+   identity is white during the flight and would otherwise turn invisible the
+   moment the header went back to its opaque cream background at 2.0s. */
+body:not(.intro-done) #header,
+body:not(.intro-done) header {
   z-index: 99995 !important;
   background: transparent !important;
   background-color: transparent !important;
@@ -240,10 +243,10 @@ body.is-loading header {
   pointer-events: none !important;
 }
 
-body.is-loading #header::before,
-body.is-loading #header::after,
-body.is-loading header::before,
-body.is-loading header::after {
+body:not(.intro-done) #header::before,
+body:not(.intro-done) #header::after,
+body:not(.intro-done) header::before,
+body:not(.intro-done) header::after {
   display: none !important;
   opacity: 0 !important;
   visibility: hidden !important;
@@ -270,7 +273,6 @@ body.is-loading .mega {
 }
 
 /* Brand logo during intro is proudly centered on top of curtains */
-body.is-loading .brand-slot,
 body.is-loading .brand,
 body.is-loading #brand {
   z-index: 99996 !important;
@@ -280,9 +282,23 @@ body.is-loading #brand {
   display: block !important;
 }
 
-body.is-loading #brand svg,
-body.is-loading #brandLogo,
-body.is-loading .brand svg {
+/* The slot must keep the base sheet's absolute centring. Forcing it to `relative`
+   left its `left:50%`/`top:50%` offsets applying against the header's width, so
+   the identity sat pushed sideways; centerBrand() measured that shifted box and
+   the flight's x compensation then carried the logo off-screen. */
+body.is-loading .brand-slot {
+  z-index: 99996 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: flex !important;
+}
+
+/* The identity sits on the DARK curtain for the whole film — including its flight
+   to the header — so it keeps the light treatment until the panels are gone.
+   Keying this on `is-loading` cut it off at 2.0s while it was still mid-flight. */
+body:not(.intro-done) #brand svg,
+body:not(.intro-done) #brandLogo,
+body:not(.intro-done) .brand svg {
   filter: brightness(2.6) contrast(145%) drop-shadow(0 6px 24px rgba(0, 0, 0, 0.7)) drop-shadow(0 0 20px rgba(247, 245, 239, 0.5)) !important;
 }
 
@@ -435,12 +451,9 @@ nav a:hover,
 }
 
 /* Brand Logo High Contrast */
-body:not(.is-loading) #brandLogo,
-body:not(.is-loading) .brand svg,
-body:not(.is-loading) #brand svg,
-body.is-ready #brandLogo,
-body.is-ready .brand svg,
-body.is-ready #brand svg {
+body.intro-done #brandLogo,
+body.intro-done .brand svg,
+body.intro-done #brand svg {
   filter: contrast(150%) brightness(0.55) drop-shadow(0 1px 2px rgba(22, 34, 23, 0.2)) !important;
 }
 
