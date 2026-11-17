@@ -7390,12 +7390,18 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
     if (megaKey) closeMega(true);
   });
 
-  /* ---------- sticky header ---------- */
+  /* ---------- sticky header (the single source of truth) ----------
+     One listener, one threshold, both state classes. A second scroll handler
+     used to toggle the same classes at a slightly different offset, so the
+     header could disagree with itself for a few pixels. */
   (function () {
+    var SOLID_AFTER = 46;      // px scrolled before the header becomes the solid sheet
     var ticking = false;
     function apply() {
       ticking = false;
-      header.classList.toggle('is-solid', window.scrollY > 46);
+      var solid = window.scrollY > SOLID_AFTER;
+      header.classList.toggle('is-solid', solid);
+      header.classList.toggle('scrolled', solid);
     }
     window.addEventListener('scroll', function () {
       if (ticking) return;
@@ -7964,21 +7970,8 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
     })
     .catch(() => {});
 
-  const header = document.getElementById('header');
   const mega = document.getElementById('mega');
   const megaInner = mega ? mega.querySelector('.mega-inner') : null;
-
-  function updateHeaderTransparency() {
-    if (!header) return;
-    if (window.scrollY > 40) {
-      header.classList.add('is-solid', 'scrolled');
-    } else {
-      header.classList.remove('is-solid', 'scrolled');
-    }
-  }
-
-  window.addEventListener('scroll', updateHeaderTransparency, { passive: true });
-  updateHeaderTransparency();
 
   if (mega && megaInner) {
     const womenTrigger = document.querySelector('[data-mega="women"]');
