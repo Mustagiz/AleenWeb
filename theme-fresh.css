@@ -300,7 +300,7 @@ header .menu-btn,
 
 /* Mega Menu Dropdown */
 /* ========================================================
-   2. GLOBAL MEGA DROPDOWN (RESTORE ORIGINAL EMERALD NOIR ATELIER)
+   2. GLOBAL MEGA DROPDOWN (FRESH LUXURY ATELIER PALETTE)
    ======================================================== */
 .mega {
   position: fixed !important;
@@ -327,19 +327,19 @@ header .menu-btn,
 #megaSheet {
   position: absolute !important;
   inset: 0 !important;
-  background: rgba(4, 9, 6, 0.97) !important;
-  backdrop-filter: blur(24px) !important;
-  -webkit-backdrop-filter: blur(24px) !important;
-  border-bottom: 1px solid rgba(201, 163, 95, 0.3) !important;
-  border-top: none !important;
-  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.5) !important;
+  background: rgba(247, 245, 239, 0.98) !important;
+  backdrop-filter: blur(24px) saturate(1.2) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(1.2) !important;
+  border-bottom: 2px solid #9caf88 !important;
+  border-top: 1px solid rgba(156, 175, 136, 0.35) !important;
+  box-shadow: 0 24px 60px rgba(22, 34, 23, 0.08) !important;
 }
 
 .mega-inner {
   position: relative !important;
   max-width: 1380px !important;
   margin: 0 auto !important;
-  padding: 44px 48px !important;
+  padding: 40px 48px !important;
   display: grid !important;
   grid-template-columns: 3.2fr 1.8fr !important;
   gap: 56px !important;
@@ -371,19 +371,20 @@ header .menu-btn,
   font-size: 11px !important;
   letter-spacing: 0.22em !important;
   text-transform: uppercase !important;
-  color: #e7c87f !important;
+  color: #748c66 !important;
   margin-bottom: 14px !important;
-  font-weight: 700 !important;
-  border-bottom: 1px solid rgba(201, 163, 95, 0.25) !important;
-  padding-bottom: 8px !important;
+  font-weight: 800 !important;
+  border-bottom: 1.5px solid rgba(156, 175, 136, 0.35) !important;
+  padding-bottom: 10px !important;
 }
 
 .mega-group a,
 .mg-col a {
-  color: rgba(233, 224, 200, 0.85) !important;
-  font-weight: 500 !important;
+  color: #162217 !important;
+  font-weight: 600 !important;
   font-size: 14px !important;
-  padding: 8px 0 !important;
+  padding: 8px 12px !important;
+  border-radius: 8px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
@@ -393,8 +394,8 @@ header .menu-btn,
 
 .mega-group a span,
 .mg-col a span {
-  color: rgba(233, 224, 200, 0.85) !important;
-  font-weight: 500 !important;
+  color: #162217 !important;
+  font-weight: 600 !important;
   transition: color 0.2s ease !important;
 }
 
@@ -402,32 +403,33 @@ header .menu-btn,
 .mega-group a:hover span,
 .mg-col a:hover,
 .mg-col a:hover span {
-  color: #ffffff !important;
+  color: #e8412c !important;
+  background: rgba(156, 175, 136, 0.12) !important;
   transform: translateX(4px) !important;
 }
 
 .mega-arr {
-  stroke: rgba(201, 163, 95, 0.7) !important;
-  stroke-width: 1.8px !important;
+  stroke: #9caf88 !important;
+  stroke-width: 2px !important;
   fill: none !important;
   transition: stroke 0.2s ease, transform 0.2s ease !important;
 }
 
 .mega-group a:hover .mega-arr {
-  stroke: #ffffff !important;
-  transform: translateX(2px) !important;
+  stroke: #e8412c !important;
+  transform: translateX(3px) !important;
 }
 
 .mega-group-line {
-  background: rgba(201, 163, 95, 0.25) !important;
+  background: rgba(156, 175, 136, 0.35) !important;
 }
 
 .mega-promo-wide-wrap {
-  border-radius: 12px !important;
+  border-radius: 14px !important;
   overflow: hidden !important;
-  border: 1px solid rgba(201, 163, 95, 0.35) !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
-  background: #040906 !important;
+  border: 1.5px solid #9caf88 !important;
+  box-shadow: 0 14px 36px rgba(22, 34, 23, 0.08) !important;
+  background: #f7f5ef !important;
 }
 
 .mega-promo-wide {
@@ -435,7 +437,7 @@ header .menu-btn,
   display: block !important;
   width: 100% !important;
   height: 100% !important;
-  border-radius: 12px !important;
+  border-radius: 14px !important;
   overflow: hidden !important;
   border: none !important;
 }
@@ -445,18 +447,24 @@ header .menu-btn,
   height: 100% !important;
   object-fit: cover !important;
   display: block !important;
+  transition: transform 0.4s ease !important;
+}
+
+.mega-promo-wide:hover img {
+  transform: scale(1.03) !important;
 }
 
 .promo-overlay {
   position: absolute !important;
   inset: 0 !important;
-  background: linear-gradient(90deg, rgba(4, 9, 6, 0.92) 0%, rgba(4, 9, 6, 0.6) 55%, transparent 100%) !important;
+  background: linear-gradient(90deg, rgba(22, 34, 23, 0.88) 0%, rgba(22, 34, 23, 0.5) 60%, rgba(22, 34, 23, 0.15) 100%) !important;
   display: flex !important;
   flex-direction: column !important;
   justify-content: center !important;
   padding: 28px 36px !important;
 }
 
+.promo-overlay .p-kicker,
 .promo-overlay .p-badge {
   display: inline-block !important;
   align-self: flex-start !important;
@@ -465,26 +473,36 @@ header .menu-btn,
   font-size: 10px !important;
   font-weight: 800 !important;
   letter-spacing: 1.5px !important;
+  text-transform: uppercase !important;
   padding: 4px 12px !important;
   border-radius: 999px !important;
   margin-bottom: 12px !important;
+  box-shadow: 0 4px 12px rgba(232, 65, 44, 0.35) !important;
 }
 
-.promo-overlay .p-title {
+.promo-overlay .p-title,
+.promo-overlay h3 {
   color: #ffffff !important;
   font-family: var(--serif) !important;
   font-size: 26px !important;
-  font-weight: 500 !important;
+  font-weight: 600 !important;
   margin: 0 0 8px 0 !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
 }
 
-.promo-overlay .p-line {
-  color: rgba(233, 224, 200, 0.85) !important;
-  font-size: 13px !important;
+.promo-overlay .p-line,
+.promo-overlay p {
+  color: #f7f5ef !important;
+  font-size: 13.5px !important;
   margin: 0 !important;
   display: flex !important;
   align-items: center !important;
   gap: 8px !important;
+  font-weight: 500 !important;
+}
+
+.promo-overlay .p-arr {
+  color: #ffffff !important;
 }
 
 /* ========================================================
