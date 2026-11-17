@@ -382,9 +382,11 @@ body.is-ready #brand svg {
 }
 
 /* Header Utilities */
-.util-btn svg, .hdr-icon svg {
+.util-btn svg,
+.hdr-icon svg {
   stroke: #162217 !important;
 }
+
 .util-btn:hover svg {
   stroke: #e8412c !important;
 }
@@ -717,6 +719,40 @@ section#hero {
 #women-new .sh-eyebrow,
 #women-new .sh-sub {
   text-shadow: none !important;
+}
+
+#women-new,
+section#women-new {
+  border: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+#women-new .sec-head,
+header.sec-head,
+.sec-head {
+  border: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  background: transparent !important;
+}
+
+#women-new .sec-head::before,
+#women-new .sec-head::after,
+.sec-head::before,
+.sec-head::after {
+  display: none !important;
+  content: none !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
 #women-new .sec-head .sh-eyebrow {
@@ -2724,21 +2760,28 @@ header.x-head,
 
     /* --- 2. GARMENT PAGES HERO SECTIONS (#f7f5ef, NEVER BLACK) --- */
     .catalog-hero,
-    .ethnic-hero {
+    header.catalog-hero,
+    .ethnic-hero,
+    header.ethnic-hero {
       background-color: #f7f5ef !important;
       background: #f7f5ef !important;
       color: #162217 !important;
-      border-bottom: 1.5px solid #9caf88 !important;
+      border: none !important;
+      border-top: none !important;
+      border-bottom: none !important;
       box-shadow: none !important;
     }
 
-    .catalog-hero-vignette {
+    .catalog-hero-bg-media,
+    .catalog-hero-bg-img,
+    .catalog-hero-vignette,
+    .catalog-hero-dust,
+    .catalog-hero::before,
+    .catalog-hero::after,
+    .ethnic-hero::before,
+    .ethnic-hero::after {
       display: none !important;
-    }
-
-    .catalog-hero-bg-img {
-      opacity: 0.12 !important;
-      filter: grayscale(100%) !important;
+      content: none !important;
     }
 
     .catalog-kicker,
@@ -2822,67 +2865,80 @@ header.x-head,
       stroke: #ffffff !important;
     }
 
-/* Modal Sizing Checkbox Pills & Multi-angle Slot Theming */
-.size-check-pill {
-  background: #ffffff !important;
-  border: 1.5px solid #9caf88 !important;
-  color: #162217 !important;
-  font-weight: 600 !important;
-}
-.size-check-pill:hover {
-  background: #f7f5ef !important;
-  border-color: #748c66 !important;
-  color: #162217 !important;
-}
-.size-check-pill.active {
-  background: #9caf88 !important;
-  border-color: #748c66 !important;
-  color: #ffffff !important;
-  box-shadow: 0 2px 8px rgba(156, 175, 136, 0.3) !important;
-}
-.size-check-pill input[type="checkbox"] {
-  accent-color: #e8412c !important;
-}
-.size-check-pill .pill-del-btn {
-  color: #e8412c !important;
-}
-.garment-image-slot {
-  background: #ffffff !important;
-  border: 1.5px solid #9caf88 !important;
-  box-shadow: 0 2px 8px rgba(22, 34, 23, 0.05) !important;
-}
-.garment-image-slot span {
-  color: #162217 !important;
-}
-.garment-image-slot .tbl-btn-del {
-  border-color: #e8412c !important;
-  color: #e8412c !important;
-  background: transparent !important;
-}
-.garment-image-slot .tbl-btn-del:hover {
-  background: #e8412c !important;
-  color: #ffffff !important;
-}
-.garment-image-slot .tbl-btn-edit {
-  background: #ffffff !important;
-  border: 1.5px solid #9caf88 !important;
-  color: #162217 !important;
-}
-.garment-image-slot .tbl-btn-edit:hover {
-  background: #f7f5ef !important;
-  border-color: #748c66 !important;
-}
-#addGarmentImageSlotBtn,
-#addCustomSizeBtn {
-  background: #ffffff !important;
-  border: 1.5px solid #9caf88 !important;
-  color: #162217 !important;
-}
-#addGarmentImageSlotBtn:hover,
-#addCustomSizeBtn:hover {
-  background: #9caf88 !important;
-  color: #ffffff !important;
-}
+    /* Modal Sizing Checkbox Pills & Multi-angle Slot Theming */
+    .size-check-pill {
+      background: #ffffff !important;
+      border: 1.5px solid #9caf88 !important;
+      color: #162217 !important;
+      font-weight: 600 !important;
+    }
+
+    .size-check-pill:hover {
+      background: #f7f5ef !important;
+      border-color: #748c66 !important;
+      color: #162217 !important;
+    }
+
+    .size-check-pill.active {
+      background: #9caf88 !important;
+      border-color: #748c66 !important;
+      color: #ffffff !important;
+      box-shadow: 0 2px 8px rgba(156, 175, 136, 0.3) !important;
+    }
+
+    .size-check-pill input[type="checkbox"] {
+      accent-color: #e8412c !important;
+    }
+
+    .size-check-pill .pill-del-btn {
+      color: #e8412c !important;
+    }
+
+    .garment-image-slot {
+      background: #ffffff !important;
+      border: 1.5px solid #9caf88 !important;
+      box-shadow: 0 2px 8px rgba(22, 34, 23, 0.05) !important;
+    }
+
+    .garment-image-slot span {
+      color: #162217 !important;
+    }
+
+    .garment-image-slot .tbl-btn-del {
+      border-color: #e8412c !important;
+      color: #e8412c !important;
+      background: transparent !important;
+    }
+
+    .garment-image-slot .tbl-btn-del:hover {
+      background: #e8412c !important;
+      color: #ffffff !important;
+    }
+
+    .garment-image-slot .tbl-btn-edit {
+      background: #ffffff !important;
+      border: 1.5px solid #9caf88 !important;
+      color: #162217 !important;
+    }
+
+    .garment-image-slot .tbl-btn-edit:hover {
+      background: #f7f5ef !important;
+      border-color: #748c66 !important;
+    }
+
+    #addGarmentImageSlotBtn,
+    #addCustomSizeBtn {
+      background: #ffffff !important;
+      border: 1.5px solid #9caf88 !important;
+      color: #162217 !important;
+    }
+
+    #addGarmentImageSlotBtn:hover,
+    #addCustomSizeBtn:hover {
+      background: #9caf88 !important;
+      color: #ffffff !important;
+    }
+
     .ecom-refine-badge {
       background: #ffffff !important;
       color: #e8412c !important;
@@ -2891,15 +2947,31 @@ header.x-head,
 
 
 
-    .search-input {
+    .search-input,
+    #searchInput,
+    input.search-input {
       background: #ffffff !important;
       border: 1.5px solid #9caf88 !important;
       color: #162217 !important;
+      -webkit-text-fill-color: #162217 !important;
       border-radius: 999px !important;
       box-shadow: 0 2px 8px rgba(22, 34, 23, 0.04) !important;
+      font-weight: 600 !important;
+      font-size: 13.5px !important;
     }
 
-    .search-input:focus {
+    .search-input::placeholder,
+    #searchInput::placeholder,
+    input.search-input::placeholder {
+      color: #748c66 !important;
+      -webkit-text-fill-color: #748c66 !important;
+      opacity: 1 !important;
+      font-weight: 500 !important;
+    }
+
+    .search-input:focus,
+    #searchInput:focus,
+    input.search-input:focus {
       border-color: #e8412c !important;
       box-shadow: 0 0 12px rgba(232, 65, 44, 0.25) !important;
     }
