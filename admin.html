@@ -3263,6 +3263,136 @@
       -webkit-backdrop-filter: none !important;
     }
   </style>
+  <style id="admin-card-type">
+    /* Catalog stat cards, set like a page of the atelier's ledger rather
+       than a dashboard widget: Cormorant figures, tracked Montserrat
+       labels, an index numeral per card. Motion is the figures counting
+       up and a short staggered rise on reveal — nothing loops. */
+    .admin-stats-row {
+      counter-reset: statcard;
+      gap: 14px;
+    }
+
+    .admin-stats-row .stat-card {
+      counter-increment: statcard;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      padding: 26px 20px 16px !important;
+      background: #fdfcf7 !important;
+      border: 1px solid rgba(156, 175, 136, 0.55) !important;
+      border-radius: 2px !important;
+      box-shadow: none !important;
+      overflow: hidden;
+      transition: border-color 0.4s ease, background-color 0.4s ease !important;
+    }
+
+    .admin-stats-row.is-revealing .stat-card {
+      animation: stat-card-rise 0.72s cubic-bezier(0.16, 0.84, 0.32, 1) backwards !important;
+    }
+
+    .admin-stats-row.is-revealing .stat-card:nth-child(2) { animation-delay: 0.06s !important; }
+    .admin-stats-row.is-revealing .stat-card:nth-child(3) { animation-delay: 0.12s !important; }
+    .admin-stats-row.is-revealing .stat-card:nth-child(4) { animation-delay: 0.18s !important; }
+    .admin-stats-row.is-revealing .stat-card:nth-child(5) { animation-delay: 0.24s !important; }
+
+    @keyframes stat-card-rise {
+      from { opacity: 0; transform: translateY(9px); }
+      to { opacity: 1; transform: none; }
+    }
+
+    .admin-stats-row .stat-card::before {
+      content: counter(statcard, decimal-leading-zero);
+      position: absolute;
+      top: 15px;
+      left: 20px;
+      font-family: var(--sans);
+      font-size: 8.5px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      color: #b6c4a5;
+      transition: color 0.4s ease;
+    }
+
+    .admin-stats-row .stat-num {
+      display: flex;
+      align-items: baseline;
+      gap: 2px;
+      margin: auto 0 0 !important;
+      font-family: 'Cormorant Garamond', Georgia, serif !important;
+      font-size: 46px !important;
+      font-weight: 500 !important;
+      line-height: 0.92 !important;
+      letter-spacing: 0 !important;
+      color: #162217 !important;
+      transition: color 0.4s ease !important;
+    }
+
+    .admin-stats-row .stat-figure {
+      display: inline-block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+
+    .admin-stats-row .stat-mark {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: #748c66;
+      transition: color 0.4s ease;
+    }
+
+    .admin-stats-row .stat-label {
+      margin-top: 11px !important;
+      padding-top: 10px;
+      border-top: 1px solid rgba(156, 175, 136, 0.45);
+      font-family: var(--sans) !important;
+      font-size: 9px !important;
+      font-weight: 600 !important;
+      letter-spacing: 0.2em !important;
+      line-height: 1.5 !important;
+      color: #748c66 !important;
+      transition: border-color 0.4s ease !important;
+    }
+
+    /* Red ink on hover — no lift, no glow */
+    .admin-stats-row .stat-card:hover {
+      border-color: rgba(22, 34, 23, 0.75) !important;
+      background: #ffffff !important;
+    }
+
+    .admin-stats-row .stat-card:hover .stat-num,
+    .admin-stats-row .stat-card:hover .stat-mark {
+      color: #e8412c !important;
+    }
+
+    .admin-stats-row .stat-card:hover .stat-label {
+      border-top-color: rgba(232, 65, 44, 0.4);
+    }
+
+    @media (max-width: 640px) {
+      .admin-stats-row .stat-card {
+        padding: 22px 16px 14px !important;
+      }
+      .admin-stats-row .stat-card::before {
+        top: 12px;
+        left: 16px;
+      }
+      .admin-stats-row .stat-num {
+        font-size: 38px !important;
+      }
+      .admin-stats-row .stat-label {
+        font-size: 8.5px !important;
+        letter-spacing: 0.16em !important;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .admin-stats-row.is-revealing .stat-card {
+        animation: none !important;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -5558,6 +5688,7 @@
           if (userNameTxt) userNameTxt.textContent = u;
           if (userRoleBadge) userRoleBadge.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"></circle></svg> ${u} &middot; ${r}`;
           renderCatalog();
+          if (typeof countUpStats === "function") countUpStats();
           renderHeroManager();
           renderCarouselManager();
           renderWomenCardsManager();
@@ -5627,7 +5758,10 @@
           else b.classList.remove("active");
         });
         panes.forEach(p => p.classList.remove("active"));
-        if (target === "catalog") document.getElementById("paneCatalog")?.classList.add("active");
+        if (target === "catalog") {
+          document.getElementById("paneCatalog")?.classList.add("active");
+          if (typeof countUpStats === "function") countUpStats();
+        }
         if (target === "hero") {
           document.getElementById("paneHero")?.classList.add("active");
           if (typeof renderHeroManager === "function") renderHeroManager();
@@ -5674,6 +5808,86 @@
       const statLehengas = document.getElementById("statLehengas");
       const statVal = document.getElementById("statVal");
 
+      // ----- Stat card numerals ---------------------------------------
+      // Figures are set in Cormorant, with the currency mark and the
+      // multiplier in tracked Montserrat, then counted up on reveal.
+      const statCardsRow = document.querySelector(".admin-stats-row");
+      const statReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+      let statRevealId = 0;
+
+      function splitStatValue(raw) {
+        const m = String(raw).match(/^([^\d]*)([\d.,]+)([^\d]*)$/);
+        if (!m) return null;
+        return { pre: m[1], figure: m[2], post: m[3] };
+      }
+
+      function paintStatValue(el, pre, post) {
+        if (el.dataset.statPre !== pre || el.dataset.statPost !== post) {
+          el.innerHTML =
+            (pre ? '<span class="stat-mark stat-pre"></span>' : "") +
+            '<span class="stat-figure"></span>' +
+            (post ? '<span class="stat-mark stat-post"></span>' : "");
+          if (pre) el.querySelector(".stat-pre").textContent = pre;
+          if (post) el.querySelector(".stat-post").textContent = post;
+          el.dataset.statPre = pre;
+          el.dataset.statPost = post;
+        }
+        return el.querySelector(".stat-figure");
+      }
+
+      function setStatValue(el, raw) {
+        if (!el) return;
+        el.dataset.statTarget = String(raw);
+        const parts = splitStatValue(raw);
+        if (!parts) { el.textContent = raw; return; }
+        paintStatValue(el, parts.pre, parts.post).textContent = parts.figure;
+      }
+
+      function countUpStats() {
+        if (!statCardsRow) return;
+        statCardsRow.classList.remove("is-revealing");
+        void statCardsRow.offsetWidth; // restart the staggered rise
+        statCardsRow.classList.add("is-revealing");
+
+        const revealId = ++statRevealId;
+        if (statReducedMotion.matches) return;
+
+        const items = [...statCardsRow.querySelectorAll(".stat-num")].map(el => {
+          const parts = splitStatValue(el.dataset.statTarget ?? el.textContent);
+          if (!parts) return null;
+          const target = parseFloat(parts.figure.replace(/,/g, ""));
+          if (!isFinite(target)) return null;
+          return {
+            figure: paintStatValue(el, parts.pre, parts.post),
+            parts,
+            target,
+            decimals: (parts.figure.split(".")[1] || "").length,
+            grouped: parts.figure.includes(",")
+          };
+        }).filter(Boolean);
+        if (!items.length) return;
+
+        const duration = 900;
+        const started = performance.now();
+        const step = now => {
+          if (revealId !== statRevealId) return;
+          const t = Math.min(1, (now - started) / duration);
+          const eased = 1 - Math.pow(1 - t, 4);
+          items.forEach(item => {
+            const value = item.target * eased;
+            item.figure.textContent = item.grouped
+              ? value.toLocaleString("en-IN", { minimumFractionDigits: item.decimals, maximumFractionDigits: item.decimals })
+              : value.toFixed(item.decimals);
+          });
+          if (t < 1) {
+            requestAnimationFrame(step);
+          } else {
+            items.forEach(item => { item.figure.textContent = item.parts.figure; });
+          }
+        };
+        requestAnimationFrame(step);
+      }
+
       function renderCatalog(filterQuery = "") {
         if (!catalogBody) return;
         const q = filterQuery.toLowerCase().trim();
@@ -5687,12 +5901,12 @@
         });
 
         // Update Stats
-        if (statTotal) statTotal.textContent = catalog.length;
-        if (statKurtis) statKurtis.textContent = catalog.filter(c => c.category === "kurtis").length;
-        if (statKurtas) statKurtas.textContent = catalog.filter(c => c.category === "kurta-sets").length;
-        if (statLehengas) statLehengas.textContent = catalog.filter(c => c.category === "lehengas").length;
+        setStatValue(statTotal, catalog.length);
+        setStatValue(statKurtis, catalog.filter(c => c.category === "kurtis").length);
+        setStatValue(statKurtas, catalog.filter(c => c.category === "kurta-sets").length);
+        setStatValue(statLehengas, catalog.filter(c => c.category === "lehengas").length);
         const totalVal = catalog.reduce((sum, item) => sum + (Number(item.price) || 0), 0);
-        if (statVal) statVal.textContent = "₹" + (totalVal / 100000).toFixed(1) + "L";
+        setStatValue(statVal, "₹" + (totalVal / 100000).toFixed(1) + "L");
 
         catalogBody.innerHTML = filtered.map(item => `
       <tr>
