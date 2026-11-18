@@ -328,16 +328,20 @@ body.has-intro:not(.intro-done) header {
   z-index: 99995 !important;
 }
 
-body.is-ready .nav-side,
-body.is-ready .nav-center,
-body.is-ready .nav-l,
-body.is-ready .nav-r,
-body.is-ready .util {
-  display: flex !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-  pointer-events: auto !important;
-  transition: opacity 0.6s ease;
+/* Desktop only: below the breakpoint the inline links give way to the drawer,
+   and this rule would otherwise out-specify the breakpoint that hides them. */
+@media (min-width: 1200px) {
+  body.is-ready .nav-side,
+  body.is-ready .nav-center,
+  body.is-ready .nav-l,
+  body.is-ready .nav-r,
+  body.is-ready .util {
+    display: flex !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    transition: opacity 0.6s ease;
+  }
 }
 
 .curtain .folds i {
@@ -786,6 +790,9 @@ section#hero {
   position: absolute !important;
   left: clamp(20px, 6vw, 80px) !important;
   top: 22vh !important;
+  /* The phone rule anchors the card by its bottom edge as well; pinning both
+     edges stretched it into a tall empty panel over the photograph. */
+  bottom: auto !important;
   max-width: 560px !important;
   z-index: 10 !important;
   background: rgba(255, 255, 255, 0.94) !important;
@@ -1374,6 +1381,18 @@ header.b-head,
   opacity: 1 !important;
 }
 
+/* Phone: the section is full bleed and the desktop frame hangs 4.5% outside
+   the photograph on each side, so half of it fell off the screen. */
+@media (max-width: 767px) {
+  #storyEd { padding: 58px 22px !important; }
+  #storyEd .se-grid { width: 100% !important; gap: 32px !important; }
+  #storyEd .se-copy { padding: 0 !important; }
+  #storyEd .se-frame { inset: 10px; }
+  #storyEd h2 { font-size: clamp(30px, 8.6vw, 40px) !important; line-height: 1.14 !important; }
+  #storyEd .se-para { font-size: 15px !important; line-height: 1.72 !important; }
+  #storyEd .se-rule { margin: 22px 0 !important; }
+}
+
 /* ========================================================
    9. FOOTER (WHITE BACKGROUND, SAGE DOODLE, #e8412c SOCIAL,
       BLACK NAVIGATION LINKS, HIGH CONTRAST)
@@ -1697,6 +1716,74 @@ svg.lotus path {
 .f-bottom #backTop:hover span,
 #backTop:hover span {
   color: #ffffff !important;
+}
+
+/* Tablet and phone: each page declares its own small-screen collapse *before*
+   the five-column grid, so the collapse never won and the link lists ended up
+   in 49px and 68px slivers. Two columns here, one on a phone, with the mark
+   and the sign-up spanning the row. */
+@media (max-width: 1024px) {
+  #footer .f-main {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px 34px;
+    width: min(88vw, 640px);
+    margin: 48px auto 44px;
+  }
+
+  #footer .f-brand,
+  #footer .f-news { grid-column: 1 / -1; }
+
+  #footer .f-social { flex-wrap: wrap; }
+
+  #footer .f-bottom {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    gap: 8px !important;
+    width: min(88vw, 640px);
+    margin: 0 auto;
+    padding-top: 22px !important;
+    padding-bottom: 28px !important;
+    text-align: left;
+  }
+  #footer .f-bottom p { text-align: left; }
+  #footer .f-bottom nav { justify-content: flex-start; }
+  #footer .f-bottom #backTop { align-self: flex-start; }
+}
+
+@media (max-width: 767px) {
+  #footer { padding: 38px 0 16px !important; }
+  #footer .f-statement { padding: 0 22px; }
+  #footer .f-statement .f-st-rule { height: 38px; margin: 18px auto; }
+
+  #footer .f-main {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    width: calc(100% - 44px);
+    margin: 34px auto 30px;
+  }
+
+  #footer .foot-brand-logo,
+  #footer .f-logo-link svg { height: 118px; width: auto; }
+  #footer .f-about { margin-bottom: 0; }
+
+  #footer .f-col h4,
+  #footer .f-news h4 { margin-bottom: 2px; }
+  #footer .f-col > i,
+  #footer .f-news > i { margin-bottom: 8px; }
+
+  #footer .f-field { width: 100%; }
+  #footer #newsEmail,
+  #footer .f-field input { min-width: 0; }
+
+  #footer .f-orna { width: calc(100% - 44px); }
+  #footer .f-bottom {
+    width: calc(100% - 44px);
+    padding-top: 18px !important;
+    padding-bottom: 22px !important;
+  }
+  #footer .f-bottom nav { width: 100%; row-gap: 0; }
+  #footer .f-bottom nav i { display: none; }
 }
 
 /* Footer Lower Bar Animated Indian Flag */
@@ -3770,6 +3857,9 @@ html {
   width: 22px;
   height: 1.5px;
   border-radius: 2px;
+  /* The bars are painted from the button's ink; the page-wide `span` colour
+     would otherwise make the span white whatever the button said. */
+  color: inherit !important;
   background: currentColor;
   transition: top 0.38s cubic-bezier(0.77, 0, 0.18, 1),
               transform 0.38s cubic-bezier(0.77, 0, 0.18, 1);
@@ -3784,6 +3874,7 @@ html {
 /* Over the transparent home header the toggle takes the light ink, exactly
    like the inline links and the mark do. */
 body.has-intro #header:not(.is-solid) .nav-toggle { color: #efe4c8 !important; }
+body.has-intro #header.is-solid .nav-toggle { color: #162217 !important; }
 
 /* The home film plays under a 99990 curtain while the sheet sits at 1200, so a
 drawer opened mid-film stays invisible yet still locks the scroll; the inline
@@ -3910,6 +4001,14 @@ html.nav-open body {
   letter-spacing: 0.18em;
   color: #748c66 !important;
   font-variant-numeric: tabular-nums;
+}
+
+/* The page sheets paint every `span` white for the dark film chapters, which
+   left the labels white on this ivory sheet; they take the link's ink instead
+   and the numerals keep their own tone. */
+.sd-nav a > span:not(.sd-idx),
+.sd-grid a > span:not(.sd-idx) {
+  color: inherit !important;
 }
 
 .sd-label {

@@ -3136,16 +3136,23 @@ button:hover,
   outline: none !important;
   overflow-x: auto !important;
   scroll-behavior: auto !important;
-  scroll-snap-type: none !important;
   -webkit-overflow-scrolling: touch !important;
   scrollbar-width: none !important;
   padding: 10px 8vw 20px !important;
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8vw, black calc(100% - 8vw), transparent 100%) !important;
-  mask-image: linear-gradient(to right, transparent 0%, black 8vw, black calc(100% - 8vw), transparent 100%) !important;
   cursor: grab;
 }
 .w-track:active {
   cursor: grabbing;
+}
+/* The glide, the snap opt-out and the edge fade are the desktop marquee's;
+   phones swipe the row with a snap point per card instead. */
+@media (min-width: 768px) {
+  .w-track {
+    scroll-snap-type: none !important;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8vw, black calc(100% - 8vw), transparent 100%) !important;
+    mask-image: linear-gradient(to right, transparent 0%, black 8vw, black calc(100% - 8vw), transparent 100%) !important;
+  }
+  .w-card { flex: 0 0 clamp(280px, 28vw, 380px) !important; }
 }
 .w-track::-webkit-scrollbar {
   display: none !important;
@@ -3153,7 +3160,6 @@ button:hover,
   height: 0 !important;
 }
 .w-card {
-  flex: 0 0 clamp(280px, 28vw, 380px) !important;
   max-width: 400px !important;
   aspect-ratio: 397 / 551 !important;
   border-radius: 999px 999px 16px 16px !important;
@@ -3464,12 +3470,15 @@ button:hover,
 }
 .lock-close-btn:hover { opacity: 1; color: var(--gold); }
 
-/* Global Footer Standardized Override */
-#footer .f-main {
-  display: grid !important;
-  grid-template-columns: 2fr 1fr 1.2fr 1.8fr !important;
-  gap: clamp(28px, 3.4vw, 64px) !important;
-  align-items: start !important;
+/* Global Footer Standardized Override — the desktop grid; the shared sheet
+   collapses it to two columns, then one, below this width. */
+@media (min-width: 1025px) {
+  #footer .f-main {
+    display: grid !important;
+    grid-template-columns: 2fr 1fr 1.2fr 1.8fr !important;
+    gap: clamp(28px, 3.4vw, 64px) !important;
+    align-items: start !important;
+  }
 }
 #footer .f-brand {
   position: relative !important;
@@ -5250,7 +5259,7 @@ html, body {
 }
 
 </style>
-  <link rel="stylesheet" href="theme-fresh.css?v=24">
+  <link rel="stylesheet" href="theme-fresh.css?v=27">
 </head>
 <body class="is-loading has-intro">
 <a href="#top" class="skip-link">Skip to main content</a>
@@ -7079,6 +7088,9 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
     var isPaused = false;
     var touchTimeout = null;
     var rafId = null;
+    // Phones get a plain swipe rail with snap points instead: the marquee never
+    // rests on a card there, so the row kept sliding under the reader's thumb.
+    var phoneQuery = window.matchMedia('(max-width: 767px)');
 
     track.addEventListener('mouseenter', function () { isPaused = true; });
     track.addEventListener('mouseleave', function () { isPaused = false; });
@@ -7095,7 +7107,7 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
       if (rafId) cancelAnimationFrame(rafId);
 
       function loop() {
-        if (!isPaused) {
+        if (!isPaused && !phoneQuery.matches) {
           track.scrollLeft += 0.85; // smooth luxury glide
           var half = track.scrollWidth / 2;
           if (half > 0 && track.scrollLeft >= half) {
@@ -7108,6 +7120,14 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
     }
 
     startAutoScroll();
+
+    // Rotating a phone back into portrait restarts at the first card rather
+    // than wherever the row happened to be.
+    if (phoneQuery.addEventListener) {
+      phoneQuery.addEventListener('change', function (event) {
+        if (event.matches) track.scrollLeft = 0;
+      });
+    }
   })();
 
   /* scroll choreography — every chapter has its own movement */
