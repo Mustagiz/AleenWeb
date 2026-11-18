@@ -4122,16 +4122,6 @@ html.nav-open body {
 .sd-cta:hover,
 .sd-cta:active { background: #cf3420 !important; }
 
-.sd-meta {
-  margin-top: 14px;
-  text-align: center;
-  font-family: var(--sans, 'Montserrat', system-ui, sans-serif);
-  font-size: 9px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: #748c66 !important;
-}
-
 /* ---------- breakpoints ---------- */
 @media (max-width: 1199px) {
   .nav-center,

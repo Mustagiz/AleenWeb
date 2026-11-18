@@ -87,7 +87,6 @@
         '<div class="sd-grid">' + shop + '</div>' +
         '<div class="sd-foot">' +
           '<a class="sd-cta" href="/collections">Explore the Collections</a>' +
-          '<p class="sd-meta">Handcrafted in Lucknow</p>' +
         '</div>' +
       '</div>';
 
