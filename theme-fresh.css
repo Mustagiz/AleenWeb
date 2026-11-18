@@ -837,10 +837,10 @@ section#hero {
   margin: 12px 0 24px !important;
 }
 
-/* Phone: the card is a wide-stage device. On a narrow one it covered most of
-   the photograph, so the same copy sits straight on the image — the light
-   vignette becomes a dark foot for it to read on. */
-@media (max-width: 767px) {
+/* Tablet and phone: the card is a wide-stage device. Below 1025px it covered
+   most of the photograph, so the same copy sits straight on the image — the
+   light vignette becomes a dark foot for it to read on. */
+@media (max-width: 1024px) {
   #hero .slide .veil {
     background: linear-gradient(180deg,
       rgba(6, 12, 8, 0.38) 0%,
@@ -854,7 +854,7 @@ section#hero {
     top: auto !important;
     bottom: calc(10vh + env(safe-area-inset-bottom)) !important;
     left: 22px !important;
-    max-width: calc(100% - 44px) !important;
+    max-width: min(560px, calc(100% - 44px)) !important;
     padding: 0 !important;
     background: transparent !important;
     border: none !important;
