@@ -213,22 +213,6 @@
   width: clamp(140px, 14vw, 220px);
 }
 
-.menu-btn {
-  display: none;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 8px;
-}
-.menu-btn span {
-  display: block;
-  width: 22px;
-  height: 2px;
-  background: var(--gold-light);
-  margin: 5px 0;
-  transition: 0.3s;
-}
-
 /* Mega Menus — Atelier Luxury Deep Emerald Glass */
 .mega {
   position: fixed !important;
@@ -410,26 +394,6 @@
 }
 .mega-promo-card:hover .mega-promo-copy p svg {
   transform: translateX(4px) !important;
-}
-
-
-/* Mobile Nav Drawer strictly hidden unless triggered on small mobile */
-.mobile-nav, #mobileNav {
-  display: none !important;
-  position: fixed;
-  inset: 0;
-  z-index: 99999;
-  background: rgba(4, 9, 6, 0.98);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-}
-.mobile-nav.is-open, #mobileNav.is-open {
-  display: block !important;
-}
-@media (min-width: 901px) {
-  .mobile-nav, #mobileNav {
-    display: none !important;
-  }
 }
 
 /* ======================= GLOBAL FOOTER STYLES ======================= */
@@ -831,12 +795,10 @@
 @media (max-width: 1024px) {
   .f-main { grid-template-columns: 1fr 1fr; gap: 40px; }
   .brand-slot { display: none; }
-  .menu-btn { display: block; }
-}
+  }
 @media (max-width: 640px) {
   .f-main { grid-template-columns: 1fr; gap: 36px; }
 }
-
 
     body {
       background: var(--void-0);
@@ -849,7 +811,6 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    
     /* Dynamic Animated Luxury Garments Hero */
     .editorial-hero {
       position: relative;
@@ -1310,7 +1271,7 @@
         gap: 14px;
       }
     }
-  </style>
+</style>
 
 <style>
 /* ================= GLOBAL COMPONENTS CSS ================= */
@@ -1462,22 +1423,6 @@
 
 .logo-space {
   width: clamp(170px, 17vw, 250px) !important;
-}
-
-.menu-btn {
-  display: none !important;
-  background: transparent !important;
-  border: none !important;
-  cursor: pointer !important;
-  padding: 8px !important;
-}
-.menu-btn span {
-  display: block !important;
-  width: 22px !important;
-  height: 2px !important;
-  background: var(--gold-light) !important;
-  margin: 5px 0 !important;
-  transition: 0.3s !important;
 }
 
 /* ================= MEGA MENU (Only Haute Couture & Wide Banner) ================= */
@@ -1666,25 +1611,6 @@
 
 .mega-promo-wide .p-line svg {
   stroke: var(--gold) !important;
-}
-
-/* Mobile Drawer rules */
-.mobile-nav, #mobileNav {
-  display: none !important;
-  position: fixed;
-  inset: 0;
-  z-index: 99999;
-  background: rgba(4, 9, 6, 0.98);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-}
-.mobile-nav.is-open, #mobileNav.is-open {
-  display: block !important;
-}
-@media (min-width: 901px) {
-  .mobile-nav, #mobileNav {
-    display: none !important;
-  }
 }
 
 /* ======================= GLOBAL FOOTER STYLES ======================= */
@@ -2086,15 +2012,14 @@
 @media (max-width: 1024px) {
   .f-main { grid-template-columns: 1fr 1fr; gap: 40px; }
   .brand-slot { display: none; }
-  .menu-btn { display: block; }
-}
+  }
 @media (max-width: 640px) {
   .f-main { grid-template-columns: 1fr; gap: 36px; }
 }
 
 /* ================= END GLOBAL COMPONENTS CSS ================= */
 </style>
-  <link rel="stylesheet" href="theme-fresh.css?v=23">
+  <link rel="stylesheet" href="theme-fresh.css?v=24">
 </head>
 <body>
   <a href="#main" class="skip-link">Skip to main content</a>

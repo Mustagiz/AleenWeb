@@ -122,7 +122,6 @@ if (!window.location.hash) {
   border: 0;
 }
 
-
 /* ================= GLOBAL HEADER & FOOTER LUXURY CSS ================= */
 :root {
   --void-0: #040906;
@@ -223,22 +222,6 @@ if (!window.location.hash) {
   width: clamp(140px, 14vw, 220px);
 }
 
-.menu-btn {
-  display: none;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 8px;
-}
-.menu-btn span {
-  display: block;
-  width: 22px;
-  height: 2px;
-  background: var(--gold-light);
-  margin: 5px 0;
-  transition: 0.3s;
-}
-
 /* Mega Menus */
 .mega {
   position: fixed;
@@ -336,25 +319,6 @@ if (!window.location.hash) {
   font-size: 12px;
   color: var(--gold-light);
   letter-spacing: 0.1em;
-}
-
-/* Mobile Nav Drawer strictly hidden unless triggered on small mobile */
-.mobile-nav, #mobileNav {
-  display: none !important;
-  position: fixed;
-  inset: 0;
-  z-index: 99999;
-  background: rgba(4, 9, 6, 0.98);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-}
-.mobile-nav.is-open, #mobileNav.is-open {
-  display: block !important;
-}
-@media (min-width: 901px) {
-  .mobile-nav, #mobileNav {
-    display: none !important;
-  }
 }
 
 /* ======================= GLOBAL FOOTER STYLES ======================= */
@@ -752,8 +716,7 @@ if (!window.location.hash) {
 @media (max-width: 1024px) {
   .f-main { grid-template-columns: 1fr 1fr; gap: 40px; }
   .brand-slot { display: none; }
-  .menu-btn { display: block; }
-}
+  }
 @media (max-width: 640px) {
   .f-main { grid-template-columns: 1fr; gap: 36px; }
 }
@@ -1271,122 +1234,10 @@ body.is-ready .util { opacity: 1; transform: none; }
 }
 
 /* ---------- hamburger ---------- */
-.menu-btn {
-  display: none;
-  width: 44px; height: 44px;
-  position: relative; z-index: 130;
-  opacity: 0; pointer-events: none;
-  transition: opacity 0.7s var(--ease) 0.28s;
-}
-body.is-ready .menu-btn { opacity: 1; pointer-events: auto; }
-.menu-btn span {
-  position: absolute; left: 11px; width: 22px; height: 1.5px;
-  background: var(--cream);
-  transition: transform 0.42s var(--ease-io), top 0.42s var(--ease-io), opacity 0.3s;
-}
-.menu-btn span:nth-child(1) { top: 18px; }
-.menu-btn span:nth-child(2) { top: 25px; }
-.menu-btn.is-open span:nth-child(1) { top: 21.5px; transform: rotate(45deg); }
-.menu-btn.is-open span:nth-child(2) { top: 21.5px; transform: rotate(-45deg); }
 
 /* ============================================================
    MOBILE / TABLET NAVIGATION DRAWER
    ============================================================ */
-#mobileNav {
-  position: fixed; inset: 0; z-index: 120;
-  display: flex; flex-direction: column;
-  background:
-    radial-gradient(120% 70% at 12% 0%, rgba(32, 58, 40, 0.96) 0%, transparent 62%),
-    linear-gradient(168deg, #12261a 0%, #0c1810 62%, #0a140d 100%);
-  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
-  opacity: 0; visibility: hidden;
-  transition: opacity 0.42s var(--ease), visibility 0.42s;
-}
-#mobileNav.is-open { opacity: 1; visibility: visible; }
-
-.mn-top {
-  flex: 0 0 auto;
-  display: grid; grid-template-columns: 44px 1fr 44px; align-items: center;
-  gap: 10px;
-  height: 84px;
-  padding: 0 clamp(14px, 4vw, 26px);
-  border-bottom: 1px solid rgba(201, 163, 95, 0.16);
-}
-.mn-back, .mn-close {
-  width: 44px; height: 44px;
-  display: inline-flex; align-items: center; justify-content: center;
-  color: rgba(238, 230, 208, 0.96);
-  transition: color 0.3s var(--ease), opacity 0.3s var(--ease);
-}
-.mn-back svg { width: 20px; height: 14px; }
-.mn-close svg { width: 19px; height: 19px; }
-.mn-back svg, .mn-close svg { fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
-.mn-back { opacity: 0; pointer-events: none; }
-#mobileNav.has-back .mn-back { opacity: 1; pointer-events: auto; }
-.mn-back:hover, .mn-close:hover { color: var(--gold-light); }
-.mn-title {
-  text-align: center; min-width: 0;
-  font-size: 11px; letter-spacing: 0.3em; text-indent: 0.3em; text-transform: uppercase;
-  color: var(--cream-hi);
-}
-.mn-emblem { height: 46px; width: auto; display: inline-block; vertical-align: middle; }
-
-.mn-stage { position: relative; flex: 1 1 auto; overflow: hidden; }
-.mn-panel {
-  position: absolute; inset: 0;
-  overflow-y: auto; -webkit-overflow-scrolling: touch;
-  padding: clamp(18px, 4vh, 34px) clamp(20px, 6vw, 46px) 24px;
-}
-.mn-panel a, .mn-panel button {
-  position: relative;
-  display: flex; align-items: center; justify-content: space-between; gap: 14px;
-  width: 100%;
-  min-height: 56px;
-  padding: 6px 0;
-  text-align: left;
-  color: var(--cream);
-  border-bottom: 1px solid rgba(201, 163, 95, 0.13);
-}
-.mn-panel .mn-l0 {
-  font-family: var(--serif);
-  font-size: clamp(25px, 6.4vw, 34px);
-  letter-spacing: 0.015em;
-  min-height: 62px;
-}
-.mn-panel .mn-l1 {
-  font-family: var(--serif);
-  font-size: clamp(20px, 5.2vw, 26px);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-.mn-panel .mn-l2 {
-  font-size: clamp(14px, 3.9vw, 16px);
-  letter-spacing: 0.09em;
-  color: rgba(238, 230, 208, 0.96);
-}
-.mn-panel .chev { flex: 0 0 auto; width: 15px; height: 15px; color: var(--gold); }
-.mn-panel .chev svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-.mn-panel a:active, .mn-panel button:active { color: var(--gold-light); }
-.mn-lead {
-  display: block !important;
-  border: 0 !important; min-height: 0 !important;
-  font-size: 9.5px !important; letter-spacing: 0.34em; text-indent: 0.34em; text-transform: uppercase;
-  color: var(--gold) !important;
-  margin-bottom: 10px; padding: 0 !important;
-}
-
-.mn-foot {
-  flex: 0 0 auto;
-  padding: 16px clamp(20px, 6vw, 46px) calc(20px + env(safe-area-inset-bottom));
-  border-top: 1px solid rgba(201, 163, 95, 0.16);
-  display: flex; align-items: center; justify-content: space-between; gap: 14px;
-}
-.mn-foot .mn-acct {
-  font-size: 10.5px; letter-spacing: 0.24em; text-transform: uppercase;
-  color: var(--gold-light);
-  min-height: 44px; display: inline-flex; align-items: center;
-}
-.mn-foot p { font-size: 9px; letter-spacing: 0.26em; text-transform: uppercase; color: rgba(226, 214, 184, 0.64); }
 
 /* ============================================================
    HEADER — TABLET (compact luxury: menu · logo · utilities)
@@ -1398,8 +1249,7 @@ body.is-ready .menu-btn { opacity: 1; pointer-events: auto; }
     --logo-h: clamp(74px, 8.4vh, 92px);
     --logo-h-solid: clamp(56px, 6vh, 66px);
   }
-  .menu-btn { display: block; }
-  .nav-center { display: none; }
+    .nav-center { display: none; }
   .mega { display: none; }
   #acctWrap { display: none; }          /* account lives in the drawer on touch layouts */
   .pop { right: -6px; }
@@ -1429,14 +1279,11 @@ body.is-ready .menu-btn { opacity: 1; pointer-events: auto; }
   .sp-inner { padding-top: calc(28px + env(safe-area-inset-top)); }
   .sp-form input { font-size: 20px; }
   .pop { position: fixed; left: 14px; right: 14px; top: auto; bottom: 14px; width: auto; }
-  .mn-top { height: 72px; }
-  .mn-emblem { height: 40px; }
-}
+    }
 
 @media (max-width: 360px) {
   :root { --logo-h: 56px; --hdr-h: 78px; }
-  .mn-panel .mn-l0 { font-size: 23px; min-height: 56px; }
-}
+  }
 
 /* ============================================================
    HERO
@@ -1733,7 +1580,6 @@ body.is-ready .hero-desc { opacity: 1; }
 @media (max-width: 700px) {
   :root { --content-x: 7.5vw; }
 
-
   /* portrait art direction — the mobile plates are composed for this frame */
   .s-women img { object-position: 69% 22%; }
   .s-men img   { object-position: 55% 25%; }
@@ -1787,12 +1633,6 @@ body.is-ready .hero-desc { opacity: 1; }
   #cinema, #curtains, #dust, #skipIntro { display: none !important; }
   .reveal { opacity: 1; transform: none; }
 }
-
-
-
-
-
-
 
 /* ============================================================
    SHARED SECTION LANGUAGE
@@ -2729,8 +2569,6 @@ section { position: relative; }
   .w-track { justify-content: flex-start; }
   .w-nav { margin-top: 2.5vh; }
 
-
-
   .c-row { flex-wrap: wrap; gap: 4.5vh 0; margin: 4.5vh auto; }
   .c-item { flex: 1 1 50%; padding: 0 4vw; }
   .c-sep { display: none; }
@@ -2749,27 +2587,6 @@ section { position: relative; }
   #backTop { flex-direction: row; }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* ============================================================
    HERO-ONLY STAGE — everything below the hero is out of the build
    ============================================================ */
@@ -2777,8 +2594,6 @@ body.hero-only #explore,
 body.hero-only #women-new,
 body.hero-only { overflow: hidden; }
 body.hero-only main { height: 100vh; height: 100svh; }
-
-
 
 /* ---------- keep both nav groups clear of the centred logo ---------- */
 @media (min-width: 1200px) {
@@ -2790,17 +2605,9 @@ body.hero-only main { height: 100vh; height: 100svh; }
   #wishWrap { display: none; }
 }
 
-
-
-
 /* anchor targets clear the fixed header instead of hiding beneath it */
 main > section[id], footer[id] { scroll-margin-top: calc(var(--hdr-h-solid) + 14px); }
 #hero { scroll-margin-top: 0; }
-
-
-
-
-
 
 /* ============================================================
    SECTION SEAMS — adjacent photographic scenes meet on a shared
@@ -2880,7 +2687,7 @@ main > section[id], footer[id] { scroll-margin-top: calc(var(--hdr-h-solid) + 14
   .w-card:active, .k-panel:active, .b-card:active, .x-card:active { transform: scale(0.985); }
   .cta:active, .btn:active, .pop-cta:active { transform: scale(0.978); }
   .k-go:active, .b-go:active, .xt-go:active { transform: scale(0.9); }
-  .util:active svg, .menu-btn:active span { opacity: 0.65; }
+  .util:active svg { opacity: 0.65; }
   .util-wish.is-liked svg { color: var(--gold-light); }
 
   /* ---------- scroll-linked section ornaments ---------- */
@@ -2934,105 +2741,27 @@ main > section[id], footer[id] { scroll-margin-top: calc(var(--hdr-h-solid) + 14
   .w-card, .k-panel, .b-card { transition: none; opacity: 1 !important; }
 }
 
-
 /* ============================================================
    MOBILE MENU — WARM IVORY VARIATION
    Same structure, spacing, content and motion as before; only the
    colour treatment and a few ornamental details change, following
    the reference plate in menu.PNG.
    ============================================================ */
-#mobileNav {
-  --mn-ivory:    #F3EBDD;   /* warm ivory  — the ground            */
-  --mn-ivory-hi: #FBF6EC;   /* lifted ivory — glow behind the mark */
-  --mn-ivory-lo: #EDE2CE;   /* settled ivory — lower edge          */
-  --mn-forest:   #17261B;   /* deep forest — depth and press state */
-  --mn-gold:     #B89A62;
-  --mn-gold-ink: #ffffff;   /* gold as TEXT — the decorative gold is too light to read small */
-  --mn-walnut:   #3B3025;   /* rich walnut — the typography        */
-
-  background:
-    radial-gradient(88% 42% at 50% -4%, var(--mn-ivory-hi) 0%, rgba(251, 246, 236, 0) 64%),
-    linear-gradient(172deg, #F7F1E6 0%, var(--mn-ivory) 46%, var(--mn-ivory-lo) 100%);
-  color: var(--mn-walnut);
-}
 
 /* soft depth at the edges — the reference reads like a lit card,
    not a flat fill */
-#mobileNav::before,
-#mobileNav::after {
-  content: "";
-  position: absolute;
-  pointer-events: none;
-  background-repeat: no-repeat;
-  background-size: contain;
-  opacity: 0.55;
-}
 /* botanical flourish, upper left — kept inside the header band so it
    never crosses the navigation type */
-#mobileNav::before {
-  left: -5%; top: -1%;
-  width: 48%; height: 21%;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cg stroke='%23D8CAB0' stroke-width='1.4' fill='none' stroke-linecap='round'%3E%3Cpath d='M0 18 C 46 14, 86 34, 110 70 C 130 100, 140 140, 142 196'/%3E%3Cpath d='M22 20 C 30 40, 30 56, 22 70'/%3E%3Cpath d='M62 32 C 72 52, 72 68, 62 84'/%3E%3Cpath d='M100 62 C 112 82, 114 100, 106 116'/%3E%3Cpath d='M126 106 C 136 124, 138 142, 132 158'/%3E%3C/g%3E%3Cg fill='%23DED2BC'%3E%3Cellipse rx='17' ry='6.5' transform='translate(30,44) rotate(58)'/%3E%3Cellipse rx='19' ry='7' transform='translate(70,60) rotate(62)'/%3E%3Cellipse rx='18' ry='6.5' transform='translate(110,92) rotate(56)'/%3E%3Cellipse rx='16' ry='6' transform='translate(134,134) rotate(60)'/%3E%3Cellipse rx='14' ry='5.5' transform='translate(14,8) rotate(24)'/%3E%3Cellipse rx='15' ry='5.5' transform='translate(52,20) rotate(18)'/%3E%3Cellipse rx='14' ry='5' transform='translate(92,44) rotate(26)'/%3E%3C/g%3E%3C/svg%3E");
-  background-position: left top;
-}
 /* the same vine, turned, in the open space below the list */
-#mobileNav::after {
-  right: -8%; bottom: 9%;
-  width: 60%; height: 30%;
-  transform: rotate(180deg);
-  opacity: 0.5;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cg stroke='%23D8CAB0' stroke-width='1.4' fill='none' stroke-linecap='round'%3E%3Cpath d='M0 18 C 46 14, 86 34, 110 70 C 130 100, 140 140, 142 196'/%3E%3Cpath d='M22 20 C 30 40, 30 56, 22 70'/%3E%3Cpath d='M62 32 C 72 52, 72 68, 62 84'/%3E%3Cpath d='M100 62 C 112 82, 114 100, 106 116'/%3E%3Cpath d='M126 106 C 136 124, 138 142, 132 158'/%3E%3C/g%3E%3Cg fill='%23DED2BC'%3E%3Cellipse rx='17' ry='6.5' transform='translate(30,44) rotate(58)'/%3E%3Cellipse rx='19' ry='7' transform='translate(70,60) rotate(62)'/%3E%3Cellipse rx='18' ry='6.5' transform='translate(110,92) rotate(56)'/%3E%3Cellipse rx='16' ry='6' transform='translate(134,134) rotate(60)'/%3E%3Cellipse rx='14' ry='5.5' transform='translate(14,8) rotate(24)'/%3E%3Cellipse rx='15' ry='5.5' transform='translate(52,20) rotate(18)'/%3E%3Cellipse rx='14' ry='5' transform='translate(92,44) rotate(26)'/%3E%3C/g%3E%3C/svg%3E");
-  background-position: left top;
-}
-/* the menu's own chrome sits above the flourishes */
-#mobileNav > * { position: relative; z-index: 1; }
 
 /* ---------- header row ---------- */
 /* the reference carries no rule under the mark — the logo simply
    sits on the cream */
-#mobileNav .mn-top { border-bottom: 0; }
-#mobileNav .mn-back,
-#mobileNav .mn-close { color: var(--mn-gold); }
-#mobileNav .mn-back svg,
-#mobileNav .mn-close svg { stroke-width: 1.5; }
-#mobileNav .mn-back:hover,
-#mobileNav .mn-close:hover,
-#mobileNav .mn-back:active,
-#mobileNav .mn-close:active { color: var(--mn-forest); }
-#mobileNav .mn-title { color: var(--mn-walnut); }
 
 /* ---------- the list ---------- */
-#mobileNav .mn-panel a,
-#mobileNav .mn-panel button {
-  color: var(--mn-walnut);
-  border-bottom: 1px solid rgba(184, 154, 98, 0.42);
-}
-#mobileNav .mn-panel .mn-l2 { color: rgba(59, 48, 37, 0.92); }
-#mobileNav .mn-panel .chev { color: var(--mn-gold); }
-#mobileNav .mn-panel a:active,
-#mobileNav .mn-panel button:active { color: var(--mn-forest); }
-#mobileNav .mn-panel a:active .chev,
-#mobileNav .mn-panel button:active .chev { color: var(--mn-walnut); }
-#mobileNav .mn-lead { color: var(--mn-gold) !important; }
 
 /* ---------- footer ---------- */
-#mobileNav .mn-foot {
-  border-top: 1px solid rgba(184, 154, 98, 0.42);
-}
 /* the reference marks its closing rule with a small gold lozenge */
-#mobileNav .mn-foot::before {
-  content: "";
-  position: absolute;
-  left: 50%; top: 0;
-  width: 7px; height: 7px;
-  transform: translate(-50%, -50%) rotate(45deg);
-  background: var(--mn-gold);
-  box-shadow: 0 0 0 4px var(--mn-ivory);
-}
-#mobileNav .mn-foot { position: relative; }
-#mobileNav .mn-foot .mn-acct { color: var(--mn-gold); }
-#mobileNav .mn-foot .mn-acct:active { color: var(--mn-forest); }
-#mobileNav .mn-foot p { color: rgba(59, 48, 37, 0.8); }
 
 /* ============================================================
    DESKTOP MEGA MENU — WARM IVORY VARIATION
@@ -3092,20 +2821,31 @@ main > section[id], footer[id] { scroll-margin-top: calc(var(--hdr-h-solid) + 14
 body { font-weight: 400; }
 
 /* letterspaced small caps need more weight to hold at small sizes */
-.mn-lead, .mn-foot .mn-acct, .mg-col h4,
-.k-eyebrow, .b-eyebrow, .x-eyebrow, .sh-st-line,
-.f-col h4, .f-news h4, .c-item span, .b-corner span, .k-corner span,
-.hero-desc, .eyebrow, .sp-label { font-weight: 500; }
+.mg-col h4,
+.k-eyebrow,
+.b-eyebrow,
+.x-eyebrow,
+.sh-st-line,
+.f-col h4,
+.f-news h4,
+.c-item span,
+.b-corner span,
+.k-corner span,
+.hero-desc,
+.eyebrow,
+.sp-label { font-weight: 500; }
 
 /* gold text -> readable gold */
-.mn-lead, .mn-foot .mn-acct, .mg-col h4,
-.k-eyebrow, .b-eyebrow, .sp-list a .sp-ctx, .sp-label { color: var(--mn-gold-ink) !important; }
-#mobileNav .mn-lead, #mobileNav .mn-foot .mn-acct { color: var(--mn-gold-ink) !important; }
+.mg-col h4,
+.k-eyebrow,
+.b-eyebrow,
+.sp-list a .sp-ctx,
+.sp-label { color: var(--mn-gold-ink) !important; }
 
 /* body copy and nav sit at full ink */
-.nav-side a, .mn-panel a, .mn-panel button, .f-col a { font-weight: 400; }
+.nav-side a,
+.f-col a { font-weight: 400; }
 .cta .lbl, .btn .lbl, .pop-cta .lbl, .sh-cta, .sh-ghost { font-weight: 500; }
-
 
 /* ============================================================
    MEASURED COMPONENT CLASSES (Aleen Clothing Reference)
@@ -3141,7 +2881,6 @@ body { font-weight: 400; }
   font-size: 30.24px;
   letter-spacing: 0.3024px;
 }
-
 
 /* ============================================================
    WHITE TEXT & BOLD WHITE BUTTON SYSTEM OVERRIDES
@@ -3250,7 +2989,6 @@ button:hover,
   stroke: #ffffff !important;
   stroke-width: 2 !important;
 }
-
 
 /* ============================================================
    MEGA MENU & MOBILE NAV READABILITY (IVORY CARD CONTRAST)
@@ -3372,26 +3110,6 @@ button:hover,
   font-size: 14px !important;
   color: #F7EFDC !important;
   text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9) !important;
-}
-
-/* Mobile Nav Drawer Contrast */
-#mobileNav .mn-lead,
-#mobileNav .mn-col h4,
-#mobileNav .mn-foot .mn-acct {
-  color: #7C561B !important;
-  font-weight: 700 !important;
-}
-
-#mobileNav .mn-panel a,
-#mobileNav .mn-panel button,
-#mobileNav .mn-list a {
-  color: #241A0C !important;
-  font-weight: 500 !important;
-}
-
-#mobileNav .mn-panel a:hover,
-#mobileNav .mn-list a:hover {
-  color: #8A6420 !important;
 }
 
 /* Remove search, login, wishlist, and bag from header */
@@ -3604,8 +3322,6 @@ button:hover,
   bottom: 14% !important;
 }
 
-
-
 /* Remove green dead space above Kalakaari */
 .x-bridge { display: none !important; height: 0 !important; margin: 0 !important; }
 .k-head { top: 2.2% !important; }
@@ -3748,7 +3464,6 @@ button:hover,
 }
 .lock-close-btn:hover { opacity: 1; color: var(--gold); }
 
-
 /* Global Footer Standardized Override */
 #footer .f-main {
   display: grid !important;
@@ -3765,7 +3480,6 @@ button:hover,
   width: auto !important;
   display: block !important;
 }
-
 
 /* ================= USER REQUESTED REFINEMENTS ================= */
 /* Picture 4: Remove empty void above New Collections For Women */
@@ -3821,7 +3535,6 @@ button:hover,
   stroke: var(--gold-spark) !important;
 }
 
-
 #best {
   padding-top: 0 !important;
   padding-bottom: 0 !important;
@@ -3829,7 +3542,6 @@ button:hover,
   margin-bottom: 0 !important;
   background: #040906 !important;
 }
-
 
 /* ===== LUXURY FULL-SCREEN BLENDED COUTURE SLIDER (TRUE FULL VIEWPORT VERTICAL) ===== */
 #garment-reel {
@@ -4084,7 +3796,6 @@ button:hover,
   }
 }
 
-
 /* ===== OUR STORY SECTION FRESH PALETTE ===== */
 #storyEd {
   background: #f7f5ef !important;
@@ -4094,7 +3805,6 @@ button:hover,
   display: none !important;
 }
 #storyEd > * { position: relative; z-index: 2; }
-
 
 /* ===== ELIMINATE GREEN GAPS BETWEEN SECTIONS ===== */
 #women-new, #explore, #garment-reel, #best, #storyEd {
@@ -4837,22 +4547,6 @@ body.is-ready .brand, body.is-ready #brand {
   width: clamp(200px, 20vw, 290px) !important;
 }
 
-.menu-btn {
-  display: none !important;
-  background: transparent !important;
-  border: none !important;
-  cursor: pointer !important;
-  padding: 8px !important;
-}
-.menu-btn span {
-  display: block !important;
-  width: 22px !important;
-  height: 2px !important;
-  background: var(--gold-light) !important;
-  margin: 5px 0 !important;
-  transition: 0.3s !important;
-}
-
 /* ================= MEGA MENU (Only Haute Couture & Wide Banner) ================= */
 .mega {
   position: fixed !important;
@@ -5039,25 +4733,6 @@ body.is-ready .brand, body.is-ready #brand {
 
 .mega-promo-wide .p-line svg {
   stroke: var(--gold) !important;
-}
-
-/* Mobile Drawer rules */
-.mobile-nav, #mobileNav {
-  display: none !important;
-  position: fixed;
-  inset: 0;
-  z-index: 99999;
-  background: rgba(4, 9, 6, 0.98);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-}
-.mobile-nav.is-open, #mobileNav.is-open {
-  display: block !important;
-}
-@media (min-width: 901px) {
-  .mobile-nav, #mobileNav {
-    display: none !important;
-  }
 }
 
 /* ======================= GLOBAL FOOTER STYLES ======================= */
@@ -5454,8 +5129,7 @@ body.is-ready .brand, body.is-ready #brand {
 @media (max-width: 1024px) {
   .f-main { grid-template-columns: 1fr 1fr; gap: 40px; }
   .brand-slot { display: none; }
-  .menu-btn { display: block; }
-}
+  }
 @media (max-width: 640px) {
   .f-main { grid-template-columns: 1fr; gap: 36px; }
 }
@@ -5483,10 +5157,20 @@ body.is-ready .brand, body.is-ready #brand {
   -webkit-tap-highlight-color: transparent;
 }
 
-a, button, input, select, textarea,
-.garment-card, .arched-card, .collection-card,
-.cat-pill, .ecom-chip-label, .menu-btn, .f-btn,
-.w-all-cta, .button-primary, .button-ghost {
+a,
+button,
+input,
+select,
+textarea,
+.garment-card,
+.arched-card,
+.collection-card,
+.cat-pill,
+.ecom-chip-label,
+.f-btn,
+.w-all-cta,
+.button-primary,
+.button-ghost {
   touch-action: manipulation;
 }
 
@@ -5508,7 +5192,6 @@ a, button, input, select, textarea,
 
 /* 3. Smooth momentum scrolling & scroll chaining containment */
 .ecom-drawer-body,
-.mobile-nav-body,
 .modal-card {
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
@@ -5567,7 +5250,7 @@ html, body {
 }
 
 </style>
-  <link rel="stylesheet" href="theme-fresh.css?v=23">
+  <link rel="stylesheet" href="theme-fresh.css?v=24">
 </head>
 <body class="is-loading has-intro">
 <a href="#top" class="skip-link">Skip to main content</a>

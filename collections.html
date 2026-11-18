@@ -327,23 +327,6 @@
       color: var(--gold-spark) !important;
     }
 
-    .menu-btn {
-      display: none;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      padding: 8px;
-    }
-
-    .menu-btn span {
-      display: block;
-      width: 22px;
-      height: 2px;
-      background: var(--gold-light);
-      margin: 5px 0;
-      transition: 0.3s;
-    }
-
     /* Mega Menus — Atelier Luxury Deep Emerald Glass */
     .mega {
       position: fixed !important;
@@ -548,32 +531,6 @@
 
     .mega-promo-card:hover .mega-promo-copy p svg {
       transform: translateX(4px) !important;
-    }
-
-
-    /* Mobile Nav Drawer strictly hidden unless triggered on small mobile */
-    .mobile-nav,
-    #mobileNav {
-      display: none !important;
-      position: fixed;
-      inset: 0;
-      z-index: 99999;
-      background: rgba(4, 9, 6, 0.98);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-    }
-
-    .mobile-nav.is-open,
-    #mobileNav.is-open {
-      display: block !important;
-    }
-
-    @media (min-width: 901px) {
-
-      .mobile-nav,
-      #mobileNav {
-        display: none !important;
-      }
     }
 
     /* ======================= GLOBAL FOOTER STYLES ======================= */
@@ -1059,10 +1016,7 @@
         gap: 40px;
       }
 
-      .menu-btn {
-        display: block;
-      }
-    }
+          }
 
     @media (max-width: 640px) {
       .f-main {
@@ -1220,7 +1174,6 @@
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
     }
 
-
     .catalog-hero::before {
       content: '';
       position: absolute;
@@ -1357,6 +1310,11 @@
         padding: 10px 14px;
         font-size: 11px;
         gap: 6px;
+        min-height: 44px;
+      }
+      .search-box,
+      .search-input {
+        height: 44px;
       }
       .search-input {
         font-size: 11px;
@@ -2755,7 +2713,7 @@
         font-size: 12px;
       }
     }
-  </style>
+</style>
   <style>
     /* ================= GLOBAL COMPONENTS CSS ================= */
     /* ================= GLOBAL HEADER & FOOTER LUXURY CSS ================= */
@@ -2889,23 +2847,6 @@
 
     .nav-side a:hover {
       color: var(--gold-spark) !important;
-    }
-
-    .menu-btn {
-      display: none !important;
-      background: transparent !important;
-      border: none !important;
-      cursor: pointer !important;
-      padding: 8px !important;
-    }
-
-    .menu-btn span {
-      display: block !important;
-      width: 22px !important;
-      height: 2px !important;
-      background: var(--gold-light) !important;
-      margin: 5px 0 !important;
-      transition: 0.3s !important;
     }
 
     /* ================= MEGA MENU (Only Haute Couture & Wide Banner) ================= */
@@ -3094,31 +3035,6 @@
 
     .mega-promo-wide .p-line svg {
       stroke: var(--gold) !important;
-    }
-
-    /* Mobile Drawer rules */
-    .mobile-nav,
-    #mobileNav {
-      display: none !important;
-      position: fixed;
-      inset: 0;
-      z-index: 99999;
-      background: rgba(4, 9, 6, 0.98);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-    }
-
-    .mobile-nav.is-open,
-    #mobileNav.is-open {
-      display: block !important;
-    }
-
-    @media (min-width: 901px) {
-
-      .mobile-nav,
-      #mobileNav {
-        display: none !important;
-      }
     }
 
     /* ======================= GLOBAL FOOTER STYLES ======================= */
@@ -3604,10 +3520,7 @@
         gap: 40px;
       }
 
-      .menu-btn {
-        display: block;
-      }
-    }
+          }
 
     @media (max-width: 640px) {
       .f-main {
@@ -3617,7 +3530,7 @@
     }
 
     /* ================= END GLOBAL COMPONENTS CSS ================= */
-  </style>
+</style>
 <style id="aleen-logo-shadow">
 /* Header Aleen Brand Logo Shadow & Elevation */
 #brandLogo, .brand svg {
@@ -3639,10 +3552,20 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-a, button, input, select, textarea,
-.garment-card, .arched-card, .collection-card,
-.cat-pill, .ecom-chip-label, .menu-btn, .f-btn,
-.w-all-cta, .button-primary, .button-ghost {
+a,
+button,
+input,
+select,
+textarea,
+.garment-card,
+.arched-card,
+.collection-card,
+.cat-pill,
+.ecom-chip-label,
+.f-btn,
+.w-all-cta,
+.button-primary,
+.button-ghost {
   touch-action: manipulation;
 }
 
@@ -3664,7 +3587,6 @@ a, button, input, select, textarea,
 
 /* 3. Smooth momentum scrolling & scroll chaining containment */
 .ecom-drawer-body,
-.mobile-nav-body,
 .modal-card {
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
@@ -3749,7 +3671,7 @@ html, body {
   }
 }
 </style>
-  <link rel="stylesheet" href="theme-fresh.css?v=23">
+  <link rel="stylesheet" href="theme-fresh.css?v=24">
 </head>
 
 <body>
@@ -4138,7 +4060,7 @@ html, body {
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
               </svg>
               <input type="text" id="searchInput" class="search-input" aria-label="Search garments by title, needlecraft, or material"
-                placeholder="Search by title, needlecraft, pure raw silk, velvet, zardozi..." autocomplete="off">
+                placeholder="Search garments..." autocomplete="off">
               <button type="button" class="search-clear-btn" id="searchClearBtn" aria-label="Clear search query" title="Clear search">✕</button>
             </div>
 

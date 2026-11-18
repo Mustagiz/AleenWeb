@@ -266,7 +266,6 @@ body.is-loading .nav-center,
 body.is-loading .nav-l,
 body.is-loading .nav-r,
 body.is-loading .util,
-body.is-loading .menu-btn,
 body.is-loading .nav-utils,
 body.is-loading .nav-desk,
 body.is-loading .hero-rail,
@@ -333,8 +332,7 @@ body.is-ready .nav-side,
 body.is-ready .nav-center,
 body.is-ready .nav-l,
 body.is-ready .nav-r,
-body.is-ready .util,
-body.is-ready .menu-btn {
+body.is-ready .util {
   display: flex !important;
   opacity: 1 !important;
   visibility: visible !important;
@@ -452,7 +450,6 @@ nav {
 .nav-r a,
 .nav-link,
 .hdr-link,
-.mn-acct,
 nav a,
 #header a {
   color: #162217 !important;
@@ -2840,13 +2837,9 @@ header.b-head,
 
 #header .util-btn svg,
 #header.is-solid .util-btn svg,
-#header.scrolled .util-btn svg,
-#header .menu-btn svg,
-#header.is-solid .menu-btn svg,
-#header.scrolled .menu-btn svg {
+#header.scrolled .util-btn svg {
   stroke: #162217 !important;
 }
-
 
 /* --- 2. GARMENT PAGES HERO SECTIONS (#f7f5ef, NEVER BLACK, NO BACKGROUND IMAGE) --- */
 .catalog-hero,
@@ -3791,6 +3784,11 @@ html {
 /* Over the transparent home header the toggle takes the light ink, exactly
    like the inline links and the mark do. */
 body.has-intro #header:not(.is-solid) .nav-toggle { color: #efe4c8 !important; }
+
+/* The home film plays under a 99990 curtain while the sheet sits at 1200, so a
+drawer opened mid-film stays invisible yet still locks the scroll; the inline
+links are hidden for the film, and so is the toggle. */
+body.has-intro:not(.intro-done) .nav-toggle { display: none !important; }
 
 /* ---------- drawer ---------- */
 .site-drawer {
