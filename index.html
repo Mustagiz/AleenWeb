@@ -5567,7 +5567,7 @@ html, body {
 }
 
 </style>
-  <link rel="stylesheet" href="theme-fresh.css?v=15">
+  <link rel="stylesheet" href="theme-fresh.css?v=23">
 </head>
 <body class="is-loading has-intro">
 <a href="#top" class="skip-link">Skip to main content</a>
@@ -5726,98 +5726,16 @@ html, body {
 
 
 
-<!-- Mobile Navigation Drawer -->
-<div class="mobile-nav" id="mobileNav" aria-hidden="true">
-  <div class="mn-panel">
-    <div class="mn-head">
-      <span class="mn-title">Aleen Menu</span>
-      <button class="mn-close" id="mnBack" aria-label="Close menu">&times;</button>
-    </div>
-    <nav class="mn-links">
-      <a href="/">Home</a>
-      <a href="/collections">All Garments</a>
-      <a href="/collections?category=sarees">Sarees</a>
-      <a href="/collections?category=kurta-sets">Kurta Sets</a>
-      <a href="/collections?category=kurta-sets">Anarkali</a>
-      <a href="/collections?category=kurta-sets">Suits</a>
-      <a href="/collections">Co-ord Sets</a>
-      <a href="/collections?category=lehengas">Lehengas</a>
-      <a href="/dresses">Dresses</a>
-      <a href="/our-story">Our Story</a>
-      <a href="/our-story">Craftsmanship</a>
-      <a href="/admin" rel="nofollow">Atelier Console</a>
-    </nav>
-  </div>
-</div>
 
 
-<!-- Mobile Navigation Drawer -->
-<div class="mobile-nav" id="mobileNav" aria-hidden="true">
-  <div class="mn-panel">
-    <div class="mn-head">
-      <span class="mn-title">Aleen Menu</span>
-      <button class="mn-close" id="mnBack" aria-label="Close menu">&times;</button>
-    </div>
-    <nav class="mn-links">
-      <a href="/">Home</a>
-      <a href="/collections">All Garments</a>
-      <a href="/collections?category=sarees">Sarees</a>
-      <a href="/collections?category=kurta-sets">Kurta Sets</a>
-      <a href="/collections?category=kurta-sets">Anarkali</a>
-      <a href="/collections?category=kurta-sets">Suits</a>
-      <a href="/collections">Co-ord Sets</a>
-      <a href="/collections?category=lehengas">Lehengas</a>
-      <a href="/dresses">Dresses</a>
-      <a href="/our-story">Our Story</a>
-      <a href="/our-story">Craftsmanship</a>
-      <a href="/admin" rel="nofollow">Atelier Console</a>
-    </nav>
-  </div>
-</div>
 
 
-<!-- Mobile Navigation Drawer -->
-<div class="mobile-nav" id="mobileNav" aria-hidden="true">
-  <div class="mn-panel">
-    <div class="mn-head">
-      <span class="mn-title">Aleen Menu</span>
-      <button class="mn-close" id="mnBack" aria-label="Close menu">&times;</button>
-    </div>
-    <nav class="mn-links">
-      <a href="/">Home</a>
-      <a href="/collections">All Garments</a>
-      <a href="/collections?category=sarees">Sarees</a>
-      <a href="/collections?category=kurta-sets">Kurta Sets</a>
-      <a href="/collections?category=kurta-sets">Anarkali</a>
-      <a href="/collections?category=kurta-sets">Suits</a>
-      <a href="/collections">Co-ord Sets</a>
-      <a href="/collections?category=lehengas">Lehengas</a>
-      <a href="/dresses">Dresses</a>
-      <a href="/our-story">Our Story</a>
-      <a href="/our-story">Craftsmanship</a>
-      <a href="/admin" rel="nofollow">Atelier Console</a>
-    </nav>
-  </div>
-</div>
 
 
-<!-- ======================= MOBILE NAVIGATION ======================= -->
-<div id="mobileNav" aria-hidden="true">
-  <div class="mn-top">
-    <button class="mn-back" id="mnBack" aria-label="Back one level">
-      <svg viewBox="0 0 20 14"><path d="M19 7H2M8 1 1.5 7 8 13"/></svg>
-    </button>
-    <p class="mn-title" id="mnTitle"><svg class="mn-emblem" id="menuEmblem" viewBox="380 30 840 900" aria-hidden="true"></svg></p>
-    <button class="mn-close" id="mnClose" aria-label="Close menu">
-      <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
-    </button>
-  </div>
-  <div class="mn-stage" id="mnStage"></div>
-  <div class="mn-foot">
-    <a class='mn-acct' href='#account'>My Account</a>
-    <p>Timeless&ensp;·&ensp;Ethical&ensp;·&ensp;Exquisite</p>
-  </div>
-</div>
+
+
+
+
 
 <main id="top">
   <!-- ======================= HERO ======================= -->
@@ -6887,7 +6805,6 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
   $$('a[data-slide]').forEach(function (a) {
     a.addEventListener('click', function () {
       var n = parseInt(a.getAttribute('data-slide'), 10);
-      if (a.closest('#mobileNav')) closeNav();
       if (introDone) {
         gsap.delayedCall(0.35, function () { goTo(n); });
       }
@@ -7252,139 +7169,11 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
     };
   })();
 
-  /* ============================================================
-     MOBILE DRILL-DOWN NAVIGATION
-     ============================================================ */
-  var mobileNav = $('#mobileNav'), mnStage = $('#mnStage'), mnTitle = $('#mnTitle'),
-      mnBack = $('#mnBack'), mnClose = $('#mnClose'), menuBtn = $('#menuBtn');
-  var emblemHTML = mnTitle.innerHTML;
-  var stack = [], curPanel = null;
-
-  function leafPanel(key, cat, group) {
-    return {
-      title: group.title, lead: cat.label,
-      items: group.items.map(function (it) { return { label: it, href: shopHref(key, it), cls: 'mn-l2' }; })
-    };
-  }
-  function catPanel(key) {
-    var cat = NAV[key];
-    /* the first row is a way straight into the category, so the drawer is
-       never a drill-down with no exit */
-    var items = [{ label: 'All ' + cat.label, href: cat.href, cls: 'mn-l1' }];
-    cat.groups.forEach(function (g) {
-      items.push({ label: g.title, cls: 'mn-l1', panel: leafPanel(key, cat, g) });
-    });
-    return { title: cat.label, lead: 'Categories', items: items };
-  }
-  function rootPanel() {
-    return {
-      title: null,
-      items: [
-        { label: 'Home', href: '#top', cls: 'mn-l0' },
-        { label: 'Garments', cls: 'mn-l0', panel: catPanel('women') },
-        { label: 'Kalakaari', cls: 'mn-l0', panel: catPanel('kalakaari') },
-        { label: 'Best Sellers', href: '#best', cls: 'mn-l0' },
-        { label: 'Our Story', href: '/our-story', cls: 'mn-l0' },
-        { label: 'Contact Us', href: '/contact-us', cls: 'mn-l0' }
-      ]
-    };
-  }
-
-  function buildPanel(data) {
-    var p = mk('div', 'mn-panel');
-    if (data.lead) p.appendChild(mk('p', 'mn-lead mn-item', esc(data.lead)));
-    data.items.forEach(function (it) {
-      var node;
-      if (it.panel) {
-        node = mk('button', 'mn-item ' + it.cls, '<span>' + esc(it.label) + '</span>' + CHEV);
-        node.type = 'button';
-        node.addEventListener('click', function () { pushPanel(it.panel, 1); });
-      } else {
-        node = mk('a', 'mn-item ' + it.cls, '<span>' + esc(it.label) + '</span>');
-        node.href = it.href;
-        node.addEventListener('click', function () { closeNav(); });
-      }
-      p.appendChild(node);
-    });
-    return p;
-  }
-
-  function updateTop() {
-    var d = stack[stack.length - 1];
-    if (d && d.title) mnTitle.textContent = d.title;
-    else mnTitle.innerHTML = emblemHTML;
-    mobileNav.classList.toggle('has-back', stack.length > 1);
-  }
-
-  function pushPanel(data, dir) {
-    stack.push(data);
-    swapPanel(dir);
-  }
-  function swapPanel(dir) {
-    var data = stack[stack.length - 1];
-    var el = buildPanel(data);
-    mnStage.appendChild(el);
-    var old = curPanel;
-    curPanel = el;
-    updateTop();
-    if (reduced || !window.gsap) { if (old) old.remove(); return; }
-    gsap.fromTo(el, { xPercent: dir > 0 ? 100 : -100, opacity: 0 },
-      { xPercent: 0, opacity: 1, duration: 0.5, ease: 'luxIO' });
-    gsap.fromTo($$('.mn-item', el), { y: 18, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.46, ease: 'luxOut', stagger: 0.045, delay: 0.1 });
-    if (old) {
-      gsap.to(old, {
-        xPercent: dir > 0 ? -30 : 30, opacity: 0, duration: 0.42, ease: 'luxIO',
-        onComplete: function () { old.remove(); }
-      });
-    }
-  }
-  function popPanel() {
-    if (stack.length < 2) return;
-    stack.pop();
-    swapPanel(-1);
-  }
-
-  function openNav() {
-    closeMega(true); closeSearch(); closePops();
-    stack = [rootPanel()];
-    mnStage.innerHTML = '';
-    curPanel = null;
-    swapPanel(1);
-    mobileNav.classList.add('is-open');
-    mobileNav.setAttribute('aria-hidden', 'false');
-    menuBtn.classList.add('is-open');
-    menuBtn.setAttribute('aria-expanded', 'true');
-    document.documentElement.style.overflow = 'hidden';
-  }
-  function closeNav() {
-    if (!mobileNav.classList.contains('is-open')) return;
-    mobileNav.classList.remove('is-open');
-    mobileNav.setAttribute('aria-hidden', 'true');
-    menuBtn.classList.remove('is-open');
-    menuBtn.setAttribute('aria-expanded', 'false');
-    if (introDone) document.documentElement.style.overflow = '';
-    setTimeout(function () {
-      if (mobileNav.classList.contains('is-open')) return;
-      mnStage.innerHTML = ''; curPanel = null; stack = [];
-      mobileNav.classList.remove('has-back');
-    }, 460);
-  }
-  /* X closes everything; Back steps exactly one level */
-  function closeMenu() { closeNav(); }
-
-  if (menuBtn) if (menuBtn) menuBtn.addEventListener('click', function () {
-    mobileNav.classList.contains('is-open') ? closeNav() : openNav();
-  });
-  if (mnClose) if (mnClose) mnClose.addEventListener('click', closeNav);
-  if (mnBack) if (mnBack) mnBack.addEventListener('click', popPanel);
-  var _ma = $('.mn-foot .mn-acct'); if (_ma) _ma.addEventListener('click', closeNav);
 
   /* ---------- global keyboard ---------- */
   document.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape') return;
     if (searchOpen) { closeSearch(); return; }
-    if (mobileNav.classList.contains('is-open')) { closeNav(); return; }
     if ($('.pop.is-open')) { closePops(); return; }
     if (megaKey) closeMega(true);
   });
@@ -7408,7 +7197,6 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
 
   /* ---------- close the drawer if we grow into the desktop layout ---------- */
   window.addEventListener('resize', function () {
-    if (window.innerWidth >= 1200 && mobileNav.classList.contains('is-open')) closeNav();
     if (window.innerWidth < 1200) closeMega(true);
     if (!heroCycles()) {
       clearTimeout(hero.timer);
@@ -7420,8 +7208,7 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
   window.aleen = window.mahira = {
     wishlist: { count: function () { return store.get('wishlist'); }, add: function (n) { store.add('wishlist', n); }, set: function (n) { store.set('wishlist', n); } },
     bag: { count: function () { return store.get('bag'); }, add: function (n) { store.add('bag', n); }, set: function (n) { store.set('bag', n); } },
-    openSearch: openSearch, closeSearch: closeSearch,
-    openNav: openNav, closeNav: closeNav
+    openSearch: openSearch, closeSearch: closeSearch
   };
 
   /* ============================================================
@@ -7714,8 +7501,12 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
           .to($(':scope > img', card), { scale: 1, yPercent: 0, duration: 1.9, ease: 'power2.out' }, at + 0.05)
           .to(cap, { y: 0, opacity: 1, duration: 0.7, stagger: 0.09 }, at + 0.5);
       });
-      gsap.set(nav, { opacity: 0, y: 30 });
-      tl.to(nav, { opacity: 1, y: 0, duration: 0.95 }, 1.25);
+      /* This markup carries no .w-nav, and a null target makes gsap warn both
+         on the set and on the tween. */
+      if (nav) {
+        gsap.set(nav, { opacity: 0, y: 30 });
+        tl.to(nav, { opacity: 1, y: 0, duration: 0.95 }, 1.25);
+      }
       /* the room settles in — never fades out, only breathes */
       gsap.set(bg, { scale: 1.07 });
       tl.to(bg, { scale: 1, duration: 2.0, ease: 'power2.out' }, 0);
@@ -7765,12 +7556,14 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
       gsap.set(head, { y: 26, opacity: 0 });
       gsap.set(cards, { y: 92, opacity: 0 });
       gsap.set(all, { y: 22, opacity: 0 });
-      gsap.set(marks, { opacity: 0 });
+      /* No rail/corner ornaments in this markup: an empty target list makes
+         gsap warn on the set and again on the tween. */
+      if (marks.length) gsap.set(marks, { opacity: 0 });
       tl.to(room, { scale: 1, duration: 2.0, ease: 'power2.out' }, 0)
         .to(head, { y: 0, opacity: 1, duration: 0.85, stagger: 0.09 }, 0.15)
         .to(cards, { y: 0, opacity: 1, duration: 1.15, ease: 'luxIO', stagger: 0.13 }, 0.5)
-        .to(marks, { opacity: 1, duration: 1.0, ease: 'sine.out', stagger: 0.08 }, 0.95)
         .to(all, { y: 0, opacity: 1, duration: 0.8 }, 1.4);
+      if (marks.length) tl.to(marks, { opacity: 1, duration: 1.0, ease: 'sine.out', stagger: 0.08 }, 0.95);
       gsap.fromTo(room, { yPercent: -2.2 }, {
         yPercent: 2.2, ease: 'none',
         scrollTrigger: { trigger: sec, start: 'top bottom', end: 'bottom top', scrub: 0.7 }
@@ -8533,5 +8326,6 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
   })();
 </script>
 
+<script src="/assets/site-nav.js?v=6" defer></script>
 </body>
 </html>

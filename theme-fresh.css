@@ -524,23 +524,9 @@ body.has-intro #header:not(.is-solid) .hdr-icon svg {
   stroke: #e8412c !important;
 }
 
-/* Delete hamburger completely from nav menu */
-#menuBtn,
-.menu-btn,
-button.menu-btn,
-#header .menu-btn,
-header .menu-btn,
-#header.is-solid .menu-btn,
-#header.scrolled .menu-btn {
-  display: none !important;
-  opacity: 0 !important;
-  visibility: hidden !important;
-  pointer-events: none !important;
-  width: 0 !important;
-  height: 0 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
+/* The hamburger is `.nav-toggle`, injected by assets/site-nav.js alongside the
+   drawer. Its rules live in the RESPONSIVE SHELL section at the end of this
+   sheet, together with the breakpoints that swap it for the inline links. */
 
 /* Mega Menu Dropdown */
 /* ========================================================
@@ -3732,4 +3718,305 @@ a.card-wa-btn:hover,
 #addCustomSizeBtn:hover {
   background: #9caf88 !important;
   color: #ffffff !important;
+}
+
+/* ========================================================
+   RESPONSIVE SHELL — hamburger + mobile/tablet drawer
+   Below 1200px the inline nav collapses to the mark, so
+   assets/site-nav.js injects `.nav-toggle` and `#siteNav`.
+   Every storefront page shares this one component.
+   ======================================================== */
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* The storefront is content-box, so padded blocks inside the sheet would
+   overflow it; the drawer keeps its own border-box. The global button/anchor
+   rules transition *every* property, which would also animate `visibility`
+   and hold the sheet's controls unfocusable, so those are scoped here too. */
+.site-drawer,
+.site-drawer *,
+.site-drawer *::before,
+.site-drawer *::after {
+  box-sizing: border-box;
+  transition-property: color, background-color, border-color, opacity, transform !important;
+}
+
+/* ---------- hamburger ---------- */
+/* Pinned to the header edge rather than left in the flex flow: the home and
+   the inner-page headers distribute their children differently, and an
+   in-flow button drifted onto the centred mark on the inner pages. */
+.nav-toggle {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: max(18px, env(safe-area-inset-left));
+  transform: translateY(-50%);
+  z-index: 3;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  padding: 0;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  color: #162217 !important;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.nav-toggle span {
+  position: absolute;
+  left: 11px;
+  width: 22px;
+  height: 1.5px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: top 0.38s cubic-bezier(0.77, 0, 0.18, 1),
+              transform 0.38s cubic-bezier(0.77, 0, 0.18, 1);
+}
+
+.nav-toggle span:nth-child(1) { top: 19px; }
+.nav-toggle span:nth-child(2) { top: 24px; }
+
+.nav-toggle[aria-expanded="true"] span:nth-child(1) { top: 21.5px; transform: rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span:nth-child(2) { top: 21.5px; transform: rotate(-45deg); }
+
+/* Over the transparent home header the toggle takes the light ink, exactly
+   like the inline links and the mark do. */
+body.has-intro #header:not(.is-solid) .nav-toggle { color: #efe4c8 !important; }
+
+/* ---------- drawer ---------- */
+.site-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: flex;
+  flex-direction: column;
+  background: #f7f5ef;
+  visibility: hidden;
+  opacity: 0;
+  /* visibility flips at once on open (so the close button can take focus)
+     and waits for the fade before hiding on close. */
+  transition: opacity 0.34s var(--ease, cubic-bezier(0.22, 0.61, 0.21, 1)),
+              visibility 0s linear 0.34s;
+  overscroll-behavior: contain;
+}
+
+.site-drawer.is-open {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.34s var(--ease, cubic-bezier(0.22, 0.61, 0.21, 1)),
+              visibility 0s;
+}
+
+html.nav-open,
+html.nav-open body {
+  overflow: hidden !important;
+}
+
+.sd-top {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: calc(10px + env(safe-area-inset-top)) 26px 10px;
+  border-bottom: 1px solid rgba(156, 175, 136, 0.45);
+}
+
+.sd-eyebrow {
+  font-family: var(--sans, 'Montserrat', system-ui, sans-serif);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #5c7350 !important;
+}
+
+.sd-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-right: -10px;
+  padding: 0;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  color: #162217 !important;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sd-close svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+.sd-close:hover,
+.sd-close:active { color: #e8412c !important; }
+
+.sd-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  padding: 6px 26px calc(30px + env(safe-area-inset-bottom));
+}
+
+.sd-nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.sd-nav a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 56px;
+  padding: 14px 0;
+  font-family: var(--serif-i, 'Cormorant Garamond', Georgia, serif);
+  font-size: clamp(27px, 8vw, 34px);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+  color: #162217 !important;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(156, 175, 136, 0.38);
+}
+
+.sd-nav a:hover,
+.sd-nav a:active,
+.sd-nav a[aria-current="page"] { color: #e8412c !important; }
+
+.sd-idx {
+  font-family: var(--sans, 'Montserrat', system-ui, sans-serif);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: #748c66 !important;
+  font-variant-numeric: tabular-nums;
+}
+
+.sd-label {
+  margin: 26px 0 10px;
+  font-family: var(--sans, 'Montserrat', system-ui, sans-serif);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #5c7350 !important;
+}
+
+.sd-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 20px;
+}
+
+.sd-grid a {
+  display: flex;
+  align-items: center;
+  min-height: 46px;
+  font-family: var(--sans, 'Montserrat', system-ui, sans-serif);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #384e36 !important;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(156, 175, 136, 0.3);
+}
+
+.sd-grid a:hover,
+.sd-grid a:active,
+.sd-grid a[aria-current="page"] { color: #e8412c !important; }
+
+.sd-foot {
+  margin-top: auto;
+  padding-top: 32px;
+}
+
+.sd-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 50px;
+  padding: 0 20px;
+  background: #e8412c !important;
+  color: #ffffff !important;
+  font-family: var(--sans, 'Montserrat', system-ui, sans-serif);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 999px;
+}
+
+.sd-cta:hover,
+.sd-cta:active { background: #cf3420 !important; }
+
+.sd-meta {
+  margin-top: 14px;
+  text-align: center;
+  font-family: var(--sans, 'Montserrat', system-ui, sans-serif);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #748c66 !important;
+}
+
+/* ---------- breakpoints ---------- */
+@media (max-width: 1199px) {
+  .nav-center,
+  .nav-l,
+  .nav-r,
+  .mega { display: none !important; }
+
+  .nav-toggle { display: inline-flex !important; }
+}
+
+@media (min-width: 1200px) {
+  .nav-toggle { display: none !important; }
+  .site-drawer { display: none !important; }
+}
+
+@media (max-width: 767px) {
+  #header {
+    padding-left: max(18px, env(safe-area-inset-left));
+    padding-right: max(18px, env(safe-area-inset-right));
+  }
+
+  .nav-toggle { left: max(14px, env(safe-area-inset-left)); }
+
+  .sd-top { padding-left: 22px; padding-right: 22px; }
+  .sd-body { padding-left: 22px; padding-right: 22px; }
+  .sd-nav a { font-size: clamp(25px, 7.6vw, 30px); }
+}
+
+@media (max-width: 359px) {
+  .sd-grid { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-drawer,
+  .nav-toggle span { transition-duration: 0.01ms !important; }
 }
