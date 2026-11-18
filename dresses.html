@@ -1002,7 +1002,436 @@
       color: #040906 !important;
       box-shadow: 0 0 14px rgba(201, 163, 95, 0.35);
     }
-</style>
+
+
+    /* Card display styles for MRP, discount, fit tag, and color swatches */
+    .card-mrp {
+      font-size: 16px;
+      font-weight: 700;
+      color: #ffffff;
+      text-decoration: line-through;
+      margin-right: 12px;
+      display: inline-block;
+    }
+
+    .card-discounted-price {
+      font-size: 18px;
+      font-weight: 700;
+      color: #c9a35f;
+      display: inline-block;
+    }
+
+    .card-discount-percent {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--gold);
+      background: rgba(201, 163, 95, 0.2);
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-left: 8px;
+      display: inline-block;
+    }
+
+    .card-prices {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 8px 0;
+    }
+
+    .fit-tag {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--gold);
+      color: #040906;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      padding: 4px 8px;
+      border-radius: 4px;
+      z-index: 2;
+    }
+
+    .color-swatch {
+      width: 20px;
+      height: 20px;
+      border: 2px solid transparent;
+      border-radius: 50%;
+      cursor: pointer;
+      margin-right: 4px;
+      flex-shrink: 0;
+      transition: border-color 0.2s;
+    }
+
+    .color-swatch:hover {
+      border-color: var(--gold);
+      background: var(--gold);
+    }
+
+    /* Card media with transparent background and softly rounded corners */
+    .garment-card .card-media {
+      background: transparent !important;
+      border-radius: 180px 180px 12px 12px !important;
+    }
+
+    .garment-card .card-media img {
+      border-radius: 180px 180px 12px 12px;
+      transition: transform 0.4s var(--ease);
+    }
+
+    .garment-card:hover .card-media img {
+      transform: scale(1.05);
+    }
+
+    /* Hide the bundle offer row */
+    .card-bottom-row {
+      display: none !important;
+    }
+
+    /* Redesigned Garment Card Styles */
+    .garment-card {
+      position: relative;
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .garment-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .card-media {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: #040906;
+    }
+
+    .card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+      transition: transform 0.3s ease;
+    }
+
+    .garment-card:hover .card-media img {
+      transform: scale(1.02);
+    }
+
+    /* Fit tag - top-left overlay */
+    .fit-tag {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: var(--gold);
+      color: #040906;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      padding: 3px 6px;
+      border-radius: 4px;
+      z-index: 2;
+    }
+
+    /* Rating badge - bottom-left overlay */
+    .rating-badge {
+      position: absolute;
+      bottom: 8px;
+      left: 8px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #040906;
+      font-size: 9px;
+      font-weight: 600;
+      padding: 3px 6px;
+      border-radius: 4px;
+      z-index: 2;
+      display: none; /* Hidden by default, shown when rating available */
+    }
+
+    /* Color swatches - bottom-right */
+    .color-swatches {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      display: flex;
+      gap: 4px;
+      z-index: 2;
+    }
+
+    .color-swatch {
+      width: 16px;
+      height: 16px;
+      border: 2px solid transparent;
+      border-radius: 50%;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: border-color 0.2s;
+    }
+
+    .color-swatch:hover {
+      border-color: var(--gold);
+    }
+
+    /* Price row - under image */
+    .card-prices {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 8px 12px;
+      background: rgba(4, 9, 6, 0.7);
+      backdrop-filter: blur(4px);
+      width: 100%;
+    }
+
+    .card-price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .card-discounted-price {
+      font-size: 14px;
+      font-weight: 700;
+      color: #c9a35f;
+    }
+
+    .card-mrp {
+      font-size: 12px;
+      font-weight: 600;
+      color: #ffffff;
+      text-decoration: line-through;
+      margin-right: 4px;
+      display: inline-block;
+    }
+
+    .card-discount-percent {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--gold);
+      background: rgba(201, 163, 95, 0.2);
+      padding: 1px 4px;
+      border-radius: 4px;
+    }
+
+    /* Garment name - under price row */
+    .garment-name {
+      font-size: 11px;
+      font-weight: 500;
+      color: #ffffff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+      margin-top: 8px;
+    }
+
+    /* Hide bundle offer row and heart icon */
+    .card-bottom-row,
+    .card-bundle-offer,
+    .card-heart-btn {
+      display: none !important;
+    }
+
+    /* Redesigned Garment Card - Layout Reference */
+    .garment-card {
+      position: relative;
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+      float: left;
+    }
+
+    .garment-card:hover {
+      transform: translateY(-4px);
+    }
+
+    /* Clearfix for grid */
+    .garments-grid::after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+
+    .garment-card:nth-child(3n) {
+      clear: left;
+    }
+
+    @media (max-width: 1200px) {
+      .garment-card:nth-child(2n) {
+        clear: left;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .garment-card {
+        width: 100%;
+        float: none;
+        margin: 0 auto 12px auto;
+      }
+      .garment-card:nth-child(3n),
+      .garment-card:nth-child(2n) {
+        clear: none;
+      }
+    }
+
+    .card-media {
+      position: relative;
+      width: 100%;
+      height: 280px;
+      background: #040906;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+      border-radius: 12px;
+    }
+
+    .garment-card:hover .card-media img {
+      transform: scale(1.02);
+    }
+
+    /* Fit tag - top-left overlay */
+    .fit-tag {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      background: var(--gold);
+      color: #040906;
+      font-size: 8px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      padding: 2px 5px;
+      border-radius: 4px;
+      z-index: 2;
+      white-space: nowrap;
+    }
+
+    /* Rating badge - bottom-left overlay */
+    .rating-badge {
+      position: absolute;
+      bottom: 6px;
+      left: 6px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #040906;
+      font-size: 8px;
+      font-weight: 600;
+      padding: 2px 5px;
+      border-radius: 4px;
+      z-index: 2;
+      display: none; /* Hidden by default */
+      white-space: nowrap;
+    }
+
+    /* Color swatches - bottom-right */
+    .color-swatches {
+      position: absolute;
+      bottom: 6px;
+      right: 6px;
+      display: flex;
+      gap: 3px;
+      z-index: 2;
+      flex-wrap: wrap;
+    }
+
+    .color-swatch {
+      width: 14px;
+      height: 14px;
+      border: 2px solid transparent;
+      border-radius: 50%;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: border-color 0.2s;
+      background: #c9a35f;
+    }
+
+    .color-swatch:hover {
+      border-color: var(--gold);
+    }
+
+    /* Price row - under image */
+    .card-prices {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 8px 10px;
+      background: rgba(4, 9, 6, 0.8);
+      backdrop-filter: blur(4px);
+      width: 100%;
+      font-size: 11px;
+    }
+
+    .card-price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 3px;
+      margin-bottom: 4px;
+    }
+
+    .card-discounted-price {
+      font-size: 13px;
+      font-weight: 700;
+      color: #c9a35f;
+    }
+
+    .card-mrp {
+      font-size: 11px;
+      font-weight: 600;
+      color: #ffffff;
+      text-decoration: line-through;
+      margin-right: 3px;
+      display: inline-block;
+    }
+
+    .card-discount-percent {
+      font-size: 9px;
+      font-weight: 600;
+      color: var(--gold);
+      background: rgba(201, 163, 95, 0.2);
+      padding: 1px 3px;
+      border-radius: 3px;
+    }
+
+    /* Garment name - under price row */
+    .garment-name {
+      font-size: 10px;
+      font-weight: 500;
+      color: #ffffff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+      margin-top: 6px;
+    }
+
+    /* Hide bundle offer row and heart icon */
+    .card-bottom-row,
+    .card-bundle-offer,
+    .card-heart-btn,
+    .f-heart-btn {
+      display: none !important;
+    }</style>
 <style>
 /* ================= GLOBAL COMPONENTS CSS ================= */
 /* ================= GLOBAL HEADER & FOOTER LUXURY CSS ================= */
@@ -2319,21 +2748,90 @@
   }
 
   grid.innerHTML = items.map(function(item) {
-    return '<article class="garment-card">' +
-      '<div class="card-media">' +
-        '<img src="' + item.image + '" alt="' + item.title + '" loading="lazy" />' +
-      '</div>' +
-      '<div class="card-info">' +
-        '<span class="card-craft">' + (item.craft || "Artisanal") + '</span>' +
-        '<h2 class="card-title">' + item.title + '</h2>' +
-        '<p class="card-fabric">' + (item.fabric || "Pure Silk") + '</p>' +
-        '<div class="card-bottom-row">' +
-          '<span class="card-price">₹' + Number(item.price).toLocaleString("en-IN") + '</span>' +
-          '<a href="/collections?category=' + CATEGORY + '" class="card-cta-btn">Examine Craft</a>' +
-        '</div>' +
-      '</div>' +
-    '</article>';
-  }).join('');
+    // Get new fields with fallbacks for backward compatibility
+    const mrp = item.mrp !== undefined ? Number(item.mrp) : 0;
+    const discountedPrice = item.discountedPrice !== undefined ? Number(item.discountedPrice) : 0;
+    const fitLabel = item.fitLabel || "";
+    const colors = item.garmentColors || [];
+    const rating = item.rating || 0; /* Optional rating */
+
+    // Calculate discount percentage
+    let discountPercent = 0;
+    if (mrp > 0 && discountedPrice >= 0) {
+      discountPercent = Math.round((1 - discountedPrice / mrp) * 100);
+    }
+
+    // Build color swatches HTML
+    const colorSwatches = colors.map((c, idx) => {
+      const swatchColor = c.swatchColor || "#c9a35f";
+      return "<div class=\"color-swatch\" style=\"width: 14px; height: 14px; border: 2px solid transparent; border-radius: 50%; background: " + swatchColor + ";"></div>";
+    }).join("");
+
+    // Build fit tag HTML
+    const fitTag = fitLabel ? "<span class=\"fit-tag\">" + fitLabel + "</span>" : "";
+
+    // Build rating badge HTML
+    const ratingBadge = rating > 0 ? "<span class=\"rating-badge\" style=\"display: block;">" + "★".repeat(rating) + " " + rating + "</span>" : "";
+
+    // Build price HTML
+    const priceHtml = mrp > 0
+      ? "<span class=\"card-mrp\">" + mrp.toLocaleString("en-IN") + "</span>" +        "<span class=\"card-discounted-price\">" + discountedPrice.toLocaleString("en-IN") + "</span>" +        "<span class=\"card-discount-percent\">-" + discountPercent + "%</span>"      : "";
+
+    // Build garment name HTML
+    const garmentName = item.title ? "<div class=\"garment-name\">" + item.title + "</div>" : "";
+
+    return "<article class=\"garment-card\"> +\n      "<div class=\"card-media\"> +\n        fitTag +\n        ratingBadge +\n        "<img src=\" + item.image + "\" alt=\" + item.title + "\" loading=\"lazy\" />" +\n        colorSwatches +\n      "</div> +\n      "<div class=\"card-prices\"> +\n        priceHtml +\n      "</div> +\n      "<div class=\"garment-name\">" +\n        (item.title || "").toString() +\n      "</div> +\n    "</article>";
+  }).join("");
+    // Build color swatches HTML
+    const colorSwatches = colors.map((c, idx) => {
+      const swatchColor = c.swatchColor || "#c9a35f";
+      return "<div class=\"color-swatch\" style=\"width: 16px; height: 16px; border: 2px solid transparent; border-radius: 50%; background: " + swatchColor + ";"></div>";
+    }).join("");
+
+    // Build fit tag HTML
+    const fitTag = fitLabel ? "<span class=\"fit-tag\">" + fitLabel + "</span>" : "";
+
+    // Build rating badge HTML
+    const ratingBadge = rating > 0 ? "<span class=\"rating-badge\" style=\"display: block;">" + "★".repeat(rating) + " " + rating + "</span>" : "";
+
+    // Build price HTML
+    const priceHtml = mrp > 0
+      ? "<span class=\"card-mrp\">" + mrp.toLocaleString("en-IN") + "</span>" +        "<span class=\"card-discounted-price\">" + discountedPrice.toLocaleString("en-IN") + "</span>" +        "<span class=\"card-discount-percent\">-" + discountPercent + "%</span>"      : "";
+
+    // Build garment name HTML
+    const garmentName = item.title ? "<div class=\"garment-name\">" + item.title + "</div>" : "";
+
+    return "<article class=\"garment-card\"> +\n      "<div class=\"card-media\"> +\n        fitTag +\n        ratingBadge +\n        "<img src=\" + item.image + "\" alt=\" + item.title + "\" loading=\"lazy\" />" +\n        colorSwatches +\n      "</div> +\n      "<div class=\"card-prices\"> +\n        priceHtml +\n      "</div> +\n      "<div class=\"garment-name\">" +\n        (item.title || "").toString() +\n      "</div> +\n    "</article>";
+  }).join("");
+    const colorSwatches = colors.map((c, idx) => {
+      const swatchColor = c.swatchColor || "#c9a35f";
+      const img = c.garmentImage ? "/assets/" + c.garmentImage : item.image;
+      return "<div class=\"color-swatch\" data-index="" + idx + "" style="background: " + swatchColor + "; width: 24px; height: 24px; border: 2px solid transparent; border-radius: 50%; cursor: pointer; margin-right: 4px;" title="Variant " + (idx + 1) + ""></div>";
+    }).join("");
+
+    // Build fit tag HTML
+    const fitTag = fitLabel ? "<span class=\"fit-tag\">" + fitLabel + "</span>" : "";
+
+    // Build price HTML
+    const priceHtml = mrp > 0
+      ? "<span class=\"card-mrp\">" + mrp.toLocaleString("en-IN") + "</span>" +        "<span class=\"card-discounted-price\">" + discountedPrice.toLocaleString("en-IN") + "</span>" +        "<span class=\"card-discount-percent\">-" + discountPercent + "%</span>"      : "<span class=\"card-price\">" + Number(item.price).toLocaleString("en-IN") + "</span>";
+
+    return "<article class=\"garment-card\">" +      "<div class=\"card-media\">" +        fitTag +        "<img src="" + item.image + "" alt="" + item.title + "" loading="lazy" />" +        colorSwatches +      "</div>" +      "<div class=\"card-info\">" +        "<span class=\"card-craft\">" + (item.craft || "Artisanal") + "</span>" +        "<h2 class=\"card-title\">" + item.title + "</h2>" +        "<div class=\"card-prices\">" + priceHtml + "</div>" +        "<p class=\"card-fabric\">" + (item.fabric || "Pure Silk") + "</p>" +      "</div>" +    "</article>";
+  }).join("");
+    const colorSwatches = colors.map((c, idx) => {
+      const swatchColor = c.swatchColor || "#c9a35f";
+      const img = c.garmentImage ? "/assets/" + c.garmentImage : item.image;
+      return "<div class=\"color-swatch\" data-index="" + idx + "" style="background: " + swatchColor + "; width: 24px; height: 24px; border: 2px solid transparent; border-radius: 50%; cursor: pointer; margin-right: 4px;" title="Variant " + (idx + 1) + ""></div>";
+    }).join("");
+
+    // Build fit tag HTML
+    const fitTag = fitLabel ? "<span class=\"fit-tag\">" + fitLabel + "</span>" : "";
+
+    // Build price HTML
+    const priceHtml = mrp > 0
+      ? "<span class=\"card-mrp\">" + mrp.toLocaleString("en-IN") + "</span>" +        "<span class=\"card-discounted-price\">" + discountedPrice.toLocaleString("en-IN") + "</span>" +        "<span class=\"card-discount-percent\">-" + discountPercent + "%</span>"      : "<span class=\"card-price\">" + Number(item.price).toLocaleString("en-IN") + "</span>";
+
+    return "<article class=\"garment-card\">" +      "<div class=\"card-media\">" +        fitTag +        "<img src="" + item.image + "" alt="" + item.title + "" loading="lazy" />" +        colorSwatches +      "</div>" +      "<div class=\"card-info\">" +        "<span class=\"card-craft\">" + (item.craft || "Artisanal") + "</span>" +        "<h2 class=\"card-title\">" + item.title + "</h2>" +        "<div class=\"card-prices\">" + priceHtml + "</div>" +        "<p class=\"card-fabric\">" + (item.fabric || "Pure Silk") + "</p>" +      "</div>" +    "</article>";
 })();
 </script>
 

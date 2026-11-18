@@ -1,0 +1,17 @@
+rules_version = '2';
+
+// Aleen atelier data is server-only.
+//
+// Every read and write goes through server.js or the api/ functions, which
+// authenticate with a service account. Service accounts are authorised by IAM,
+// so they bypass these rules entirely — denying everything here does not affect
+// backend sync, it only removes anonymous browser access.
+//
+// Deploy with:  firebase deploy --only firestore:rules
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

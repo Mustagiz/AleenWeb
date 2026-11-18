@@ -1,6 +1,11 @@
 // POST /api/auth/login
 const { getData } = require('../_data');
-const { signToken } = require('../_auth');
+const { signToken, LEAKED_PASSWORDS } = require('../_auth');
+const { createLimiter, clientIp } = require('../_ratelimit');
+
+// Guessing protection. Per isolate on serverless, but it still turns a scripted
+// run of attempts into a handful per window instead of unlimited.
+const loginLimiter = createLimiter({ max: 8, windowMs: 15 * 60 * 1000, blockMs: 15 * 60 * 1000 });
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -14,6 +19,14 @@ module.exports = async (req, res) => {
 
   if (req.method !== 'POST') {
     res.status(405).json({ error: 'Method not allowed' });
+    return;
+  }
+
+  const ip = clientIp(req);
+  const limit = loginLimiter.check(ip);
+  if (!limit.allowed) {
+    res.setHeader('Retry-After', String(limit.retryAfter));
+    res.status(429).json({ error: 'Too many attempts. Please try again later.' });
     return;
   }
 
@@ -31,25 +44,25 @@ module.exports = async (req, res) => {
   let matchedUser = null;
   const validMasters = [
     process.env.ATELIER_ADMIN_PASSWORD,
-    data.masterPassword,
-    'aleen',
-    'Aleen@Atelier2026!'
-  ].filter(Boolean);
+    data.masterPassword
+  ].filter((p) => p && !LEAKED_PASSWORDS.has(p));
 
   if (validMasters.includes(pass)) {
     matchedUser = { username: 'Super Admin', role: 'admin' };
   } else if (Array.isArray(data.users)) {
-    const found = data.users.find(u => u.username.toLowerCase() === user.toLowerCase() && u.password === pass);
+    const found = data.users.find(u => u.username.toLowerCase() === user.toLowerCase() && u.password === pass && !LEAKED_PASSWORDS.has(u.password));
     if (found) {
       matchedUser = { username: found.username, role: found.role };
     }
   }
 
   if (!matchedUser) {
+    loginLimiter.fail(ip);
     res.status(401).json({ error: 'Invalid password. Please try again.' });
     return;
   }
 
+  loginLimiter.reset(ip);
   const token = signToken(matchedUser);
   res.status(200).json({
     success: true,

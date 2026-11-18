@@ -4,17 +4,14 @@
 
 const fs = require('fs');
 const path = require('path');
-const https = require('https');
+const firestore = require('./_firebase');
 
-const PROJECT_ID = 'aleen-a5c32';
-const API_KEY = 'AIzaSyDJOIWVS5LwRfhLLEa_lT51CI6ndQp1eXQ';
-const BASE_FIRESTORE = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/settings`;
 const DATA_FILE = path.join(process.cwd(), 'atelier_data.json');
 
 const DEFAULT_DATA = {
-  masterPassword: process.env.ATELIER_ADMIN_PASSWORD || 'Aleen@Atelier2026!',
+  masterPassword: process.env.ATELIER_ADMIN_PASSWORD,
   users: [
-    { username: 'admin', role: 'admin', password: process.env.ATELIER_ADMIN_PASSWORD || 'Aleen@Atelier2026!', createdAt: '14 Nov 2026' }
+    { username: 'admin', role: 'admin', password: process.env.ATELIER_ADMIN_PASSWORD, createdAt: '14 Nov 2026' }
   ],
   megaMenuBanner: {
     img: 'assets/s2-card-women.jpg?v=2',
@@ -164,62 +161,11 @@ function readLocalFallback() {
 }
 
 function fetchDoc(docName) {
-  return new Promise((resolve) => {
-    const url = `${BASE_FIRESTORE}/${docName}?key=${API_KEY}`;
-    const req = https.get(url, { timeout: 3500 }, (res) => {
-      let body = '';
-      res.on('data', chunk => body += chunk);
-      res.on('end', () => {
-        if (res.statusCode === 200) {
-          try {
-            const doc = JSON.parse(body);
-            const raw = doc.fields?.jsonPayload?.stringValue;
-            if (raw) return resolve(JSON.parse(raw));
-          } catch (e) {}
-        }
-        resolve(null);
-      });
-    });
-    req.on('timeout', () => { req.destroy(); resolve(null); });
-    req.on('error', () => resolve(null));
-  });
+  return firestore.fetchDoc(docName, 3500);
 }
 
 function saveDoc(docName, data) {
-  return new Promise((resolve) => {
-    const url = new URL(`${BASE_FIRESTORE}/${docName}?key=${API_KEY}`);
-    const payload = JSON.stringify({
-      fields: {
-        jsonPayload: { stringValue: JSON.stringify(data) },
-        updatedAt: { stringValue: new Date().toISOString() }
-      }
-    });
-
-    const req = https.request(url, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        'Content-Length': Buffer.byteLength(payload)
-      },
-      timeout: 3000
-    }, (res) => {
-      let b = '';
-      res.on('data', c => b += c);
-      res.on('end', () => {
-        if (res.statusCode !== 200) {
-          console.warn(`saveDoc(${docName}) failed with status ${res.statusCode}:`, b);
-          resolve(false);
-        } else {
-          resolve(true);
-        }
-      });
-    });
-
-    req.on('timeout', () => { req.destroy(); resolve(false); });
-    req.on('error', () => resolve(false));
-    req.write(payload);
-    req.end();
-  });
+  return firestore.saveDoc(docName, data, 3000);
 }
 
 async function getCarouselSlides() {

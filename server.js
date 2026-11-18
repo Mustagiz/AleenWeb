@@ -3,9 +3,31 @@ const https = require('https');
 const fs = require('fs');
 const path = require('path');
 
-const FIREBASE_PROJECT_ID = 'aleen-a5c32';
-const FIREBASE_API_KEY = 'AIzaSyDJOIWVS5LwRfhLLEa_lT51CI6ndQp1eXQ';
-const FIRESTORE_URL = `https://firestore.googleapis.com/v1/projects/${FIREBASE_PROJECT_ID}/databases/(default)/documents/settings/atelier_data?key=${FIREBASE_API_KEY}`;
+// Firestore is reached with a service account (see api/_firebase.js). A service
+// account is authorised by IAM, so it bypasses Firestore security rules — which is
+// what lets firestore.rules deny all public access while sync keeps working.
+const firestore = require('./api/_firebase');
+
+// No credentials are hardcoded anywhere. Refuse to start rather than fall back to
+// a password that is public in the git history.
+const REQUIRED_ENV = ['ATELIER_ADMIN_PASSWORD', 'ATELIER_AUTH_SECRET'];
+const missingEnv = REQUIRED_ENV.filter((name) => !process.env[name]);
+if (missingEnv.length) {
+  console.error(
+    `[config] Missing required environment variable(s): ${missingEnv.join(', ')}\n` +
+    '         Copy .env.example to .env, fill them in, then start with:\n' +
+    '         node --env-file=.env server.js'
+  );
+  process.exit(1);
+}
+
+if (!firestore.isConfigured()) {
+  console.warn(
+    '[firestore] No service account configured (FIREBASE_SERVICE_ACCOUNT / ' +
+    'FIREBASE_SERVICE_ACCOUNT_BASE64 / GOOGLE_APPLICATION_CREDENTIALS).\n' +
+    '            Falling back to the public API key, which only works while the rules are open.'
+  );
+}
 
 const PORT = process.env.PORT || 3300;
 const ROOT = __dirname;
@@ -28,19 +50,64 @@ const MIME = {
   '.xml': 'application/xml; charset=utf-8',
   '.txt': 'text/plain; charset=utf-8',
   '.webmanifest': 'application/manifest+json',
+  '.avif': 'image/avif',
   '.woff': 'font/woff',
   '.woff2': 'font/woff2',
   '.ttf': 'font/ttf'
 };
 
-const { signToken, verifyToken, verifyAdmin } = require('./api/_auth');
+// Request ceilings. Slide and catalog payloads are base64 image data, so the JSON
+// cap is generous — but it is a cap instead of "read whatever arrives".
+const MAX_BODY_BYTES = 25 * 1024 * 1024;
+const MAX_UPLOAD_BYTES = 6 * 1024 * 1024;
+
+// Uploads are limited to the raster formats this site actually serves. SVG is
+// absent on purpose: it can carry script and would be served from this origin.
+const UPLOAD_MIME_EXT = {
+  'image/png': '.png',
+  'image/jpeg': '.jpg',
+  'image/jpg': '.jpg',
+  'image/webp': '.webp',
+  'image/avif': '.avif'
+};
+
+// Files that carry credentials, configuration or server code. None of them is
+// ever served over HTTP, whatever the request path looks like.
+const BLOCKED_STATIC_FILES = new Set([
+  'atelier_data.json',
+  'package.json',
+  'package-lock.json',
+  'vercel.json',
+  'firebase.json',
+  'firestore.rules',
+  'server.js',
+  'readme.md'
+]);
+
+function isBlockedStaticPath(reqPath) {
+  const segments = String(reqPath)
+    .split('/')
+    .filter(Boolean)
+    .map((segment) => segment.toLowerCase());
+  if (!segments.length) return false;
+  // Dotfiles and dot-directories (.env, .git, .freebuff) never leave the server.
+  if (segments.some((segment) => segment.startsWith('.'))) return true;
+  if (segments[0] === 'api' || segments[0] === 'node_modules') return true;
+  const name = segments[segments.length - 1];
+  if (BLOCKED_STATIC_FILES.has(name)) return true;
+  if (/\.(json|rules|md|lock|log|sh|yml|yaml|sql|db|sqlite|pem|key|crt)$/.test(name)) return true;
+  return false;
+}
+
+const { signToken, verifyToken, verifyAdmin, LEAKED_PASSWORDS } = require('./api/_auth');
+const { createLimiter, clientIp } = require('./api/_ratelimit');
 
 // In-memory / file-persisted admin data
 const DATA_FILE = path.join(ROOT, 'atelier_data.json');
 let atelierData = {
-  masterPassword: process.env.ATELIER_ADMIN_PASSWORD || 'Aleen@Atelier2026!',
+  masterPassword: process.env.ATELIER_ADMIN_PASSWORD,
   users: [
-    { username: 'admin', role: 'admin', password: process.env.ATELIER_ADMIN_PASSWORD || 'Aleen@Atelier2026!', createdAt: '14 Nov 2026' }
+    { username: 'admin', role: 'admin', password: process.env.ATELIER_ADMIN_PASSWORD, createdAt: '14 Nov 2026' }
   ],
   megaMenuBanner: {
     img: 'assets/s2-card-women.jpg?v=2',
@@ -145,29 +212,10 @@ if (fs.existsSync(DATA_FILE)) {
   fs.writeFileSync(DATA_FILE, JSON.stringify(atelierData, null, 2), 'utf8');
 }
 
-const BASE_FIRESTORE = `https://firestore.googleapis.com/v1/projects/${FIREBASE_PROJECT_ID}/databases/(default)/documents/settings`;
-
+// Callers are synchronous, so the write is kicked off and left to complete;
+// the helper logs any failure instead of throwing.
 function saveDocToFirestore(docName, data) {
-  try {
-    const url = new URL(`${BASE_FIRESTORE}/${docName}?key=${FIREBASE_API_KEY}`);
-    const payload = JSON.stringify({
-      fields: {
-        jsonPayload: { stringValue: JSON.stringify(data) },
-        updatedAt: { stringValue: new Date().toISOString() }
-      }
-    });
-    const req = https.request(url, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        'Content-Length': Buffer.byteLength(payload)
-      },
-      timeout: 4500
-    }, (res) => {});
-    req.on('error', () => {});
-    req.write(payload);
-    req.end();
-  } catch(e) {}
+  firestore.saveDoc(docName, data, 4500).catch(() => {});
 }
 
 function saveData() {
@@ -208,19 +256,9 @@ function saveData() {
 
 // Initial async fetch from Firestore to stay in sync
 function fetchFirestoreDoc(docName, cb) {
-  https.get(`${BASE_FIRESTORE}/${docName}?key=${FIREBASE_API_KEY}`, { timeout: 3500 }, (res) => {
-    let body = '';
-    res.on('data', chunk => body += chunk);
-    res.on('end', () => {
-      if (res.statusCode === 200) {
-        try {
-          const doc = JSON.parse(body);
-          const raw = doc.fields?.jsonPayload?.stringValue;
-          if (raw) cb(JSON.parse(raw));
-        } catch(e) {}
-      }
-    });
-  }).on('error', () => {});
+  firestore.fetchDoc(docName, 3500)
+    .then((payload) => { if (payload) cb(payload); })
+    .catch(() => {});
 }
 
 fetchFirestoreDoc('atelier_data', (remote) => {
@@ -228,14 +266,14 @@ fetchFirestoreDoc('atelier_data', (remote) => {
     delete remote.carouselSlides;
     delete remote.catalog;
     delete remote.womenCollections;
-    if (!remote.masterPassword || remote.masterPassword === 'aleen') {
-      remote.masterPassword = process.env.ATELIER_ADMIN_PASSWORD || 'Aleen@Atelier2026!';
+    if (!remote.masterPassword || LEAKED_PASSWORDS.has(remote.masterPassword)) {
+      remote.masterPassword = process.env.ATELIER_ADMIN_PASSWORD;
       // Persist the upgraded secure password back to Firestore
       setTimeout(() => saveData(), 1000);
     }
     if (Array.isArray(remote.users)) {
       remote.users.forEach(u => {
-        if (u.password === 'aleen') u.password = process.env.ATELIER_ADMIN_PASSWORD || 'Aleen@Atelier2026!';
+        if (LEAKED_PASSWORDS.has(u.password)) u.password = process.env.ATELIER_ADMIN_PASSWORD;
       });
     }
     atelierData = { ...atelierData, ...remote };
@@ -301,16 +339,39 @@ fetchFirestoreDoc('atelier_women', (cards) => {
 // Active session tokens with role check
 const activeSessions = new Map(); // token -> { username, role, expires }
 
-function parseBody(req) {
+// Login throttling: 8 failed attempts per address, then a 15 minute block.
+const loginLimiter = createLimiter({ max: 8, windowMs: 15 * 60 * 1000, blockMs: 15 * 60 * 1000 });
+
+// Reads a JSON body, refusing to buffer more than `maxBytes`. An oversized body
+// resolves to `{}` (so handlers reject it as invalid input) and the remainder of
+// the stream is drained instead of being kept in memory.
+function parseBody(req, maxBytes = MAX_BODY_BYTES) {
   return new Promise((resolve) => {
     let body = '';
-    req.on('data', chunk => { body += chunk; });
+    let settled = false;
+    req.on('data', chunk => {
+      if (settled) return;
+      if (body.length + chunk.length > maxBytes) {
+        settled = true;
+        body = '';
+        resolve({});
+        return;
+      }
+      body += chunk;
+    });
     req.on('end', () => {
+      if (settled) return;
+      settled = true;
       try {
         resolve(body ? JSON.parse(body) : {});
       } catch (err) {
         resolve({});
       }
+    });
+    req.on('error', () => {
+      if (settled) return;
+      settled = true;
+      resolve({});
     });
   });
 }
@@ -341,6 +402,14 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  // Refuse declared oversized bodies before any handler starts reading them.
+  const declaredLength = Number(req.headers['content-length'] || 0);
+  if (Number.isFinite(declaredLength) && declaredLength > MAX_BODY_BYTES) {
+    res.writeHead(413);
+    res.end(JSON.stringify({ error: 'Request body is too large.' }));
+    return;
+  }
+
   // ==========================================
   // BACKEND API ENDPOINTS WITH ROLE CONTROL
   // ==========================================
@@ -349,6 +418,14 @@ const server = http.createServer(async (req, res) => {
 
     // 1. Auth Login Endpoint
     if (reqPath === '/api/auth/login' && req.method === 'POST') {
+      const ip = clientIp(req);
+      const limit = loginLimiter.check(ip);
+      if (!limit.allowed) {
+        res.writeHead(429, { 'Retry-After': String(limit.retryAfter) });
+        res.end(JSON.stringify({ error: 'Too many attempts. Please try again later.' }));
+        return;
+      }
+
       const { passcode, username, password } = await parseBody(req);
       const pass = passcode || password;
       const user = username ? username.trim() : 'admin';
@@ -357,21 +434,20 @@ const server = http.createServer(async (req, res) => {
       let matchedUser = null;
       const validMasters = [
         atelierData.masterPassword,
-        process.env.ATELIER_ADMIN_PASSWORD,
-        'Aleen@Atelier2026!',
-        'aleen'
-      ].filter(Boolean);
+        process.env.ATELIER_ADMIN_PASSWORD
+      ].filter((p) => p && !LEAKED_PASSWORDS.has(p));
 
       if (pass && validMasters.includes(pass)) {
         matchedUser = { username: 'Super Admin', role: 'admin' };
       } else if (pass && Array.isArray(atelierData.users)) {
-        const found = atelierData.users.find(u => u.username.toLowerCase() === user.toLowerCase() && u.password === pass);
+        const found = atelierData.users.find(u => u.username.toLowerCase() === user.toLowerCase() && u.password === pass && !LEAKED_PASSWORDS.has(u.password));
         if (found) {
           matchedUser = found;
         }
       }
 
       if (!matchedUser) {
+        loginLimiter.fail(ip);
         res.writeHead(401);
         res.end(JSON.stringify({ error: 'Invalid password. Please try again.' }));
         return;
@@ -388,6 +464,7 @@ const server = http.createServer(async (req, res) => {
         return;
       }
 
+      loginLimiter.reset(ip);
       const token = signToken({
         username: matchedUser.username,
         role: 'admin'
@@ -453,70 +530,93 @@ const server = http.createServer(async (req, res) => {
         const body = await parseBody(req);
         const rawGarments = body.catalog || body.garments;
         if (Array.isArray(rawGarments)) {
-          // Process any base64 images into static upload files to keep catalog lightweight & permanent
-          const processed = rawGarments.map((g, gIdx) => {
-            const item = { ...g };
-            // Process main image
-            if (typeof item.image === 'string' && item.image.startsWith('data:image')) {
-              try {
-                const match = item.image.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
-                if (match) {
-                  let ext = '.jpg';
-                  if (match[1].includes('png')) ext = '.png';
-                  else if (match[1].includes('webp')) ext = '.webp';
-                  const buf = Buffer.from(match[2], 'base64');
-                  const filename = `${Date.now()}_garment_${(item.id || gIdx).toString().replace(/[^a-zA-Z0-9_-]/g, '_')}_main${ext}`;
-                  fs.writeFileSync(path.join(UPLOADS_DIR, filename), buf);
-                  item.image = `/assets/uploads/${filename}`;
-                }
-              } catch (e) {
-                console.error('Error saving base64 main image:', e);
-              }
-            }
-            // Process multi-angle images
-            if (Array.isArray(item.images)) {
-              item.images = item.images.map((img, imgIdx) => {
-                if (typeof img === 'string' && img.startsWith('data:image')) {
-                  try {
-                    const match = img.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
-                    if (match) {
-                      let ext = '.jpg';
-                      if (match[1].includes('png')) ext = '.png';
-                      else if (match[1].includes('webp')) ext = '.webp';
-                      const buf = Buffer.from(match[2], 'base64');
-                      const filename = `${Date.now()}_garment_${(item.id || gIdx).toString().replace(/[^a-zA-Z0-9_-]/g, '_')}_angle_${imgIdx}${ext}`;
-                      fs.writeFileSync(path.join(UPLOADS_DIR, filename), buf);
-                      return `/assets/uploads/${filename}`;
-                    }
-                  } catch (e) {
-                    console.error('Error saving base64 angle image:', e);
-                  }
-                }
-                return img;
-              });
-              if (!item.image && item.images[0]) {
-                item.image = item.images[0];
-              }
-            }
-            return item;
-          });
 
-          atelierData.catalog = processed;
-          saveData();
-          res.writeHead(200);
-          res.end(JSON.stringify({
-            success: true,
-            message: 'Catalog saved to server and persisted permanently.',
-            count: processed.length,
-            garments: processed,
-            catalog: processed
-          }));
+        // Validate new pricing fields
+        const validationErrors = [];
+        
+        rawGarments.forEach((g, gIdx) => {
+          const mrp = g.mrp !== undefined ? Number(g.mrp) : 0;
+          const discountedPrice = g.discountedPrice !== undefined ? Number(g.discountedPrice) : 0;
+          
+          // Non-negative price validation
+          if (mrp < 0) validationErrors.push(`Garment ${g.id || gIdx}: MRP must be non-negative`);
+          if (discountedPrice < 0) validationErrors.push(`Garment ${g.id || gIdx}: Discounted price must be non-negative`);
+          
+          // Discounted price must not exceed MRP
+          if (mrp > 0 && discountedPrice > mrp) {
+            validationErrors.push(`Garment ${g.id || gIdx}: Discounted price (₹${discountedPrice}) cannot exceed MRP (₹${mrp})`);
+          }
+        });
+        
+        if (validationErrors.length > 0) {
+          res.writeHead(400);
+          res.end(JSON.stringify({ error: validationErrors.join('; ') }));
           return;
         }
+        // Process any base64 images into static upload files to keep catalog lightweight & permanent
+        const processed = rawGarments.map((g, gIdx) => {
+          const item = { ...g };
+          // Process main image
+          if (typeof item.image === 'string' && item.image.startsWith('data:image')) {
+            try {
+              const match = item.image.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+              if (match) {
+                let ext = '.jpg';
+                if (match[1].includes('png')) ext = '.png';
+                else if (match[1].includes('webp')) ext = '.webp';
+                const buf = Buffer.from(match[2], 'base64');
+                const filename = `${Date.now()}_garment_${(item.id || gIdx).toString().replace(/[^a-zA-Z0-9_-]/g, '_')}_main${ext}`;
+                fs.writeFileSync(path.join(UPLOADS_DIR, filename), buf);
+                item.image = `/assets/uploads/${filename}`;
+              }
+            } catch (e) {
+              console.error('Error saving base64 main image:', e);
+            }
+          }
+          // Process multi-angle images
+          if (Array.isArray(item.images)) {
+            item.images = item.images.map((img, imgIdx) => {
+              if (typeof img === 'string' && img.startsWith('data:image')) {
+                try {
+                  const match = img.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+                  if (match) {
+                    let ext = '.jpg';
+                    if (match[1].includes('png')) ext = '.png';
+                    else if (match[1].includes('webp')) ext = '.webp';
+                    const buf = Buffer.from(match[2], 'base64');
+                    const filename = `${Date.now()}_garment_${(item.id || gIdx).toString().replace(/[^a-zA-Z0-9_-]/g, '_')}_angle_${imgIdx}${ext}`;
+                    fs.writeFileSync(path.join(UPLOADS_DIR, filename), buf);
+                    return `/assets/uploads/${filename}`;
+                  }
+                } catch (e) {
+                  console.error('Error saving base64 angle image:', e);
+                }
+              }
+              return img;
+            });
+            if (!item.image && item.images[0]) {
+              item.image = item.images[0];
+            }
+          }
+          return item;
+        });
 
-        res.writeHead(400);
-        res.end(JSON.stringify({ error: 'Valid garments or catalog array is required' }));
+        atelierData.catalog = processed;
+        saveData();
+        res.writeHead(200);
+        res.end(JSON.stringify({
+          success: true,
+          message: 'Catalog saved to server and persisted permanently.',
+          count: processed.length,
+          garments: processed,
+          catalog: processed
+        }));
         return;
+      }
+
+      res.writeHead(400);
+      res.end(JSON.stringify({ error: 'Valid garments or catalog array is required' }));
+      return;
       }
     }
 
@@ -812,18 +912,26 @@ const server = http.createServer(async (req, res) => {
       }
 
       try {
-        // Parse base64 data URL
-        const matches = data.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
-        let buffer;
-        let ext = '.jpg';
-        if (matches && matches.length === 3) {
-          const mime = matches[1];
-          if (mime.includes('png')) ext = '.png';
-          else if (mime.includes('webp')) ext = '.webp';
-          else if (mime.includes('svg')) ext = '.svg';
-          buffer = Buffer.from(matches[2], 'base64');
-        } else {
-          buffer = Buffer.from(data, 'base64');
+        // Uploads must be an allowlisted raster data URL: the extension is taken
+        // from the declared MIME type, never from the client's filename.
+        const matches = typeof data === 'string'
+          ? data.match(/^data:([A-Za-z0-9.+-]+\/[A-Za-z0-9.+-]+);base64,([\s\S]+)$/)
+          : null;
+        const mime = matches ? matches[1].toLowerCase() : '';
+        const ext = UPLOAD_MIME_EXT[mime];
+        if (!matches || !ext) {
+          res.writeHead(415);
+          res.end(JSON.stringify({ error: 'Only PNG, JPEG, WebP or AVIF images can be uploaded.' }));
+          return;
+        }
+
+        const buffer = Buffer.from(matches[2], 'base64');
+        if (!buffer.length || buffer.length > MAX_UPLOAD_BYTES) {
+          res.writeHead(413);
+          res.end(JSON.stringify({
+            error: `Image must be larger than 0 bytes and no more than ${Math.round(MAX_UPLOAD_BYTES / (1024 * 1024))} MB.`
+          }));
+          return;
         }
 
         const safeBase = (filename || 'garment').replace(/[^a-zA-Z0-9_\-\.]/g, '_').replace(/\.[^/.]+$/, '');
@@ -896,6 +1004,12 @@ const server = http.createServer(async (req, res) => {
   let normalizedPath = reqPath;
   if (normalizedPath === '/' || normalizedPath === '' || normalizedPath === '/index.html') {
     normalizedPath = '/home.html';
+  }
+
+  if (isBlockedStaticPath(normalizedPath)) {
+    res.writeHead(404, { 'Content-Type': 'text/plain' });
+    res.end('404 Not Found');
+    return;
   }
 
   const filePath = path.join(ROOT, normalizedPath);

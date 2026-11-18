@@ -4,8 +4,23 @@
 
 const crypto = require('crypto');
 
-// Secret key from environment or cryptographically secure default
-const AUTH_SECRET = process.env.ATELIER_AUTH_SECRET || 'aleen_atelier_sec_9f8b417e2c94a613d0972b9ef182a45';
+// Passwords that shipped in the source, are public in the git history, and must
+// never authenticate again — even if they are still sitting in atelier_data.json
+// or in Firestore. The server replaces them with ATELIER_ADMIN_PASSWORD on sync.
+const LEAKED_PASSWORDS = new Set(['aleen', 'Aleen@Atelier2026!']);
+
+// Signing key must come from the environment. There is deliberately no default:
+// a committed fallback would let anyone forge admin tokens.
+const AUTH_SECRET = process.env.ATELIER_AUTH_SECRET;
+
+function requireAuthSecret() {
+  if (!AUTH_SECRET) {
+    throw new Error(
+      'ATELIER_AUTH_SECRET is not set. Add it to .env (see .env.example) or to the Vercel environment variables.'
+    );
+  }
+  return AUTH_SECRET;
+}
 
 function signToken(user, ttlMs = 24 * 60 * 60 * 1000) {
   const payload = {
@@ -15,7 +30,7 @@ function signToken(user, ttlMs = 24 * 60 * 60 * 1000) {
     exp: Date.now() + ttlMs
   };
   const payloadStr = Buffer.from(JSON.stringify(payload)).toString('base64url');
-  const signature = crypto.createHmac('sha256', AUTH_SECRET).update(payloadStr).digest('base64url');
+  const signature = crypto.createHmac('sha256', requireAuthSecret()).update(payloadStr).digest('base64url');
   return `${payloadStr}.${signature}`;
 }
 
@@ -25,6 +40,8 @@ function verifyToken(token) {
   if (token === 'offline_admin' || token === 'admin_session' || token === 'aleen') {
     return null;
   }
+
+  if (!AUTH_SECRET) return null;
 
   const parts = token.split('.');
   if (parts.length !== 2) return null;
@@ -65,6 +82,7 @@ function verifyAdmin(req) {
 
 module.exports = {
   AUTH_SECRET,
+  LEAKED_PASSWORDS,
   signToken,
   verifyToken,
   verifyAdmin

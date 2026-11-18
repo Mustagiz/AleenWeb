@@ -276,7 +276,7 @@
       "origin": "Aleen Design Studio",
       "badge": "Signature Cut",
       "image": "/assets/women-collections/card_3_lehengas.jpg",
-      "desc": "A springtime dream composed of thousand-petal floral tapestries rendered in ombré pastel threads, crowned by an embroidered sweetheart bustier.",
+      "desc": "A springtime dream composed of thousand-petal floral tapestries rendered in ombr\u00e9 pastel threads, crowned by an embroidered sweetheart bustier.",
       "weave": "French Knot & Silk Floss",
       "delivery": "Express Insured Dispatch (3-5 Days)",
       "whatsapp": "+91 98765 43210",
@@ -412,7 +412,7 @@
     "emailSubtext": "Our client liaison desk responds to all inquiries within 4 business hours.",
     "conciergeBadge": "Direct Concierge & WhatsApp",
     "phone": "+91 98765 43210",
-    "hours": "Mon – Sat, 10:00 AM – 7:30 PM IST",
+    "hours": "Mon \u2013 Sat, 10:00 AM \u2013 7:30 PM IST",
     "whatsappMsg": "Hello Aleen Atelier, I would like to inquire about your couture creations."
   },
   "bestSellers": [
@@ -466,7 +466,11 @@
         "/assets/pakistani-kurti-1.jpg",
         "/assets/pakistani-kurti-2.jpg",
         "/assets/pakistani-kurti-3.jpg"
-      ]
+      ],
+      "garmentColors": [],
+      "fitLabel": "",
+      "mrp": 0,
+      "discountedPrice": 0
     },
     {
       "id": "ALN-KS-02",
@@ -486,7 +490,11 @@
       "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
       "images": [
         "assets/women-collections/card_1_kurta-sets.jpg"
-      ]
+      ],
+      "garmentColors": [],
+      "fitLabel": "",
+      "mrp": 0,
+      "discountedPrice": 0
     },
     {
       "id": "ALN-DS-03",
@@ -506,7 +514,11 @@
       "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
       "images": [
         "assets/women-collections/card_2_dresses.jpg"
-      ]
+      ],
+      "garmentColors": [],
+      "fitLabel": "",
+      "mrp": 0,
+      "discountedPrice": 0
     },
     {
       "id": "ALN-LH-04",
@@ -526,7 +538,11 @@
       "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
       "images": [
         "assets/women-collections/card_3_lehengas.jpg"
-      ]
+      ],
+      "garmentColors": [],
+      "fitLabel": "",
+      "mrp": 0,
+      "discountedPrice": 0
     },
     {
       "id": "ALN-PK-05",
@@ -548,7 +564,11 @@
         "/assets/pakistani-kurti-2.jpg",
         "/assets/pakistani-kurti-1.jpg",
         "/assets/pakistani-kurti-3.jpg"
-      ]
+      ],
+      "garmentColors": [],
+      "fitLabel": "",
+      "mrp": 0,
+      "discountedPrice": 0
     },
     {
       "id": "ALN-KS-06",
@@ -568,7 +588,11 @@
       "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
       "images": [
         "assets/women-collections/card_4_anarkalis.jpg"
-      ]
+      ],
+      "garmentColors": [],
+      "fitLabel": "",
+      "mrp": 0,
+      "discountedPrice": 0
     },
     {
       "id": "ALN-DP-07",
@@ -589,7 +613,11 @@
       "images": [
         "assets/women-collections/card_5_dupattas.jpg",
         "assets/s5-room.jpg"
-      ]
+      ],
+      "garmentColors": [],
+      "fitLabel": "",
+      "mrp": 0,
+      "discountedPrice": 0
     },
     {
       "id": "ALN-UN-08",
@@ -609,7 +637,11 @@
       "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
       "images": [
         "assets/women-collections/card_6_fabrics.jpg"
-      ]
+      ],
+      "garmentColors": [],
+      "fitLabel": "",
+      "mrp": 0,
+      "discountedPrice": 0
     },
     {
       "id": "ALN-PK-09",
@@ -631,7 +663,11 @@
         "/assets/pakistani-kurti-3.jpg",
         "/assets/pakistani-kurti-1.jpg",
         "/assets/pakistani-kurti-2.jpg"
-      ]
+      ],
+      "garmentColors": [],
+      "fitLabel": "",
+      "mrp": 0,
+      "discountedPrice": 0
     },
     {
       "id": "ALN-LH-10",
@@ -644,14 +680,18 @@
       "origin": "Aleen Design Studio",
       "badge": "Signature Cut",
       "image": "assets/women-collections/card_3_lehengas.jpg",
-      "desc": "A springtime dream composed of thousand-petal floral tapestries rendered in ombré pastel threads, crowned by an embroidered sweetheart bustier.",
+      "desc": "A springtime dream composed of thousand-petal floral tapestries rendered in ombr\u00e9 pastel threads, crowned by an embroidered sweetheart bustier.",
       "weave": "French Knot & Silk Floss",
       "delivery": "Express Insured Dispatch (3-5 Days)",
       "whatsapp": "+91 98765 43210",
       "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
       "images": [
         "assets/women-collections/card_3_lehengas.jpg"
-      ]
+      ],
+      "garmentColors": [],
+      "fitLabel": "",
+      "mrp": 0,
+      "discountedPrice": 0
     },
     {
       "id": "ALN-DS-11",
@@ -671,7 +711,11 @@
       "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
       "images": [
         "assets/women-collections/card_2_dresses.jpg"
-      ]
+      ],
+      "garmentColors": [],
+      "fitLabel": "",
+      "mrp": 0,
+      "discountedPrice": 0
     },
     {
       "id": "ALN-UN-12",
@@ -691,7 +735,11 @@
       "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
       "images": [
         "assets/women-collections/card_6_fabrics.jpg"
-      ]
+      ],
+      "garmentColors": [],
+      "fitLabel": "",
+      "mrp": 0,
+      "discountedPrice": 0
     }
   ]
 }
