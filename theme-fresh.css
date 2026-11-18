@@ -2061,7 +2061,6 @@ a.cta svg path {
 }
 
 /* CARDS & CATALOG TILES */
-.garment-card,
 .ecom-card,
 .catalog-card,
 .w-card,
@@ -2086,7 +2085,6 @@ a.cta svg path {
   border-radius: 16px !important;
 }
 
-.garment-card:hover,
 .ecom-card:hover,
 .product-card:hover,
 .contact-detail-card:hover,
@@ -4218,4 +4216,255 @@ html.nav-open body {
 @media (prefers-reduced-motion: reduce) {
   .site-drawer,
   .nav-toggle span { transition-duration: 0.01ms !important; }
+}
+
+
+/* ==========================================================================
+   GARMENT CARD & RESPONSIVE GRID REDESIGN (LARGE PORTRAIT SCALE)
+   ========================================================================== */
+.garments-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 36px 24px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+@media (max-width: 992px) {
+  .garments-grid,
+  .garments-grid.cols-2,
+  .garments-grid.cols-3,
+  .garments-grid.cols-4,
+  .garments-grid.cols-5 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 24px 16px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .catalog-section {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    overflow-x: hidden !important;
+  }
+  .garments-grid,
+  .garments-grid.cols-2,
+  .garments-grid.cols-3,
+  .garments-grid.cols-4,
+  .garments-grid.cols-5 {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 24px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+  .garment-card {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+/* Card Container - Large portrait scale, no white card panel */
+.garment-card {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  cursor: pointer !important;
+  user-select: none !important;
+  text-decoration: none !important;
+  box-sizing: border-box !important;
+  overflow: visible !important;
+  width: 100% !important;
+}
+
+.garment-card:hover {
+  transform: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* Tall Portrait Media Container */
+.garment-card .card-media {
+  position: relative !important;
+  width: 100% !important;
+  aspect-ratio: 3 / 4 !important;
+  height: auto !important;
+  border-radius: 14px !important;
+  overflow: hidden !important;
+  background: #edeae0 !important;
+  box-shadow: 0 4px 16px rgba(22, 34, 23, 0.08) !important;
+}
+
+.garment-card .card-media img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+  border-radius: 14px !important;
+  transition: transform 0.4s ease !important;
+}
+
+.garment-card:hover .card-media img {
+  transform: scale(1.03) !important;
+}
+
+/* Fit Label - Top-Left Overlay */
+.garment-card .fit-tag {
+  position: absolute !important;
+  top: 10px !important;
+  left: 10px !important;
+  background: rgba(22, 34, 23, 0.82) !important;
+  color: #f7f5ef !important;
+  backdrop-filter: blur(4px) !important;
+  -webkit-backdrop-filter: blur(4px) !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.6px !important;
+  text-transform: uppercase !important;
+  padding: 4px 8px !important;
+  border-radius: 6px !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+  white-space: nowrap !important;
+  border: none !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Rating Badge - Bottom-Left Overlay */
+.garment-card .rating-badge {
+  position: absolute !important;
+  bottom: 10px !important;
+  left: 10px !important;
+  background: rgba(255, 255, 255, 0.95) !important;
+  color: #162217 !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  padding: 3px 9px !important;
+  border-radius: 20px !important;
+  z-index: 2 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18) !important;
+  pointer-events: none !important;
+  border: none !important;
+  white-space: nowrap !important;
+}
+
+.garment-card .rating-badge .rating-star {
+  color: #f59e0b !important;
+  font-size: 11px !important;
+}
+
+/* Color Swatches - Bottom-Right Overlay */
+.garment-card .color-swatches {
+  position: absolute !important;
+  bottom: 10px !important;
+  right: 10px !important;
+  z-index: 3 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  padding: 3px 6px !important;
+  background: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(6px) !important;
+  -webkit-backdrop-filter: blur(6px) !important;
+  border-radius: 999px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12) !important;
+}
+
+.garment-card .color-swatch {
+  width: 17px !important;
+  height: 17px !important;
+  border-radius: 50% !important;
+  border: 2px solid #ffffff !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
+  cursor: pointer !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  flex-shrink: 0 !important;
+  transition: transform 0.15s ease, outline 0.15s ease !important;
+  outline: none !important;
+}
+
+.garment-card .color-swatch:hover,
+.garment-card .color-swatch.active {
+  transform: scale(1.15) !important;
+  outline: 2px solid #162217 !important;
+}
+
+/* Garment Info & Typography Below Image */
+.garment-card .card-info {
+  padding: 10px 2px 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.garment-card .garment-name {
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  color: #162217 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  line-height: 1.3 !important;
+  font-family: inherit !important;
+}
+
+.garment-card .card-prices {
+  position: static !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  padding: 0 !important;
+  margin: 2px 0 0 !important;
+  display: flex !important;
+  align-items: baseline !important;
+  gap: 8px !important;
+  flex-wrap: wrap !important;
+  width: 100% !important;
+}
+
+.garment-card .card-discounted-price {
+  font-size: 16.5px !important;
+  font-weight: 800 !important;
+  color: #162217 !important;
+}
+
+.garment-card .card-mrp {
+  font-size: 13.5px !important;
+  font-weight: 500 !important;
+  color: #768573 !important;
+  text-decoration: line-through !important;
+  margin-right: 0 !important;
+}
+
+.garment-card .card-discount-percent {
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  color: #168a3a !important; /* vivid green */
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+/* Hide legacy pills, heart buttons, and bundle offers */
+.garment-card .card-buying-meta,
+.garment-card .card-foot,
+.garment-card .card-bottom-row,
+.garment-card .card-bundle-offer,
+.garment-card .card-heart-btn,
+.garment-card .card-wish-btn,
+.garment-card .f-heart-btn {
+  display: none !important;
 }

@@ -4545,64 +4545,43 @@
             <input type="text" id="garmentBadge" class="form-control" placeholder="e.g. Heritage Edition, Bestseller">
           </div>
           <div class="form-group">
-            <label class="form-label">Price (₹ INR)</label>
-            <input type="number" id="garmentPrice" class="form-control" min="1000" step="500" required>          <div class="form-grid-2col">
-            <div class="form-group">
-              <label class="form-label">Fit Label</label>
-              <input type="text" id="garmentFitLabel" class="form-control" placeholder="e.g. Regular Fit, Slim Fit, Oversized...">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Discount % (auto-calculated)</label>
-              <input type="number" id="garmentDiscountPercent" class="form-control" min="0" max="100" step="5" readonly>
-            </div>
+            <label class="form-label">Selling Price (₹ INR)</label>
+            <input type="number" id="garmentPrice" class="form-control" min="0" step="1" required>
           </div>
-          <!-- New MRP and discounted price fields added below -->
-          <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(201, 163, 95, 0.2);">
-            <label class="form-label" style="font-size: 11px; color: var(--gold-light); display: block; margin-bottom: 6px;">Pricing & Discount</label>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 8px;">
-              <div>
-                <label class="form-label" style="font-size: 11px; color: #ffffff;">MRP</label>
-                <input type="number" id="garmentMrp" class="form-control" min="0" step="500" placeholder="e.g. 39500">
-              </div>
+        </div>
 
-        <!-- Color Variants Management -->
-        <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(201, 163, 95, 0.2);">
-          <label class="form-label" style="font-size: 11px; color: var(--gold-light); display: block; margin-bottom: 6px;">Color Variants</label>
-          <div id="colorVariantsContainer">
-            <div class="color-variant-row" data-index="0">
-              <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px; align-items: center; margin-bottom: 8px;">
-                <div>
-                  <label class="form-label" style="font-size: 10px; color: #ffffff;">Color Name</label>
-                  <input type="text" class="form-control color-name-input" placeholder="e.g. Red, Blue, Green">
-                </div>
-                <div>
-                  <label class="form-label" style="font-size: 10px; color: #ffffff;">Swatch</label>
-                  <input type="color" class="form-control swatch-color-input" value="#c9a35f">
-                </div>
-                <div>
-                  <label class="form-label" style="font-size: 10px; color: #ffffff;">Image</label>
-                  <input type="file" class="form-control" accept="image/*">
-                </div>
-                <div>
-                  <button type="button" class="btn-remove-color" style="background: transparent; border: none; color: #ff4d4d; font-size: 10px; cursor: pointer;">Remove</button>
-                </div>
-              </div>
-            </div>
+        <!-- Section: Pricing, Fit & Ratings -->
+        <span class="modal-section-badge" style="margin-top: 8px;">✦ Pricing, Fit &amp; Customer Ratings</span>
+        <div class="form-grid-2col">
+          <div class="form-group">
+            <label class="form-label">MRP (₹ INR) <span style="font-size: 11px; font-weight: normal; color: rgba(22,34,23,0.7);">(Original Struck-through Price)</span></label>
+            <input type="number" id="garmentMrp" class="form-control" min="0" step="1" placeholder="e.g. 39500">
           </div>
-          <button type="button" class="btn-add-color" style="margin-top: 8px; padding: 6px 12px; background: var(--gold); color: #040906; border: none; border-radius: 4px; font-size: 11px; cursor: pointer;">Add Color Variant</button>
-        </div>
-              <div>
-                <label class="form-label" style="font-size: 11px; color: #ffffff;">Discounted Price</label>
-                <input type="number" id="garmentDiscountedPrice" class="form-control" min="0" step="500" placeholder="e.g. 29800"><span class="form-label" style="font-size: 10px; color: var(--gold-light); margin-left: 4px;">0 = no discount</span>
-              </div>
-            </div>
-            <div style="background: rgba(4,9,6,0.3); padding: 6px 8px; border-radius: 6px; font-size: 11px; color: var(--gold-light);"><strong>Discount %: <span id="calcDiscountPercent">0</span>%</strong></div>
-          </div>
-        </div>
+          <div class="form-group">
+            <label class="form-label">Discounted Price (₹ INR) <span style="font-size: 11px; font-weight: normal; color: rgba(22,34,23,0.7);">(Discounted Selling Price)</span></label>
+            <input type="number" id="garmentDiscountedPrice" class="form-control" min="0" step="1" placeholder="e.g. 29800">
           </div>
         </div>
 
         <div class="form-grid-2col">
+          <div class="form-group">
+            <label class="form-label">Discount % (Auto-calculated)</label>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <input type="text" id="garmentDiscountPercent" class="form-control" readonly placeholder="Calculated from MRP & Discounted Price" style="background: rgba(247, 245, 239, 0.7); font-weight: 700; color: #168a3a;">
+              <span id="discountBadgePreview" style="display: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 700; background: #e8f5e9; color: #168a3a; white-space: nowrap;"></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Fit Label (Optional)</label>
+            <input type="text" id="garmentFitLabel" class="form-control" placeholder="e.g. Oversized Fit, Slim Fit, Relaxed Fit...">
+          </div>
+        </div>
+
+        <div class="form-grid-2col">
+          <div class="form-group">
+            <label class="form-label">Genuine Rating (Optional, 1.0 - 5.0)</label>
+            <input type="number" id="garmentRating" class="form-control" min="1.0" max="5.0" step="0.1" placeholder="e.g. 4.6">
+          </div>
           <div class="form-group">
             <label class="form-label">Category</label>
             <select id="garmentCategory" class="form-control" style="cursor: pointer;">
@@ -4619,6 +4598,25 @@
               <input type="text" id="garmentCustomCategory" class="form-control" placeholder="Enter custom category name (e.g. Anarkalis, Bridal Shawls)...">
             </div>
           </div>
+        </div>
+
+        <!-- Section: Color Variants Management -->
+        <span class="modal-section-badge" style="margin-top: 8px;">✦ Color Variants &amp; Swatches</span>
+        <div class="form-group" style="background: #ffffff; border: 1.5px solid #9caf88; border-radius: 12px; padding: 14px 16px; margin-bottom: 18px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+            <div>
+              <label class="form-label" style="margin: 0; font-weight: 700; color: #162217;">Multiple Color Variants</label>
+              <div style="font-size: 11.5px; color: #556b4f;">Each variant includes a color name, swatch color, and optional variant image.</div>
+            </div>
+            <button type="button" id="btnAddColorVariant" class="tbl-btn tbl-btn-edit" style="padding: 6px 14px; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
+              + Add Color Variant
+            </button>
+          </div>
+
+          <div id="colorVariantsContainer" style="display: flex; flex-direction: column; gap: 10px;">
+            <!-- Rendered dynamically via JavaScript -->
+          </div>
+        </div>
           <div class="form-group">
             <label class="form-label">Inquiry WhatsApp Direct Number</label>
             <input type="text" id="garmentWhatsapp" class="form-control" placeholder="+91 98765 43210" value="+91 98765 43210">
@@ -6057,7 +6055,13 @@
         </td>
         <td>${item.craft || 'Artisanal'}</td>
         <td>${item.fabric || 'Pure Silk'}</td>
-        <td><span class="tbl-price">₹${Number(item.price).toLocaleString("en-IN")}</span></td>
+        <td>
+          <span class="tbl-price">₹${Number(item.price || item.discountedPrice || 0).toLocaleString("en-IN")}</span>
+          ${item.mrp && Number(item.mrp) > Number(item.price || item.discountedPrice || 0) ? `
+            <div style="font-size: 11px; color: #748c66; text-decoration: line-through;">MRP ₹${Number(item.mrp).toLocaleString("en-IN")}</div>
+            <div style="font-size: 10.5px; color: #168a3a; font-weight: 700;">${Math.round(((Number(item.mrp) - Number(item.price || item.discountedPrice || 0)) / Number(item.mrp)) * 100)}% OFF</div>
+          ` : ''}
+        </td>
         <td>
           <div class="tbl-actions">
             <button type="button" class="tbl-btn tbl-btn-edit" onclick="editGarment('${item.id}')">Edit</button>
@@ -6300,6 +6304,169 @@
       const badgeInput = document.getElementById("garmentBadge");
       const catInput = document.getElementById("garmentCategory");
       const priceInput = document.getElementById("garmentPrice");
+      const mrpInput = document.getElementById("garmentMrp");
+      const discountedPriceInput = document.getElementById("garmentDiscountedPrice");
+      const discountPercentInput = document.getElementById("garmentDiscountPercent");
+      const discountBadgePreview = document.getElementById("discountBadgePreview");
+      const fitLabelInput = document.getElementById("garmentFitLabel");
+      const ratingInput = document.getElementById("garmentRating");
+      const colorVariantsContainer = document.getElementById("colorVariantsContainer");
+      const btnAddColorVariant = document.getElementById("btnAddColorVariant");
+      let currentGarmentVariants = [];
+
+      function calculateDiscount() {
+        const mrp = parseFloat(mrpInput?.value) || 0;
+        const disc = parseFloat(discountedPriceInput?.value) || 0;
+        const price = parseFloat(priceInput?.value) || 0;
+
+        if (mrp > 0 && disc > 0) {
+          if (disc > mrp) {
+            if (discountPercentInput) discountPercentInput.value = "Invalid (Discount > MRP)";
+            if (discountBadgePreview) {
+              discountBadgePreview.style.display = "inline-block";
+              discountBadgePreview.style.background = "#fee2e2";
+              discountBadgePreview.style.color = "#dc2626";
+              discountBadgePreview.textContent = "Discounted price cannot exceed MRP";
+            }
+            return -1;
+          }
+          const pct = Math.round(((mrp - disc) / mrp) * 100);
+          if (discountPercentInput) discountPercentInput.value = pct + "% OFF";
+          if (discountBadgePreview) {
+            discountBadgePreview.style.display = "inline-block";
+            discountBadgePreview.style.background = "#e8f5e9";
+            discountBadgePreview.style.color = "#168a3a";
+            discountBadgePreview.textContent = pct + "% OFF";
+          }
+          if (priceInput && (!priceInput.value || parseFloat(priceInput.value) <= 0 || parseFloat(priceInput.value) === mrp)) {
+            priceInput.value = disc;
+          }
+          return pct;
+        } else if (mrp > 0 && price > 0 && price < mrp) {
+          const pct = Math.round(((mrp - price) / mrp) * 100);
+          if (discountPercentInput) discountPercentInput.value = pct + "% OFF";
+          if (discountBadgePreview) {
+            discountBadgePreview.style.display = "inline-block";
+            discountBadgePreview.style.background = "#e8f5e9";
+            discountBadgePreview.style.color = "#168a3a";
+            discountBadgePreview.textContent = pct + "% OFF";
+          }
+          return pct;
+        } else {
+          if (discountPercentInput) discountPercentInput.value = "";
+          if (discountBadgePreview) discountBadgePreview.style.display = "none";
+          return 0;
+        }
+      }
+
+      mrpInput?.addEventListener("input", calculateDiscount);
+      discountedPriceInput?.addEventListener("input", calculateDiscount);
+      priceInput?.addEventListener("input", calculateDiscount);
+
+      function renderColorVariants() {
+        if (!colorVariantsContainer) return;
+        if (!Array.isArray(currentGarmentVariants)) currentGarmentVariants = [];
+
+        if (currentGarmentVariants.length === 0) {
+          colorVariantsContainer.innerHTML = `
+            <div style="font-size: 12px; color: #748c66; padding: 10px 0; text-align: center;">
+              No color variants configured yet. Click <strong>+ Add Color Variant</strong> to create variants.
+            </div>
+          `;
+          return;
+        }
+
+        colorVariantsContainer.innerHTML = currentGarmentVariants.map((v, idx) => `
+          <div class="color-variant-row" data-idx="${idx}" style="display: grid; grid-template-columns: minmax(110px, 1.2fr) 42px minmax(80px, 0.8fr) minmax(130px, 2fr) auto auto; gap: 8px; align-items: center; background: #f7f5ef; border: 1px solid #9caf88; border-radius: 8px; padding: 8px 10px;">
+            <div>
+              <input type="text" class="form-control" placeholder="Color Name (e.g. Emerald)" value="${escapeHtml(v.name || '')}" oninput="window.updateVariantData(${idx}, 'name', this.value)" style="padding: 6px 8px; font-size: 12px;">
+            </div>
+            <div style="display: flex; align-items: center; justify-content: center;">
+              <input type="color" class="variant-color-picker" value="${v.swatchColor || '#1b4d2e'}" oninput="window.updateVariantData(${idx}, 'swatchColor', this.value)" style="width: 34px; height: 32px; padding: 0; border: 1px solid #9caf88; border-radius: 6px; cursor: pointer; background: transparent;">
+            </div>
+            <div>
+              <input type="text" class="form-control variant-hex" placeholder="#1b4d2e" value="${escapeHtml(v.swatchColor || '#1b4d2e')}" oninput="window.updateVariantData(${idx}, 'swatchColor', this.value)" style="padding: 6px 8px; font-size: 11.5px; font-family: monospace;">
+            </div>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              ${v.image ? `<img src="${v.image}" style="width: 28px; height: 28px; object-fit: cover; border-radius: 4px; border: 1px solid #9caf88;" onerror="this.style.display='none'">` : ''}
+              <input type="text" class="form-control" placeholder="Variant Image URL (optional)" value="${escapeHtml(v.image || '')}" oninput="window.updateVariantData(${idx}, 'image', this.value)" style="padding: 6px 8px; font-size: 11.5px; flex: 1; min-width: 0;">
+            </div>
+            <div>
+              <label class="tbl-btn tbl-btn-edit" style="cursor: pointer; padding: 6px 10px; font-size: 11px; margin: 0; white-space: nowrap; height: 32px; display: inline-flex; align-items: center; gap: 4px;" title="Upload photo for this variant">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                <span>Upload</span>
+                <input type="file" accept="image/*" style="display: none;" onchange="window.uploadVariantPhoto(${idx}, this)">
+              </label>
+            </div>
+            <div>
+              <button type="button" class="tbl-btn tbl-btn-del" onclick="window.removeColorVariant(${idx})" style="padding: 6px 10px; font-size: 11px; height: 32px;" title="Remove this variant">&times;</button>
+            </div>
+          </div>
+        `).join("");
+      }
+
+      window.updateVariantData = function(idx, key, val) {
+        if (!currentGarmentVariants[idx]) return;
+        currentGarmentVariants[idx][key] = val;
+        if (key === 'swatchColor') {
+          const row = document.querySelector(`.color-variant-row[data-idx="${idx}"]`);
+          if (row) {
+            const picker = row.querySelector('.variant-color-picker');
+            const hex = row.querySelector('.variant-hex');
+            if (picker && picker.value !== val && /^#[0-9A-Fa-f]{6}$/.test(val)) picker.value = val;
+            if (hex && hex.value !== val) hex.value = val;
+          }
+        }
+      };
+
+      window.removeColorVariant = function(idx) {
+        currentGarmentVariants.splice(idx, 1);
+        renderColorVariants();
+      };
+
+      window.uploadVariantPhoto = async function(idx, fileInput) {
+        if (!fileInput.files || !fileInput.files[0]) return;
+        const file = fileInput.files[0];
+        fileInput.value = "";
+        showToast("✦ Uploading variant photo...");
+        const optimizedDataUrl = await fastProcessImage(file, { maxWidth: 2000, maxHeight: 2600, quality: 0.95 });
+        let finalUrl = optimizedDataUrl;
+        try {
+          const token = localStorage.getItem("atelier_admin_token") || "";
+          const upRes = await fetch("/api/admin/upload", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer " + token
+            },
+            body: JSON.stringify({
+              filename: "garment_variant_" + idx + "_" + Date.now() + ".jpg",
+              data: optimizedDataUrl
+            })
+          });
+          const upData = await upRes.json();
+          if (upData.success && upData.url) {
+            finalUrl = upData.url;
+          }
+        } catch (err) {
+          console.warn("Variant upload error:", err);
+        }
+        if (currentGarmentVariants[idx]) {
+          currentGarmentVariants[idx].image = finalUrl;
+        }
+        renderColorVariants();
+        showToast("✦ Variant photo ready!");
+      };
+
+      btnAddColorVariant?.addEventListener("click", () => {
+        currentGarmentVariants.push({
+          name: "",
+          swatchColor: "#9caf88",
+          image: ""
+        });
+        renderColorVariants();
+      });
+
       const craftInput = document.getElementById("garmentCraft");
       const fabricInput = document.getElementById("garmentFabric");
       const weaveInput = document.getElementById("garmentWeave");
@@ -6660,6 +6827,21 @@
         }
 
         priceInput.value = item.price || 0;
+        if (mrpInput) mrpInput.value = (item.mrp !== undefined && item.mrp !== null) ? item.mrp : "";
+        if (discountedPriceInput) discountedPriceInput.value = (item.discountedPrice !== undefined && item.discountedPrice !== null) ? item.discountedPrice : "";
+        if (fitLabelInput) fitLabelInput.value = item.fitLabel || "";
+        if (ratingInput) ratingInput.value = (item.rating !== undefined && item.rating !== null) ? item.rating : "";
+        calculateDiscount();
+
+        // Color variants
+        const vars = Array.isArray(item.garmentColors) ? item.garmentColors : (Array.isArray(item.colorVariants) ? item.colorVariants : []);
+        currentGarmentVariants = vars.map(v => ({
+          name: v.name || "",
+          swatchColor: v.swatchColor || "#9caf88",
+          image: v.image || ""
+        }));
+        renderColorVariants();
+
         craftInput.value = item.craft || "";
         fabricInput.value = item.fabric || "";
         if (weaveInput) weaveInput.value = item.weave || item.craft || "";
@@ -6708,6 +6890,15 @@
       addGarmentBtn?.addEventListener("click", () => {
         garmentForm.reset();
         editIdInput.value = "";
+        if (mrpInput) mrpInput.value = "";
+        if (discountedPriceInput) discountedPriceInput.value = "";
+        if (discountPercentInput) discountPercentInput.value = "";
+        if (discountBadgePreview) discountBadgePreview.style.display = "none";
+        if (fitLabelInput) fitLabelInput.value = "";
+        if (ratingInput) ratingInput.value = "";
+        currentGarmentVariants = [];
+        renderColorVariants();
+
         const codeInput = document.getElementById("garmentCodeInput");
         if (codeInput) codeInput.value = "ALN-PK-" + String(catalog.length + 1).padStart(2, '0');
         if (customCategoryWrap) customCategoryWrap.style.display = "none";
@@ -6730,6 +6921,30 @@
         const id = editIdInput.value;
         let cat = catInput.value;
         let catLabel = catLabels[cat] || "Curated Couture";
+
+        // Validate prices & rating
+        const mrpVal = (mrpInput && mrpInput.value.trim() !== "") ? parseFloat(mrpInput.value) : null;
+        const discVal = (discountedPriceInput && discountedPriceInput.value.trim() !== "") ? parseFloat(discountedPriceInput.value) : null;
+        const basePrice = parseFloat(priceInput.value) || 0;
+
+        if (mrpVal !== null && mrpVal < 0) {
+          showToast("Error: MRP must be a non-negative number");
+          return;
+        }
+        if (discVal !== null && discVal < 0) {
+          showToast("Error: Discounted price must be a non-negative number");
+          return;
+        }
+        if (mrpVal !== null && discVal !== null && discVal > mrpVal) {
+          showToast("Error: Discounted price (₹" + discVal + ") cannot exceed MRP (₹" + mrpVal + ")");
+          return;
+        }
+
+        const ratingVal = (ratingInput && ratingInput.value.trim() !== "") ? parseFloat(ratingInput.value) : null;
+        if (ratingVal !== null && (isNaN(ratingVal) || ratingVal < 1.0 || ratingVal > 5.0)) {
+          showToast("Error: Rating must be between 1.0 and 5.0");
+          return;
+        }
 
         if (cat === "custom") {
           const customVal = customCategoryInput ? customCategoryInput.value.trim() : "";
@@ -6781,12 +6996,33 @@
           ? selectedSizesList.join(", ") 
           : "Free Size, Custom Bespoke";
 
+        // Clean variants
+        const cleanVariants = (currentGarmentVariants || [])
+          .filter(v => (v.name && v.name.trim()) || (v.swatchColor && v.swatchColor.trim()) || (v.image && v.image.trim()))
+          .map(v => ({
+            name: (v.name || "").trim(),
+            swatchColor: (v.swatchColor || "#9caf88").trim(),
+            image: (v.image || "").trim()
+          }));
+
+        const finalPrice = (discVal && discVal > 0) ? discVal : (basePrice > 0 ? basePrice : (mrpVal || 0));
+        const calcDiscountPct = (mrpVal > 0 && discVal > 0 && discVal <= mrpVal) 
+          ? Math.round(((mrpVal - discVal) / mrpVal) * 100) 
+          : ((mrpVal > 0 && basePrice > 0 && basePrice < mrpVal) ? Math.round(((mrpVal - basePrice) / mrpVal) * 100) : null);
+
         const itemData = {
           title: titleInput.value.trim(),
           badge: badgeInput ? badgeInput.value.trim() : "",
           category: cat,
           categoryLabel: catLabel,
-          price: Number(priceInput.value),
+          price: finalPrice,
+          mrp: (mrpVal && mrpVal > 0) ? mrpVal : null,
+          discountedPrice: (discVal && discVal > 0) ? discVal : null,
+          discountPercent: calcDiscountPct,
+          fitLabel: (fitLabelInput && fitLabelInput.value.trim()) ? fitLabelInput.value.trim() : null,
+          rating: (ratingVal !== null && !isNaN(ratingVal)) ? ratingVal : null,
+          garmentColors: cleanVariants,
+          colorVariants: cleanVariants,
           craft: craftInput.value.trim(),
           fabric: fabricInput.value.trim(),
           weave: (weaveInput ? weaveInput.value.trim() : craftInput.value.trim()) || "Artisanal Weave",

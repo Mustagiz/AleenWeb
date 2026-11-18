@@ -513,6 +513,14 @@ const server = http.createServer(async (req, res) => {
           if (Array.isArray(g.images)) {
             g.images = g.images.map(img => (typeof img === 'string' && img.startsWith('assets/')) ? '/' + img : img);
           }
+          if (Array.isArray(g.garmentColors)) {
+            g.garmentColors = g.garmentColors.map(v => {
+              const cv = { ...v };
+              if (cv.image && typeof cv.image === 'string' && cv.image.startsWith('assets/')) cv.image = '/' + cv.image;
+              return cv;
+            });
+            g.colorVariants = g.garmentColors;
+          }
           return g;
         });
         res.end(JSON.stringify({ success: true, garments, catalog: garments }));
@@ -531,20 +539,27 @@ const server = http.createServer(async (req, res) => {
         const rawGarments = body.catalog || body.garments;
         if (Array.isArray(rawGarments)) {
 
-        // Validate new pricing fields
+        // Validate new pricing & rating fields
         const validationErrors = [];
         
         rawGarments.forEach((g, gIdx) => {
-          const mrp = g.mrp !== undefined ? Number(g.mrp) : 0;
-          const discountedPrice = g.discountedPrice !== undefined ? Number(g.discountedPrice) : 0;
+          const mrp = (g.mrp !== undefined && g.mrp !== null && g.mrp !== '') ? Number(g.mrp) : 0;
+          const discountedPrice = (g.discountedPrice !== undefined && g.discountedPrice !== null && g.discountedPrice !== '') ? Number(g.discountedPrice) : 0;
           
           // Non-negative price validation
           if (mrp < 0) validationErrors.push(`Garment ${g.id || gIdx}: MRP must be non-negative`);
           if (discountedPrice < 0) validationErrors.push(`Garment ${g.id || gIdx}: Discounted price must be non-negative`);
           
           // Discounted price must not exceed MRP
-          if (mrp > 0 && discountedPrice > mrp) {
+          if (mrp > 0 && discountedPrice > 0 && discountedPrice > mrp) {
             validationErrors.push(`Garment ${g.id || gIdx}: Discounted price (₹${discountedPrice}) cannot exceed MRP (₹${mrp})`);
+          }
+
+          if (g.rating !== undefined && g.rating !== null && g.rating !== '') {
+            const r = Number(g.rating);
+            if (isNaN(r) || r < 1.0 || r > 5.0) {
+              validationErrors.push(`Garment ${g.id || gIdx}: Rating must be between 1.0 and 5.0`);
+            }
           }
         });
         
@@ -597,6 +612,32 @@ const server = http.createServer(async (req, res) => {
             if (!item.image && item.images[0]) {
               item.image = item.images[0];
             }
+          }
+          // Process color variant images
+          const rawVariants = Array.isArray(item.garmentColors) ? item.garmentColors : (Array.isArray(item.colorVariants) ? item.colorVariants : null);
+          if (Array.isArray(rawVariants)) {
+            const processedVariants = rawVariants.map((v, vIdx) => {
+              const variant = { ...v };
+              if (typeof variant.image === 'string' && variant.image.startsWith('data:image')) {
+                try {
+                  const match = variant.image.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+                  if (match) {
+                    let ext = '.jpg';
+                    if (match[1].includes('png')) ext = '.png';
+                    else if (match[1].includes('webp')) ext = '.webp';
+                    const buf = Buffer.from(match[2], 'base64');
+                    const filename = `${Date.now()}_garment_${(item.id || gIdx).toString().replace(/[^a-zA-Z0-9_-]/g, '_')}_variant_${vIdx}${ext}`;
+                    fs.writeFileSync(path.join(UPLOADS_DIR, filename), buf);
+                    variant.image = `/assets/uploads/${filename}`;
+                  }
+                } catch (e) {
+                  console.error('Error saving base64 variant image:', e);
+                }
+              }
+              return variant;
+            });
+            item.garmentColors = processedVariants;
+            item.colorVariants = processedVariants;
           }
           return item;
         });

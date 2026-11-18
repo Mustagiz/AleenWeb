@@ -1907,24 +1907,26 @@
       font-weight: 700;
     }
 
-    /* Garments Grid: Exactly 4 cards in 1 line on desktop */
+    /* Garments Grid: Redesigned 3 cards per row on desktop, 2 on tablet, 1 on mobile */
     .garments-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 28px 20px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 36px 24px;
+      width: 100%;
+      box-sizing: border-box;
     }
 
-    @media (max-width: 1200px) {
+    @media (max-width: 992px) {
       .garments-grid {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 24px 16px;
       }
     }
 
-    @media (max-width: 860px) {
+    @media (max-width: 640px) {
       .garments-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px 14px;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 24px;
       }
     }
 
@@ -2738,171 +2740,207 @@
       display: table;
     }
 
-    .garment-card:nth-child(3n) {
-      clear: left;
+    /* Redesigned Card Container - Large portrait scale, no white card panel */
+    .garment-card {
+      background: transparent !important;
+      border: none !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      display: flex !important;
+      flex-direction: column !important;
+      cursor: pointer !important;
+      user-select: none !important;
+      text-decoration: none !important;
+      box-sizing: border-box !important;
+      overflow: visible !important;
+      width: 100% !important;
     }
 
-    @media (max-width: 1200px) {
-      .garment-card:nth-child(2n) {
-        clear: left;
-      }
+    .garment-card:hover {
+      transform: none !important;
+      box-shadow: none !important;
+      border: none !important;
     }
 
-    @media (max-width: 768px) {
-      .garment-card {
-        width: 100%;
-        float: none;
-        margin: 0 auto 12px auto;
-      }
-      .garment-card:nth-child(3n),
-      .garment-card:nth-child(2n) {
-        clear: none;
-      }
+    /* Tall Portrait Media Container */
+    .garment-card .card-media {
+      position: relative !important;
+      width: 100% !important;
+      aspect-ratio: 3 / 4 !important;
+      height: auto !important;
+      border-radius: 14px !important;
+      overflow: hidden !important;
+      background: #edeae0 !important;
+      box-shadow: 0 4px 16px rgba(22, 34, 23, 0.08) !important;
     }
 
-    .card-media {
-      position: relative;
-      width: 100%;
-      height: 280px;
-      background: #040906;
-      border-radius: 12px;
-      overflow: hidden;
-    }
-
-    .card-media img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.3s ease;
-      border-radius: 12px;
+    .garment-card .card-media img {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      display: block !important;
+      border-radius: 14px !important;
+      transition: transform 0.4s ease !important;
     }
 
     .garment-card:hover .card-media img {
-      transform: scale(1.02);
+      transform: scale(1.03) !important;
     }
 
-    /* Fit tag - top-left overlay */
-    .fit-tag {
-      position: absolute;
-      top: 6px;
-      left: 6px;
-      background: var(--gold);
-      color: #040906;
-      font-size: 8px;
-      font-weight: 600;
-      letter-spacing: 0.3px;
-      text-transform: uppercase;
-      padding: 2px 5px;
-      border-radius: 4px;
-      z-index: 2;
-      white-space: nowrap;
+    /* Fit Label - Top-Left Overlay */
+    .garment-card .fit-tag {
+      position: absolute !important;
+      top: 10px !important;
+      left: 10px !important;
+      background: rgba(22, 34, 23, 0.82) !important;
+      color: #f7f5ef !important;
+      backdrop-filter: blur(4px) !important;
+      -webkit-backdrop-filter: blur(4px) !important;
+      font-size: 10px !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.6px !important;
+      text-transform: uppercase !important;
+      padding: 4px 8px !important;
+      border-radius: 6px !important;
+      z-index: 2 !important;
+      pointer-events: none !important;
+      white-space: nowrap !important;
+      border: none !important;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15) !important;
     }
 
-    /* Rating badge - bottom-left overlay */
-    .rating-badge {
-      position: absolute;
-      bottom: 6px;
-      left: 6px;
-      background: rgba(255, 255, 255, 0.9);
-      color: #040906;
-      font-size: 8px;
-      font-weight: 600;
-      padding: 2px 5px;
-      border-radius: 4px;
-      z-index: 2;
-      display: none;
-      white-space: nowrap;
+    /* Rating Badge - Bottom-Left Overlay */
+    .garment-card .rating-badge {
+      position: absolute !important;
+      bottom: 10px !important;
+      left: 10px !important;
+      background: rgba(255, 255, 255, 0.95) !important;
+      color: #162217 !important;
+      font-size: 12px !important;
+      font-weight: 700 !important;
+      padding: 3px 9px !important;
+      border-radius: 20px !important;
+      z-index: 2 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 4px !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18) !important;
+      pointer-events: none !important;
+      border: none !important;
+      white-space: nowrap !important;
     }
 
-    /* Color swatches - bottom-right */
-    .color-swatches {
-      position: absolute;
-      bottom: 6px;
-      right: 6px;
-      display: flex;
-      gap: 3px;
-      z-index: 2;
-      flex-wrap: wrap;
+    .garment-card .rating-badge .rating-star {
+      color: #f59e0b !important;
+      font-size: 11px !important;
     }
 
-    .color-swatch {
-      width: 14px;
-      height: 14px;
-      border: 2px solid transparent;
-      border-radius: 50%;
-      cursor: pointer;
-      flex-shrink: 0;
-      background: #c9a35f;
-      transition: border-color 0.2s;
+    /* Color Swatches - Bottom-Right Overlay */
+    .garment-card .color-swatches {
+      position: absolute !important;
+      bottom: 10px !important;
+      right: 10px !important;
+      z-index: 3 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 5px !important;
+      padding: 3px 6px !important;
+      background: rgba(255, 255, 255, 0.7) !important;
+      backdrop-filter: blur(6px) !important;
+      -webkit-backdrop-filter: blur(6px) !important;
+      border-radius: 999px !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12) !important;
     }
 
-    .color-swatch:hover {
-      border-color: var(--gold);
+    .garment-card .color-swatch {
+      width: 17px !important;
+      height: 17px !important;
+      border-radius: 50% !important;
+      border: 2px solid #ffffff !important;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
+      cursor: pointer !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      flex-shrink: 0 !important;
+      transition: transform 0.15s ease, outline 0.15s ease !important;
+      outline: none !important;
     }
 
-    /* Price row - under image */
-    .card-prices {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 8px 10px;
-      background: rgba(4, 9, 6, 0.8);
-      backdrop-filter: blur(4px);
-      width: 100%;
-      font-size: 11px;
+    .garment-card .color-swatch:hover,
+    .garment-card .color-swatch.active {
+      transform: scale(1.15) !important;
+      outline: 2px solid #162217 !important;
     }
 
-    .card-price-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      flex-wrap: wrap;
-      gap: 3px;
-      margin-bottom: 4px;
+    /* Garment Info & Typography Below Image */
+    .garment-card .card-info {
+      padding: 10px 2px 0 !important;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 4px !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
     }
 
-    .card-discounted-price {
-      font-size: 13px;
-      font-weight: 700;
-      color: #c9a35f;
+    .garment-card .garment-name {
+      font-size: 15px !important;
+      font-weight: 600 !important;
+      color: #162217 !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      max-width: 100% !important;
+      margin: 0 !important;
+      line-height: 1.3 !important;
+      font-family: inherit !important;
     }
 
-    .card-mrp {
-      font-size: 11px;
-      font-weight: 600;
-      color: #ffffff;
-      text-decoration: line-through;
-      margin-right: 3px;
-      display: inline-block;
+    .garment-card .card-prices {
+      position: static !important;
+      background: transparent !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      padding: 0 !important;
+      margin: 2px 0 0 !important;
+      display: flex !important;
+      align-items: baseline !important;
+      gap: 8px !important;
+      flex-wrap: wrap !important;
+      width: 100% !important;
     }
 
-    .card-discount-percent {
-      font-size: 9px;
-      font-weight: 600;
-      color: var(--gold);
-      background: rgba(201, 163, 95, 0.2);
-      padding: 1px 3px;
-      border-radius: 3px;
+    .garment-card .card-discounted-price {
+      font-size: 16.5px !important;
+      font-weight: 800 !important;
+      color: #162217 !important;
     }
 
-    /* Garment name - under price row */
-    .garment-name {
-      font-size: 10px;
-      font-weight: 500;
-      color: #ffffff;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 100%;
-      margin-top: 6px;
+    .garment-card .card-mrp {
+      font-size: 13.5px !important;
+      font-weight: 500 !important;
+      color: #768573 !important;
+      text-decoration: line-through !important;
+      margin-right: 0 !important;
     }
 
-    /* Hide bundle offer row and heart icon */
-    .card-bottom-row,
-    .card-bundle-offer,
-    .card-heart-btn,
-    .f-heart-btn {
+    .garment-card .card-discount-percent {
+      font-size: 13.5px !important;
+      font-weight: 700 !important;
+      color: #168a3a !important; /* vivid green */
+      background: transparent !important;
+      padding: 0 !important;
+    }
+
+    /* Hide legacy pills, heart buttons, and bundle offers */
+    .garment-card .card-buying-meta,
+    .garment-card .card-foot,
+    .garment-card .card-bottom-row,
+    .garment-card .card-bundle-offer,
+    .garment-card .card-heart-btn,
+    .garment-card .card-wish-btn,
+    .garment-card .f-heart-btn {
       display: none !important;
     }</style>
   <style>
@@ -3814,51 +3852,26 @@ html, body {
 }
 
 @media (max-width: 640px) {
+  .catalog-section {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    overflow-x: hidden !important;
+  }
   .garments-grid,
   .garments-grid.cols-2,
   .garments-grid.cols-3,
   .garments-grid.cols-4,
   .garments-grid.cols-5 {
-    /* minmax(0, 1fr): an even split that a wide price + pill cannot widen, so
-       the second card can never be pushed off the screen. */
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 16px 10px !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 24px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
   }
-}
-
-/* Only the two-across phone range needs this tighter card scale: two cards on
-   a 390px screen leave about 170px each, so the name gets its own size and the
-   footer may stack instead of shoving the Inquire pill out of the card. Below
-   381px the grid is a single full-width column and the card keeps its full
-   size. */
-@media (min-width: 381px) and (max-width: 640px) {
-  .garment-card { padding: 8px 8px 14px; }
-  .card-info { padding: 10px 4px 0; }
-  .card-origin { font-size: 10px !important; letter-spacing: 1px !important; }
-  .card-title {
-    font-size: 16px !important;
-    line-height: 1.3 !important;
-    margin: 4px 0 8px !important;
-  }
-  .card-buying-meta { font-size: 10.5px !important; gap: 4px !important; }
-  .card-buying-meta span { font-size: 10.5px !important; }
-  .card-buying-meta > div { flex-wrap: wrap !important; row-gap: 2px !important; }
-  .card-foot {
-    flex-wrap: wrap !important;
-    align-items: flex-end !important;
-    gap: 8px 6px !important;
-  }
-  .card-cat-badge { font-size: 9px !important; letter-spacing: 0.8px !important; }
-}
-
-@media (max-width: 380px) {
-  .garments-grid,
-  .garments-grid.cols-2,
-  .garments-grid.cols-3,
-  .garments-grid.cols-4,
-  .garments-grid.cols-5 {
-    grid-template-columns: 1fr !important;
-    gap: 16px !important;
+  .garment-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
   }
 }
 </style>
@@ -5317,8 +5330,8 @@ html, body {
       let visibleLimit = 10;
       const PAGE_SIZE = 10;
       let currentFilteredList = [];
-      let currentGridCols = parseInt(localStorage.getItem("aleen_ecom_grid_cols") || "4", 10);
-      if (currentGridCols > 4 || currentGridCols < 1) currentGridCols = 4;
+      let currentGridCols = parseInt(localStorage.getItem("aleen_ecom_grid_cols") || "3", 10);
+      if (currentGridCols > 4 || currentGridCols < 1) currentGridCols = 3;
       let wishlist = JSON.parse(localStorage.getItem("aleen_wishlist") || "[]");
       let bag = JSON.parse(localStorage.getItem("aleen_bag") || "[]");
       let activeModalItem = null;
@@ -5619,11 +5632,21 @@ html, body {
         renderGarments(filtered);
       }
 
+      function escapeHtml(str) {
+        if (str === null || str === undefined) return "";
+        return String(str)
+          .replace(/&/g, "&amp;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;");
+      }
+
       function renderGarments(items) {
         if (!items) items = currentFilteredList.length ? currentFilteredList : GARMENTS;
         if (!gridEl) return;
         gridEl.innerHTML = "";
-        gridEl.className = "garments-grid cols-" + (currentGridCols || 4);
+        gridEl.className = "garments-grid cols-" + (currentGridCols || 3);
 
         if (items.length === 0) {
           if (countEl) countEl.textContent = "0";
@@ -5642,54 +5665,91 @@ html, body {
         if (countEl) countEl.textContent = `${toShow.length} of ${items.length}`;
 
         toShow.forEach(item => {
-          const isLiked = wishlist.includes(item.id);
           const card = document.createElement("article");
           card.className = "garment-card";
           card.setAttribute("data-id", item.id);
           card.setAttribute("role", "button");
           card.setAttribute("tabindex", "0");
-          card.setAttribute("aria-label", `View details for ${item.title}`);
-          const cleanPhone = (item.whatsapp || "919876543210").replace(/[^0-9]/g, '');
-          const waMsg = encodeURIComponent(`Hello Aleen Atelier, I am inquiring about: ${item.title} (${item.id}) - ${formatPrice(item.price)}. Please share availability and custom sizing details.`);
+          card.setAttribute("aria-label", `View details for ${escapeHtml(item.title)}`);
+
+          const fitLabel = (item.fitLabel || item.fit || "").trim();
+          const ratingVal = (item.rating !== undefined && item.rating !== null && !isNaN(Number(item.rating)) && Number(item.rating) > 0)
+            ? Number(item.rating).toFixed(1)
+            : null;
+
+          const variants = Array.isArray(item.garmentColors) && item.garmentColors.length > 0
+            ? item.garmentColors
+            : (Array.isArray(item.colorVariants) && item.colorVariants.length > 0 ? item.colorVariants : []);
+
+          // Pricing calculation: keep existing garments working without inventing fields
+          const hasMrp = item.mrp !== undefined && item.mrp !== null && Number(item.mrp) > 0;
+          const sellingPrice = (item.discountedPrice !== undefined && item.discountedPrice !== null && Number(item.discountedPrice) > 0)
+            ? Number(item.discountedPrice)
+            : Number(item.price || item.mrp || 0);
+
+          let priceMarkup = "";
+          if (hasMrp && Number(item.mrp) > sellingPrice && sellingPrice > 0) {
+            const pct = Math.round(((Number(item.mrp) - sellingPrice) / Number(item.mrp)) * 100);
+            priceMarkup = `
+              <div class="card-prices">
+                <span class="card-discounted-price">₹${sellingPrice.toLocaleString('en-IN')}</span>
+                <span class="card-mrp">₹${Number(item.mrp).toLocaleString('en-IN')}</span>
+                <span class="card-discount-percent">${pct}% OFF</span>
+              </div>
+            `;
+          } else {
+            priceMarkup = `
+              <div class="card-prices">
+                <span class="card-discounted-price">₹${sellingPrice.toLocaleString('en-IN')}</span>
+              </div>
+            `;
+          }
+
+          // Swatches markup
+          let swatchesMarkup = "";
+          if (variants.length > 0) {
+            swatchesMarkup = `
+              <div class="color-swatches" onclick="event.stopPropagation();">
+                ${variants.map((v, vIdx) => `
+                  <button type="button" class="color-swatch ${vIdx === 0 ? 'active' : ''}" 
+                    style="background-color: ${escapeHtml(v.swatchColor || '#c9a35f')};" 
+                    data-img="${escapeHtml(v.image || '')}" 
+                    title="${escapeHtml(v.name || 'Color variant')}" 
+                    aria-label="${escapeHtml(v.name || 'Color variant')}">
+                  </button>
+                `).join('')}
+              </div>
+            `;
+          }
+
           card.innerHTML = `
-        <div class="card-media">
-          <span class="fit-tag">${item.fitLabel || ""}</span>
-          <img src="${formatImgSrc(item.image)}" alt="${item.title}" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='assets/pakistani-kurti-1.jpg'" />
-          ${item.garmentColors && item.garmentColors.length > 0 ? '<div class="color-swatches">' + item.garmentColors.slice(0, 3).map((c, idx) => '<div class="color-swatch" style="width: 16px; height: 16px; border: 2px solid transparent; border-radius: 50%; background: ' + (c.swatchColor || "#c9a35f") + '"></div>').join('') + '</div>' : ''}
-          ${item.rating > 0 ? '<span class="rating-badge" style="display: block;">★'.repeat(item.rating) + ' ' + item.rating + '</span>' : ''}
-        </div>
-        <div class="card-prices">
-          ${item.mrp ? '<span class="card-mrp">' + item.mrp.toLocaleString('en-IN') + '</span>' : ''}
-          ${item.discountedPrice ? '<span class="card-discounted-price">' + item.discountedPrice.toLocaleString('en-IN') + '</span>' : ''}
-          ${item.mrp > 0 ? '<span class="card-discount-percent">-' + Math.round((1 - item.discountedPrice / item.mrp) * 100) + '%</span>' : ''}
-        </div>
-        ${item.title ? '<div class="garment-name">' + item.title + '</div>' : ''}
-      
-          <div class="card-buying-meta" style="display: flex; flex-direction: column; gap: 5px; margin: 6px 0 8px; font-size: 11.5px; color: #162217;">
-            <div style="display: flex; align-items: center; gap: 5px;">
-              <span style="color: #162217; font-weight: 700;">Sizes:</span>
-              <span style="letter-spacing: 0.02em; color: #162217; font-weight: 600;">XS–XXL • Bespoke Ready</span>
+            <div class="card-media">
+              ${fitLabel ? `<span class="fit-tag">${escapeHtml(fitLabel)}</span>` : ''}
+              <img src="${formatImgSrc(item.image)}" alt="${escapeHtml(item.title)}" class="card-main-img" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='assets/pakistani-kurti-1.jpg'" />
+              ${ratingVal ? `<span class="rating-badge"><span class="rating-star">★</span> ${ratingVal}</span>` : ''}
+              ${swatchesMarkup}
             </div>
-            <div style="display: flex; align-items: center; justify-content: space-between; gap: 4px; font-size: 11px;">
-              <span style="color: #1b4d2e; font-weight: 700; display: flex; align-items: center; gap: 5px;">
-                <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #1b4d2e;"></span>
-                3–5 Days Dispatch
-              </span>
-              <span style="color: #384e36; font-weight: 600;">7-Day Exchange</span>
+            <div class="card-info">
+              <h3 class="garment-name" title="${escapeHtml(item.title)}">${escapeHtml(item.title)}</h3>
+              ${priceMarkup}
             </div>
-          </div>
-          <div class="card-foot" style="display: flex; align-items: center; justify-content: space-between; margin-top: 6px; gap: 8px;">
-            <div style="display: flex; flex-direction: column;">
-              <span class="card-cat-badge" style="background: #f7f5ef; border: 1px solid #9caf88; color: #2e432c; font-weight: 700;">${item.categoryLabel || item.category}</span>
-              <span class="card-foot-price" style="margin-top: 2px; color: #e8412c; font-weight: 700; font-family: var(--serif); font-size: 21px;">${formatPrice(item.price)}</span>
-            </div>
-            <a href="https://wa.me/${cleanPhone}?text=${waMsg}" target="_blank" rel="noopener" class="card-wa-btn" style="display: inline-flex; align-items: center; gap: 6px; background: #e8412c; border: none; color: #ffffff; padding: 7px 16px; border-radius: 999px; font-size: 11.5px; font-weight: 700; text-decoration: none; box-shadow: 0 4px 12px rgba(232, 65, 44, 0.3); transition: all 0.25s ease;" onclick="event.stopPropagation();" title="Inquire on WhatsApp">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="#ffffff"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.82.49 3.53 1.34 5L2 22l5.16-1.31C8.59 21.49 10.25 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18.2c-1.57 0-3.05-.44-4.32-1.21l-.31-.19-3.06.78.82-2.98-.2-.33A8.17 8.17 0 0 1 3.8 12c0-4.52 3.68-8.2 8.2-8.2s8.2 3.68 8.2 8.2-3.68 8.2-8.2 8.2zm4.52-6.13c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.12-.14.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43l-.48-.01c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1s.9 2.44 1.03 2.61c.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.22-.16-.47-.29z"/></svg>
-              <span>Inquire</span>
-            </a>
-          </div>
-        </div>
-      `;
+          `;
+
+          // Swatch click interaction to change main photo
+          const swatchBtns = card.querySelectorAll(".color-swatch");
+          const cardImg = card.querySelector(".card-main-img");
+          swatchBtns.forEach(btn => {
+            btn.addEventListener("click", e => {
+              e.stopPropagation();
+              swatchBtns.forEach(b => b.classList.remove("active"));
+              btn.classList.add("active");
+              const variantImg = btn.getAttribute("data-img");
+              if (variantImg && cardImg) {
+                cardImg.src = formatImgSrc(variantImg);
+              }
+            });
+          });
+
           gridEl.appendChild(card);
         });
 
@@ -6419,6 +6479,10 @@ html, body {
 
       if (gridEl) {
         gridEl.addEventListener("click", e => {
+          if (e.target.closest(".color-swatch") || e.target.closest(".color-swatches")) {
+            return;
+          }
+
           const wishBtn = e.target.closest(".card-wish-btn");
           if (wishBtn) {
             e.stopPropagation();
@@ -6436,6 +6500,9 @@ html, body {
 
         gridEl.addEventListener("keydown", e => {
           if (e.key === "Enter" || e.key === " ") {
+            if (e.target.closest(".color-swatch") || e.target.closest(".color-swatches")) {
+              return;
+            }
             const card = e.target.closest(".garment-card");
             if (card && !e.target.closest(".card-wish-btn")) {
               e.preventDefault();
@@ -6534,7 +6601,7 @@ html, body {
       syncFabricChipsState();
       syncBadgeChipsState();
       syncSortChipsState();
-      setGridColumns(currentGridCols || 4);
+      setGridColumns(currentGridCols || 3);
       filterAndSortGarments(true);
 
       // Deep link query or search focus
