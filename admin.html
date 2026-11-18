@@ -3387,6 +3387,90 @@
       }
     }
 
+    /* -----------------------------------------------------------------
+       The same ledger voice across the other panes: house serif for card
+       headings, tracked Montserrat captions for field labels, and one
+       hairline under each card header where the pane title sits.
+       ----------------------------------------------------------------- */
+    h2.cm-title,
+    .cm-title-group h3,
+    .hero-manager-card h3,
+    .settings-box h3,
+    .admin-pane h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif !important;
+      font-weight: 500 !important;
+      letter-spacing: 0 !important;
+      line-height: 1.14 !important;
+      color: #162217 !important;
+    }
+
+    h2.cm-title {
+      font-size: 30px !important;
+    }
+
+    .cm-title-group h3,
+    .hero-manager-card h3,
+    .admin-pane h3 {
+      font-size: 26px !important;
+    }
+
+    .settings-box h3 {
+      font-size: 25px !important;
+      margin-bottom: 12px !important;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(156, 175, 136, 0.45);
+    }
+
+    /* Modal card titles (garment editor, cropper) */
+    .admin-modal-card h3,
+    #garmentModalTitle {
+      font-family: 'Cormorant Garamond', Georgia, serif !important;
+      font-size: 25px !important;
+      font-weight: 500 !important;
+      letter-spacing: 0 !important;
+      color: #162217 !important;
+    }
+
+    /* Card titles inside the contact, social and collection cards */
+    .cm-slide-item h4 {
+      font-family: 'Cormorant Garamond', Georgia, serif !important;
+      font-size: 19px !important;
+      font-weight: 500 !important;
+      letter-spacing: 0 !important;
+      color: #162217 !important;
+    }
+
+    /* Pane header rule, echoing the hairline under the stat labels */
+    .cm-header {
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(156, 175, 136, 0.4);
+      margin-bottom: 20px !important;
+    }
+
+    .cm-field-label,
+    .form-label,
+    .admin-label {
+      font-family: var(--sans) !important;
+      font-size: 9.5px !important;
+      font-weight: 600 !important;
+      letter-spacing: 0.18em !important;
+      line-height: 1.6 !important;
+      text-transform: uppercase;
+      color: #5c7350 !important;
+    }
+
+    @media (max-width: 640px) {
+      h2.cm-title {
+        font-size: 25px !important;
+      }
+      .cm-title-group h3,
+      .hero-manager-card h3,
+      .admin-pane h3,
+      .settings-box h3 {
+        font-size: 22px !important;
+      }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       .admin-stats-row.is-revealing .stat-card {
         animation: none !important;
