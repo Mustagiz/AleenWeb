@@ -837,6 +837,56 @@ section#hero {
   margin: 12px 0 24px !important;
 }
 
+/* Phone: the card is a wide-stage device. On a narrow one it covered most of
+   the photograph, so the same copy sits straight on the image — the light
+   vignette becomes a dark foot for it to read on. */
+@media (max-width: 767px) {
+  #hero .slide .veil {
+    background: linear-gradient(180deg,
+      rgba(6, 12, 8, 0.38) 0%,
+      rgba(6, 12, 8, 0.10) 30%,
+      rgba(6, 12, 8, 0.55) 62%,
+      rgba(6, 12, 8, 0.92) 100%) !important;
+    opacity: 1 !important;
+  }
+
+  #hero .slide-content {
+    top: auto !important;
+    bottom: calc(10vh + env(safe-area-inset-bottom)) !important;
+    left: 22px !important;
+    max-width: calc(100% - 44px) !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  #hero .headline,
+  #hero .headline * {
+    color: #fbf7ee !important;
+    font-size: clamp(34px, 9.8vw, 46px) !important;
+    line-height: 1.1 !important;
+    text-shadow: 0 2px 20px rgba(5, 11, 7, 0.55);
+  }
+
+  #hero .eyebrow,
+  #hero .eyebrow .eb-text { color: #e8d5a6 !important; }
+  #hero .eyebrow .eb-line { background: #c9a35f !important; }
+
+  #hero .tagline { color: rgba(251, 247, 238, 0.95) !important; }
+
+  #hero .hero-subtext {
+    color: rgba(251, 247, 238, 0.9) !important;
+    font-size: 14px !important;
+    line-height: 1.62 !important;
+    text-shadow: 0 1px 14px rgba(5, 11, 7, 0.5);
+    margin: 10px 0 20px !important;
+  }
+}
+
 #hero .hero-rail,
 #hero .hero-desc {
   color: #384e36 !important;
@@ -1721,8 +1771,9 @@ svg.lotus path {
 /* Tablet and phone: each page declares its own small-screen collapse *before*
    the five-column grid, so the collapse never won and the link lists ended up
    in 49px and 68px slivers. Two columns here, one on a phone, with the mark
-   and the sign-up spanning the row. */
-@media (max-width: 1024px) {
+   and the sign-up spanning the row. The width matches the pages' own
+   1100px collapse so the two never disagree in between. */
+@media (max-width: 1100px) {
   #footer .f-main {
     grid-template-columns: 1fr 1fr;
     gap: 40px 34px;
