@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0d121a">
+  <meta name="description" content="Explore Aurelia Residences — A living, photorealistic interactive 3D Downtown Dubai architectural experience in Three.js.">
+  <title>Aurelia Residences — Interactive 3D Downtown Dubai</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&family=Playfair+Display:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
+  <script type="module" crossorigin src="/assets/index-BJIUOTFA.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-B3TYUveZ.css">
+</head>
+<body>
+  <header class="header">
+    <a class="brand" href="#hero">
+      <b class="brand-mark">A<span>.</span></b>
+      <span>AURELIA TOWER<small>ARCHITECTURAL MAQUETTE · DUBAI</small></span>
+    </a>
+    <nav>
+      <a href="#vision">THE TOWER</a>
+      <a href="#architecture">MATERIALS</a>
+      <a href="#neighborhood">MASTERPLAN</a>
+    </nav>
+    <a class="nav-cta" href="#contact">INSPECT RESIDENCES <span>↗</span></a>
+  </header>
+
+  <main>
+    <section class="hero" id="hero">
+      <!-- 3D WebGL Canvas Container -->
+      <div id="scene-host" class="scene-host">
+        <canvas id="world" aria-label="Interactive 3D Architectural Maquette model. Orbit 360 degrees, zoom, and explore."></canvas>
+        <div class="scene-loader" id="loader">
+          <i></i>
+          <span>GENERATING ARCHITECTURAL MAQUETTE...</span>
+        </div>
+        <!-- 3D World Spatial Pins -->
+        <button class="pin" id="pin-aurelia" data-place="aurelia">
+          <span>01</span> AURELIA TOWER
+        </button>
+        <button class="pin" id="pin-lake" data-place="lake">
+          <span>02</span> WATERFRONT PARK
+        </button>
+        <button class="pin" id="pin-skygarden" data-place="skygarden">
+          <span>03</span> SKY GARDEN
+        </button>
+      </div>
+
+      <!-- Vignette Gradient -->
+      <div class="fade" aria-hidden="true"></div>
+
+      <!-- Hero Editorial Typography -->
+      <div class="hero-content">
+        <div class="kicker">ARCHITECTURAL MAQUETTE · AXONOMETRIC 45°</div>
+        <div class="title-line-mask">
+          <h1>The Ivory</h1>
+        </div>
+        <div class="title-line-mask">
+          <h1><em>Masterplan.</em></h1>
+        </div>
+        <p>An iconic sculptural tower rendered in physical glass, concrete, and champagne titanium — commanding an elegant ivory architectural maquette with waterfront parklands.</p>
+        <div class="actions">
+          <button class="primary" id="explore">INSPECT THE TOWER <span>↗</span></button>
+          <a class="secondary" href="#vision">THE MATERIALITY SPEC <span>↓</span></a>
+        </div>
+      </div>
+
+      <!-- Live Telemetry Status Pill -->
+      <div class="status">
+        <i></i>
+        <span>25.1972° N, 55.2744° E</span>
+        <small>SCALE 1:500 · PBR SHADING</small>
+      </div>
+
+      <!-- Atmospheric & Camera Presets Controls -->
+      <div class="controls">
+        <div class="controls-group">
+          <button id="time-mode" title="Switch between Studio Daylight, Sunset Gold, and Blue Hour">
+            ◐ <span id="mood-label">STUDIO DAYLIGHT</span>
+          </button>
+          <button id="view-axon" title="Reset to Reference Axonometric Isometric Angle">
+            ⌖ <span>AXONOMETRIC</span>
+          </button>
+          <button id="view-tower" title="Close-up focus on the featured tower">
+            ◈ <span>TOWER FOCUS</span>
+          </button>
+          <button id="view-lake" title="Waterfront park perspective">
+            〰 <span>LAKE PARK</span>
+          </button>
+          <button id="tour" title="Toggle 360 Turntable Orbit">
+            ⌁ <span>ORBIT 360°</span>
+          </button>
+          <button id="reset" title="Reset Camera">↺</button>
+        </div>
+      </div>
+
+      <!-- Active Landmark Inspector Card -->
+      <div class="focus" id="focus">
+        <small>SELECTED ARCHITECTURAL ELEMENT</small>
+        <b id="focus-name">AURELIA TOWER</b>
+        <p id="focus-description">Curved curtain-wall glass, fluted architectural concrete pilasters, and champagne titanium finials.</p>
+        <button id="focus-go">INSPECT ELEMENT ↗</button>
+      </div>
+
+      <!-- Bottom Status Bar -->
+      <div class="hero-foot">
+        <span>01 / 04 &nbsp;&nbsp; ARCHITECTURAL MAQUETTE · PHYSICAL GLASS, CONCRETE & METAL</span>
+        <span>LEFT-CLICK + DRAG TO ORBIT &nbsp;·&nbsp; SCROLL TO ZOOM &nbsp;·&nbsp; CLICK ANY ANNOTATION PIN</span>
+      </div>
+
+      <div class="error" id="error" hidden>
+        Unable to initialize WebGL 2.0 graphics acceleration. Please ensure hardware acceleration is enabled in your browser settings.
+      </div>
+    </section>
+
+    <!-- Vision Section -->
+    <section class="section vision" id="vision">
+      <div class="label">01 — THE VISION</div>
+      <div class="two">
+        <h2>Above the city.<br><em>Beyond ordinary.</em></h2>
+        <div>
+          <p>A transformative address designed for those who shape the future. Aurelia is positioned at the nexus of culture, commerce, and architectural distinction in Downtown Dubai.</p>
+          <a href="#architecture">EXPLORE ARCHITECTURAL DETAILS ↗</a>
+        </div>
+      </div>
+      <div class="stats">
+        <div>
+          <strong>360°</strong>
+          <span>PHYSICALLY-BASED RENDERING</span>
+        </div>
+        <div>
+          <strong>03</strong>
+          <span>ATMOSPHERIC LIGHTING MODES</span>
+        </div>
+        <div>
+          <strong>LIVE</strong>
+          <span>SIMULATED URBAN TRAFFIC & FOUNTAIN</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Architecture Section -->
+    <section class="section architecture" id="architecture">
+      <div>
+        <div class="label">02 — ARCHITECTURE</div>
+        <h2>An iconic<br><em>silhouette.</em></h2>
+        <p>Curvilinear champagne-gold titanium louvers, ultra-clear acoustic glazing, and private sky-villas overlooking the Burj Khalifa lake.</p>
+        <button class="primary" id="view-tower">FOCUS ON AURELIA TOWER ↗</button>
+      </div>
+      <div class="arch-art">
+        <div class="tower-art"></div>
+        <span>CONCEPT STUDY · PHASE 01</span>
+      </div>
+    </section>
+
+    <!-- Neighborhood Section -->
+    <section class="section" id="neighborhood">
+      <div class="label">03 — NEIGHBORHOOD</div>
+      <div class="two">
+        <h2>Dubai, closer<br><em>than ever.</em></h2>
+        <p>Seamlessly orbit between the residential tower, the iconic Burj Khalifa, the dancing waters of the Dubai Fountain, and the surrounding boulevard district.</p>
+      </div>
+      <div class="places">
+        <button data-place="aurelia">
+          <span>01</span>
+          <b>Aurelia Tower</b>
+          <small>FEATURED RESIDENCE</small>
+          <i>↗</i>
+        </button>
+        <button data-place="burj">
+          <span>02</span>
+          <b>Burj Khalifa</b>
+          <small>GLOBAL LANDMARK</small>
+          <i>↗</i>
+        </button>
+        <button data-place="fountain">
+          <span>03</span>
+          <b>Dubai Fountain</b>
+          <small>WATERFRONT ESPLANADE</small>
+          <i>↗</i>
+        </button>
+        <button data-place="mall">
+          <span>04</span>
+          <b>Dubai Mall District</b>
+          <small>LUXURY RETAIL & PROMENADE</small>
+          <i>↗</i>
+        </button>
+      </div>
+    </section>
+
+    <!-- Contact & Register Interest -->
+    <section class="contact" id="contact">
+      <div class="label">PRIVATE PREVIEW</div>
+      <h2>Experience <em>Aurelia.</em></h2>
+      <p>Register your interest for bespoke floorplans, private penthouse viewings, and exclusive investment presentations.</p>
+      <button class="primary" id="enquire">REGISTER INTEREST ↗</button>
+      <small>CONCEPT DEMONSTRATION · THREE.JS ARCHITECTURAL SHOWCASE</small>
+    </section>
+  </main>
+
+  <footer>
+    <b>A. AURELIA</b>
+    <small>© 2026 AURELIA RESIDENCES DUBAI · THREE.JS ARCHITECTURAL ENGINE</small>
+    <a href="#hero">RETURN TO TOP ↑</a>
+  </footer>
+
+  <!-- Modal Dialog -->
+  <dialog id="contact-modal">
+    <button id="close-modal" class="close" aria-label="Close dialog">×</button>
+    <div class="label">PRIVATE INVITATION</div>
+    <h2>Let's connect.</h2>
+    <p>Submit your details to receive the architectural monograph and floor plan catalogue.</p>
+    <label>Full Name
+      <input type="text" placeholder="e.g. Alexander Vance">
+    </label>
+    <label>Email Address
+      <input type="email" placeholder="vance@heritage.com">
+    </label>
+    <label>Phone Number
+      <input type="tel" placeholder="+971 50 000 0000">
+    </label>
+    <button class="primary" id="modal-demo">SUBMIT ENQUIRY ↗</button>
+  </dialog>
+
+</body>
+</html>

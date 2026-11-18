@@ -1,0 +1,17 @@
+import { chromium } from 'playwright-core';
+const browser = await chromium.launch({ channel: 'chrome', headless: true, args: ['--disable-background-timer-throttling','--disable-renderer-backgrounding','--disable-backgrounding-occluded-windows'] });
+const ctx = await browser.newContext({ viewport:{width:1440,height:900} });
+const page = await ctx.newPage();
+const cdp = await ctx.newCDPSession(page);
+await cdp.send('Network.setCacheDisabled',{cacheDisabled:true});
+await page.addInitScript(() => { window.__lt=[]; new PerformanceObserver(l => l.getEntries().forEach(e=>window.__lt.push({start:Math.round(e.startTime),dur:Math.round(e.duration)}))).observe({type:'longtask', buffered:true}); });
+const t=Date.now();
+await page.goto('http://127.0.0.1:4173/', { waitUntil:'load' });
+const loadMs=Date.now()-t;
+await page.waitForFunction(() => document.body.classList.contains('is-loaded'), null, {timeout:30000});
+const ms=Date.now()-t;
+await page.waitForTimeout(1200);
+await page.screenshot({path:'shots/optimized-1.png'});
+const data=await page.evaluate(() => ({ now:Math.round(performance.now()), longtasks:window.__lt, canvas:[document.querySelector('#scene').width,document.querySelector('#scene').height], body:document.body.className }));
+console.log('load', loadMs, 'is-loaded', ms, JSON.stringify(data,null,2));
+await browser.close();

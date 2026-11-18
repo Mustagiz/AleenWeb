@@ -1,0 +1,10 @@
+import { chromium } from 'playwright-core';
+const browser = await chromium.launch({ channel: 'chrome', headless: true, args: ['--disable-background-timer-throttling','--disable-renderer-backgrounding','--disable-backgrounding-occluded-windows'] });
+const page = await browser.newPage({ viewport: { width: 1600, height: 900 }, deviceScaleFactor: 1 });
+await page.goto('http://127.0.0.1:4173/', { waitUntil: 'load' });
+await page.waitForTimeout(4200);
+await page.addStyleTag({ content: '.nav,.rail,.hero > *, .loader,.hero-marker,.vignette,.grain,.cursor-dot,.cursor-ring{visibility:hidden!important;transition:none!important;opacity:0!important}' });
+await page.evaluate(() => window.scrollTo(0, 0));
+await page.waitForTimeout(1400);
+await page.screenshot({ path: 'assets/hero-poster.jpg', type: 'jpeg', quality: 84 });
+await browser.close();

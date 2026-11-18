@@ -1,0 +1,11 @@
+import { chromium } from 'playwright-core';
+const browser=await chromium.launch({channel:'chrome',headless:true});
+const page=await browser.newPage({viewport:{width:1440,height:900}});
+const errors=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
+const t=Date.now();
+await page.goto('http://127.0.0.1:4174/',{waitUntil:'domcontentloaded'});
+await page.waitForTimeout(500);
+const state=await page.evaluate(()=>({cls:document.body.className,h1:getComputedStyle(document.querySelector('.hero h1')).opacity,fallback:getComputedStyle(document.querySelector('.fallback')).opacity,scene:getComputedStyle(document.querySelector('#scene')).opacity,label:document.querySelector('.render-badge').textContent.trim(),h:document.documentElement.scrollHeight}));
+await page.screenshot({path:'shots/final-instant.png'});
+console.log('500ms',Date.now()-t,state,'errors',errors);
+await browser.close();

@@ -1,0 +1,12 @@
+import { chromium } from 'playwright-core';
+const browser = await chromium.launch({ channel: 'chrome', headless: true, args:['--disable-background-timer-throttling','--disable-renderer-backgrounding','--disable-backgrounding-occluded-windows'] });
+const page = await browser.newPage({ viewport:{width:390,height:844}, deviceScaleFactor:2, isMobile:true, hasTouch:true });
+const errors=[]; page.on('pageerror',e=>errors.push(e.message)); page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
+await page.goto('http://127.0.0.1:4173/', {waitUntil:'domcontentloaded'});
+await page.waitForTimeout(120);
+await page.screenshot({path:'shots/mobile-fast-early.png'});
+await page.waitForFunction(() => document.body.classList.contains('is-scene-ready'), null, {timeout:30000});
+await page.waitForTimeout(1600);
+await page.screenshot({path:'shots/mobile-fast-final.png'});
+console.log(errors.length ? errors : 'no errors', await page.evaluate(()=>({body:document.body.className, label:document.querySelector('#render-label')?.textContent})));
+await browser.close();

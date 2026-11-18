@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Meridian — Residences Above Dubai</title>
+<meta name="description" content="A private portfolio of residences in Dubai — Burj Khalifa district, Dubai Marina and Palm Jumeirah. An interactive 3D skyline." />
+<meta name="theme-color" content="#0a0c0e" />
+<meta property="og:title" content="Meridian — Residences Above Dubai" />
+<meta property="og:description" content="Own the skyline. A private portfolio of Dubai residences, rendered in real time." />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="./assets/preview-desktop.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="./assets/preview-desktop.jpg" />
+<meta name="color-scheme" content="dark" />
+
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="./assets/css/style.css" />
+<noscript>
+  <style>
+    #scene, .hero-marker, .render-badge { display: none !important; }
+    .fallback { display: block !important; position: fixed; inset: 0; z-index: 0; }
+    .fallback img { width: 100%; height: 100%; object-fit: cover; }
+    body { overflow: auto !important; }
+    .reveal { opacity: 1 !important; transform: none !important; }
+  </style>
+</noscript>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "./vendor/three.module.js",
+    "three/addons/": "./vendor/addons/"
+  }
+}
+</script>
+</head>
+
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- ───────────────────────── 3D canvas ───────────────────────── -->
+<canvas id="scene" aria-hidden="true"></canvas>
+
+<!-- Poster backdrop, replaced by the live scene once it is ready -->
+<div class="fallback" aria-hidden="true">
+  <div class="fallback-media"><img src="./assets/hero-poster.jpg" alt="" decoding="async" /></div>
+  <span class="fallback-note">Static preview · enable WebGL for the live skyline</span>
+</div>
+
+<div class="vignette" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- 3D-anchored landmark label, positioned from the live camera -->
+<a class="hero-marker" id="hero-marker" href="#downtown" aria-label="Burj Khalifa, 828 metres, Downtown Dubai — explore Downtown">
+  <span class="hero-marker-dot" aria-hidden="true"></span>
+  <span class="hero-marker-rule" aria-hidden="true"></span>
+  <span class="hero-marker-copy">
+    <b>Burj Khalifa</b>
+    <em>828 m · 163 floors</em>
+    <i>Downtown Dubai</i>
+  </span>
+</a>
+
+<!-- ───────────────────────── nav ───────────────────────── -->
+<header class="nav">
+  <a class="brand" href="#top" aria-label="Meridian, home">
+    <span class="brand-main">MERIDIAN</span>
+    <span class="brand-sub">DUBAI</span>
+  </a>
+
+  <nav class="nav-links" aria-label="Primary">
+    <a href="#downtown">Neighbourhoods</a>
+    <a href="#residences">Residences</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <a class="btn btn-ghost nav-cta" href="#contact">Book a viewing</a>
+
+  <button class="nav-toggle" aria-label="Menu" aria-expanded="false">
+    <span></span><span></span>
+  </button>
+</header>
+
+<!-- ───────────────────────── chapter rail ───────────────────────── -->
+<aside class="rail" aria-label="Chapters">
+  <div class="rail-progress"><span></span></div>
+  <ol>
+    <li><a href="#top" class="is-active"><i>00</i><b>Overview</b></a></li>
+    <li><a href="#downtown"><i>01</i><b>Downtown</b></a></li>
+    <li><a href="#marina"><i>02</i><b>Marina</b></a></li>
+    <li><a href="#palm"><i>03</i><b>Palm</b></a></li>
+    <li><a href="#residences"><i>04</i><b>Residences</b></a></li>
+    <li><a href="#contact"><i>05</i><b>Viewing</b></a></li>
+  </ol>
+</aside>
+
+<main id="main">
+
+  <!-- ═════════════════════ 00 · hero ═════════════════════ -->
+  <section class="section hero" id="top" data-chapter="0">
+    <div class="hero-top">
+      <p class="eyebrow reveal">Dubai · United Arab Emirates · 25.1972° N, 55.2744° E</p>
+    </div>
+
+    <div class="hero-copy">
+      <h1 class="reveal">Own the<br /><em>skyline.</em></h1>
+      <p class="lede reveal">
+        A private portfolio of residences in the world's most vertical city —
+        from the Burj Khalifa district to the Palm. Selected, not listed.
+      </p>
+      <div class="hero-actions reveal">
+        <a class="btn btn-solid" href="#residences">Explore residences</a>
+        <a class="btn btn-ghost" href="#contact">Request the portfolio</a>
+      </div>
+    </div>
+
+    <div class="hero-foot">
+      <dl class="stats reveal">
+        <div><dt>828 m</dt><dd>Burj Khalifa, the tallest structure on earth</dd></div>
+        <div><dt>18</dt><dd>Towers in the private portfolio</dd></div>
+        <div><dt>AED 4.2 B</dt><dd>Transacted across the portfolio in 2025</dd></div>
+      </dl>
+      <div class="hero-foot-right reveal">
+        <span class="render-badge" id="render-badge"><i aria-hidden="true"></i>Dubai skyline · 3D</span>
+        <div class="scroll-cue"><span></span>Scroll to descend</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════════════ 01 · downtown ═════════════════════ -->
+  <section class="section chapter" id="downtown" data-chapter="1">
+    <div class="chapter-inner">
+      <p class="kicker reveal"><i>01</i> Downtown</p>
+      <h2 class="reveal">A kilometre of<br />glass and light.</h2>
+      <p class="body reveal">
+        The Burj Khalifa district holds the densest concentration of supertall
+        architecture on earth. Residences here sit above the haze line — the
+        city arranged beneath you, the desert at the edge of the frame.
+      </p>
+      <ul class="specs reveal">
+        <li><span>Burj Khalifa</span><b>828 m · 163 floors</b></li>
+        <li><span>Emirates Towers</span><b>355 m · 54 floors</b></li>
+        <li><span>Museum of the Future</span><b>78 m · torus form</b></li>
+      </ul>
+    </div>
+    <div class="chapter-aside reveal">
+      <p class="quote">“At this height the city stops being noise. It becomes weather.”</p>
+      <p class="byline">Resident, Burj Khalifa · floor 108</p>
+    </div>
+  </section>
+
+  <!-- ═════════════════════ 02 · marina ═════════════════════ -->
+  <section class="section chapter chapter-right" id="marina" data-chapter="2">
+    <div class="chapter-inner">
+      <p class="kicker reveal"><i>02</i> Dubai Marina</p>
+      <h2 class="reveal">Where the city<br />meets the water.</h2>
+      <p class="body reveal">
+        A man-made harbour cut into the coastline, then walled in towers.
+        Cayan's 90-degree twist turns every floorplate a few degrees from the
+        last; berths, promenades and open sea sit directly below.
+      </p>
+      <ul class="specs reveal">
+        <li><span>Cayan Tower</span><b>306 m · 90° twist</b></li>
+        <li><span>Ain Dubai</span><b>250 m · 48 capsules</b></li>
+        <li><span>Marina berths</span><b>700+ · 40–160 m</b></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═════════════════════ 03 · palm ═════════════════════ -->
+  <section class="section chapter" id="palm" data-chapter="3">
+    <div class="chapter-inner">
+      <p class="kicker reveal"><i>03</i> Palm Jumeirah</p>
+      <h2 class="reveal">An island built<br />for arrivals.</h2>
+      <p class="body reveal">
+        Reached by a single causeway, anchored by a sail. The Burj Al Arab's
+        helipad and the villa beaches behind it share one horizon — the gulf,
+        unbroken westward.
+      </p>
+      <ul class="specs reveal">
+        <li><span>Burj Al Arab</span><b>321 m · sail form</b></li>
+        <li><span>Palm villas</span><b>5–7 bed · private beach</b></li>
+        <li><span>West-facing</span><b>Sunset over open gulf</b></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═════════════════════ 04 · residences ═════════════════════ -->
+  <section class="section residences" id="residences" data-chapter="4">
+    <div class="residences-head">
+      <p class="kicker reveal"><i>04</i> The portfolio</p>
+      <h2 class="reveal">Four addresses.<br />One skyline.</h2>
+      <p class="body reveal">Every residence is held privately. Pricing on application, viewings by appointment.</p>
+    </div>
+
+    <div class="cards">
+      <article class="card reveal">
+        <header><span class="card-no">01</span><span class="card-tag">Available</span></header>
+        <h3>Burj Khalifa Residence</h3>
+        <p class="card-meta">4 bed · 468 m² · floor 108</p>
+        <p class="card-price">AED 32,500,000</p>
+        <footer><a href="#contact">Enquire <span>→</span></a></footer>
+      </article>
+
+      <article class="card reveal">
+        <header><span class="card-no">02</span><span class="card-tag">Available</span></header>
+        <h3>Marina Gate</h3>
+        <p class="card-meta">3 bed · 214 m² · sea facing</p>
+        <p class="card-price">AED 8,900,000</p>
+        <footer><a href="#contact">Enquire <span>→</span></a></footer>
+      </article>
+
+      <article class="card reveal">
+        <header><span class="card-no">03</span><span class="card-tag">Off market</span></header>
+        <h3>Palm Signature Villa</h3>
+        <p class="card-meta">5 bed · 780 m² · private beach</p>
+        <p class="card-price">AED 46,000,000</p>
+        <footer><a href="#contact">Enquire <span>→</span></a></footer>
+      </article>
+
+      <article class="card reveal">
+        <header><span class="card-no">04</span><span class="card-tag">Available</span></header>
+        <h3>Museum District Loft</h3>
+        <p class="card-meta">2 bed · 142 m² · cultural district</p>
+        <p class="card-price">AED 5,400,000</p>
+        <footer><a href="#contact">Enquire <span>→</span></a></footer>
+      </article>
+    </div>
+  </section>
+
+  <!-- ═════════════════════ 05 · contact ═════════════════════ -->
+  <section class="section contact" id="contact" data-chapter="5">
+    <div class="contact-grid">
+      <div class="contact-copy">
+        <p class="kicker reveal"><i>05</i> Private viewings</p>
+        <h2 class="reveal">See it from<br />the 108th floor.</h2>
+        <p class="body reveal">
+          Viewings are arranged one party at a time, by appointment.
+          Tell us which address interests you and we will send the full
+          portfolio with floor plates and service charges.
+        </p>
+
+        <ul class="contact-list reveal">
+          <li><span>Office</span><b>Level 42, Burj Khalifa, Downtown Dubai</b></li>
+          <li><span>Telephone</span><b>+971 4 000 0000</b></li>
+          <li><span>Email</span><b>private@meridian.example</b></li>
+        </ul>
+      </div>
+
+      <form class="contact-form reveal" id="enquiry" novalidate>
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" autocomplete="name" required placeholder="Your full name" />
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" required placeholder="you@example.com" />
+        </div>
+        <div class="field">
+          <label for="interest">Residence</label>
+          <select id="interest" name="interest">
+            <option>Burj Khalifa Residence</option>
+            <option>Marina Gate</option>
+            <option>Palm Signature Villa</option>
+            <option>Museum District Loft</option>
+            <option>Not sure yet</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="3" placeholder="Preferred dates, budget, anything else"></textarea>
+        </div>
+        <button class="btn btn-solid" type="submit">Request the portfolio</button>
+        <p class="form-note" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-brand">
+        <span class="brand-main">MERIDIAN</span>
+        <span class="brand-sub">DUBAI</span>
+      </div>
+      <p class="footer-disclaimer">
+        Concept showcase. Not affiliated with Emaar, Nakheel, Jumeirah Group or any Dubai
+        developer. Listings, prices and availability are illustrative. All imagery is
+        generated in real time in your browser.
+      </p>
+      <p class="footer-meta">© 2026 Meridian — Dubai · <a href="#top">Back to top</a></p>
+    </footer>
+  </section>
+
+</main>
+
+<div class="cursor-dot" aria-hidden="true"></div>
+<div class="cursor-ring" aria-hidden="true"></div>
+
+<script defer src="./assets/js/ui.js"></script>
+</body>
+</html>

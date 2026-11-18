@@ -1,0 +1,10 @@
+import { chromium } from 'playwright-core';
+const browser = await chromium.launch({ channel: 'chrome', headless: false });
+const page = await browser.newPage({ viewport:{width:1280,height:800} });
+const t=Date.now();
+await page.goto('http://127.0.0.1:4173/', {waitUntil:'domcontentloaded'});
+await page.waitForFunction(() => document.body.classList.contains('is-scene-ready'), null, {timeout:20000});
+console.log('headed scene-ready', Date.now()-t, 'ms');
+await page.waitForTimeout(800);
+await page.screenshot({path:'shots/headed.png'});
+await browser.close();

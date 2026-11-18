@@ -1,0 +1,11 @@
+import { chromium } from 'playwright-core';
+const browser = await chromium.launch({ channel:'chrome', headless:true, args:['--disable-background-timer-throttling'] });
+const page=await browser.newPage({viewport:{width:1440,height:900}});
+const errors=[];page.on('pageerror',e=>errors.push(e.message));
+const t=Date.now();
+await page.goto('http://127.0.0.1:4173/',{waitUntil:'domcontentloaded'});
+await page.waitForFunction(()=>document.body.classList.contains('is-scene-ready'),null,{timeout:20000});
+console.log('scene-ready',Date.now()-t,'ms',errors);
+await page.waitForTimeout(1500);
+await page.screenshot({path:'shots/no-mirror.png'});
+await browser.close();

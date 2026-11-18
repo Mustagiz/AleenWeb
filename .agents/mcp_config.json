@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "21st-dev": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@21st-dev/magic@latest"
+      ],
+      "env": {
+        "API_KEY": "21st_sk_c8f51421fe5c3021f5177cbc5d15ff9240d8af4ebfdd205a7ca7049371d75158",
+        "API_KEY_21ST": "21st_sk_c8f51421fe5c3021f5177cbc5d15ff9240d8af4ebfdd205a7ca7049371d75158",
+        "TWENTY_FIRST_API_KEY": "21st_sk_c8f51421fe5c3021f5177cbc5d15ff9240d8af4ebfdd205a7ca7049371d75158"
+      }
+    },
+    "supabase": {
+      "url": "https://mcp.supabase.com/mcp?project_ref=jgsomyxvkhcnhzwapoob&features=docs%2Caccount%2Cdatabase%2Cdebugging%2Cdevelopment%2Cfunctions%2Cbranching"
+    }
+  }
+}

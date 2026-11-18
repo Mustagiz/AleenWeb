@@ -1,0 +1,10 @@
+import { chromium } from 'playwright-core';
+const browser=await chromium.launch({channel:'chrome',headless:true});
+const page=await browser.newPage({viewport:{width:1280,height:800}});
+const errors=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
+const t=Date.now();
+await page.goto('file:///Users/faeez/faeez.c/dubai-skyline/index.html',{waitUntil:'load'});
+await page.waitForTimeout(400);
+console.log('file ms',Date.now()-t,await page.evaluate(()=>({h1:getComputedStyle(document.querySelector('.hero h1')).opacity,fallback:getComputedStyle(document.querySelector('.fallback')).opacity,cls:document.body.className})),errors);
+await page.screenshot({path:'shots/file-hero.png'});
+await browser.close();

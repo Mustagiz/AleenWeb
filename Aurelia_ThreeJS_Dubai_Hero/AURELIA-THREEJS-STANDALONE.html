@@ -1,0 +1,374 @@
+<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f8f8f8"><meta name="description" content="Explore a living, interactive 3D Downtown Dubai architectural concept in Three.js."><title>Aurelia — Interactive 3D Dubai</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&display=swap" rel="stylesheet"><style>:root{--paper:#f8f8f8;--ink:#222;--muted:#777;--yellow:#fff083;--line:#d7d7d7}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:'Inter Tight',Arial,sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer}button:focus-visible,a:focus-visible{outline:2px solid #222;outline-offset:3px}.header{position:absolute;top:0;left:0;right:0;height:83px;z-index:30;border-bottom:1px solid #fff9;display:flex;justify-content:space-between;align-items:center;padding:0 5.5vw}.brand{display:flex;gap:11px;align-items:center;font-size:16px;letter-spacing:.2em;font-weight:700}.brand-mark{font-size:38px;letter-spacing:-.1em}.brand-mark span{color:#a9a9a9}.brand small{display:block;font-size:7px;letter-spacing:.26em;margin-top:5px;font-weight:500}.header nav{display:flex;gap:34px}.header nav a,.nav-cta{font-size:11px;font-weight:600;letter-spacing:.07em}.nav-cta span{margin-left:12px;border:1px solid #aaa;display:inline-grid;place-items:center;height:33px;width:33px;border-radius:50%}.hero{height:100vh;min-height:740px;position:relative;isolation:isolate;overflow:hidden;background:#dce3e5}.scene-host{position:absolute;inset:0 0 0 22%;cursor:grab;overflow:hidden;touch-action:pan-y}.scene-host:active{cursor:grabbing}.scene-host canvas{display:block;width:100%;height:100%;outline:none}.fade{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(90deg,#f8f8f8 0%,#f8f8f8fa 13%,#f8f8f8e8 25%,#f8f8f8aa 39%,#f8f8f830 61%,transparent 78%),linear-gradient(0deg,#f8f8f8 0%,transparent 19%)}.hero-content{position:absolute;top:49%;left:7.4%;transform:translateY(-44%);z-index:5;max-width:550px;pointer-events:none}.hero-content>*{pointer-events:auto}.kicker,.label{font-size:10px;letter-spacing:.22em;font-weight:600}.hero h1{font-size:clamp(72px,7.3vw,132px);line-height:.94;letter-spacing:-.075em;font-weight:600;margin:28px 0 34px}.hero h1 em{font-weight:300;font-style:normal;color:#9b9b9b}.hero-content p{font-size:17px;line-height:1.7;max-width:345px;color:#626262;font-weight:300;margin:0}.actions{display:flex;gap:21px;margin-top:31px;align-items:center}.primary,.yellow{display:inline-flex;justify-content:space-between;align-items:center;gap:26px;min-height:49px;background:#222;color:#fff;border:1px solid #222;padding:0 18px;border-radius:4px;font-size:11px;letter-spacing:.06em;font-weight:600;transition:transform .25s,background .25s}.primary:hover{background:#414141;transform:translateY(-2px)}.secondary{font-weight:600;font-size:11px;letter-spacing:.06em;border-bottom:1px solid #bbb;padding:15px 0}.secondary span{margin-left:14px}.status{position:absolute;top:122px;right:5.5vw;z-index:5;display:flex;align-items:center;gap:9px;font-size:10px;font-weight:600;letter-spacing:.12em}.status i{width:7px;height:7px;background:#59a16c;border-radius:50%;box-shadow:0 0 0 4px #59a16c20}.status small{margin-left:6px;font-size:9px;font-weight:400;color:#777}.controls{position:absolute;top:160px;right:5.5vw;display:flex;gap:6px;z-index:10}.controls button{border:1px solid #dedede;background:#f8f8f8db;backdrop-filter:blur(8px);font-size:10px;border-radius:4px;min-height:37px;padding:0 12px}.controls button:hover,.controls button.active{background:var(--yellow)}.controls button span{font-size:9px;letter-spacing:.07em;margin-left:5px;font-weight:600}.focus{position:absolute;right:5.5vw;bottom:106px;z-index:7;min-width:260px;max-width:300px;padding:17px 20px;background:#f8f8f8ef;backdrop-filter:blur(8px);border:1px solid #ddd;border-radius:4px}.focus small{color:#999;font-size:9px;letter-spacing:.12em}.focus b{display:block;margin-top:6px;font-size:16px;font-weight:600}.focus p{margin:4px 0 12px;color:#777;font-size:11px}.focus button{font-size:10px;border:0;background:var(--yellow);padding:7px 11px;border-radius:3px}.hero-foot{position:absolute;bottom:30px;left:7.4%;right:5.5vw;z-index:7;display:flex;justify-content:space-between;font-size:9px;color:#777;letter-spacing:.12em;font-weight:500}.pin{display:none;position:absolute;z-index:4;transform:translate(-50%,-100%);border:2px solid #fff;border-radius:50px;min-width:29px;height:29px;align-items:center;justify-content:center;font-size:10px;color:#222;background:var(--yellow);font-weight:700;box-shadow:0 2px 13px #0004;white-space:nowrap}.pin span{position:absolute;top:-34px;left:17px;background:#f8f8f8ea;padding:7px 10px;font-size:9px;font-weight:600;letter-spacing:.06em;border-radius:3px}.pin:hover{background:#222;color:#fff}.scene-loader{position:absolute;inset:0;z-index:8;display:flex;align-items:center;justify-content:center;gap:10px;background:#e1e6e9;font-size:11px;letter-spacing:.15em}.scene-loader i{height:19px;width:19px;border:2px solid #aaa;border-top-color:#222;border-radius:50%;animation:spin 1s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.error{position:absolute;top:245px;right:30px;z-index:20;border:1px solid #c55;background:#fff;padding:18px;font-size:13px;max-width:280px}.section{padding:130px 7.4vw}.label{color:#777}.section .two{display:grid;grid-template-columns:1.25fr 1fr;align-items:start;gap:10vw;margin-top:45px}.section h2,.contact h2{font-size:clamp(49px,5.7vw,92px);font-weight:600;line-height:1.08;letter-spacing:-.06em;margin:0}.section h2 em,.contact h2 em{font-weight:300;color:#9d9d9d;font-style:normal}.section p{font-size:18px;line-height:1.7;font-weight:300;color:#777;max-width:480px}.two a{display:inline-block;margin-top:20px;border-bottom:1px solid #999;padding-bottom:12px;font-size:11px;font-weight:600;letter-spacing:.07em}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:102px}.stats div{border-top:1px solid #ccc;padding-top:29px}.stats strong{display:block;font-size:64px;font-weight:500;letter-spacing:-.07em}.stats span{display:block;font-size:10px;letter-spacing:.12em;margin-top:9px}.architecture{display:grid;grid-template-columns:1fr 1fr;gap:7vw;padding-right:0;background:#ededed;min-height:630px}.architecture>div:first-child{align-self:center}.architecture h2{margin:31px 0 24px}.architecture p{margin-bottom:35px}.arch-art{position:relative;background:linear-gradient(150deg,#e9eef0,#afbfc3);overflow:hidden;min-height:630px}.tower-art{position:absolute;left:40%;bottom:-65px;width:174px;height:645px;transform:skewY(-3deg);background:repeating-linear-gradient(0deg,transparent 0px 19px,#d4e0e4 20px 22px,transparent 23px 28px),repeating-linear-gradient(90deg,#506974 0 13px,#c7dbe2 14px 20px,#7894a0 21px 31px);box-shadow:27px 17px 49px #29394342,-19px 0 34px #29394340}.arch-art>span{position:absolute;left:25px;bottom:25px;letter-spacing:.12em;font-size:10px}.places{margin-top:65px;border-top:1px solid var(--line)}.places button{width:100%;display:grid;grid-template-columns:65px 1fr 190px 40px;gap:12px;align-items:center;text-align:left;padding:25px 0;border:0;border-bottom:1px solid var(--line);background:transparent}.places button:hover{background:#fff0832b}.places button>span,.places small{font-size:11px;letter-spacing:.1em;color:#777}.places b{font-size:30px;font-weight:500;letter-spacing:-.04em}.places i{font-style:normal;font-size:19px}.contact{padding:124px 20px 99px;background:#222;color:#fff;text-align:center}.contact h2{margin:36px 0}.contact p{font-size:18px;color:#bbb;font-weight:300}.yellow{background:var(--yellow);border-color:var(--yellow);color:#222;margin:25px auto 55px}.yellow:hover{background:white}.contact>small{display:block;font-size:9px;color:#999;letter-spacing:.14em}footer{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:30px 5.5vw}footer b{font-size:18px}footer small,footer a{font-size:10px;color:#777;letter-spacing:.08em}dialog{border:1px solid #bbb;background:#f8f8f8;color:#222;max-width:440px;width:calc(100% - 30px);padding:40px}dialog::backdrop{background:#0008}dialog .close{position:absolute;right:14px;top:12px;font-size:26px;border:0;background:transparent}dialog h2{font-size:40px;letter-spacing:-.05em;margin:22px 0}dialog p{color:#777;font-size:14px}dialog label{display:block;font-size:12px;margin:18px 0}dialog input{display:block;width:100%;padding:12px;background:white;border:1px solid #ccc;margin-top:6px}dialog .primary{width:100%;margin-top:10px}
+@media(max-width:1050px){.header nav{gap:17px}.hero-content{left:5%;max-width:48vw}.hero h1{font-size:clamp(66px,8vw,96px)}.focus{bottom:95px}}@media(max-width:760px){.header{height:66px;padding:0 21px}.header nav{display:none}.brand{font-size:13px}.brand small{font-size:6px}.brand-mark{font-size:31px}.nav-cta{font-size:9px}.nav-cta span{height:26px;width:26px;margin-left:5px}.hero{height:870px;min-height:870px}.scene-host{inset:66px 0 260px 0;touch-action:none}.fade{background:linear-gradient(0deg,#f8f8f8 16%,#f8f8f8ed 29%,#f8f8f800 54%),linear-gradient(180deg,#f8f8f8 0%,transparent 15%)}.hero-content{top:auto;bottom:94px;left:24px;right:24px;max-width:calc(100% - 48px);transform:none}.kicker{font-size:9px}.hero h1{font-size:clamp(54px,11.5vw,78px);margin:16px 0 17px}.hero-content p{font-size:14px;line-height:1.55;max-width:330px}.actions{gap:15px;margin-top:19px}.primary,.yellow{font-size:9px;min-height:43px;padding:0 14px}.secondary{font-size:9px}.status{top:83px;right:20px;font-size:8px}.status small{display:none}.controls{top:117px;right:16px;gap:4px}.controls button{padding:0 8px;min-height:32px;font-size:10px}.controls button span{font-size:8px}.focus{top:171px;bottom:auto;right:14px;min-width:190px;max-width:211px;padding:11px 13px}.focus b{font-size:12px}.focus p{font-size:10px;margin-bottom:6px}.focus small{font-size:8px}.focus button{font-size:9px;padding:6px}.pin span{display:none}.hero-foot{bottom:21px;left:24px;right:24px;font-size:8px}.hero-foot span+span{display:none}.section{padding:80px 24px}.section .two{grid-template-columns:1fr;gap:24px;margin-top:29px}.section h2,.contact h2{font-size:clamp(47px,10vw,65px)}.section p{font-size:15px}.stats{margin-top:55px;gap:8px}.stats strong{font-size:37px}.stats span{font-size:8px}.architecture{grid-template-columns:1fr;padding-right:0;padding-bottom:0;gap:30px}.architecture>div:first-child{padding-right:24px}.architecture h2{margin:20px 0}.arch-art{min-height:390px;margin-left:-24px}.tower-art{height:410px;width:130px}.places{margin-top:42px}.places button{grid-template-columns:28px 1fr 25px;padding:19px 0}.places b{font-size:22px}.places small{display:none}.contact{padding:84px 20px}.contact p{font-size:15px}footer{padding:28px 24px;flex-wrap:wrap}footer small{order:3;width:100%}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+</style><script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"}}</script></head><body>
+<header class="header"><a class="brand" href="#hero"><b class="brand-mark">A<span>.</span></b><span>AURELIA<small>RESIDENCES · DUBAI</small></span></a><nav><a href="#vision">THE VISION</a><a href="#architecture">ARCHITECTURE</a><a href="#neighborhood">NEIGHBORHOOD</a></nav><a class="nav-cta" href="#contact">ENQUIRE NOW <span>↗</span></a></header>
+<main><section class="hero" id="hero"><div id="scene-host" class="scene-host"><canvas id="world" aria-label="Real 3D city model. Drag to orbit, scroll to zoom, click buildings to focus."></canvas><div class="scene-loader" id="loader"><i></i> GENERATING 3D CITY...</div><button class="pin" id="pin-aurelia" data-place="aurelia">01 <span>AURELIA TOWER</span></button><button class="pin" id="pin-burj" data-place="burj">02 <span>BURJ KHALIFA</span></button><button class="pin" id="pin-fountain" data-place="fountain">03 <span>DUBAI FOUNTAIN</span></button></div><div class="fade" aria-hidden="true"></div>
+<div class="hero-content"><div class="kicker">— AN EXCEPTIONAL ADDRESS</div><h1>A new<br>perspective<br>on <em>Dubai.</em></h1><p>Landmark architecture meets the rhythm of a living city. Explore Downtown Dubai with an entirely interactive 3D experience.</p><div class="actions"><button class="primary" id="explore">EXPLORE THE CITY <span>↗</span></button><a class="secondary" href="#vision">THE VISION <span>↓</span></a></div></div>
+<div class="status"><i></i> REAL-TIME 3D CITY <small>THREE.JS / WEBGL</small></div><div class="controls"><button id="time-mode" title="Switch day, sunset, night">◐ <span>DAYLIGHT</span></button><button id="tour" title="Guided camera tour">⌁ <span>TOUR</span></button><button id="helicopter" title="Follow the helicopter">✦ <span>FOLLOW HELI</span></button><button id="reset" title="Reset camera">↺</button></div>
+<div class="focus" id="focus"><small>SELECTED LANDMARK</small><b id="focus-name">AURELIA TOWER</b><p id="focus-description">A new expression of city living</p><button id="focus-go">FOCUS ↗</button></div><div class="hero-foot"><span>01 / 04 &nbsp;&nbsp; DOWNTOWN DUBAI — CONCEPT MODEL</span><span>DRAG TO ORBIT &nbsp;·&nbsp; SCROLL TO ZOOM &nbsp;·&nbsp; CLICK BUILDINGS</span></div><div class="error" id="error" hidden>Unable to start WebGL. Open in Chrome or Edge with graphics acceleration enabled.</div></section>
+<section class="section vision" id="vision"><div class="label">01 — THE VISION</div><div class="two"><h2>Above the city.<br><em>Beyond ordinary.</em></h2><div><p>A new way to experience Dubai. Our architectural concept places Aurelia within a living district of moving streets, landmark towers, and urban gardens.</p><a href="#architecture">EXPLORE THE ARCHITECTURE ↗</a></div></div><div class="stats"><div><strong>360°</strong><span>REAL CAMERA MOVEMENT</span></div><div><strong>03</strong><span>LIGHTING ATMOSPHERES</span></div><div><strong>LIVE</strong><span>ANIMATED CITY LIFE</span></div></div></section>
+<section class="section architecture" id="architecture"><div><div class="label">02 — ARCHITECTURE</div><h2>An iconic<br><em>silhouette.</em></h2><p>Reflective glass, layered terraces, and contemporary design. Aurelia is shown as a proposed conceptual design, not a real-world property listing.</p><button class="primary" id="view-tower">EXPLORE AURELIA ↗</button></div><div class="arch-art"><div class="tower-art"></div><span>CONCEPT / DESIGN STUDY 01</span></div></section>
+<section class="section" id="neighborhood"><div class="label">03 — NEIGHBORHOOD</div><div class="two"><h2>Dubai, closer<br><em>than ever.</em></h2><p>Navigate between the featured residence, the Burj Khalifa-inspired geometry, the fountain lake, and the shopping district with real camera movement.</p></div><div class="places"><button data-place="aurelia"><span>01</span><b>Aurelia Tower</b><small>FEATURED CONCEPT</small><i>↗</i></button><button data-place="burj"><span>02</span><b>Burj Khalifa</b><small>LANDMARK</small><i>↗</i></button><button data-place="fountain"><span>03</span><b>Dubai Fountain</b><small>WATERFRONT</small><i>↗</i></button><button data-place="mall"><span>04</span><b>Dubai Mall district</b><small>NEIGHBORHOOD</small><i>↗</i></button></div></section><section class="contact" id="contact"><div class="label">AN INVITATION</div><h2>A new way to<br>see <em>Dubai.</em></h2><p>Experience this living city from every perspective.</p><button class="yellow" id="enquire">REGISTER INTEREST ↗</button><small>DESIGN PROTOTYPE · NO ENQUIRY DATA IS SUBMITTED</small></section></main>
+<footer><b>A. AURELIA</b><small>© 2026 AURELIA · THREE.JS CONCEPT EXPERIENCE</small><a href="#hero">BACK TO TOP ↑</a></footer>
+<dialog id="contact-modal"><button id="close-modal" class="close">×</button><div class="label">AURELIA RESIDENCES</div><h2>Let's connect.</h2><p>This is a concept demonstration; forms do not send personal data.</p><label>Full name<input type="text" placeholder="Your name"></label><label>Email address<input type="email" placeholder="you@example.com"></label><button class="primary" id="modal-demo">DEMO ONLY ↗</button></dialog>
+<script>window.setTimeout(()=>{const l=document.getElementById('loader');if(l&&l.isConnected){l.textContent='3D engine could not load. Check your connection and open this project using npm run dev.';const err=document.getElementById('error');err.hidden=false;}},16000);</script><script type="module">import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+
+/* AURELIA — genuinely interactive Three.js architectural city.
+   Model is an artist's interpretation of Downtown Dubai, not survey-grade geodata.
+   All roads, towers, cars, people, helicopter and water are actual Three.js meshes. */
+const host = document.getElementById('scene-host');
+const canvas = document.getElementById('world');
+const loader = document.getElementById('loader');
+const error = document.getElementById('error');
+let renderer, scene, camera, orbit;
+try {
+  renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:false, powerPreference:'high-performance'});
+  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.7));
+  renderer.setSize(host.clientWidth,host.clientHeight,false);
+  renderer.shadowMap.enabled=true;
+  renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+  renderer.toneMapping=THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure=1.45;
+  renderer.outputColorSpace=THREE.SRGBColorSpace;
+} catch (e) {
+  loader.remove(); error.hidden=false;
+  console.error('WebGL unavailable:',e);
+  throw e;
+}
+scene = new THREE.Scene();
+scene.background = new THREE.Color('#c2d4dd');
+scene.fog = new THREE.FogExp2('#cad6d9', .00118);
+camera = new THREE.PerspectiveCamera(48,host.clientWidth/Math.max(host.clientHeight,1),1,2300);
+camera.position.set(-330,245,410);
+orbit=new OrbitControls(camera,canvas);
+orbit.target.set(17,52,-15); orbit.enableDamping=true;orbit.dampingFactor=.045;
+orbit.enablePan=true;orbit.maxPolarAngle=Math.PI/2.08;orbit.minPolarAngle=.13;
+orbit.minDistance=95;orbit.maxDistance=970;orbit.screenSpacePanning=true;
+orbit.mouseButtons.LEFT=THREE.MOUSE.ROTATE; orbit.mouseButtons.MIDDLE=THREE.MOUSE.DOLLY;orbit.mouseButtons.RIGHT=THREE.MOUSE.PAN;
+orbit.update();
+const hemi = new THREE.HemisphereLight('#e4f1ff','#b7ab90',2.1); scene.add(hemi);
+const sun = new THREE.DirectionalLight('#fff2d9',3.4);sun.position.set(-220,390,150);sun.castShadow=true;
+sun.shadow.mapSize.set(2048,2048);sun.shadow.camera.left=-450;sun.shadow.camera.right=450;sun.shadow.camera.top=450;sun.shadow.camera.bottom=-450;sun.shadow.camera.near=1;sun.shadow.camera.far=1100;sun.shadow.bias=-.0005;scene.add(sun);
+const fill=new THREE.DirectionalLight('#adc6d5',.6);fill.position.set(250,120,-350);scene.add(fill);
+const rand=(()=>{let state=92285;return ()=>((state=(Math.imul(state,1664525)+1013904223)>>>0)/4294967296)})();
+const between=(a,b)=>a+(b-a)*rand();
+const choice=a=>a[Math.floor(rand()*a.length)];
+const PBR=(color,roughness=.66,metalness=.0)=>new THREE.MeshStandardMaterial({color,roughness,metalness});
+const mat={sand:PBR('#c6bca7'),soil:PBR('#bbb29c'),asphalt:PBR('#555b60'),road:PBR('#4a5156'),line:PBR('#deded9'),walk:PBR('#cec9bb'),roof:PBR('#a7aba9',.65,.25),stone:PBR('#dfd5c0'),accent:PBR('#baa685',.4,.5),glass:PBR('#658f9d',.15,.75),teal:PBR('#82b9bf',.16,.38),green:PBR('#50785e'),pool:PBR('#59a9bd',.12,.47),white:PBR('#f5f1e8'),metal:PBR('#8e979b',.3,.85),black:PBR('#202f35'),glow:new THREE.MeshBasicMaterial({color:'#fff5b8'}),water:new THREE.MeshPhysicalMaterial({color:'#36a3ac',metalness:.4,roughness:.12,transparent:true,opacity:.94,clearcoat:1,clearcoatRoughness:.08})};
+const lights=[];
+function mesh(geometry,material,x=0,y=0,z=0,parent=scene,shadow=false){const m=new THREE.Mesh(geometry,material);m.position.set(x,y,z);m.receiveShadow=shadow;m.castShadow=shadow;parent.add(m);return m}
+function box(w,h,d,material,x=0,y=0,z=0,parent=scene,shadow=false){return mesh(new THREE.BoxGeometry(w,h,d),material,x,y,z,parent,shadow)}
+function cylinder(r1,r2,h,material,x=0,y=0,z=0,parent=scene,segments=10){return mesh(new THREE.CylinderGeometry(r1,r2,h,segments),material,x,y,z,parent)}
+function surfaceColor(a,b,t){return new THREE.Color(a).lerp(new THREE.Color(b),t)}
+function makeFacade(primary='#6f96a6',seed=0){
+  const c=document.createElement('canvas');c.width=320;c.height=768;
+  const ctx=c.getContext('2d');ctx.fillStyle='#435c68';ctx.fillRect(0,0,320,768);
+  const tint=new THREE.Color(primary);const r=Math.floor(tint.r*180+44),g=Math.floor(tint.g*180+45),b=Math.floor(tint.b*180+49);
+  for(let j=0;j<40;j++)for(let i=0;i<12;i++){
+    const x=2+i*26,y=2+j*19;
+    ctx.fillStyle=`rgb(${Math.round(r*.55)},${Math.round(g*.55)},${Math.round(b*.55)})`;ctx.fillRect(x,y,24,18);
+    const v=rand(),bright=v>.87;
+    ctx.fillStyle=bright?choice(['#ffe9b2','#e4d9c4','#f6d59d']):choice(['#577785','#6c91a0','#8ca9b0','#395662','#7d989f']);
+    ctx.fillRect(x+2,y+2,20,14);
+    ctx.fillStyle='#e4eff032';ctx.fillRect(x+3,y+2,3,13);
+    ctx.fillStyle='#1e2d3445';ctx.fillRect(x+12,y+2,1,14);
+  }
+  ctx.fillStyle='#d8e4e333';for(let i=0;i<12;i++)ctx.fillRect(i*26,0,1,768);
+  ctx.fillStyle='#ffffff25';for(let j=0;j<40;j++)ctx.fillRect(0,j*19,320,1);
+  const tex=new THREE.CanvasTexture(c);tex.colorSpace=THREE.SRGBColorSpace;tex.anisotropy=Math.min(renderer.capabilities.getMaxAnisotropy(),8);return tex;
+}
+const facades=['#6e9ba5','#9caaa9','#567484','#7496a7','#858e91','#6e7c8b'].map((color,i)=>{
+  const texture=makeFacade(color,i);
+  const material=new THREE.MeshStandardMaterial({map:texture,metalness:.67,roughness:.27,emissive:'#a17b4c',emissiveMap:texture,emissiveIntensity:.025});lights.push(material);return material;
+});
+const podiumMat=new THREE.MeshStandardMaterial({color:'#c8b79a',roughness:.55,metalness:.1});
+const cityRoot=new THREE.Group();scene.add(cityRoot);
+/* Actual 3D ground, roads, lane markings and curbs. */
+box(1150,5,1050,mat.sand,0,-5,0,cityRoot,true);
+box(1080,.6,1000,mat.soil,0,-2,0,cityRoot);
+const roadXs=[-370,-285,-200,-112, -20, 73, 176, 267, 365];
+const roadZs=[-367,-282,-196,-108,-15,93,193,292,379];
+for (const x of roadXs){box(19,.26,1020,mat.asphalt,x,-1.22,0,cityRoot);for(let z=-495;z<495;z+=30){box(.5,.04,11,mat.line,x,-1.03,z,cityRoot)}box(1.2,.4,1020,mat.walk,x+10.5,-.95,0,cityRoot);box(1.2,.4,1020,mat.walk,x-10.5,-.95,0,cityRoot)}
+for (const z of roadZs){box(1100,.27,19,mat.road,0,-1.16,z,cityRoot);for(let x=-520;x<520;x+=28){box(11,.035,.5,mat.line,x,-.99,z,cityRoot)}box(1100,.36,1.2,mat.walk,0,-.9,z+10.5,cityRoot);box(1100,.36,1.2,mat.walk,0,-.9,z-10.5,cityRoot)}
+/* Boulevard plaza and dedicated sidewalks */
+box(130,.3,155,mat.walk,-59,-.6,-61,cityRoot);
+box(85,.32,70,podiumMat,-47,-.45,-57,cityRoot);
+box(146,.25,86,mat.walk,104,-.8,112,cityRoot);
+/* Recessed irregular fountain lake (real triangulated water geometry). */
+const lakeShape=new THREE.Shape();lakeShape.moveTo(-66,-5);
+lakeShape.bezierCurveTo(-84,29,-65,66,-17,76);lakeShape.bezierCurveTo(11,93,44,65,54,28);lakeShape.bezierCurveTo(82,-16,72,-79,29,-85);lakeShape.bezierCurveTo(-11,-98,-59,-60,-66,-5);
+const lakeBorder=mesh(new THREE.ShapeGeometry(lakeShape,50),mat.stone,95,-.68,77,cityRoot);lakeBorder.rotation.x=-Math.PI/2;lakeBorder.scale.set(1.14,1.13,1);
+const lake=mesh(new THREE.ShapeGeometry(lakeShape,50),mat.water,95,-.5,77,cityRoot);lake.rotation.x=-Math.PI/2;
+const waterRings=[];
+for(let i=0;i<24;i++){const x=95+Math.sin(i*.77)*29,z=77+Math.cos(i*.6)*29;const fountain=cylinder(.3,.45,2.3,mat.white,x,.95,z,cityRoot,7);const jet=cylinder(.14,.35,between(3,12),new THREE.MeshBasicMaterial({color:'#d8faff',transparent:true,opacity:.45}),x,4,z,cityRoot,6);waterRings.push({mesh:jet,seed:i*1.66,base:jet.scale.y});}
+/* A distinctive Burj-inspired tiered skyscraper, built from physical meshes. */
+const landmarks={},hitMeshes=[];
+landmarks.fountain={name:'DUBAI FOUNTAIN',description:'A living waterfront with animated fountain jets',point:new THREE.Vector3(95,9,77),target:new THREE.Vector3(95,4,77),camera:new THREE.Vector3(-44,142,265),group:new THREE.Group()};
+const burj=new THREE.Group();burj.position.set(116,0,-111);cityRoot.add(burj);
+box(70,5,65,mat.stone,0,2.5,0,burj,true);
+const burjGlass=new THREE.MeshStandardMaterial({color:'#a5c8d1',metalness:.81,roughness:.16});lights.push(burjGlass);
+let y=5;for(let s=0;s<18;s++){
+  const w=Math.max(4,34-s*1.64),h=s<13?11.1:8.1;
+  const piece=cylinder(w*.49,w*.52,h,burjGlass,0,y+h/2,0,burj,12);piece.castShadow=true;
+  if(s<14)for(let a=0;a<3;a++){
+    const ang=a*Math.PI*2/3+s*.017;
+    const fin=box(w*.48,h*.93,w*.29,burjGlass,Math.cos(ang)*w*.28,y+h/2,Math.sin(ang)*w*.28,burj,true);fin.rotation.y=-ang;
+  }
+  cylinder(w*.54,w*.54,.55,mat.metal,0,y+h-.6,0,burj,16);
+  y+=h;
+}
+cylinder(2.0,3.2,32,burjGlass,0,y+16,0,burj,12);
+cylinder(.2,2,28,mat.metal,0,y+46,0,burj,8);
+const burjHeight=y+60;burj.userData.landmark='burj';
+landmarks.burj={name:'BURJ KHALIFA',description:'An iconic part of the Dubai skyline',point:new THREE.Vector3(116,burjHeight,-111),target:new THREE.Vector3(116,108,-111),camera:new THREE.Vector3(-35,220,195),group:burj};
+/* Featured residence with glass façades, physical cantilevered terraces and a roof garden. */
+const aurelia=new THREE.Group();aurelia.position.set(-67,0,-69);cityRoot.add(aurelia);
+box(78,9,70,podiumMat,0,4.5,0,aurelia,true);
+box(82,.8,74,mat.stone,0,9,0,aurelia);
+for(let j=0;j<3;j++)box(19,8,23,mat.glass,-24+j*24,4,-36,aurelia);
+box(39,139,36,facades[0],0,79.3,0,aurelia,true);
+box(41,139,1.5,mat.metal,0,79,18.3,aurelia);
+for(let y=16;y<155;y+=6.7){box(46,.52,42,mat.stone,0,y,0,aurelia);box(46,.35,1,mat.metal,0,y,21.1,aurelia)}
+for(let x of [-22.5,22.5]){box(2.3,139,44,mat.stone,x,79.5,0,aurelia)}
+for(let z of [-21,21])box(46,139,1.5,mat.metal,0,79.5,z,aurelia);
+box(52,4,45,podiumMat,0,151.5,0,aurelia,true);
+box(55,.8,48,mat.white,0,155.5,0,aurelia);
+box(16,.5,14,mat.pool,7,156.2,-10,aurelia);
+for(let i=0;i<11;i++)cylinder(.9,1.2,between(3,7),mat.green,-24+i*4.2,158,19,aurelia,8);
+for(let i=0;i<7;i++)cylinder(.8,.9,between(2,4),mat.green,-21+i*6,10,31,aurelia,8);
+landmarks.aurelia={name:'AURELIA RESIDENCES',description:'The featured contemporary residence concept',point:new THREE.Vector3(-67,169,-69),target:new THREE.Vector3(-67,79,-69),camera:new THREE.Vector3(-210,150,115),group:aurelia};
+/* Dubai Mall-inspired low-rise retail district and Opera-inspired theater. */
+const mall=new THREE.Group();mall.position.set(242,0,159);cityRoot.add(mall);
+box(150,12,97,mat.stone,0,6,0,mall,true);
+box(160,3,99,mat.white,0,13,0,mall);
+box(69,17,58,facades[4],-37,23,0,mall);box(53,18,63,mat.white,42,23,0,mall);
+for(let x=-62;x<63;x+=11)box(1.1,7,1.3,mat.metal,x,10,50,mall);
+landmarks.mall={name:'DUBAI MALL DISTRICT',description:'Retail, culture, and city destinations',point:new THREE.Vector3(242,40,159),target:new THREE.Vector3(242,24,159),camera:new THREE.Vector3(90,125,330),group:mall};
+const opera=new THREE.Group();opera.position.set(-175,0,122);cityRoot.add(opera);
+const dome=cylinder(30,34,15,mat.stone,0,8,0,opera,20);dome.rotation.z=.09;
+const roof=mesh(new THREE.SphereGeometry(34,28,12,0,Math.PI*2,0,Math.PI*.48),mat.white,0,15,0,opera);roof.scale.y=.58;
+for(let a=0;a<12;a++){const t=a*Math.PI/6;box(1.2,7,2,mat.glass,Math.sin(t)*32,5,Math.cos(t)*32,opera)}
+/* Procedural context towers: each one is actual 3D geometry, not a billboard. */
+const towerPalette=[facades[0],facades[1],facades[2],facades[3],facades[4],facades[5]];
+function building(x,z,w,d,h,type=0){
+  const g=new THREE.Group();g.position.set(x,0,z);cityRoot.add(g);
+  const face=choice(towerPalette),trim=rand()>.5?mat.roof:mat.stone;
+  box(w,h,d,face,0,h/2,0,g,h>65);
+  box(w+1.1,1.2,d+1.1,trim,0,h-.7,0,g);
+  if(h>37){
+    for(let y=16;y<h-4;y+=(h>85?19:16))box(w+1.2,.42,d+1.2,mat.metal,0,y,0,g);
+    const antenna=cylinder(.25,.6,between(2,8),mat.metal,0,h+2,0,g,6);
+    for(const sx of [-1,1])box(.7,h-2,d+1.1,mat.roof,sx*(w/2+.3),h/2,0,g);
+  }
+  if(h<35){box(w+3,.7,d+3,mat.stone,0,h+.45,0,g)}
+  return g;
+}
+for(let ix=-5;ix<=5;ix++)for(let iz=-5;iz<=5;iz++){
+  if(rand()<.09)continue;
+  const x=ix*85+between(-10,10),z=iz*85+between(-11,11);
+  if((x+67)**2+(z+69)**2<108**2)continue;
+  if((x-116)**2+(z+111)**2<108**2)continue;
+  if((x-96)**2+(z-77)**2<133**2)continue;
+  if(Math.abs(x-242)<116&&Math.abs(z-159)<84)continue;
+  if(Math.abs(x+175)<56&&Math.abs(z-122)<50)continue;
+  const w=between(19,44),d=between(18,42);
+  let h=between(25,130);if(rand()<.23)h=between(15,32);if(rand()<.11)h=between(134,172);
+  building(x,z,w,d,h);
+  if(rand()<.39){const x2=x+between(-24,24),z2=z+between(-24,24);
+    if(Math.abs(x2-x)>10&&Math.abs(z2-z)>10)building(x2,z2,between(10,17),between(10,18),between(19,48));}
+}
+/* Public landscaping, palms and pockets of vegetation. */
+const trunkMat=PBR('#837862'),leafMats=[PBR('#4c7860'),PBR('#5a8665'),PBR('#729879')];
+function palm(x,z,scale=1){const g=new THREE.Group();g.position.set(x,0,z);g.scale.setScalar(scale);cityRoot.add(g);
+  const trunk=cylinder(.48,.8,10,trunkMat,0,5,0,g,8);trunk.rotation.z=between(-.06,.06);
+  const leaf=choice(leafMats);
+  for(let k=0;k<7;k++){const a=k/7*Math.PI*2,frond=mesh(new THREE.ConeGeometry(1.25,8.5,5),leaf,Math.cos(a)*3,10.7,Math.sin(a)*3,g);frond.rotation.z=-Math.PI/2.35;frond.rotation.y=a;frond.scale.set(.75,1,.4)}
+  mesh(new THREE.IcosahedronGeometry(1.4,0),leaf,0,10.7,0,g);
+}
+for(let i=0;i<116;i++){
+  const a=between(-495,495),b=between(-440,440);
+  if((a+67)**2+(b+69)**2<110**2||((a-95)**2/10000+(b-77)**2/14000)<1.2)continue;
+  const nearRoad=roadXs.some(x=>Math.abs(x-a)<17)||roadZs.some(z=>Math.abs(z-b)<17);
+  if(nearRoad||rand()<.15)palm(a,b,between(.58,1.17));
+}
+/* Podium planters and plaza furniture */
+for(let i=0;i<28;i++){const a=i/28*Math.PI*2;const x=-67+Math.cos(a)*55,z=-69+Math.sin(a)*52;palm(x,z,.54)}
+for(let i=0;i<12;i++){const x=-20+i*8;box(5,.6,2,mat.stone,x,.4,11,cityRoot)}
+/* Mark landmark meshes for actual raycast picking. */
+lake.userData.place='fountain';hitMeshes.push(lake);
+for (const [id,data] of Object.entries(landmarks)){
+  data.group.traverse(obj=>{if(obj.isMesh){obj.userData.place=id;hitMeshes.push(obj)}});
+}
+/* Actual animated vehicles on orthogonal streets. */
+const cars=[];
+function carMesh(i){
+  const g=new THREE.Group();cityRoot.add(g);
+  const color=choice(['#edf0e9','#c6c8ca','#303c43','#a48d75','#4f6470','#efdebb']);
+  const body=PBR(color,.38,.32);
+  box(3.8,1.35,7.2,body,0,1.35,0,g);
+  box(3.1,1.4,3.8,mat.black,0,2.5,-.3,g);
+  box(3.2,.22,4.0,body,0,3.28,-.3,g);
+  for (const x of [-1.95,1.95])for(const z of [-2.25,2.25]){
+    const wh=cylinder(.86,.86,.48,mat.black,x,.85,z,g,10);wh.rotation.z=Math.PI/2;
+  }
+  for(const x of [-1.12,1.12]){
+    box(.6,.35,.18,mat.glow,x,1.4,-3.57,g);
+    box(.65,.28,.18,PBR('#d54f37'),x,1.4,3.58,g);
+  }
+  const horizontal=i%3!==0, road=horizontal?choice(roadZs):choice(roadXs);
+  return {mesh:g,horizontal,road,forward:i%2?1:-1,start:between(-525,525),speed:between(9,20)};
+}
+for(let i=0;i<52;i++)cars.push(carMesh(i));
+/* Animated human figures with pivoting arms/legs rather than 2D dots. */
+const pedestrians=[];
+function person(i){
+  const g=new THREE.Group();cityRoot.add(g);
+  const shirt=PBR(choice(['#d6d0c7','#8ca29b','#666a6d','#b6aaa0','#f1eeee']),.8);
+  cylinder(.46,.43,1.7,shirt,0,2.1,0,g,8);
+  const head=mesh(new THREE.SphereGeometry(.44,8,6),PBR('#b99a7e'),0,3.4,0,g);
+  const armL=new THREE.Group(),armR=new THREE.Group(),legL=new THREE.Group(),legR=new THREE.Group();
+  armL.position.set(-.63,2.84,0);armR.position.set(.63,2.84,0);legL.position.set(-.26,1.15,0);legR.position.set(.26,1.15,0);
+  for(const limb of [armL,armR]){cylinder(.15,.13,1.35,shirt,0,-.65,0,limb,6);g.add(limb)}
+  for(const limb of [legL,legR]){cylinder(.19,.18,1.35,mat.black,0,-.63,0,limb,6);g.add(limb)}
+  const around=i%3===0?[-67,-69,103,100]:i%3===1?[242,159,183,127]:[95,77,184,175];
+  return {mesh:g,limbs:[armL,armR,legL,legR],around,t:rand(),speed:between(.008,.023)};
+}
+for(let i=0;i<52;i++)pedestrians.push(person(i));
+/* Detailed 3D helicopter: cabin, transparent windshield, rotor, skid and tail. */
+const helicopter=new THREE.Group();cityRoot.add(helicopter);
+const heliBody=PBR('#e8e7df',.38,.25),heliDark=PBR('#273c45',.24,.5);
+const cabin=mesh(new THREE.SphereGeometry(6.8,20,12),heliBody,0,0,0,helicopter);cabin.scale.set(1.33,.73,.72);
+const wind=mesh(new THREE.SphereGeometry(5.5,20,10,0,Math.PI,0,Math.PI*.65),mat.glass,3.1,.4,0,helicopter);wind.scale.set(.9,.56,.74);
+const boom=box(21,1.8,1.9,heliBody,-16,1.1,0,helicopter);boom.rotation.z=.11;
+const tailFin=box(2.6,6.5,.8,heliBody,-26.3,3.8,0,helicopter);
+const rotor=new THREE.Group();rotor.position.y=5.8;helicopter.add(rotor);
+for(let j=0;j<4;j++){const blade=box(25,.18,.8,heliDark,0,0,0,rotor);blade.rotation.y=j*Math.PI/4}
+cylinder(.5,.5,2.7,mat.metal,0,4.7,0,helicopter);
+const backRotor=new THREE.Group();backRotor.position.set(-27.4,4.5,0);helicopter.add(backRotor);
+for(let j=0;j<2;j++){const blade=box(.3,6,.55,heliDark,0,0,0,backRotor);blade.rotation.z=j*Math.PI/2}
+for(const z of [-3.9,3.9]){
+  box(13,.5,.55,heliDark,0,-5.4,z,helicopter);
+  for(const x of [-3.5,3.5]){const skid=box(.35,4,.35,mat.metal,x,-3.4,z,helicopter);skid.rotation.z=.12}
+}
+helicopter.scale.setScalar(1.12);
+/* Lighting controls alter the real renderer, materials, fog and lamps. */
+const moods=[
+  {name:'DAYLIGHT',sky:'#c2d4dd',fog:'#cad6d9',sun:3.4,hemi:2.1,exposure:1.45,emissive:.025},
+  {name:'GOLDEN HOUR',sky:'#e1baa0',fog:'#dcbdab',sun:2.0,hemi:1.45,exposure:1.35,emissive:.22},
+  {name:'NIGHT VIEW',sky:'#182c45',fog:'#2d4255',sun:.16,hemi:.28,exposure:1.55,emissive:.95}
+];
+let mood=0,selected='aurelia',followHeli=false,tourOn=false,tourIndex=0,tourTimer=0;
+let transition=null, lastPointer=null, isVisible=true;
+const clock=new THREE.Clock();
+const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();
+const focusName=document.getElementById('focus-name'),focusDescription=document.getElementById('focus-description');
+function setMood(index){
+  mood=index%moods.length;const m=moods[mood];
+  scene.background.set(m.sky);scene.fog.color.set(m.fog);
+  sun.intensity=m.sun;hemi.intensity=m.hemi;
+  sun.color.set(mood===1?'#ffcf89':mood===2?'#c8cfe9':'#fff2d9');
+  renderer.toneMappingExposure=m.exposure;
+  lights.forEach(material=>{if(material.emissiveIntensity!==undefined)material.emissiveIntensity=m.emissive});
+  document.querySelector('#time-mode span').textContent=m.name;
+}
+function goTo(id,fromTour=false){
+  const item=landmarks[id];if(!item)return;
+  selected=id;followHeli=false;document.getElementById('helicopter').classList.remove('active');
+  document.querySelector('#helicopter span').textContent='FOLLOW HELI';
+  focusName.textContent=item.name;focusDescription.textContent=item.description;
+  for(const pin of document.querySelectorAll('.pin'))pin.classList.toggle('active',pin.dataset.place===id);
+  transition={pos:item.camera.clone(),target:item.target.clone()};
+  if(!fromTour)tourOn=false;
+  document.getElementById('tour').classList.toggle('active',tourOn);
+}
+function home(){tourOn=false;followHeli=false;transition={pos:new THREE.Vector3(-330,245,410),target:new THREE.Vector3(17,52,-15)};document.getElementById('tour').classList.remove('active');document.getElementById('helicopter').classList.remove('active');}
+function toggleTour(){tourOn=!tourOn;followHeli=false;document.getElementById('tour').classList.toggle('active',tourOn);document.getElementById('helicopter').classList.remove('active');if(tourOn){tourIndex=0;tourTimer=0;goTo('aurelia',true)}}
+function toggleHeli(){followHeli=!followHeli;tourOn=false;transition=null;document.getElementById('helicopter').classList.toggle('active',followHeli);document.getElementById('tour').classList.remove('active');document.querySelector('#helicopter span').textContent=followHeli?'EXIT HELI':'FOLLOW HELI'}
+document.getElementById('time-mode').addEventListener('click',()=>setMood(mood+1));
+document.getElementById('tour').addEventListener('click',toggleTour);
+document.getElementById('helicopter').addEventListener('click',toggleHeli);
+document.getElementById('reset').addEventListener('click',home);
+document.getElementById('explore').addEventListener('click',()=>goTo('burj'));
+document.getElementById('view-tower').addEventListener('click',()=>{document.getElementById('hero').scrollIntoView();goTo('aurelia')});
+document.getElementById('focus-go').addEventListener('click',()=>goTo(selected));
+for(const el of document.querySelectorAll('[data-place]'))el.addEventListener('click',()=>{document.getElementById('hero').scrollIntoView({behavior:'smooth'});goTo(el.dataset.place)});
+const modal=document.getElementById('contact-modal');document.getElementById('enquire').addEventListener('click',()=>modal.showModal());
+document.getElementById('close-modal').addEventListener('click',()=>modal.close());document.getElementById('modal-demo').addEventListener('click',()=>{alert('Demo only: no data was sent. Connect your CRM or API before launch.');modal.close()});
+canvas.addEventListener('pointerdown',ev=>{lastPointer={x:ev.clientX,y:ev.clientY}});
+canvas.addEventListener('pointerup',ev=>{
+  if(!lastPointer||Math.hypot(ev.clientX-lastPointer.x,ev.clientY-lastPointer.y)>6)return;
+  const rect=canvas.getBoundingClientRect();pointer.x=((ev.clientX-rect.left)/rect.width)*2-1;pointer.y=-((ev.clientY-rect.top)/rect.height)*2+1;
+  raycaster.setFromCamera(pointer,camera);const hits=raycaster.intersectObjects(hitMeshes,false);
+  if(hits.length)goTo(hits[0].object.userData.place);
+});
+canvas.addEventListener('pointermove',ev=>{if(lastPointer&&ev.buttons>0){tourOn=false;followHeli=false;transition=null}});
+window.addEventListener('keydown',ev=>{if(ev.key==='Escape'){followHeli=false;tourOn=false}});
+const _worldPoint=new THREE.Vector3();
+const timeMod=(v,max)=>((v%max)+max)%max;
+function animate(){
+  requestAnimationFrame(animate);
+  const dt=Math.min(clock.getDelta(),.05),t=clock.elapsedTime;
+  if(!isVisible)return;
+  for(const c of cars){
+    const d=timeMod(c.start+t*c.speed*c.forward,1030)-515;
+    if(c.horizontal){c.mesh.position.set(d,-.15,c.road+(c.forward>0?3.9:-3.9));c.mesh.rotation.y=c.forward>0?Math.PI/2:-Math.PI/2;}
+    else {c.mesh.position.set(c.road+(c.forward>0?-3.9:3.9),-.15,d);c.mesh.rotation.y=c.forward>0?Math.PI:0;}
+  }
+  for(let i=0;i<pedestrians.length;i++){
+    const p=pedestrians[i];const [cx,cz,w,d]=p.around;
+    const v=timeMod(p.t*2*(w+d)+t*p.speed*2*(w+d),2*(w+d));let x,z,angle;
+    if(v<w){x=cx-w/2+v;z=cz-d/2;angle=Math.PI/2}
+    else if(v<w+d){x=cx+w/2;z=cz-d/2+(v-w);angle=0}
+    else if(v<2*w+d){x=cx+w/2-(v-w-d);z=cz+d/2;angle=-Math.PI/2}
+    else{x=cx-w/2;z=cz+d/2-(v-2*w-d);angle=Math.PI}
+    p.mesh.position.set(x,-.5+Math.sin(t*8+i)*.045,z);p.mesh.rotation.y=angle;
+    const swing=Math.sin(t*5.7+i*1.36)*.28;
+    p.limbs[0].rotation.x=swing;p.limbs[1].rotation.x=-swing;
+    p.limbs[2].rotation.x=-swing;p.limbs[3].rotation.x=swing;
+  }
+  for(const jet of waterRings){jet.mesh.scale.y=.44+.58*(1+Math.sin(t*2.3+jet.seed))*.5;}
+  const hA=t*.14+.6;
+  const flight=new THREE.Vector3(5+215*Math.cos(hA),188+10*Math.sin(t*.7),-25+151*Math.sin(hA));
+  helicopter.position.copy(flight);
+  const velocity=new THREE.Vector3(-215*Math.sin(hA),0,151*Math.cos(hA)).normalize();
+  helicopter.rotation.set(.045*Math.sin(t*.7),Math.atan2(-velocity.x,-velocity.z),.06*Math.sin(t*.4));
+  rotor.rotation.y+=dt*31;backRotor.rotation.z+=dt*46;
+  const ease=1-Math.exp(-dt*2.7);
+  if(followHeli){
+    const behind=flight.clone().addScaledVector(velocity,-86).add(new THREE.Vector3(0,35,0));
+    camera.position.lerp(behind,ease*.65);orbit.target.lerp(flight,ease*.82);
+    orbit.enabled=false;
+  }else{
+    orbit.enabled=true;
+    if(transition){
+      camera.position.lerp(transition.pos,ease);orbit.target.lerp(transition.target,ease);
+      if(camera.position.distanceTo(transition.pos)<1.2&&orbit.target.distanceTo(transition.target)<1)transition=null;
+    }
+  }
+  if(tourOn){
+    tourTimer+=dt;
+    if(tourTimer>8.5){tourTimer=0;const path=['aurelia','burj','fountain','mall'];tourIndex=(tourIndex+1)%path.length;goTo(path[tourIndex],true)}
+  }
+  orbit.update();
+  for (const id of ['aurelia','burj','fountain']){
+    const target=id==='fountain'?new THREE.Vector3(96,13,77):landmarks[id].point;
+    _worldPoint.copy(target).project(camera);
+    const element=document.getElementById('pin-'+id);
+    const x=(_worldPoint.x*.5+.5)*host.clientWidth, y=(-_worldPoint.y*.5+.5)*host.clientHeight;
+    const inFrame=_worldPoint.z>-1&&_worldPoint.z<1&&x>15&&x<host.clientWidth-15&&y>55&&y<host.clientHeight-80;
+    element.style.display=inFrame?'flex':'none';
+    if(inFrame){element.style.left=x+'px';element.style.top=y+'px'}
+  }
+  renderer.render(scene,camera);
+}
+function resize(){
+  const w=Math.max(1,host.clientWidth),h=Math.max(1,host.clientHeight);
+  camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.7));renderer.setSize(w,h,false);
+}
+new ResizeObserver(resize).observe(host);
+new IntersectionObserver(entries=>{isVisible=entries[0].isIntersecting},{threshold:0}).observe(document.getElementById('hero'));
+document.addEventListener('visibilitychange',()=>{if(document.hidden)isVisible=false;else isVisible=true});
+try{resize();setMood(0);requestAnimationFrame(()=>loader.remove());animate()}catch(e){loader.remove();error.hidden=false;console.error('Scene failed:',e)}
+</script></body></html>

@@ -1,0 +1,2855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aleen Clothing — Luxury Atelier Intelligence & Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --canvas: #F4F6F9;
+      --card-bg: #FFFFFF;
+      --border: rgba(15, 23, 42, 0.05);
+      --border-hover: rgba(15, 23, 42, 0.12);
+      --text-heading: #0F172A;
+      --text-body: #475569;
+      --text-muted: #94A3B8;
+
+      --accent-blue: #2563EB;
+      --accent-cyan: #06B6D4;
+      --accent-purple: #8B5CF6;
+      --accent-amber: #F59E0B;
+      --accent-rose: #E11D48;
+      --accent-emerald: #10B981;
+
+      --radius-card: 24px;
+      --radius-pill: 9999px;
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      
+      --shadow-ambient: 0 1px 3px rgba(15, 23, 42, 0.02), 0 8px 24px rgba(15, 23, 42, 0.03);
+      --shadow-hover: 0 4px 16px rgba(15, 23, 42, 0.03), 0 20px 48px rgba(15, 23, 42, 0.055);
+      --shadow-drawer: -20px 0 60px rgba(15, 23, 42, 0.14);
+      --shadow-toast: 0 16px 44px rgba(15, 23, 42, 0.24);
+      
+      /* APPLE FLUID MOTION CURVES */
+      --ease-apple: cubic-bezier(0.25, 0.1, 0.25, 1.0);
+      --ease-spring: cubic-bezier(0.2, 0.8, 0.2, 1);
+      --ease-sheet: cubic-bezier(0.32, 0.72, 0, 1);
+      --anim-hover: all 0.32s var(--ease-apple);
+      --anim-toggle: all 0.28s var(--ease-spring);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--canvas);
+      color: var(--text-body);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      padding: 24px 36px 60px;
+    }
+
+    /* TOP GLOBAL BAR */
+    .top-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-pill-btn {
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: var(--radius-pill);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-heading);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.02);
+      transition: var(--anim-hover);
+    }
+
+    .nav-pill-btn:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 3px 10px rgba(15, 23, 42, 0.04);
+    }
+
+    .nav-pill-btn:active {
+      transform: scale(0.98);
+    }
+
+    /* APPLE-STYLE FLUID VIEW SWITCHER */
+    .view-switcher-bar {
+      display: flex;
+      background: rgba(226, 232, 240, 0.7);
+      backdrop-filter: blur(8px);
+      padding: 3px;
+      border-radius: var(--radius-pill);
+      gap: 3px;
+      border: 1px solid rgba(15, 23, 42, 0.03);
+    }
+
+    .view-tab {
+      border: none;
+      background: transparent;
+      padding: 7px 18px;
+      border-radius: var(--radius-pill);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-body);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      transition: var(--anim-toggle);
+    }
+
+    .view-tab:hover {
+      color: var(--text-heading);
+      background: rgba(255, 255, 255, 0.45);
+    }
+
+    .view-tab:active {
+      transform: scale(0.97);
+    }
+
+    .view-tab.active {
+      background: #FFFFFF;
+      color: var(--text-heading);
+      font-weight: 700;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+      transform: none;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .icon-circle-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-pill);
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-heading);
+      cursor: pointer;
+      position: relative;
+      transition: all 0.25s var(--ease-spring);
+    }
+
+    .icon-circle-btn:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+    }
+
+    .badge-dot {
+      position: absolute;
+      top: 9px;
+      right: 9px;
+      width: 7px;
+      height: 7px;
+      background: #EF4444;
+      border-radius: var(--radius-pill);
+      border: 1.5px solid #FFFFFF;
+    }
+
+    .btn-ask-ai {
+      background: linear-gradient(135deg, #4F46E5, #7C3AED);
+      color: #FFFFFF;
+      border: none;
+      padding: 9px 18px;
+      border-radius: var(--radius-pill);
+      font-size: 13px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(99, 102, 241, 0.25);
+      transition: all 0.25s var(--ease-spring);
+    }
+
+    .btn-ask-ai:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.35);
+    }
+
+    .user-avatar-top {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-pill);
+      overflow: hidden;
+      border: 2px solid #FFFFFF;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .user-avatar-top:hover {
+      transform: scale(1.08);
+    }
+
+    .user-avatar-top img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* PAGE VIEW CONTAINERS */
+    .page-view {
+      display: none;
+      animation: viewFade 0.35s var(--ease-spring);
+    }
+
+    .page-view.active {
+      display: block;
+    }
+
+    @keyframes viewFade {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* HEADER BANNER */
+    .dashboard-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .header-greeting h1 {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--text-heading);
+      letter-spacing: -0.03em;
+      margin-bottom: 4px;
+    }
+
+    .header-greeting p {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .segmented-control {
+      background: #E2E8F0;
+      padding: 3px;
+      border-radius: var(--radius-pill);
+      display: flex;
+      gap: 2px;
+    }
+
+    .seg-btn {
+      border: none;
+      background: transparent;
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-body);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .seg-btn.active {
+      background: #FFFFFF;
+      color: var(--text-heading);
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    }
+
+    .btn-export {
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: var(--radius-pill);
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text-heading);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.25s var(--ease-spring);
+    }
+
+    .btn-export:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+    }
+
+    /* 4 TOP KPI CARDS */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    .kpi-card {
+      background: var(--card-bg);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border);
+      padding: 22px 24px 20px;
+      box-shadow: var(--shadow-ambient);
+      transition: var(--anim-hover);
+      position: relative;
+      cursor: pointer;
+    }
+
+    .kpi-card:hover {
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-2px);
+      border-color: var(--border-hover);
+    }
+
+    .kpi-card:active {
+      transform: scale(0.99);
+    }
+
+    .kpi-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .kpi-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      transition: transform 0.3s var(--ease-apple);
+    }
+
+    .kpi-card:hover .kpi-icon {
+      transform: scale(1.06);
+    }
+
+    .kpi-card.cyan .kpi-icon { background: #ECFEFF; color: #0891B2; }
+    .kpi-card.orange .kpi-icon { background: #FFF7ED; color: #EA580C; }
+    .kpi-card.purple .kpi-icon { background: #FAF5FF; color: #7C3AED; }
+    .kpi-card.gold .kpi-icon { background: #FEFCE8; color: #CA8A04; }
+
+    .kpi-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-body);
+    }
+
+    .kpi-mid {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .kpi-number {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--text-heading);
+      letter-spacing: -0.03em;
+    }
+
+    .kpi-trend {
+      font-size: 12px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .kpi-trend.green { color: #16A34A; }
+    .kpi-trend.orange { color: #EA580C; }
+
+    /* DOT MATRIX HISTOGRAM (5 rows x 24 cols) */
+    .kpi-dots-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .kpi-dots-row {
+      display: flex;
+      gap: 4.5px;
+    }
+
+    .kpi-dot {
+      width: 4.5px;
+      height: 4.5px;
+      border-radius: 9999px;
+      background: #E2E8F0;
+      transition: transform 0.28s var(--ease-apple), filter 0.28s ease;
+    }
+
+    .kpi-dot:hover {
+      transform: scale(1.5);
+      filter: brightness(1.12);
+    }
+
+    .kpi-card.cyan .kpi-dot.lit { background: #06B6D4; }
+    .kpi-card.orange .kpi-dot.lit { background: #F97316; }
+    .kpi-card.purple .kpi-dot.lit { background: #8B5CF6; }
+    .kpi-card.gold .kpi-dot.lit { background: #EAB308; }
+
+    /* MIDDLE ROW: TIMELINE & NEEDS ATTENTION */
+    .mid-row {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    .mid-card {
+      background: var(--card-bg);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border);
+      padding: 24px;
+      box-shadow: var(--shadow-ambient);
+      position: relative;
+      transition: all 0.3s var(--ease-spring);
+    }
+
+    .mid-card:hover {
+      box-shadow: var(--shadow-hover);
+    }
+
+    .card-head-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .card-title-group h2 {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text-heading);
+      letter-spacing: -0.01em;
+      margin-bottom: 2px;
+    }
+
+    .card-title-group p {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* TIMELINE BARS */
+    .timeline-legend {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--text-body);
+      margin-bottom: 24px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .legend-box {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+    }
+
+    .timeline-chart-area {
+      height: 200px;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding: 0 10px;
+      border-bottom: 1px solid #E2E8F0;
+    }
+
+    /* NOW BADGE */
+    .now-marker {
+      position: absolute;
+      left: 17%;
+      top: 0;
+      bottom: 0;
+      width: 1.5px;
+      background: #0F172A;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .now-pill {
+      background: #0F172A;
+      color: #FFFFFF;
+      font-size: 10.5px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: var(--radius-pill);
+      white-space: nowrap;
+      position: absolute;
+      top: -12px;
+      transform: translateX(-50%);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .timeline-bar-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      height: 100%;
+      justify-content: flex-end;
+      width: 32px;
+      cursor: pointer;
+    }
+
+    .stacked-bar {
+      width: 32px;
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column-reverse;
+      background: #F1F5F9;
+      transition: all 0.25s var(--ease-spring);
+    }
+
+    .stacked-bar:hover {
+      transform: scaleY(1.05) scaleX(1.05);
+      filter: brightness(1.05);
+    }
+
+    .bar-seg { width: 100%; }
+    .seg-green { background: #10B981; }
+    .seg-cyan { background: #06B6D4; }
+    .seg-orange { background: #F59E0B; }
+    .seg-red { background: #EF4444; }
+    .seg-gray { background: #E2E8F0; }
+
+    .bar-time-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: -22px;
+    }
+
+    /* FLOATING POPOVER TOOLTIP */
+    .timeline-popover {
+      position: absolute;
+      left: 17%;
+      top: 24px;
+      background: #FFFFFF;
+      border-radius: 16px;
+      padding: 14px 18px;
+      box-shadow: 0 12px 32px rgba(15, 23, 42, 0.12);
+      border: 1px solid var(--border);
+      z-index: 20;
+      width: 250px;
+      animation: fadeIn 0.3s ease;
+      transition: transform 0.2s ease;
+    }
+
+    .timeline-popover:hover {
+      transform: scale(1.02);
+    }
+
+    .popover-head {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text-heading);
+      margin-bottom: 10px;
+    }
+
+    .popover-stat-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+
+    .popover-stat-row span:first-child {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-body);
+      font-weight: 600;
+    }
+
+    .popover-stat-row span:last-child {
+      font-weight: 800;
+      color: var(--text-heading);
+    }
+
+    /* NEEDS ATTENTION LIST */
+    .needs-attention-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .attention-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: var(--anim-hover);
+    }
+
+    .attention-item:hover {
+      background: #F8FAFC;
+      border-color: var(--border-hover);
+      transform: translateX(3px);
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+    }
+
+    .attention-item:active {
+      transform: scale(0.99);
+    }
+
+    .attention-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .attention-icon-box {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+      transition: transform 0.3s var(--ease-apple);
+    }
+
+    .attention-item:hover .attention-icon-box {
+      transform: scale(1.08);
+    }
+
+    .attention-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text-heading);
+      margin-bottom: 2px;
+    }
+
+    .attention-meta {
+      font-size: 11.5px;
+      color: var(--text-muted);
+    }
+
+    .status-pill {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .status-pill.overdue { background: #FEF3C7; color: #B45309; }
+    .status-pill.conflict { background: #FEE2E2; color: #DC2626; }
+    .status-pill.unsigned { background: #FEF3C7; color: #D97706; }
+    .status-pill.delay { background: #FFEDD5; color: #EA580C; }
+    .status-pill.resolved { background: #DCFCE7; color: #16A34A; }
+
+    .status-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 9999px;
+      background: currentColor;
+    }
+
+    .attention-chevron {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-left: 8px;
+      transition: transform 0.2s;
+    }
+
+    .attention-item:hover .attention-chevron {
+      transform: translateX(4px);
+      color: var(--text-heading);
+    }
+
+    /* BOTTOM ROW: DONUT & LIVE ACTIVITY */
+    .bottom-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .donut-layout {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding-top: 10px;
+    }
+
+    .donut-center-group {
+      position: relative;
+      width: 170px;
+      height: 170px;
+      transition: transform 0.3s var(--ease-spring);
+    }
+
+    .donut-center-group:hover {
+      transform: scale(1.05);
+    }
+
+    .donut-center-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .donut-center-text .amount {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text-heading);
+    }
+
+    .donut-center-text .sub {
+      font-size: 10px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+
+    .donut-legend-table {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 220px;
+    }
+
+    .donut-legend-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12.5px;
+      padding: 4px 6px;
+      border-radius: 6px;
+      transition: background 0.2s;
+      cursor: pointer;
+    }
+
+    .donut-legend-row:hover {
+      background: #F1F5F9;
+    }
+
+    .donut-legend-row .cat {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-body);
+      font-weight: 600;
+    }
+
+    .donut-legend-row .val {
+      font-weight: 700;
+      color: var(--text-heading);
+    }
+
+    .donut-legend-row .pct {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 600;
+      width: 32px;
+      text-align: right;
+    }
+
+    /* LIVE ACTIVITY FEED */
+    .activity-feed {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .activity-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 6px 8px;
+      border-radius: 12px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .activity-item:hover {
+      background: #F8FAFC;
+      transform: translateX(4px);
+    }
+
+    .act-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-pill);
+      overflow: hidden;
+      flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+
+    .activity-item:hover .act-avatar {
+      transform: scale(1.1);
+    }
+
+    .act-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+    .act-content { flex: 1; min-width: 0; }
+    .act-title { font-size: 13px; font-weight: 600; color: var(--text-heading); }
+    .act-title strong { font-weight: 800; }
+    .act-time { font-size: 11.5px; color: var(--text-muted); margin-top: 1px; }
+
+    /* ========================================================
+       PAGE 2: VIP PATRONS & GUESTS CRM STYLING
+       ======================================================== */
+    .patron-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      gap: 16px;
+    }
+
+    .patron-search-box {
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-pill);
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 380px;
+      box-shadow: var(--shadow-ambient);
+      transition: all 0.25s var(--ease-spring);
+    }
+
+    .patron-search-box:focus-within {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
+      transform: translateY(-1px);
+    }
+
+    .patron-search-box input {
+      border: none;
+      outline: none;
+      font-size: 13.5px;
+      font-family: inherit;
+      width: 100%;
+      color: var(--text-heading);
+    }
+
+    .patron-filter-pills {
+      display: flex;
+      gap: 8px;
+    }
+
+    .p-filter {
+      border: 1px solid var(--border);
+      background: #FFFFFF;
+      padding: 7px 16px;
+      border-radius: var(--radius-pill);
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-body);
+      cursor: pointer;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.02);
+      transition: var(--anim-toggle);
+    }
+
+    .p-filter:hover {
+      border-color: var(--border-hover);
+      color: var(--text-heading);
+      transform: translateY(-1px);
+    }
+
+    .p-filter:active {
+      transform: scale(0.97);
+    }
+
+    .p-filter.active {
+      background: #0F172A;
+      color: #FFFFFF;
+      border-color: #0F172A;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.12);
+    }
+
+    .patron-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .patron-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 24px;
+      box-shadow: var(--shadow-ambient);
+      transition: var(--anim-hover);
+      position: relative;
+      cursor: pointer;
+    }
+
+    .patron-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--border-hover);
+    }
+
+    .patron-card:active {
+      transform: scale(0.99);
+    }
+
+    .patron-top {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .patron-card-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-pill);
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+      flex-shrink: 0;
+      transition: transform 0.25s var(--ease-spring);
+    }
+
+    .patron-card:hover .patron-card-avatar {
+      transform: scale(1.1);
+    }
+
+    .patron-card-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+    .patron-name-group h3 {
+      font-size: 15.5px;
+      font-weight: 800;
+      color: var(--text-heading);
+      letter-spacing: -0.01em;
+    }
+
+    .patron-phone {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .patron-tier-badge {
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: var(--radius-pill);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 4px;
+    }
+
+    .patron-tier-badge.couture { background: #FAF5FF; color: #7C3AED; }
+    .patron-tier-badge.royal { background: #FEF3C7; color: #D97706; }
+    .patron-tier-badge.bespoke { background: #ECFEFF; color: #0891B2; }
+
+    .patron-stats-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: #F8FAFC;
+      border-radius: 14px;
+      padding: 12px 14px;
+      margin-bottom: 16px;
+      gap: 10px;
+    }
+
+    .patron-stat-box .lbl {
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+    }
+
+    .patron-stat-box .val {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text-heading);
+      margin-top: 1px;
+    }
+
+    .patron-footer-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border);
+      padding-top: 14px;
+    }
+
+    .patron-last-fitting {
+      font-size: 11.5px;
+      color: var(--text-muted);
+    }
+
+    .btn-patron-measure {
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-heading);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-patron-measure:hover {
+      background: #0F172A;
+      color: #FFFFFF;
+      transform: translateY(-1px);
+    }
+
+    /* ========================================================
+       PAGE 3: ATELIER TAILORING BOARD (KANBAN)
+       ======================================================== */
+    .kanban-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .kanban-col {
+      background: #EAEFF5;
+      border-radius: 20px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      min-height: 520px;
+    }
+
+    .kanban-col-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 6px;
+    }
+
+    .kanban-title {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: var(--text-heading);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .kanban-badge {
+      background: #FFFFFF;
+      color: var(--text-heading);
+      font-size: 11px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    }
+
+    .kanban-card {
+      background: #FFFFFF;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      padding: 18px;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+      cursor: pointer;
+      transition: var(--anim-hover);
+      position: relative;
+    }
+
+    .kanban-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+      border-color: var(--border-hover);
+    }
+
+    .kanban-card:active {
+      transform: scale(0.985);
+    }
+
+    .order-tag {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent-purple);
+      margin-bottom: 4px;
+    }
+
+    .order-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text-heading);
+      margin-bottom: 4px;
+    }
+
+    .order-patron {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .progress-bar-bg {
+      height: 6px;
+      background: #F1F5F9;
+      border-radius: var(--radius-pill);
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      border-radius: var(--radius-pill);
+      transition: width 0.4s ease;
+    }
+
+    .kanban-card-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border);
+      padding-top: 10px;
+    }
+
+    .tailor-avatar-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tailor-av {
+      width: 24px;
+      height: 24px;
+      border-radius: var(--radius-pill);
+      overflow: hidden;
+    }
+
+    .tailor-av img { width: 100%; height: 100%; object-fit: cover; }
+
+    .tailor-name {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text-body);
+    }
+
+    .trial-chip {
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: var(--radius-pill);
+    }
+
+    .trial-chip.urgent { background: #FEE2E2; color: #DC2626; }
+    .trial-chip.normal { background: #F1F5F9; color: var(--text-muted); }
+    .trial-chip.ready { background: #DCFCE7; color: #16A34A; }
+
+    /* SLIDE-OVER SHEET / FLYOUT DRAWER (APPLE FLUID SHEET) */
+    .drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.16);
+      backdrop-filter: blur(14px) saturate(180%);
+      -webkit-backdrop-filter: blur(14px) saturate(180%);
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s var(--ease-apple);
+    }
+
+    .drawer-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .drawer-panel {
+      position: fixed;
+      top: 14px;
+      right: 14px;
+      bottom: 14px;
+      width: 480px;
+      max-width: 94vw;
+      background: #FFFFFF;
+      border-radius: 28px;
+      box-shadow: var(--shadow-drawer);
+      z-index: 101;
+      transform: translateX(110%);
+      transition: transform 0.44s var(--ease-sheet);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid rgba(15, 23, 42, 0.04);
+    }
+
+    .drawer-panel.open {
+      transform: translateX(0);
+    }
+
+    /* DRAWER PHASE 1: DIAGNOSTIC */
+    .drawer-view {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .drawer-header {
+      padding: 24px 28px 16px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    .drawer-header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .drawer-avatar-doc {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-pill);
+      overflow: hidden;
+    }
+
+    .drawer-avatar-doc img { width: 100%; height: 100%; object-fit: cover; }
+
+    .drawer-doc-name {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text-heading);
+    }
+
+    .drawer-late-badge {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #DC2626;
+    }
+
+    .drawer-close-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-pill);
+      background: #F1F5F9;
+      border: none;
+      cursor: pointer;
+      font-size: 13px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .drawer-close-btn:hover {
+      background: #E2E8F0;
+      color: var(--text-heading);
+      transform: rotate(90deg);
+    }
+
+    .drawer-body-scroll {
+      padding: 8px 28px 24px;
+      overflow-y: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    /* APPOINTMENT TIMELINE STACK */
+    .apt-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .apt-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .apt-time-col {
+      width: 44px;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .apt-time-col.red { color: #DC2626; }
+
+    .apt-card-item {
+      flex: 1;
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.02);
+      transition: transform 0.2s;
+    }
+
+    .apt-card-item:hover {
+      transform: translateX(3px);
+    }
+
+    .apt-card-item.overlap {
+      border: 1.5px solid #FCA5A5;
+      background: #FEF2F2;
+    }
+
+    .apt-card-item.open-slot {
+      border: 1.5px dashed #06B6D4;
+      background: #ECFEFF;
+    }
+
+    .apt-patient {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .apt-p-avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: var(--radius-pill);
+      overflow: hidden;
+    }
+
+    .apt-p-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+    .apt-p-name {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text-heading);
+    }
+
+    .apt-p-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .apt-tag-overlap {
+      font-size: 11px;
+      font-weight: 700;
+      color: #DC2626;
+    }
+
+    /* CAUSAL DIAGNOSTIC CALLOUTS */
+    .cause-callout {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .cause-icon-round {
+      width: 26px;
+      height: 26px;
+      border-radius: var(--radius-pill);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+
+    .cause-icon-round.blue { background: #EFF6FF; color: #2563EB; }
+    .cause-icon-round.amber { background: #FEF3C7; color: #D97706; }
+
+    .cause-text h4 {
+      font-size: 12.5px;
+      font-weight: 800;
+      color: var(--text-heading);
+      margin-bottom: 2px;
+    }
+
+    .cause-text p {
+      font-size: 12px;
+      color: var(--text-body);
+      line-height: 1.45;
+    }
+
+    /* SUGGESTED FIX ACTION CARD */
+    .suggested-fix-section {
+      margin-top: 8px;
+    }
+
+    .suggested-fix-title {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .fix-action-card {
+      background: #F0FDFA;
+      border: 1.5px solid #5EEAD4;
+      border-radius: 16px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: all 0.25s var(--ease-spring);
+    }
+
+    .fix-action-card:hover {
+      background: #CCFBF1;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(20, 184, 166, 0.15);
+    }
+
+    .fix-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .fix-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-heading);
+    }
+
+    .fix-sub {
+      font-size: 11.5px;
+      color: #0F766E;
+    }
+
+    .badge-best-fit {
+      font-size: 11px;
+      font-weight: 800;
+      color: #0F766E;
+      background: #99F6E4;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+    }
+
+    /* STEPPER IN WIZARD */
+    .wizard-stepper-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #F8FAFC;
+      padding: 8px 12px;
+      border-radius: var(--radius-pill);
+      margin-bottom: 16px;
+    }
+
+    .wiz-step {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .wiz-step.done { color: #16A34A; }
+    .wiz-step.active {
+      background: #0284C7;
+      color: #FFFFFF;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+    }
+
+    /* BEFORE / AFTER CARDS */
+    .before-after-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .ba-box {
+      background: #F8FAFC;
+      border-radius: 14px;
+      padding: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .ba-tag {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .ba-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11.5px;
+      margin-bottom: 6px;
+      padding: 4px 6px;
+      border-radius: 8px;
+    }
+
+    .ba-row.overlap { background: #FEE2E2; }
+    .ba-row.green { background: #DCFCE7; }
+
+    /* CHANNEL SWITCHER & SMS */
+    .channel-pills {
+      display: flex;
+      background: #F1F5F9;
+      padding: 3px;
+      border-radius: var(--radius-pill);
+      margin-bottom: 14px;
+    }
+
+    .c-pill {
+      flex: 1;
+      border: none;
+      background: transparent;
+      padding: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .c-pill.active {
+      background: #FFFFFF;
+      color: var(--text-heading);
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    }
+
+    .sms-container {
+      border: 1.5px solid #38BDF8;
+      border-radius: 14px;
+      padding: 14px;
+      background: #FFFFFF;
+      transition: all 0.2s ease;
+    }
+
+    .sms-container:focus-within {
+      box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.15);
+    }
+
+    .sms-textarea {
+      width: 100%;
+      border: none;
+      outline: none;
+      font-family: inherit;
+      font-size: 12.5px;
+      line-height: 1.5;
+      color: var(--text-heading);
+      resize: none;
+      height: 70px;
+    }
+
+    /* CONFIRM CTA */
+    .drawer-confirm-btn {
+      width: 100%;
+      background: #0F172A;
+      color: #FFFFFF;
+      border: none;
+      padding: 14px;
+      border-radius: 16px;
+      font-size: 13.5px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.18);
+      transition: all 0.25s var(--ease-spring);
+      margin-top: 10px;
+    }
+
+    .drawer-confirm-btn:hover {
+      background: #1E293B;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(15, 23, 42, 0.25);
+    }
+
+    /* LUXURY FLOATING TOAST */
+    .floating-luxury-toast {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      background: #0F172A;
+      color: #FFFFFF;
+      padding: 12px 20px;
+      border-radius: var(--radius-pill);
+      box-shadow: var(--shadow-toast);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      z-index: 200;
+      transform: translateY(120px) scale(0.95);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.35s var(--ease-spring);
+    }
+
+    .floating-luxury-toast.active {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .toast-icon-green {
+      width: 22px;
+      height: 22px;
+      border-radius: var(--radius-pill);
+      background: #10B981;
+      color: #0F172A;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .toast-text-bold {
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .toast-text-sub {
+      font-size: 11.5px;
+      color: #94A3B8;
+      margin-left: 4px;
+    }
+
+    .toast-undo-btn {
+      background: rgba(255, 255, 255, 0.14);
+      border: none;
+      color: #FFFFFF;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .toast-undo-btn:hover {
+      background: rgba(255, 255, 255, 0.24);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP GLOBAL BAR -->
+  <nav class="top-nav">
+    <div class="nav-left">
+      <button class="nav-pill-btn">
+        <span>Aleen Clothing • Main Atelier</span>
+        <span>▾</span>
+      </button>
+
+      <!-- 3 INTERACTIVE PAGE TABS -->
+      <div class="view-switcher-bar">
+        <button class="view-tab active" onclick="switchView('dashboard', this)">
+          <span>📊</span>
+          <span>Dashboard</span>
+        </button>
+        <button class="view-tab" onclick="switchView('patrons', this)">
+          <span>👥</span>
+          <span>VIP Patrons</span>
+        </button>
+        <button class="view-tab" onclick="switchView('tailoring', this)">
+          <span>✂️</span>
+          <span>Tailoring Board</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="nav-right">
+      <button class="nav-pill-btn" style="padding:7px 14px;">
+        <span>📅 Tue, Oct 27, 2026</span>
+        <span>▾</span>
+      </button>
+
+      <button class="icon-circle-btn" title="Notifications">
+        <span>🔔</span>
+        <span class="badge-dot"></span>
+      </button>
+
+      <button class="btn-ask-ai" onclick="openDrawer('wizard')">
+        <span>✨</span>
+        <span>Ask AI</span>
+      </button>
+
+      <button class="icon-circle-btn" title="Theme Toggle" onclick="toggleTheme()">
+        <span>🌙</span>
+      </button>
+
+      <div class="user-avatar-top" title="Atelier Director">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=80&q=80" alt="Director">
+      </div>
+    </div>
+  </nav>
+
+  <!-- =========================================================
+       PAGE 1: DASHBOARD OVERVIEW
+       ========================================================= -->
+  <div class="page-view active" id="viewDashboard">
+    <header class="dashboard-header">
+      <div class="header-greeting">
+        <h1>Good morning, Atelier Director</h1>
+        <p>48 visits across 4 departments, 17 completed so far. 4 items need attention.</p>
+      </div>
+
+      <div class="header-controls">
+        <div class="segmented-control">
+          <button class="seg-btn active">Today</button>
+          <button class="seg-btn">Week</button>
+          <button class="seg-btn">Month</button>
+        </div>
+
+        <button class="btn-export">
+          <span>↓</span>
+          <span>Export report</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- 4 TOP KPI CARDS -->
+    <section class="kpi-row">
+      <!-- 1. APPOINTMENTS TODAY -->
+      <div class="kpi-card cyan" onclick="switchView('tailoring')">
+        <div class="kpi-top">
+          <div class="kpi-icon">📅</div>
+          <span class="kpi-label">Appointments today</span>
+        </div>
+        <div class="kpi-mid">
+          <div class="kpi-number">24</div>
+          <div class="kpi-trend green">↗ +8%</div>
+        </div>
+        <div class="kpi-dots-grid" id="dots1"></div>
+      </div>
+
+      <!-- 2. WAITING NOW -->
+      <div class="kpi-card orange" onclick="openDrawer('diagnostic')">
+        <div class="kpi-top">
+          <div class="kpi-icon">⏳</div>
+          <span class="kpi-label">Waiting now</span>
+        </div>
+        <div class="kpi-mid">
+          <div class="kpi-number">6</div>
+          <div class="kpi-trend orange">↘ -3 min</div>
+        </div>
+        <div class="kpi-dots-grid" id="dots2"></div>
+      </div>
+
+      <!-- 3. UNSIGNED NOTES -->
+      <div class="kpi-card purple" onclick="switchView('patrons')">
+        <div class="kpi-top">
+          <div class="kpi-icon">✍️</div>
+          <span class="kpi-label">Unsigned notes</span>
+        </div>
+        <div class="kpi-mid">
+          <div class="kpi-number">5</div>
+          <div class="kpi-trend orange">↗ +2</div>
+        </div>
+        <div class="kpi-dots-grid" id="dots3"></div>
+      </div>
+
+      <!-- 4. OUTSTANDING BALANCE -->
+      <div class="kpi-card gold" onclick="switchView('patrons')">
+        <div class="kpi-top">
+          <div class="kpi-icon">💰</div>
+          <span class="kpi-label">Outstanding balance</span>
+        </div>
+        <div class="kpi-mid">
+          <div class="kpi-number">₹12,53,445</div>
+          <div class="kpi-trend green">↘ -4%</div>
+        </div>
+        <div class="kpi-dots-grid" id="dots4"></div>
+      </div>
+    </section>
+
+    <!-- MIDDLE ROW: TIMELINE & NEEDS ATTENTION -->
+    <section class="mid-row">
+      <!-- LEFT: HOURLY TIMELINE -->
+      <div class="mid-card">
+        <div class="card-head-row">
+          <div class="card-title-group">
+            <h2>Appointments by hour</h2>
+            <p>Fittings by status. Bars show booked visits by status.</p>
+          </div>
+          <button class="nav-pill-btn" style="padding:4px 10px;font-size:11px;">⚙️</button>
+        </div>
+
+        <div class="timeline-legend">
+          <div class="legend-item"><span class="legend-box" style="background:#10B981;"></span> Completed</div>
+          <div class="legend-item"><span class="legend-box" style="background:#06B6D4;"></span> In consultation</div>
+          <div class="legend-item"><span class="legend-box" style="background:#F59E0B;"></span> Waiting</div>
+          <div class="legend-item"><span class="legend-box" style="background:#E2E8F0;"></span> Scheduled</div>
+          <div class="legend-item"><span class="legend-box" style="background:#EF4444;"></span> No show</div>
+        </div>
+
+        <div class="timeline-chart-area">
+          <div class="now-marker">
+            <div class="now-pill">Now 10:53</div>
+          </div>
+
+          <!-- BARS -->
+          <div class="timeline-bar-col">
+            <div class="stacked-bar" style="height: 140px;">
+              <div class="bar-seg seg-green" style="height: 60px;"></div>
+              <div class="bar-seg seg-cyan" style="height: 40px;"></div>
+              <div class="bar-seg seg-orange" style="height: 20px;"></div>
+              <div class="bar-seg seg-red" style="height: 20px;"></div>
+            </div>
+            <div class="bar-time-label">9 AM</div>
+          </div>
+
+          <div class="timeline-bar-col">
+            <div class="stacked-bar" style="height: 170px;">
+              <div class="bar-seg seg-green" style="height: 70px;"></div>
+              <div class="bar-seg seg-cyan" style="height: 50px;"></div>
+              <div class="bar-seg seg-orange" style="height: 30px;"></div>
+              <div class="bar-seg seg-red" style="height: 20px;"></div>
+            </div>
+            <div class="bar-time-label">10 AM</div>
+          </div>
+
+          <div class="timeline-bar-col">
+            <div class="stacked-bar" style="height: 130px;">
+              <div class="bar-seg seg-orange" style="height: 80px;"></div>
+              <div class="bar-seg seg-gray" style="height: 50px;"></div>
+            </div>
+            <div class="bar-time-label">11 AM</div>
+          </div>
+
+          <div class="timeline-bar-col">
+            <div class="stacked-bar" style="height: 60px;">
+              <div class="bar-seg seg-gray" style="height: 60px;"></div>
+            </div>
+            <div class="bar-time-label">12 PM</div>
+          </div>
+
+          <div class="timeline-bar-col">
+            <div class="stacked-bar" style="height: 90px;">
+              <div class="bar-seg seg-gray" style="height: 90px;"></div>
+            </div>
+            <div class="bar-time-label">1 PM</div>
+          </div>
+
+          <div class="timeline-bar-col">
+            <div class="stacked-bar" style="height: 80px;">
+              <div class="bar-seg seg-gray" style="height: 80px;"></div>
+            </div>
+            <div class="bar-time-label">2 PM</div>
+          </div>
+
+          <div class="timeline-bar-col">
+            <div class="stacked-bar" style="height: 100px;">
+              <div class="bar-seg seg-gray" style="height: 100px;"></div>
+            </div>
+            <div class="bar-time-label">3 PM</div>
+          </div>
+
+          <div class="timeline-bar-col">
+            <div class="stacked-bar" style="height: 45px;">
+              <div class="bar-seg seg-gray" style="height: 45px;"></div>
+            </div>
+            <div class="bar-time-label">4 PM</div>
+          </div>
+
+          <!-- POPOVER TOOLTIP -->
+          <div class="timeline-popover">
+            <div class="popover-head">10:00 to 11:00 AM, 8 booked</div>
+            <div class="popover-stat-row">
+              <span><span class="legend-box" style="background:#10B981;"></span> Completed</span>
+              <span>2</span>
+            </div>
+            <div class="popover-stat-row">
+              <span><span class="legend-box" style="background:#06B6D4;"></span> In consultation</span>
+              <span>3</span>
+            </div>
+            <div class="popover-stat-row">
+              <span><span class="legend-box" style="background:#F59E0B;"></span> Waiting</span>
+              <span>2</span>
+            </div>
+            <div class="popover-stat-row">
+              <span><span class="legend-box" style="background:#EF4444;"></span> No show</span>
+              <span>1</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: NEEDS ATTENTION -->
+      <div class="mid-card">
+        <div class="card-head-row">
+          <div class="card-title-group">
+            <h2>Needs attention</h2>
+            <p>Highest risk first</p>
+          </div>
+        </div>
+
+        <div class="needs-attention-list">
+          <div class="attention-item" onclick="openDrawer('diagnostic')">
+            <div class="attention-left">
+              <div class="attention-icon-box" style="background:#FEF3C7;color:#D97706;">🧪</div>
+              <div>
+                <div class="attention-title">7 lab results awaiting review</div>
+                <div class="attention-meta">Oldest 26 h, 2 departments</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;">
+              <span class="status-pill overdue"><span class="status-dot"></span>Overdue</span>
+              <span class="attention-chevron">›</span>
+            </div>
+          </div>
+
+          <!-- DOUBLE BOOKED SLOT -->
+          <div class="attention-item" id="itemDoubleBooked" onclick="openDrawer('diagnostic')" style="background:#FFF1F2;border-color:#FFE4E6;">
+            <div class="attention-left">
+              <div class="attention-icon-box" id="itemIcon" style="background:#FEE2E2;color:#DC2626;">📅</div>
+              <div>
+                <div class="attention-title" id="itemTitle">Double booked slot at 11:00 AM</div>
+                <div class="attention-meta" id="itemMeta">Dr. Sophia Carter, Dermatology</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;">
+              <span class="status-pill conflict" id="itemPill"><span class="status-dot"></span>Conflict</span>
+              <span class="attention-chevron">›</span>
+            </div>
+          </div>
+
+          <div class="attention-item" onclick="openDrawer('diagnostic')">
+            <div class="attention-left">
+              <div class="attention-icon-box" style="background:#FAF5FF;color:#7C3AED;">✍️</div>
+              <div>
+                <div class="attention-title">5 encounters unsigned over 48h</div>
+                <div class="attention-meta">3 clinicians, oldest Oct 25</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;">
+              <span class="status-pill unsigned"><span class="status-dot"></span>Unsigned</span>
+              <span class="attention-chevron">›</span>
+            </div>
+          </div>
+
+          <div class="attention-item" onclick="openDrawer('diagnostic')">
+            <div class="attention-left">
+              <div class="attention-icon-box" style="background:#FFF7ED;color:#EA580C;">⏳</div>
+              <div>
+                <div class="attention-title">Dermatology wait above 20 min</div>
+                <div class="attention-meta">2 patients, longest 24 min</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;">
+              <span class="status-pill delay"><span class="status-dot"></span>Delay</span>
+              <span class="attention-chevron">›</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BOTTOM ROW: DONUT & LIVE ACTIVITY -->
+    <section class="bottom-row">
+      <div class="mid-card">
+        <div class="card-head-row">
+          <div class="card-title-group">
+            <h2>Balances by age</h2>
+            <p>31 open invoices, patient and insurer</p>
+          </div>
+          <button class="nav-pill-btn" style="padding:4px 8px;font-size:12px;">•••</button>
+        </div>
+
+        <div class="donut-layout">
+          <div class="donut-center-group">
+            <svg viewBox="0 0 100 100" width="170" height="170">
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#06B6D4" stroke-width="14" stroke-dasharray="128.9 238.7" stroke-dashoffset="0"/>
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#2563EB" stroke-width="14" stroke-dasharray="62.1 238.7" stroke-dashoffset="-128.9"/>
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#F59E0B" stroke-width="14" stroke-dasharray="31 238.7" stroke-dashoffset="-191"/>
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#F97316" stroke-width="14" stroke-dasharray="16.7 238.7" stroke-dashoffset="-222"/>
+            </svg>
+            <div class="donut-center-text">
+              <div class="amount">₹12,53,445</div>
+              <div class="sub">outstanding</div>
+            </div>
+          </div>
+
+          <div class="donut-legend-table">
+            <div class="donut-legend-row">
+              <span class="cat"><span class="legend-box" style="background:#06B6D4;"></span> 0 to 30 days</span>
+              <span class="val">₹6,76,860</span>
+              <span class="pct">54%</span>
+            </div>
+            <div class="donut-legend-row">
+              <span class="cat"><span class="legend-box" style="background:#2563EB;"></span> 31 to 60 days</span>
+              <span class="val">₹3,25,895</span>
+              <span class="pct">26%</span>
+            </div>
+            <div class="donut-legend-row">
+              <span class="cat"><span class="legend-box" style="background:#F59E0B;"></span> 61 to 90 days</span>
+              <span class="val">₹1,62,947</span>
+              <span class="pct">13%</span>
+            </div>
+            <div class="donut-legend-row">
+              <span class="cat"><span class="legend-box" style="background:#F97316;"></span> Over 90 days</span>
+              <span class="val">₹87,743</span>
+              <span class="pct">7%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mid-card">
+        <div class="card-head-row">
+          <div class="card-title-group">
+            <h2>Live activity</h2>
+            <p>Main atelier campus, updated live</p>
+          </div>
+          <button class="nav-pill-btn" style="padding:4px 8px;font-size:12px;">•••</button>
+        </div>
+
+        <div class="activity-feed" id="activityFeed">
+          <div class="activity-item">
+            <div class="act-avatar">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=80&q=80" alt="Avatar">
+            </div>
+            <div class="act-content">
+              <div class="act-title"><strong>James Holloway</strong> arrived for 10:30 AM fitting</div>
+              <div class="act-time">10:41 AM, VIP Reception</div>
+            </div>
+          </div>
+
+          <div class="activity-item">
+            <div class="act-avatar">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80" alt="Avatar">
+            </div>
+            <div class="act-content">
+              <div class="act-title"><strong>Dr. Marcus Reed</strong> signed bespoke bridal measurement card</div>
+              <div class="act-time">10:35 AM, Master Tailoring Wing</div>
+            </div>
+          </div>
+
+          <div class="activity-item">
+            <div class="act-avatar">
+              <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=80&q=80" alt="Avatar">
+            </div>
+            <div class="act-content">
+              <div class="act-title"><strong>Andre Mitchell</strong> issued invoice INV-2026-1184</div>
+              <div class="act-time">10:22 AM, Retail Billing</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- =========================================================
+       PAGE 2: VIP PATRONS & GUESTS (CRM DIRECTORY)
+       ========================================================= -->
+  <div class="page-view" id="viewPatrons">
+    <header class="dashboard-header">
+      <div class="header-greeting">
+        <h1>VIP Patrons & Clientele CRM</h1>
+        <p>Curated list of 842 luxury patrons, bridal commissions, and private fitting cards.</p>
+      </div>
+
+      <div class="header-controls">
+        <button class="nav-pill-btn" style="background:#0F172A;color:#FFFFFF;border-color:#0F172A;">
+          <span>+</span>
+          <span>New Patron Profile</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- TOOLBAR -->
+    <div class="patron-toolbar">
+      <div class="patron-search-box">
+        <span>🔍</span>
+        <input type="text" placeholder="Search patron name, royal title, phone...">
+      </div>
+
+      <div class="patron-filter-pills">
+        <button class="p-filter active">All Patrons (842)</button>
+        <button class="p-filter">Haute Couture VIP (128)</button>
+        <button class="p-filter">Bridal Royalty (46)</button>
+        <button class="p-filter">Fitting Pending (12)</button>
+      </div>
+    </div>
+
+    <!-- PATRON CARDS GRID -->
+    <div class="patron-grid">
+      <!-- PATRON 1 -->
+      <div class="patron-card" onclick="openDrawer('diagnostic')">
+        <div class="patron-top">
+          <div class="patron-card-avatar">
+            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=120&q=80" alt="Patron">
+          </div>
+          <div class="patron-name-group">
+            <h3>Lady Reema Al-Sabah</h3>
+            <div class="patron-phone">+965 9988 1234 • Kuwait / Dubai</div>
+            <span class="patron-tier-badge royal">👑 Bridal Royalty</span>
+          </div>
+        </div>
+
+        <div class="patron-stats-row">
+          <div class="patron-stat-box">
+            <div class="lbl">Lifetime Spend</div>
+            <div class="val">₹24,80,000</div>
+          </div>
+          <div class="patron-stat-box">
+            <div class="lbl">Active Gowns</div>
+            <div class="val">2 Commissions</div>
+          </div>
+        </div>
+
+        <div class="patron-footer-actions">
+          <span class="patron-last-fitting">Trial: Today 14:00 (Suite 1)</span>
+          <button class="btn-patron-measure">Measurements 📐</button>
+        </div>
+      </div>
+
+      <!-- PATRON 2 -->
+      <div class="patron-card" onclick="openDrawer('wizard')">
+        <div class="patron-top">
+          <div class="patron-card-avatar">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80" alt="Patron">
+          </div>
+          <div class="patron-name-group">
+            <h3>Princess Sophia Al-Thani</h3>
+            <div class="patron-phone">+974 5511 8899 • Doha Salon</div>
+            <span class="patron-tier-badge couture">💎 Haute Couture VIP</span>
+          </div>
+        </div>
+
+        <div class="patron-stats-row">
+          <div class="patron-stat-box">
+            <div class="lbl">Lifetime Spend</div>
+            <div class="val">₹38,50,000</div>
+          </div>
+          <div class="patron-stat-box">
+            <div class="lbl">Active Gowns</div>
+            <div class="val">3 Commissions</div>
+          </div>
+        </div>
+
+        <div class="patron-footer-actions">
+          <span class="patron-last-fitting">Trial: Today 16:30 (Salon A)</span>
+          <button class="btn-patron-measure">Measurements 📐</button>
+        </div>
+      </div>
+
+      <!-- PATRON 3 -->
+      <div class="patron-card" onclick="openDrawer('diagnostic')">
+        <div class="patron-top">
+          <div class="patron-card-avatar">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=120&q=80" alt="Patron">
+          </div>
+          <div class="patron-name-group">
+            <h3>Elena Rostova</h3>
+            <div class="patron-phone">+44 7700 900142 • London / Mayfair</div>
+            <span class="patron-tier-badge bespoke">✨ Bespoke Atelier</span>
+          </div>
+        </div>
+
+        <div class="patron-stats-row">
+          <div class="patron-stat-box">
+            <div class="lbl">Lifetime Spend</div>
+            <div class="val">₹14,20,000</div>
+          </div>
+          <div class="patron-stat-box">
+            <div class="lbl">Active Gowns</div>
+            <div class="val">1 Commission</div>
+          </div>
+        </div>
+
+        <div class="patron-footer-actions">
+          <span class="patron-last-fitting">Alteration: Tomorrow 11:00</span>
+          <button class="btn-patron-measure">Measurements 📐</button>
+        </div>
+      </div>
+
+      <!-- PATRON 4 -->
+      <div class="patron-card">
+        <div class="patron-top">
+          <div class="patron-card-avatar">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80" alt="Patron">
+          </div>
+          <div class="patron-name-group">
+            <h3>Maharaja Vikramaditya</h3>
+            <div class="patron-phone">+91 98200 11223 • Jaipur Palace</div>
+            <span class="patron-tier-badge royal">👑 Royal Sherwani</span>
+          </div>
+        </div>
+
+        <div class="patron-stats-row">
+          <div class="patron-stat-box">
+            <div class="lbl">Lifetime Spend</div>
+            <div class="val">₹52,00,000</div>
+          </div>
+          <div class="patron-stat-box">
+            <div class="lbl">Zari Silk Sets</div>
+            <div class="val">4 Ensembles</div>
+          </div>
+        </div>
+
+        <div class="patron-footer-actions">
+          <span class="patron-last-fitting">Final QC: Nov 02, 2026</span>
+          <button class="btn-patron-measure">Measurements 📐</button>
+        </div>
+      </div>
+
+      <!-- PATRON 5 -->
+      <div class="patron-card">
+        <div class="patron-top">
+          <div class="patron-card-avatar">
+            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=120&q=80" alt="Patron">
+          </div>
+          <div class="patron-name-group">
+            <h3>Natasha De Silva</h3>
+            <div class="patron-phone">+65 9123 4567 • Singapore Marina</div>
+            <span class="patron-tier-badge couture">💎 Haute Couture VIP</span>
+          </div>
+        </div>
+
+        <div class="patron-stats-row">
+          <div class="patron-stat-box">
+            <div class="lbl">Lifetime Spend</div>
+            <div class="val">₹18,90,000</div>
+          </div>
+          <div class="patron-stat-box">
+            <div class="lbl">Cocktail Gowns</div>
+            <div class="val">2 In Progress</div>
+          </div>
+        </div>
+
+        <div class="patron-footer-actions">
+          <span class="patron-last-fitting">Beading: Stage 3</span>
+          <button class="btn-patron-measure">Measurements 📐</button>
+        </div>
+      </div>
+
+      <!-- PATRON 6 -->
+      <div class="patron-card">
+        <div class="patron-top">
+          <div class="patron-card-avatar">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80" alt="Patron">
+          </div>
+          <div class="patron-name-group">
+            <h3>Lord Arthur Hamilton</h3>
+            <div class="patron-phone">+44 20 7946 0912 • Savile Row Guild</div>
+            <span class="patron-tier-badge bespoke">✨ Bespoke Tailoring</span>
+          </div>
+        </div>
+
+        <div class="patron-stats-row">
+          <div class="patron-stat-box">
+            <div class="lbl">Lifetime Spend</div>
+            <div class="val">₹21,40,000</div>
+          </div>
+          <div class="patron-stat-box">
+            <div class="lbl">Tuxedo Sets</div>
+            <div class="val">3 Ensembles</div>
+          </div>
+        </div>
+
+        <div class="patron-footer-actions">
+          <span class="patron-last-fitting">Baste Fitting: Ready</span>
+          <button class="btn-patron-measure">Measurements 📐</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       PAGE 3: ATELIER TAILORING BOARD (BESPOKE PIPELINE)
+       ========================================================= -->
+  <div class="page-view" id="viewTailoring">
+    <header class="dashboard-header">
+      <div class="header-greeting">
+        <h1>Atelier Craft & Tailoring Board</h1>
+        <p>15 bespoke commissions in active craftsmanship across Milan, Paris, and Dubai workshops.</p>
+      </div>
+
+      <div class="header-controls">
+        <button class="nav-pill-btn" style="background:#0F172A;color:#FFFFFF;border-color:#0F172A;">
+          <span>+</span>
+          <span>Assign New Bespoke Order</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="kanban-grid">
+      <!-- COL 1: PATTERN & CUTTING -->
+      <div class="kanban-col">
+        <div class="kanban-col-head">
+          <div class="kanban-title">
+            <span>✂️</span>
+            <span>Pattern & Cutting</span>
+          </div>
+          <span class="kanban-badge">4</span>
+        </div>
+
+        <!-- JOB CARD 1 -->
+        <div class="kanban-card" onclick="openDrawer('diagnostic')">
+          <div class="order-tag">ORDER #A-402</div>
+          <div class="order-title">Royal Velvet Bridal Lehenga</div>
+          <div class="order-patron">Patron: Lady Reema Al-Sabah</div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" style="width: 25%; background:#8B5CF6;"></div>
+          </div>
+          <div class="kanban-card-foot">
+            <div class="tailor-avatar-group">
+              <div class="tailor-av"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=60&q=80"></div>
+              <span class="tailor-name">Pierre M.</span>
+            </div>
+            <span class="trial-chip urgent">● Conflict</span>
+          </div>
+        </div>
+
+        <!-- JOB CARD 2 -->
+        <div class="kanban-card">
+          <div class="order-tag">ORDER #A-408</div>
+          <div class="order-title">Cashmere Tailored Tuxedo</div>
+          <div class="order-patron">Patron: Lord Arthur Hamilton</div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" style="width: 30%; background:#06B6D4;"></div>
+          </div>
+          <div class="kanban-card-foot">
+            <div class="tailor-avatar-group">
+              <div class="tailor-av"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=60&q=80"></div>
+              <span class="tailor-name">Karim S.</span>
+            </div>
+            <span class="trial-chip normal">On Schedule</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- COL 2: EMBROIDERY & HAND-BEADING -->
+      <div class="kanban-col">
+        <div class="kanban-col-head">
+          <div class="kanban-title">
+            <span>🪡</span>
+            <span>Embroidery & Zari</span>
+          </div>
+          <span class="kanban-badge">5</span>
+        </div>
+
+        <div class="kanban-card" onclick="openDrawer('wizard')">
+          <div class="order-tag">ORDER #A-391</div>
+          <div class="order-title">Pure Silk Organza Gown</div>
+          <div class="order-patron">Patron: Princess Sophia Al-Thani</div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" style="width: 60%; background:#F59E0B;"></div>
+          </div>
+          <div class="kanban-card-foot">
+            <div class="tailor-avatar-group">
+              <div class="tailor-av"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=60&q=80"></div>
+              <span class="tailor-name">Maya R.</span>
+            </div>
+            <span class="trial-chip urgent">● 14:00 Today</span>
+          </div>
+        </div>
+
+        <div class="kanban-card">
+          <div class="order-tag">ORDER #A-412</div>
+          <div class="order-title">Zari Brocade Sherwani</div>
+          <div class="order-patron">Patron: Maharaja Vikramaditya</div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" style="width: 50%; background:#8B5CF6;"></div>
+          </div>
+          <div class="kanban-card-foot">
+            <div class="tailor-avatar-group">
+              <div class="tailor-av"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=60&q=80"></div>
+              <span class="tailor-name">Pierre M.</span>
+            </div>
+            <span class="trial-chip normal">Stage 2/4</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- COL 3: FITTINGS & ALTERATIONS -->
+      <div class="kanban-col">
+        <div class="kanban-col-head">
+          <div class="kanban-title">
+            <span>📐</span>
+            <span>Fittings & Trials</span>
+          </div>
+          <span class="kanban-badge">3</span>
+        </div>
+
+        <div class="kanban-card" onclick="openDrawer('diagnostic')">
+          <div class="order-tag">ORDER #A-385</div>
+          <div class="order-title">Haute Couture Cape Dress</div>
+          <div class="order-patron">Patron: Elena Rostova</div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" style="width: 80%; background:#10B981;"></div>
+          </div>
+          <div class="kanban-card-foot">
+            <div class="tailor-avatar-group">
+              <div class="tailor-av"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=60&q=80"></div>
+              <span class="tailor-name">Rachel K.</span>
+            </div>
+            <span class="trial-chip ready">Ready for Salon</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- COL 4: QUALITY GATE & PACKAGING -->
+      <div class="kanban-col">
+        <div class="kanban-col-head">
+          <div class="kanban-title">
+            <span>✨</span>
+            <span>Final QC & Dispatch</span>
+          </div>
+          <span class="kanban-badge">2</span>
+        </div>
+
+        <div class="kanban-card">
+          <div class="order-tag">ORDER #A-379</div>
+          <div class="order-title">Crystal Beaded Evening Gown</div>
+          <div class="order-patron">Patron: Natasha De Silva</div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" style="width: 100%; background:#10B981;"></div>
+          </div>
+          <div class="kanban-card-foot">
+            <div class="tailor-avatar-group">
+              <div class="tailor-av"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=60&q=80"></div>
+              <span class="tailor-name">Karim S.</span>
+            </div>
+            <span class="trial-chip ready">Passed QC ✓</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       SLIDE-OVER SHEET / FLYOUT DRAWER (SHARED ACROSS PAGES)
+       ========================================================= -->
+  <div class="drawer-backdrop" id="drawerBackdrop" onclick="closeDrawer()"></div>
+  <aside class="drawer-panel" id="drawerPanel">
+    
+    <!-- PHASE 1: DIAGNOSTIC REASONING -->
+    <div class="drawer-view" id="viewDiagnostic">
+      <div class="drawer-header">
+        <div class="drawer-header-left">
+          <div class="drawer-avatar-doc">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=80&q=80" alt="Dr. Carter">
+          </div>
+          <div>
+            <div class="drawer-doc-name">Dr. Carter's morning</div>
+            <div class="drawer-late-badge">22 min behind</div>
+          </div>
+        </div>
+        <button class="drawer-close-btn" onclick="closeDrawer()">✕</button>
+      </div>
+
+      <div class="drawer-body-scroll">
+        <div class="apt-stack">
+          <div class="apt-row">
+            <div class="apt-time-col">10:00</div>
+            <div class="apt-card-item">
+              <div class="apt-patient">
+                <div class="apt-p-avatar"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=60&q=80"></div>
+                <div>
+                  <div class="apt-p-name">Steven Cho</div>
+                  <div class="apt-p-sub">In visit, 17 min over</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="apt-row">
+            <div class="apt-time-col">10:30</div>
+            <div class="apt-card-item">
+              <div class="apt-patient">
+                <div class="apt-p-avatar"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=60&q=80"></div>
+                <div>
+                  <div class="apt-p-name">Jamal Ward</div>
+                  <div class="apt-p-sub">Waiting 16 min</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- OVERLAPPING SLOT 1 -->
+          <div class="apt-row">
+            <div class="apt-time-col red">11:00</div>
+            <div class="apt-card-item overlap">
+              <div class="apt-patient">
+                <div class="apt-p-avatar"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=60&q=80"></div>
+                <div>
+                  <div class="apt-p-name">Grace Nakamura</div>
+                  <div class="apt-p-sub">Follow up, moved here by phone Oct 26</div>
+                </div>
+              </div>
+              <span class="apt-tag-overlap">Overlap</span>
+            </div>
+          </div>
+
+          <!-- OVERLAPPING SLOT 2 -->
+          <div class="apt-row">
+            <div class="apt-time-col red">11:00</div>
+            <div class="apt-card-item overlap">
+              <div class="apt-patient">
+                <div class="apt-p-avatar"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=60&q=80"></div>
+                <div>
+                  <div class="apt-p-name">Layla Haddad</div>
+                  <div class="apt-p-sub">New patient, booked online Oct 26</div>
+                </div>
+              </div>
+              <span class="apt-tag-overlap">Overlap</span>
+            </div>
+          </div>
+
+          <!-- OPEN SLOT -->
+          <div class="apt-row">
+            <div class="apt-time-col">11:30</div>
+            <div class="apt-card-item open-slot">
+              <div class="apt-patient">
+                <span style="font-size:14px;color:#0891B2;">🕒</span>
+                <div>
+                  <div class="apt-p-name" style="color:#0891B2;">Open</div>
+                  <div class="apt-p-sub" style="color:#0891B2;">30 min free</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cause-callout">
+          <div class="cause-icon-round blue">🔗</div>
+          <div class="cause-text">
+            <h4>Why it happened</h4>
+            <p>Online booking showed 11:00 as open while Maya was moving Grace into it by phone. Both saved at 4:12 PM on Oct 26.</p>
+          </div>
+        </div>
+
+        <div class="cause-callout">
+          <div class="cause-icon-round amber">⚠️</div>
+          <div class="cause-text">
+            <h4>If nothing changes</h4>
+            <p>One of them waits about 50 minutes, and Dr. Carter runs about 50 minutes late into lunch.</p>
+          </div>
+        </div>
+
+        <div class="suggested-fix-section">
+          <div class="suggested-fix-title">Suggested Fix</div>
+          <div class="fix-action-card" onclick="goToWizard()">
+            <div class="fix-left">
+              <div class="apt-p-avatar"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=60&q=80"></div>
+              <div>
+                <div class="fix-title">Move Layla Haddad to 11:30 AM</div>
+                <div class="fix-sub">Same doctor, open slot. Grace keeps her original time</div>
+              </div>
+            </div>
+            <span class="badge-best-fit">Best fit</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE 2: RESOLUTION WIZARD -->
+    <div class="drawer-view" id="viewWizard" style="display:none;">
+      <div class="drawer-header">
+        <div class="drawer-header-left">
+          <div class="kpi-icon" style="background:#FEE2E2;color:#DC2626;border-radius:12px;">📅</div>
+          <div>
+            <div class="drawer-doc-name" style="font-size:16px;">Resolve double booking</div>
+            <div style="font-size:12px;color:var(--text-muted);">Move Layla Haddad to 11:30 AM with Dr. Carter</div>
+          </div>
+        </div>
+        <button class="drawer-close-btn" onclick="closeDrawer()">✕</button>
+      </div>
+
+      <div class="drawer-body-scroll">
+        <div class="wizard-stepper-bar">
+          <div class="wiz-step done">✓ Choose fix</div>
+          <div class="wiz-step active">2 Tell Layla</div>
+          <div class="wiz-step">3 Confirm</div>
+        </div>
+
+        <div class="before-after-grid">
+          <div class="ba-box">
+            <div class="ba-tag">NOW</div>
+            <div class="ba-row">
+              <div class="apt-p-avatar" style="width:18px;height:18px;"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=40&q=80"></div>
+              <span>11:00 Grace Nakamura</span>
+            </div>
+            <div class="ba-row overlap">
+              <div class="apt-p-avatar" style="width:18px;height:18px;"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=40&q=80"></div>
+              <span style="color:#DC2626;font-weight:700;">11:00 Layla Haddad</span>
+            </div>
+            <div class="ba-row" style="color:var(--text-muted);">
+              <span>🕒 11:30 Open</span>
+            </div>
+          </div>
+
+          <div class="ba-box">
+            <div class="ba-tag">AFTER</div>
+            <div class="ba-row">
+              <div class="apt-p-avatar" style="width:18px;height:18px;"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=40&q=80"></div>
+              <span>11:00 Grace Nakamura</span>
+            </div>
+            <div class="ba-row green">
+              <div class="apt-p-avatar" style="width:18px;height:18px;"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=40&q=80"></div>
+              <span style="color:#16A34A;font-weight:700;">11:30 Layla Haddad</span>
+            </div>
+            <div class="ba-row" style="color:var(--text-muted);">
+              <span>🕒 12:00 Lunch</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-size:12px;font-weight:700;color:var(--text-heading);margin-bottom:8px;">How to reach Layla</div>
+          <div class="channel-pills">
+            <button class="c-pill active">Text message</button>
+            <button class="c-pill">Phone call</button>
+            <button class="c-pill">Portal message</button>
+          </div>
+        </div>
+
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:11.5px;color:var(--text-muted);margin-bottom:6px;">
+            <span>To Layla Haddad, <strong>(425) 555-0163</strong></span>
+            <span>Template: schedule change</span>
+          </div>
+          <div class="sms-container">
+            <textarea class="sms-textarea">Hi Layla, this is Aleen Atelier & Specialty Clinic. Dr. Carter's 11:00 AM slot was booked twice by mistake. Can we see you at 11:30 AM today instead? Reply YES to confirm, or call (206) 555-0199.</textarea>
+          </div>
+        </div>
+
+        <button class="drawer-confirm-btn" onclick="confirmResolution()">
+          <span>Confirm & Send Notification</span>
+          <span>→</span>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- LUXURY FLOATING TOAST -->
+  <div class="floating-luxury-toast" id="luxuryToast">
+    <div class="toast-icon-green">✓</div>
+    <div>
+      <span class="toast-text-bold">Double booking resolved</span>
+      <span class="toast-text-sub">Layla replied YES at 10:52 AM. Grace keeps 11:00 AM.</span>
+    </div>
+    <button class="toast-undo-btn" onclick="undoResolution()">Undo</button>
+  </div>
+
+  <script>
+    // VIEW SWITCHER LOGIC
+    function switchView(viewName, tabBtn) {
+      document.querySelectorAll('.page-view').forEach(v => v.classList.remove('active'));
+      document.querySelectorAll('.view-tab').forEach(t => t.classList.remove('active'));
+      
+      if (viewName === 'dashboard') {
+        document.getElementById('viewDashboard').classList.add('active');
+      } else if (viewName === 'patrons') {
+        document.getElementById('viewPatrons').classList.add('active');
+      } else if (viewName === 'tailoring') {
+        document.getElementById('viewTailoring').classList.add('active');
+      }
+
+      if (tabBtn) {
+        tabBtn.classList.add('active');
+      } else {
+        const index = viewName === 'dashboard' ? 0 : (viewName === 'patrons' ? 1 : 2);
+        document.querySelectorAll('.view-tab')[index].classList.add('active');
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // POPULATE 4 KPI DOT MATRIX HISTOGRAMS (5 rows x 24 cols)
+    function buildDots(containerId, activeHeights) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      container.innerHTML = '';
+      for (let r = 0; r < 5; r++) {
+        const row = document.createElement('div');
+        row.className = 'kpi-dots-row';
+        for (let c = 0; c < 24; c++) {
+          const dot = document.createElement('div');
+          dot.className = 'kpi-dot';
+          const heightAtCol = activeHeights[c] || 0;
+          if (5 - r <= heightAtCol) {
+            dot.classList.add('lit');
+          }
+          row.appendChild(dot);
+        }
+        container.appendChild(row);
+      }
+    }
+
+    const heights1 = [1,2,2,3,4,3,2,1,2,3,4,4,5,4,3,2,2,3,4,3,2,1,0,0];
+    const heights2 = [2,3,4,4,5,3,2,1,1,2,3,4,5,4,3,2,3,4,4,3,2,1,0,0];
+    const heights3 = [1,1,2,3,4,4,2,1,2,3,4,5,3,2,3,4,3,2,1,2,1,1,0,0];
+    const heights4 = [1,2,3,4,4,5,4,3,4,5,5,4,3,2,3,4,4,5,3,2,1,0,0,0];
+
+    buildDots('dots1', heights1);
+    buildDots('dots2', heights2);
+    buildDots('dots3', heights3);
+    buildDots('dots4', heights4);
+
+    // DRAWER CONTROLS
+    function openDrawer(mode) {
+      document.getElementById('drawerBackdrop').classList.add('open');
+      document.getElementById('drawerPanel').classList.add('open');
+      if (mode === 'wizard') {
+        goToWizard();
+      } else {
+        document.getElementById('viewDiagnostic').style.display = 'flex';
+        document.getElementById('viewWizard').style.display = 'none';
+      }
+    }
+
+    function closeDrawer() {
+      document.getElementById('drawerBackdrop').classList.remove('open');
+      document.getElementById('drawerPanel').classList.remove('open');
+    }
+
+    function goToWizard() {
+      document.getElementById('viewDiagnostic').style.display = 'none';
+      document.getElementById('viewWizard').style.display = 'flex';
+    }
+
+    // RESOLUTION CONFIRMATION & TOAST
+    function confirmResolution() {
+      closeDrawer();
+
+      const item = document.getElementById('itemDoubleBooked');
+      if (item) {
+        item.style.background = '#F0FDF4';
+        item.style.borderColor = '#DCFCE7';
+
+        document.getElementById('itemIcon').style.background = '#DCFCE7';
+        document.getElementById('itemIcon').style.color = '#16A34A';
+        document.getElementById('itemIcon').textContent = '✓';
+
+        document.getElementById('itemTitle').textContent = 'Double booking resolved';
+        document.getElementById('itemMeta').textContent = 'Layla moved to 11:30 AM, confirmed via SMS';
+
+        const pill = document.getElementById('itemPill');
+        pill.className = 'status-pill resolved';
+        pill.innerHTML = '<span class="status-dot"></span>Resolved';
+      }
+
+      const feed = document.getElementById('activityFeed');
+      if (feed) {
+        const newAct = document.createElement('div');
+        newAct.className = 'activity-item';
+        newAct.style.background = '#F0FDF4';
+        newAct.style.padding = '8px 12px';
+        newAct.style.borderRadius = '12px';
+        newAct.innerHTML = `
+          <div class="act-avatar">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=80&q=80">
+          </div>
+          <div class="act-content">
+            <div class="act-title"><strong>Rachel Kim</strong> resolved a double booking</div>
+            <div class="act-time" style="color:#16A34A;">Just now, Dr. Carter, Dermatology</div>
+          </div>
+        `;
+        feed.insertBefore(newAct, feed.firstChild);
+      }
+
+      const toast = document.getElementById('luxuryToast');
+      toast.classList.add('active');
+      setTimeout(() => {
+        toast.classList.remove('active');
+      }, 6000);
+    }
+
+    function undoResolution() {
+      const toast = document.getElementById('luxuryToast');
+      toast.classList.remove('active');
+
+      const item = document.getElementById('itemDoubleBooked');
+      if (item) {
+        item.style.background = '#FFF1F2';
+        item.style.borderColor = '#FFE4E6';
+
+        document.getElementById('itemIcon').style.background = '#FEE2E2';
+        document.getElementById('itemIcon').style.color = '#DC2626';
+        document.getElementById('itemIcon').textContent = '📅';
+
+        document.getElementById('itemTitle').textContent = 'Double booked slot at 11:00 AM';
+        document.getElementById('itemMeta').textContent = 'Dr. Sophia Carter, Dermatology';
+
+        const pill = document.getElementById('itemPill');
+        pill.className = 'status-pill conflict';
+        pill.innerHTML = '<span class="status-dot"></span>Conflict';
+      }
+    }
+
+    function toggleTheme() {
+      document.body.style.filter = document.body.style.filter === 'invert(0.92) hue-rotate(180deg)' ? 'none' : 'invert(0.92) hue-rotate(180deg)';
+    }
+  </script>
+</body>
+</html>

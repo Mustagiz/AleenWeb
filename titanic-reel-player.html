@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Titanic Sinking: Anatomy of a Disaster (9:16 Vertical Reel)</title>
+  <style>
+    :root {
+      --bg-dark: #06090e;
+      --card-bg: #0d131f;
+      --accent-cyan: #00f0ff;
+      --accent-red: #ff3344;
+      --accent-gold: #ffbe3b;
+      --ice-blue: #70b8ff;
+      --text-main: #f0f4f8;
+      --text-muted: #8494a8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background: #020408;
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    .reel-container {
+      position: relative;
+      width: 390px;
+      height: 780px;
+      max-width: 100%;
+      background: #050b14;
+      border-radius: 44px;
+      overflow: hidden;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 0 10px #1e2633, 0 0 35px rgba(0, 240, 255, 0.2);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Video Canvas Viewport */
+    .viewport {
+      position: relative;
+      flex: 1;
+      width: 100%;
+      background: radial-gradient(circle at 50% 30%, #0d1e33 0%, #03070d 100%);
+      overflow: hidden;
+    }
+
+    canvas#reelCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Top Reel Overlay / Telemetry */
+    .top-overlay {
+      position: absolute;
+      top: 24px;
+      left: 20px;
+      right: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .tag-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(13, 22, 38, 0.85);
+      border: 1px solid rgba(0, 240, 255, 0.3);
+      backdrop-filter: blur(8px);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: var(--accent-cyan);
+      text-transform: uppercase;
+    }
+
+    .tag-badge .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-red);
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+
+    .telemetry-box {
+      background: rgba(6, 12, 22, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      padding: 6px 12px;
+      border-radius: 8px;
+      text-align: right;
+    }
+
+    .telemetry-time {
+      font-size: 14px;
+      font-weight: 800;
+      color: #fff;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .telemetry-sub {
+      font-size: 10px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Center Kinetic Captions */
+    .caption-container {
+      position: absolute;
+      bottom: 155px;
+      left: 20px;
+      right: 20px;
+      min-height: 110px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .caption-pill {
+      background: rgba(3, 7, 14, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+      border-radius: 16px;
+      padding: 12px 18px;
+      max-width: 95%;
+    }
+
+    .caption-text {
+      font-size: 20px;
+      font-weight: 900;
+      line-height: 1.35;
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: -0.3px;
+    }
+
+    .highlight-yellow {
+      color: var(--accent-gold);
+      text-shadow: 0 0 12px rgba(255, 190, 59, 0.6);
+    }
+
+    .highlight-red {
+      color: var(--accent-red);
+      text-shadow: 0 0 12px rgba(255, 51, 68, 0.6);
+    }
+
+    .highlight-cyan {
+      color: var(--accent-cyan);
+      text-shadow: 0 0 12px rgba(0, 240, 255, 0.6);
+    }
+
+    /* Floating Stats Bar */
+    .stats-overlay {
+      position: absolute;
+      bottom: 85px;
+      left: 18px;
+      right: 18px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .stat-card {
+      background: rgba(13, 22, 38, 0.88);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 8px 10px;
+      text-align: center;
+    }
+
+    .stat-val {
+      font-size: 15px;
+      font-weight: 800;
+      color: #fff;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .stat-label {
+      font-size: 9px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    /* Bottom Controller & Timeline */
+    .controls-bar {
+      height: 70px;
+      background: #070d17;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      padding: 0 18px;
+      gap: 12px;
+      z-index: 20;
+    }
+
+    .btn-play {
+      background: var(--accent-cyan);
+      color: #03070d;
+      border: none;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: bold;
+      transition: transform 0.15s, background 0.2s;
+    }
+
+    .btn-play:hover {
+      transform: scale(1.06);
+      background: #38f4ff;
+    }
+
+    .progress-track {
+      flex: 1;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 4px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-gold));
+      border-radius: 4px;
+      transition: width 0.05s linear;
+    }
+
+    .audio-btn {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    /* Story Chapter Navigation Outside */
+    .chapter-nav {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 650px;
+    }
+
+    .chap-btn {
+      background: #0f1826;
+      border: 1px solid #1f2f45;
+      color: var(--text-muted);
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .chap-btn:hover, .chap-btn.active {
+      background: rgba(0, 240, 255, 0.15);
+      border-color: var(--accent-cyan);
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="reel-container">
+    <!-- Top HUD -->
+    <div class="top-overlay">
+      <div class="tag-badge">
+        <span class="dot"></span>
+        TITANIC ANATOMY
+      </div>
+      <div class="telemetry-box">
+        <div class="telemetry-time" id="hudTime">11:40 PM</div>
+        <div class="telemetry-sub" id="hudStatus">IMPACT DETECTED</div>
+      </div>
+    </div>
+
+    <!-- Visual Simulation Canvas (9:16) -->
+    <div class="viewport">
+      <canvas id="reelCanvas" width="780" height="1350"></canvas>
+    </div>
+
+    <!-- Center Kinetic Captions -->
+    <div class="caption-container">
+      <div class="caption-pill">
+        <div class="caption-text" id="captionDisplay">
+          THE TITANIC DIDN'T SINK JUST FROM AN ICEBERG.
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Real-time Telemetry Stats -->
+    <div class="stats-overlay">
+      <div class="stat-card">
+        <div class="stat-val" id="statInrush">400 T/m</div>
+        <div class="stat-label">Water Inrush</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" id="statPitch">2.4°</div>
+        <div class="stat-label">Bow Tilt</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" id="statFlooded">5 / 16</div>
+        <div class="stat-label">Bulkheads</div>
+      </div>
+    </div>
+
+    <!-- Bottom Video Controller -->
+    <div class="controls-bar">
+      <button class="btn-play" id="playBtn">▶</button>
+      <div class="progress-track" id="progressTrack">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <button class="audio-btn" id="audioBtn" title="Toggle Sound">🔊</button>
+    </div>
+  </div>
+
+  <!-- Chapters Selection -->
+  <div class="chapter-nav">
+    <button class="chap-btn active" onclick="jumpTo(0)">0:00 The Hook</button>
+    <button class="chap-btn" onclick="jumpTo(4)">0:04 The Fatal Flaw</button>
+    <button class="chap-btn" onclick="jumpTo(9)">0:09 Ice Cube Spillover</button>
+    <button class="chap-btn" onclick="jumpTo(15)">0:15 The Snapping Point</button>
+    <button class="chap-btn" onclick="jumpTo(21)">0:21 The Abyss & Loop</button>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('reelCanvas');
+    const ctx = canvas.getContext('2d');
+    const playBtn = document.getElementById('playBtn');
+    const progressFill = document.getElementById('progressFill');
+    const progressTrack = document.getElementById('progressTrack');
+    const captionDisplay = document.getElementById('captionDisplay');
+    const hudTime = document.getElementById('hudTime');
+    const hudStatus = document.getElementById('hudStatus');
+    const statInrush = document.getElementById('statInrush');
+    const statPitch = document.getElementById('statPitch');
+    const statFlooded = document.getElementById('statFlooded');
+    const audioBtn = document.getElementById('audioBtn');
+
+    // 26-second Short Reel Script with Retention Beats
+    const SCRIPT_BEATS = [
+      {
+        start: 0,
+        end: 4.0,
+        time: "11:40 PM",
+        status: "FATAL IMPACT",
+        caption: "THE TITANIC <span class='highlight-red'>DIDN'T SINK</span> JUST FROM AN ICEBERG...",
+        pitch: 1.2,
+        water: 0.15,
+        floodedCount: "2 / 16",
+        inrush: "420 T/m",
+        phase: "collision"
+      },
+      {
+        start: 4.0,
+        end: 9.0,
+        time: "12:15 AM",
+        status: "RIVET FAILURE",
+        caption: "THE ICE DIDN'T PIERCE THE HULL. IT <span class='highlight-yellow'>POPPED THE COLD STEEL RIVETS</span>.",
+        pitch: 4.8,
+        water: 0.35,
+        floodedCount: "5 / 16",
+        inrush: "460 T/m",
+        phase: "rivets"
+      },
+      {
+        start: 9.0,
+        end: 15.0,
+        time: "01:20 AM",
+        status: "ICE CUBE EFFECT",
+        caption: "THE FATAL FLAW: BULKHEADS WERE <span class='highlight-cyan'>OPEN AT THE CEILING</span> LIKE AN ICE TRAY!",
+        pitch: 11.5,
+        water: 0.62,
+        floodedCount: "8 / 16",
+        inrush: "680 T/m",
+        phase: "spillover"
+      },
+      {
+        start: 15.0,
+        end: 21.0,
+        time: "02:18 AM",
+        status: "STRUCTURAL FAILURE",
+        caption: "THE WEIGHT OF 40,000 TONS OF WATER <span class='highlight-red'>SNAPPED THE KEEL IN HALF</span>.",
+        pitch: 42.0,
+        water: 0.85,
+        floodedCount: "13 / 16",
+        inrush: "MAX CRITICAL",
+        phase: "breakup"
+      },
+      {
+        start: 21.0,
+        end: 26.0,
+        time: "02:20 AM",
+        status: "THE ABYSS",
+        caption: "IN 2 HOURS AND 40 MINUTES, THE <span class='highlight-gold'>UNSINKABLE SHIP WAS GONE</span>.",
+        pitch: 85.0,
+        water: 1.0,
+        floodedCount: "16 / 16",
+        inrush: "TERMINAL",
+        phase: "sunk"
+      }
+    ];
+
+    const TOTAL_DURATION = 26.0;
+    let currentTime = 0;
+    let isPlaying = false;
+    let lastTimestamp = null;
+    let audioContext = null;
+    let isMuted = false;
+
+    // Web Audio Procedural Sound Engine
+    function initAudio() {
+      if (!audioContext) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioContext.state === 'suspended') {
+        audioContext.resume();
+      }
+    }
+
+    function playCreak(pitchFreq = 80) {
+      if (!audioContext || isMuted) return;
+      try {
+        const osc = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(pitchFreq, audioContext.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(35, audioContext.currentTime + 1.2);
+
+        gain.gain.setValueAtTime(0.12, audioContext.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 1.2);
+
+        osc.connect(gain);
+        gain.connect(audioContext.destination);
+        osc.start();
+        osc.stop(audioContext.currentTime + 1.2);
+      } catch (e) {}
+    }
+
+    function playSonar() {
+      if (!audioContext || isMuted) return;
+      try {
+        const osc = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(880, audioContext.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(440, audioContext.currentTime + 0.8);
+
+        gain.gain.setValueAtTime(0.08, audioContext.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + 0.8);
+
+        osc.connect(gain);
+        gain.connect(audioContext.destination);
+        osc.start();
+        osc.stop(audioContext.currentTime + 0.8);
+      } catch (e) {}
+    }
+
+    // Toggle Play/Pause
+    playBtn.addEventListener('click', () => {
+      initAudio();
+      if (isPlaying) {
+        pause();
+      } else {
+        play();
+      }
+    });
+
+    audioBtn.addEventListener('click', () => {
+      initAudio();
+      isMuted = !isMuted;
+      audioBtn.textContent = isMuted ? '🔇' : '🔊';
+    });
+
+    function play() {
+      isPlaying = true;
+      playBtn.textContent = '⏸';
+      lastTimestamp = performance.now();
+      requestAnimationFrame(animationLoop);
+    }
+
+    function pause() {
+      isPlaying = false;
+      playBtn.textContent = '▶';
+    }
+
+    function jumpTo(sec) {
+      currentTime = Math.min(Math.max(sec, 0), TOTAL_DURATION);
+      updateBeat();
+      renderFrame(currentTime);
+      playCreak(120);
+    }
+
+    progressTrack.addEventListener('click', (e) => {
+      const rect = progressTrack.getBoundingClientRect();
+      const pos = (e.clientX - rect.left) / rect.width;
+      jumpTo(pos * TOTAL_DURATION);
+    });
+
+    let lastBeatIndex = -1;
+
+    function updateBeat() {
+      const beat = SCRIPT_BEATS.find(b => currentTime >= b.start && currentTime < b.end) || SCRIPT_BEATS[SCRIPT_BEATS.length - 1];
+      const curIndex = SCRIPT_BEATS.indexOf(beat);
+      if (curIndex !== lastBeatIndex) {
+        lastBeatIndex = curIndex;
+        captionDisplay.innerHTML = beat.caption;
+        hudTime.textContent = beat.time;
+        hudStatus.textContent = beat.status;
+        statInrush.textContent = beat.inrush;
+        statPitch.textContent = beat.pitch.toFixed(1) + "°";
+        statFlooded.textContent = beat.floodedCount;
+        playSonar();
+        playCreak(90 - curIndex * 10);
+      }
+      progressFill.style.width = ((currentTime / TOTAL_DURATION) * 100) + '%';
+    }
+
+    // Main Canvas Render of Cinematic Titanic Cross-Section
+    function renderFrame(t) {
+      const w = canvas.width;
+      const h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+
+      // 1. Dramatic Ocean Atmosphere
+      const oceanGrad = ctx.createLinearGradient(0, 0, 0, h);
+      oceanGrad.addColorStop(0, '#030814');
+      oceanGrad.addColorStop(0.45, '#07162c');
+      oceanGrad.addColorStop(0.7, '#020b18');
+      oceanGrad.addColorStop(1, '#000308');
+      ctx.fillStyle = oceanGrad;
+      ctx.fillRect(0, 0, w, h);
+
+      // Starfield in upper night sky
+      ctx.fillStyle = '#ffffff';
+      for (let i = 0; i < 40; i++) {
+        const sx = (Math.sin(i * 99) * 0.5 + 0.5) * w;
+        const sy = (Math.cos(i * 33) * 0.5 + 0.5) * (h * 0.35);
+        const sa = 0.3 + 0.7 * Math.sin(t * 2 + i);
+        ctx.globalAlpha = Math.max(0, sa);
+        ctx.fillRect(sx, sy, 2, 2);
+      }
+      ctx.globalAlpha = 1.0;
+
+      // 2. Iceberg Silhouette in background
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(w * 0.75, h * 0.42);
+      ctx.lineTo(w * 0.85, h * 0.22);
+      ctx.lineTo(w * 0.92, h * 0.28);
+      ctx.lineTo(w * 0.98, h * 0.42);
+      ctx.closePath();
+      const iceGrad = ctx.createLinearGradient(w * 0.75, h * 0.2, w * 0.98, h * 0.42);
+      iceGrad.addColorStop(0, 'rgba(150, 210, 255, 0.4)');
+      iceGrad.addColorStop(1, 'rgba(20, 50, 90, 0.2)');
+      ctx.fillStyle = iceGrad;
+      ctx.fill();
+      ctx.restore();
+
+      // Current progress factor
+      const progress = t / TOTAL_DURATION;
+      const angle = (progress * progress) * 45; // exponential tilt up to 45 deg
+      const sinkDepth = progress * 240;
+
+      // 3. Titanic Cross-Section Centerpiece
+      ctx.save();
+      ctx.translate(w * 0.48, h * 0.46 + sinkDepth);
+      ctx.rotate((-angle * Math.PI) / 180);
+
+      // Hull Dimensions
+      const shipW = 540;
+      const shipH = 95;
+      const bowX = shipW * 0.48;
+      const sternX = -shipW * 0.48;
+
+      // Draw Lower Hull (Red Keel)
+      ctx.beginPath();
+      ctx.moveTo(sternX, 0);
+      ctx.lineTo(bowX - 40, 0);
+      ctx.quadraticCurveTo(bowX, 10, bowX + 15, -15);
+      ctx.lineTo(bowX + 10, 35);
+      ctx.lineTo(sternX + 30, 35);
+      ctx.closePath();
+      ctx.fillStyle = '#8b1c1c';
+      ctx.fill();
+      ctx.strokeStyle = '#c43333';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      // Draw Upper Hull (Black Steel)
+      ctx.beginPath();
+      ctx.moveTo(sternX, 0);
+      ctx.lineTo(sternX - 10, -45);
+      ctx.lineTo(bowX - 20, -45);
+      ctx.quadraticCurveTo(bowX, -45, bowX + 15, -15);
+      ctx.lineTo(bowX - 40, 0);
+      ctx.closePath();
+      ctx.fillStyle = '#0f141d';
+      ctx.fill();
+      ctx.strokeStyle = '#2b3648';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // 16 Watertight Bulkheads Vertical Dividers
+      const compartments = 16;
+      const compW = (shipW - 60) / compartments;
+      const floodedComps = Math.min(16, Math.floor(progress * 18));
+
+      for (let i = 0; i < compartments; i++) {
+        const cx = bowX - 40 - (i * compW);
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(cx, -40);
+        ctx.lineTo(cx, 30);
+        ctx.stroke();
+
+        // Water Influx within Compartment
+        if (i < floodedComps) {
+          ctx.fillStyle = 'rgba(0, 240, 255, 0.55)';
+          const fillH = Math.min(65, (floodedComps - i) * 22);
+          ctx.fillRect(cx - compW, 30 - fillH, compW, fillH);
+
+          // Flow spillover arrow when water reaches bulkhead ceiling
+          if (fillH >= 55 && i < 15) {
+            ctx.fillStyle = '#ffbe3b';
+            ctx.font = 'bold 12px sans-serif';
+            ctx.fillText('↷', cx, -35);
+          }
+        }
+      }
+
+      // Funnels (Smokestacks)
+      const funnelPositions = [sternX + 160, sternX + 230, sternX + 300, sternX + 370];
+      funnelPositions.forEach((fx, idx) => {
+        ctx.save();
+        ctx.translate(fx, -45);
+        ctx.rotate((5 * Math.PI) / 180);
+        // Base buff color
+        ctx.fillStyle = '#d49b55';
+        ctx.fillRect(-10, -42, 20, 42);
+        // Black top band
+        ctx.fillStyle = '#111';
+        ctx.fillRect(-10, -42, 20, 14);
+        ctx.restore();
+      });
+
+      // Breakup line at 02:18 AM
+      if (t > 15) {
+        const breakX = sternX + 260;
+        ctx.strokeStyle = '#ff3344';
+        ctx.lineWidth = 5;
+        ctx.setLineDash([8, 4]);
+        ctx.beginPath();
+        ctx.moveTo(breakX, -65);
+        ctx.lineTo(breakX, 45);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Stress crack indicator
+        ctx.fillStyle = '#ff3344';
+        ctx.font = 'bold 18px sans-serif';
+        ctx.fillText('⚡ STRUCTURAL FRACTURE', breakX - 110, -80);
+      }
+
+      ctx.restore();
+
+      // 4. Rising Atlantic Sea Surface Level
+      ctx.beginPath();
+      const seaLevelY = h * 0.45;
+      ctx.moveTo(0, seaLevelY);
+      for (let x = 0; x <= w; x += 30) {
+        const wave = Math.sin((x * 0.02) + (t * 3)) * 6;
+        ctx.lineTo(x, seaLevelY + wave);
+      }
+      ctx.lineTo(w, h);
+      ctx.lineTo(0, h);
+      ctx.closePath();
+
+      const seaGrad = ctx.createLinearGradient(0, seaLevelY, 0, h);
+      seaGrad.addColorStop(0, 'rgba(0, 160, 230, 0.35)');
+      seaGrad.addColorStop(0.3, 'rgba(2, 25, 55, 0.7)');
+      seaGrad.addColorStop(1, 'rgba(0, 10, 25, 0.95)');
+      ctx.fillStyle = seaGrad;
+      ctx.fill();
+
+      // Grid Overlay / Telemetry Wireframe
+      ctx.strokeStyle = 'rgba(0, 240, 255, 0.05)';
+      ctx.lineWidth = 1;
+      for (let y = 0; y < h; y += 40) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(w, y);
+        ctx.stroke();
+      }
+    }
+
+    // Animation Loop
+    function animationLoop(timestamp) {
+      if (!isPlaying) return;
+      const delta = (timestamp - lastTimestamp) / 1000;
+      lastTimestamp = timestamp;
+
+      currentTime += delta;
+      if (currentTime >= TOTAL_DURATION) {
+        currentTime = 0; // Seamless loop!
+      }
+
+      updateBeat();
+      renderFrame(currentTime);
+      requestAnimationFrame(animationLoop);
+    }
+
+    // Initial Frame
+    renderFrame(0);
+    updateBeat();
+  </script>
+</body>
+</html>
+

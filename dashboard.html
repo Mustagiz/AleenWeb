@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1280" />
+<title>Acme Dashboard (Iconsax Linear style)</title>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #f8fafc; color: #0f172a; }
+  .layout { display: flex; min-height: 100vh; }
+  .sidebar { width: 240px; background: #0f172a; color: #e2e8f0; padding: 24px 16px; display: flex; flex-direction: column; gap: 8px; }
+  .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; padding-left: 8px; font-weight: 700; font-size: 18px; }
+  .brand svg { color: #38bdf8; }
+  .nav-btn { display: flex; align-items: center; gap: 12px; padding: 10px 12px; background: transparent; border: none; color: #e2e8f0; border-radius: 8px; cursor: pointer; text-align: left; width: 100%; font-size: 14px; }
+  .nav-btn.active { background: #1e293b; }
+  .nav-btn.active span { color: #38bdf8; }
+  .nav-btn svg { color: #94a3b8; }
+  .nav-btn.active svg { color: #38bdf8; }
+  .user-row { margin-top: auto; padding: 12px 8px; border-top: 1px solid #1e293b; display: flex; align-items: center; gap: 10px; font-size: 13px; }
+  .main { flex: 1; padding: 24px; display: flex; flex-direction: column; gap: 24px; }
+  .topbar { display: flex; align-items: center; gap: 16px; }
+  .search-wrap { flex: 1; position: relative; }
+  .search-wrap svg { position: absolute; left: 12px; top: 10px; color: #94a3b8; }
+  .search-wrap input { width: 100%; padding: 10px 12px 10px 40px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 14px; background: #fff; }
+  .icon-btn { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px; cursor: pointer; display: flex; align-items: center; }
+  .new-btn { background: #2563eb; color: #fff; border: none; border-radius: 8px; padding: 10px 16px; display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 14px; font-weight: 600; }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .stat { background: #fff; border-radius: 12px; padding: 20px; border: 1px solid #e2e8f0; }
+  .stat-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .stat-label { font-size: 13px; color: #64748b; }
+  .stat-value { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+  .stat-delta { display: flex; align-items: center; gap: 4px; font-size: 13px; }
+  .up { color: #16a34a; } .down { color: #dc2626; }
+  .table-card { background: #fff; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; }
+  .table-head { padding: 16px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
+  .table-head h3 { margin: 0; font-size: 16px; font-weight: 600; }
+  .table-tools { display: flex; gap: 8px; }
+  .tool-btn { background: #f1f5f9; border: none; border-radius: 6px; padding: 8px; cursor: pointer; display: flex; align-items: center; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th { padding: 12px 20px; color: #64748b; font-weight: 500; text-align: left; background: #f8fafc; }
+  td { padding: 12px 20px; }
+  tr { border-top: 1px solid #f1f5f9; }
+  .name { font-weight: 500; }
+  .email { color: #64748b; }
+  .amount { font-weight: 600; }
+  .pill { padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 500; }
+  .pill.active { background: #dcfce7; color: #16a34a; }
+  .pill.pending { background: #fef9c3; color: #ca8a04; }
+  .pill.overdue { background: #fee2e2; color: #dc2626; }
+  .row-actions { display: flex; gap: 4px; }
+  .row-actions button { background: none; border: none; cursor: pointer; padding: 4px; color: #94a3b8; }
+  .row-actions button:hover { color: #475569; }
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand"><i data-lucide="grid-3x3"></i> Acme Dashboard</div>
+    <button class="nav-btn active"><i data-lucide="home"></i><span>Overview</span></button>
+    <button class="nav-btn"><i data-lucide="bar-chart-3"></i><span>Analytics</span></button>
+    <button class="nav-btn"><i data-lucide="users"></i><span>Customers</span></button>
+    <button class="nav-btn"><i data-lucide="wallet"></i><span>Billing</span></button>
+    <button class="nav-btn"><i data-lucide="settings"></i><span>Settings</span></button>
+    <div class="user-row">
+      <i data-lucide="user"></i>
+      <span>Mustagiz J.</span>
+      <i data-lucide="log-out" style="margin-left:auto;cursor:pointer;"></i>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="search-wrap">
+        <i data-lucide="search"></i>
+        <input placeholder="Search..." />
+      </div>
+      <button class="icon-btn"><i data-lucide="filter"></i></button>
+      <button class="icon-btn" style="position:relative;">
+        <i data-lucide="bell"></i>
+        <span style="position:absolute;top:6px;right:6px;width:8px;height:8px;background:#ef4444;border-radius:50%;"></span>
+      </button>
+      <button class="new-btn"><i data-lucide="plus"></i> New</button>
+    </header>
+
+    <section class="stats">
+      <div class="stat">
+        <div class="stat-head"><span class="stat-label">Revenue</span><i data-lucide="dollar-sign"></i></div>
+        <div class="stat-value">$48,290</div>
+        <div class="stat-delta up"><i data-lucide="trending-up"></i> +12.4%</div>
+      </div>
+      <div class="stat">
+        <div class="stat-head"><span class="stat-label">Users</span><i data-lucide="users"></i></div>
+        <div class="stat-value">12,847</div>
+        <div class="stat-delta up"><i data-lucide="trending-up"></i> +3.1%</div>
+      </div>
+      <div class="stat">
+        <div class="stat-head"><span class="stat-label">Orders</span><i data-lucide="bar-chart-3"></i></div>
+        <div class="stat-value">1,204</div>
+        <div class="stat-delta down"><i data-lucide="trending-down"></i> -1.8%</div>
+      </div>
+      <div class="stat">
+        <div class="stat-head"><span class="stat-label">Conversion</span><i data-lucide="trending-up"></i></div>
+        <div class="stat-value">3.42%</div>
+        <div class="stat-delta up"><i data-lucide="trending-up"></i> +0.6%</div>
+      </div>
+    </section>
+
+    <section class="table-card">
+      <div class="table-head">
+        <h3>Recent Customers</h3>
+        <div class="table-tools">
+          <button class="tool-btn"><i data-lucide="calendar"></i></button>
+          <button class="tool-btn"><i data-lucide="more-horizontal"></i></button>
+        </div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th><th>Email</th><th>Status</th><th>Amount</th><th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="name">Acme Corp</td><td class="email">ops@acme.com</td>
+            <td><span class="pill active">Active</span></td><td class="amount">$4,200</td>
+            <td class="row-actions"><button><i data-lucide="eye"></i></button><button><i data-lucide="edit-2"></i></button><button><i data-lucide="trash-2"></i></button></td>
+          </tr>
+          <tr>
+            <td class="name">Globex</td><td class="email">billing@globex.io</td>
+            <td><span class="pill pending">Pending</span></td><td class="amount">$1,800</td>
+            <td class="row-actions"><button><i data-lucide="eye"></i></button><button><i data-lucide="edit-2"></i></button><button><i data-lucide="trash-2"></i></button></td>
+          </tr>
+          <tr>
+            <td class="name">Initech</td><td class="email">finance@initech.com</td>
+            <td><span class="pill active">Active</span></td><td class="amount">$6,500</td>
+            <td class="row-actions"><button><i data-lucide="eye"></i></button><button><i data-lucide="edit-2"></i></button><button><i data-lucide="trash-2"></i></button></td>
+          </tr>
+          <tr>
+            <td class="name">Umbrella</td><td class="email">ap@umbrella.co</td>
+            <td><span class="pill overdue">Overdue</span></td><td class="amount">$920</td>
+            <td class="row-actions"><button><i data-lucide="eye"></i></button><button><i data-lucide="edit-2"></i></button><button><i data-lucide="trash-2"></i></button></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+</div>
+<script>lucide.createIcons();</script>
+</body>
+</html>
+EOF
+echo written

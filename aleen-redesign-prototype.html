@@ -1,0 +1,1724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aleen Clothing — Luxury Fashion Atelier CRM & Studio ERP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    /* =========================================================
+       1. DESIGN TOKENS (Extracted via 'hue' & 'impeccable')
+       ========================================================= */
+    :root {
+      /* Surfaces & Canvas */
+      --canvas: #F4F7FC;
+      --card-bg: #FFFFFF;
+      --card-subtle: #F8FAFD;
+      --border: rgba(15, 23, 42, 0.06);
+      --border-focus: #0F766E;
+      --text-heading: #0F172A;
+      --text-body: #475569;
+      --text-muted: #94A3B8;
+
+      /* Signature Atelier Emerald & Champagne Gold Palette */
+      --brand-primary: #0F766E;
+      --brand-primary-light: #F0FDFA;
+      --brand-primary-dark: #042F2E;
+      --brand-emerald-luminous: #10B981;
+      --brand-gold: #D97706;
+      --brand-gold-soft: #FEF3C7;
+
+      /* Pastel KPI Container Accents (Ref: Dabang & SalesRadar) */
+      --pastel-mint-bg: #E6F8F3;    --pastel-mint-fg: #059669;
+      --pastel-rose-bg: #FFE4E6;    --pastel-rose-fg: #E11D48;
+      --pastel-amber-bg: #FEF3C7;   --pastel-amber-fg: #B45309;
+      --pastel-lavender-bg: #F3E8FF;--pastel-lavender-fg: #7E22CE;
+      --pastel-sky-bg: #E0F2FE;     --pastel-sky-fg: #0284C7;
+
+      /* Radii (Ref: SalesRadar & Invenza 22-26px soft geometry) */
+      --radius-card: 22px;
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-pill: 9999px;
+
+      /* Ambient Soft Elevation (No harsh shadows) */
+      --shadow-ambient: 0 4px 20px -2px rgba(15, 23, 42, 0.03), 0 1px 3px 0 rgba(15, 23, 42, 0.02);
+      --shadow-hover: 0 16px 36px -4px rgba(15, 23, 42, 0.07), 0 4px 12px -2px rgba(15, 23, 42, 0.03);
+      --shadow-drawer: -24px 0 60px rgba(15, 23, 42, 0.16);
+
+      /* Apple Fluid Motion */
+      --ease-fluid: cubic-bezier(0.25, 0.1, 0.25, 1.0);
+      --ease-spring: cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    /* Dark Mode (Midnight Atelier Emerald) */
+    body.theme-dark {
+      --canvas: #091313;
+      --card-bg: #112020;
+      --card-subtle: #162B2B;
+      --border: rgba(255, 255, 255, 0.08);
+      --text-heading: #F8FAFC;
+      --text-body: #CBD5E1;
+      --text-muted: #64748B;
+      --brand-primary: #14B8A6;
+      --brand-primary-light: #132E2B;
+      --pastel-mint-bg: #064E3B;    --pastel-mint-fg: #34D399;
+      --pastel-rose-bg: #4C0519;    --pastel-rose-fg: #FB7185;
+      --pastel-amber-bg: #451A03;   --pastel-amber-fg: #FBBF24;
+      --pastel-lavender-bg: #3B0764;--pastel-lavender-fg: #C084FC;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background-color: var(--canvas);
+      color: var(--text-body);
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+    }
+
+    /* =========================================================
+       2. FLOATING SIDEBAR (Ref: SalesRadar & Dabang)
+       ========================================================= */
+    .sidebar {
+      width: 260px;
+      background: var(--card-bg);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      padding: 24px 18px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      z-index: 50;
+      transition: all 0.3s var(--ease-fluid);
+    }
+
+    .brand-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+      padding: 0 8px;
+    }
+
+    .brand-logo-mark {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, #0F766E, #042F2E);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 20px;
+      box-shadow: 0 4px 12px rgba(15, 118, 110, 0.25);
+    }
+
+    .brand-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 19px;
+      color: var(--text-heading);
+      letter-spacing: -0.01em;
+    }
+
+    .brand-badge {
+      font-size: 10px;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--brand-gold);
+      background: var(--brand-gold-soft);
+      padding: 2px 7px;
+      border-radius: var(--radius-pill);
+      margin-left: 2px;
+    }
+
+    .nav-group-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin: 18px 0 8px 10px;
+    }
+
+    .nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 14px;
+      color: var(--text-body);
+      font-weight: 600;
+      font-size: 13.5px;
+      cursor: pointer;
+      transition: all 0.2s var(--ease-fluid);
+      text-decoration: none;
+    }
+
+    .nav-item:hover {
+      background: var(--card-subtle);
+      color: var(--text-heading);
+    }
+
+    .nav-item.active {
+      background: var(--brand-primary-light);
+      color: var(--brand-primary);
+    }
+
+    .nav-item .icon {
+      font-size: 17px;
+      width: 20px;
+      text-align: center;
+    }
+
+    .nav-item .pill-count {
+      margin-left: auto;
+      font-size: 11px;
+      font-weight: 700;
+      background: rgba(15, 118, 110, 0.12);
+      color: var(--brand-primary);
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+    }
+
+    /* Shift & Pro Banner Card (Ref: SalesRadar & Dabang bottom banner) */
+    .sidebar-footer-card {
+      margin-top: auto;
+      background: linear-gradient(135deg, #042F2E 0%, #0F766E 100%);
+      border-radius: 18px;
+      padding: 16px;
+      color: #FFFFFF;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 24px -4px rgba(15, 118, 110, 0.35);
+    }
+
+    .sidebar-footer-card::after {
+      content: '';
+      position: absolute;
+      top: -30px;
+      right: -30px;
+      width: 90px;
+      height: 90px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .shift-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: #A7F3D0;
+    }
+
+    .shift-dot {
+      width: 7px;
+      height: 7px;
+      background: #10B981;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #10B981;
+    }
+
+    .shift-title {
+      font-size: 14px;
+      font-weight: 700;
+      margin: 4px 0 2px 0;
+      color: #FFFFFF;
+    }
+
+    .shift-meta {
+      font-size: 11.5px;
+      color: rgba(255, 255, 255, 0.75);
+      margin-bottom: 12px;
+    }
+
+    .btn-shift-action {
+      width: 100%;
+      background: #FFFFFF;
+      color: #042F2E;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-shift-action:hover {
+      transform: translateY(-1px);
+    }
+
+    /* =========================================================
+       3. MAIN VIEWPORT & HEADER
+       ========================================================= */
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      max-height: 100vh;
+      padding: 24px 32px 60px 32px;
+    }
+
+    .top-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .search-bar-wrap {
+      position: relative;
+      width: 360px;
+    }
+
+    .search-input {
+      width: 100%;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-pill);
+      padding: 10px 18px 10px 42px;
+      font-size: 13.5px;
+      color: var(--text-heading);
+      outline: none;
+      box-shadow: var(--shadow-ambient);
+      transition: all 0.2s ease;
+    }
+
+    .search-input:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .pill-currency-select {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-pill);
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-heading);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: var(--shadow-ambient);
+      cursor: pointer;
+    }
+
+    .icon-action-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text-body);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      box-shadow: var(--shadow-ambient);
+      transition: all 0.2s ease;
+    }
+
+    .icon-action-btn:hover {
+      color: var(--brand-primary);
+      transform: translateY(-1px);
+    }
+
+    .btn-studio-drawer {
+      background: var(--card-bg);
+      border: 1.5px solid var(--brand-primary);
+      color: var(--brand-primary);
+      padding: 8px 16px;
+      border-radius: var(--radius-pill);
+      font-weight: 700;
+      font-size: 12.5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      box-shadow: var(--shadow-ambient);
+      transition: all 0.2s ease;
+    }
+
+    .btn-studio-drawer:hover {
+      background: var(--brand-primary);
+      color: #FFFFFF;
+    }
+
+    .user-profile-chip {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 5px 14px 5px 6px;
+      border-radius: var(--radius-pill);
+      box-shadow: var(--shadow-ambient);
+      cursor: pointer;
+    }
+
+    .user-avatar-img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .user-meta-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-heading);
+      line-height: 1.2;
+    }
+
+    .user-meta-role {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* =========================================================
+       4. INVENZA-INSPIRED HERO GREETING BANNER
+       ========================================================= */
+    .hero-banner {
+      background: linear-gradient(135deg, #042F2E 0%, #0F766E 60%, #115E59 100%);
+      border-radius: var(--radius-card);
+      padding: 26px 30px;
+      color: #FFFFFF;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 12px 32px -4px rgba(4, 47, 46, 0.35);
+    }
+
+    .hero-banner::before {
+      content: '';
+      position: absolute;
+      left: 40%;
+      top: -60px;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(20, 184, 166, 0.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-left h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-left p {
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 13.5px;
+      margin-bottom: 18px;
+    }
+
+    .hero-action-chips {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hero-chip-btn {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #FFFFFF;
+      font-size: 12.5px;
+      font-weight: 600;
+      padding: 7px 14px;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .hero-chip-btn:hover {
+      background: #FFFFFF;
+      color: #042F2E;
+    }
+
+    .hero-chip-btn.gold-cta {
+      background: var(--brand-gold);
+      border-color: var(--brand-gold);
+      color: #FFFFFF;
+      box-shadow: 0 4px 14px rgba(217, 119, 6, 0.35);
+    }
+
+    .hero-chip-btn.gold-cta:hover {
+      background: #F59E0B;
+    }
+
+    .hero-stats-strip {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 14px 22px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .hero-stat-col {
+      text-align: center;
+    }
+
+    .hero-stat-val {
+      font-size: 20px;
+      font-weight: 800;
+      font-family: 'JetBrains Mono', monospace;
+      color: #FFFFFF;
+    }
+
+    .hero-stat-lbl {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.7);
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      margin-top: 2px;
+    }
+
+    .hero-stat-sep {
+      width: 1px;
+      height: 32px;
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    /* =========================================================
+       5. PASTEL METRIC TILES (Ref: SalesRadar & Dabang)
+       ========================================================= */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    .kpi-tile {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 20px;
+      box-shadow: var(--shadow-ambient);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s var(--ease-fluid);
+      position: relative;
+      cursor: pointer;
+    }
+
+    .kpi-tile:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+      border-color: rgba(15, 118, 110, 0.2);
+    }
+
+    .kpi-tile-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .kpi-icon-chip {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .kpi-icon-chip.mint { background: var(--pastel-mint-bg); color: var(--pastel-mint-fg); }
+    .kpi-icon-chip.rose { background: var(--pastel-rose-bg); color: var(--pastel-rose-fg); }
+    .kpi-icon-chip.amber { background: var(--pastel-amber-bg); color: var(--pastel-amber-fg); }
+    .kpi-icon-chip.lavender { background: var(--pastel-lavender-bg); color: var(--pastel-lavender-fg); }
+
+    .kpi-trend-pill {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: var(--radius-pill);
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .kpi-trend-pill.up { background: #DCFCE7; color: #15803D; }
+    .kpi-trend-pill.down { background: #FEE2E2; color: #B91C1C; }
+
+    .kpi-value-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+
+    .kpi-value-col {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .kpi-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .kpi-figure {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--text-heading);
+      letter-spacing: -0.02em;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .kpi-sparkline {
+      width: 100px;
+      height: 40px;
+    }
+
+    /* =========================================================
+       6. ANALYTICS ROW: DUAL SPLINE & DONUT (Ref: Lume & SalesRadar)
+       ========================================================= */
+    .charts-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    .chart-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 24px;
+      box-shadow: var(--shadow-ambient);
+    }
+
+    .card-header-flex {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .card-header-titles h2 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-heading);
+      letter-spacing: -0.01em;
+    }
+
+    .card-header-titles p {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .segmented-filter {
+      display: flex;
+      background: var(--card-subtle);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-pill);
+      padding: 3px;
+      gap: 2px;
+    }
+
+    .seg-pill-btn {
+      border: none;
+      background: transparent;
+      padding: 5px 12px;
+      border-radius: var(--radius-pill);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-body);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .seg-pill-btn.active {
+      background: var(--card-bg);
+      color: var(--brand-primary);
+      box-shadow: 0 1px 4px rgba(15, 23, 42, 0.08);
+    }
+
+    /* SVG Spline Chart Styling */
+    .spline-svg-container {
+      width: 100%;
+      height: 220px;
+      position: relative;
+    }
+
+    .spline-svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    .chart-legend-row {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-top: 14px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-body);
+    }
+
+    .legend-indicator {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+      margin-right: 6px;
+    }
+
+    /* Donut Layout */
+    .donut-content-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .donut-svg-center {
+      position: relative;
+      width: 180px;
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .donut-center-label {
+      position: absolute;
+      text-align: center;
+    }
+
+    .donut-center-label .big {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text-heading);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .donut-center-label .small {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .donut-legend-list {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .donut-legend-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12.5px;
+      padding: 4px 6px;
+      border-radius: 8px;
+    }
+
+    .donut-legend-item:hover {
+      background: var(--card-subtle);
+    }
+
+    .donut-cat-name {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      color: var(--text-heading);
+    }
+
+    .donut-cat-pct {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      color: var(--text-body);
+    }
+
+    /* =========================================================
+       7. TABLE & BESPOKE ORDERS (Ref: SalesRadar & Lume)
+       ========================================================= */
+    .table-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 24px;
+      box-shadow: var(--shadow-ambient);
+    }
+
+    .couture-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      margin-top: 10px;
+    }
+
+    .couture-table th {
+      font-size: 11.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .couture-table td {
+      padding: 14px;
+      border-bottom: 1px solid rgba(15, 23, 42, 0.04);
+      vertical-align: middle;
+      font-size: 13.5px;
+    }
+
+    .couture-table tr:hover td {
+      background: var(--card-subtle);
+    }
+
+    .garment-cell {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .garment-thumb {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      object-fit: cover;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    }
+
+    .garment-name {
+      font-weight: 700;
+      color: var(--text-heading);
+    }
+
+    .garment-sub {
+      font-size: 11.5px;
+      color: var(--text-muted);
+    }
+
+    .guest-pill {
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      display: inline-block;
+      margin-top: 3px;
+    }
+
+    .guest-pill.diamond { background: #FEF3C7; color: #B45309; }
+    .guest-pill.platinum { background: #E0E7FF; color: #4338CA; }
+    .guest-pill.elite { background: #FCE7F3; color: #BE185D; }
+
+    .stage-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .stage-pill.trial { background: #DCFCE7; color: #166534; }
+    .stage-pill.embroidery { background: #FEF3C7; color: #92400E; }
+    .stage-pill.cutting { background: #F3E8FF; color: #6B21A8; }
+    .stage-pill.ready { background: #DBEAFE; color: #1E40AF; }
+
+    .stage-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .price-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      color: var(--text-heading);
+    }
+
+    /* =========================================================
+       8. COMPONENT FINE-TUNING DRAWER (STUDIO INSPECTOR)
+       ========================================================= */
+    .studio-drawer-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(15, 23, 42, 0.4);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .studio-drawer-backdrop.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .studio-drawer {
+      position: fixed;
+      top: 0;
+      right: -420px;
+      width: 400px;
+      height: 100vh;
+      background: var(--card-bg);
+      box-shadow: var(--shadow-drawer);
+      z-index: 101;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      transition: right 0.35s var(--ease-spring);
+      overflow-y: auto;
+    }
+
+    .studio-drawer.active {
+      right: 0;
+    }
+
+    .drawer-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 22px;
+    }
+
+    .drawer-title-row h3 {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text-heading);
+      letter-spacing: -0.01em;
+    }
+
+    .close-drawer-btn {
+      background: var(--card-subtle);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .tune-group {
+      margin-bottom: 24px;
+    }
+
+    .tune-label {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .tune-options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .tune-card-btn {
+      background: var(--card-subtle);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .tune-card-btn.active {
+      border-color: var(--brand-primary);
+      background: var(--brand-primary-light);
+    }
+
+    .tune-card-btn .name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-heading);
+    }
+
+    .tune-card-btn .sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .slider-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-heading);
+    }
+
+    .tune-range {
+      width: 100%;
+      accent-color: var(--brand-primary);
+    }
+
+    /* Live Toast */
+    .atelier-toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #042F2E;
+      color: #FFFFFF;
+      padding: 12px 20px;
+      border-radius: var(--radius-pill);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13.5px;
+      font-weight: 600;
+      z-index: 200;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s var(--ease-spring);
+    }
+
+    .atelier-toast.active {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =========================================================
+       1. FLOATING SIDEBAR
+       ========================================================= -->
+  <aside class="sidebar">
+    <div class="brand-row">
+      <div class="brand-logo-mark">A</div>
+      <div>
+        <div class="brand-title">Aleen <span class="brand-badge">Atelier</span></div>
+      </div>
+    </div>
+
+    <div class="nav-group-label">Core Operations</div>
+    <ul class="nav-list">
+      <li>
+        <a class="nav-item active" href="#dashboard">
+          <span class="icon">📊</span>
+          <span>Atelier Overview</span>
+        </a>
+      </li>
+      <li>
+        <a class="nav-item" href="#pos">
+          <span class="icon">🧾</span>
+          <span>POS & Invoicing</span>
+        </a>
+      </li>
+      <li>
+        <a class="nav-item" href="#fittings">
+          <span class="icon">✂️</span>
+          <span>Bespoke Fittings</span>
+          <span class="pill-count">6</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="nav-group-label">Clientele & Catalog</div>
+    <ul class="nav-list">
+      <li>
+        <a class="nav-item" href="#patrons">
+          <span class="icon">👑</span>
+          <span>VIP Patron CRM</span>
+        </a>
+      </li>
+      <li>
+        <a class="nav-item" href="#garments">
+          <span class="icon">👗</span>
+          <span>Couture Catalog</span>
+        </a>
+      </li>
+      <li>
+        <a class="nav-item" href="#fabrics">
+          <span class="icon">🧵</span>
+          <span>Raw Silk & Fabrics</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="nav-group-label">Audit & Studio</div>
+    <ul class="nav-list">
+      <li>
+        <a class="nav-item" href="#reports">
+          <span class="icon">📈</span>
+          <span>P&L & Analytics</span>
+        </a>
+      </li>
+      <li>
+        <a class="nav-item" href="#settings">
+          <span class="icon">⚙️</span>
+          <span>Atelier Settings</span>
+        </a>
+      </li>
+    </ul>
+
+    <!-- Bottom Shift Status Card (Ref: SalesRadar & Dabang Pro Card) -->
+    <div class="sidebar-footer-card">
+      <div class="shift-header">
+        <span class="shift-dot"></span>
+        <span>Register #1 Active</span>
+      </div>
+      <div class="shift-title">Morning Shift</div>
+      <div class="shift-meta">Cashier: Zainab • Started 09:30 AM</div>
+      <button class="btn-shift-action" onclick="showToast('Cash drawer shift modal opened')">
+        <span>🔒</span> Close Register
+      </button>
+    </div>
+  </aside>
+
+  <!-- =========================================================
+       2. MAIN WORKSPACE
+       ========================================================= -->
+  <main class="main-content">
+    
+    <!-- Top Header -->
+    <header class="top-header">
+      <div class="search-bar-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" class="search-input" placeholder="Search guests, SKUs, bills, fittings (Cmd+K)">
+      </div>
+
+      <div class="header-actions">
+        <div class="pill-currency-select" title="Active Currency">
+          <span>🇮🇳</span>
+          <span>INR (₹)</span>
+        </div>
+
+        <button class="icon-action-btn" title="Toggle Dark/Light Mode" onclick="toggleTheme()">
+          🌓
+        </button>
+
+        <button class="icon-action-btn" title="Notifications" onclick="showToast('No new urgent fitting conflicts')">
+          🔔
+        </button>
+
+        <!-- Studio Fine-Tuning Drawer Trigger -->
+        <button class="btn-studio-drawer" onclick="toggleDrawer(true)">
+          <span>🎨</span>
+          <span>Fine-Tune Components</span>
+        </button>
+
+        <div class="user-profile-chip" title="Active Atelier Director">
+          <img class="user-avatar-img" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80" alt="Avatar">
+          <div>
+            <div class="user-meta-name">Zara Al-Mansoor</div>
+            <div class="user-meta-role">Atelier Director</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- INVENZA-INSPIRED HERO GREETING BANNER -->
+    <section class="hero-banner">
+      <div class="hero-left">
+        <h1>Welcome back, Zara Al-Mansoor</h1>
+        <p>Flagship Atelier • 6 bespoke bridal trials scheduled today • Daily revenue target: <strong>84% achieved</strong></p>
+        
+        <div class="hero-action-chips">
+          <button class="hero-chip-btn gold-cta" onclick="showToast('Creating new bespoke couture order')">
+            <span>✨</span> + New Bespoke Order
+          </button>
+          <button class="hero-chip-btn" onclick="showToast('Viewing scheduled bridal trials')">
+            <span>📅</span> Today's Trials (6)
+          </button>
+          <button class="hero-chip-btn" onclick="showToast('Exporting Daily P&L report')">
+            <span>↓</span> Export Ledger
+          </button>
+        </div>
+      </div>
+
+      <div class="hero-stats-strip">
+        <div class="hero-stat-col">
+          <div class="hero-stat-val">1,420</div>
+          <div class="hero-stat-lbl">Total Pieces</div>
+        </div>
+        <div class="hero-stat-sep"></div>
+        <div class="hero-stat-col">
+          <div class="hero-stat-val">18</div>
+          <div class="hero-stat-lbl">In Tailoring</div>
+        </div>
+        <div class="hero-stat-sep"></div>
+        <div class="hero-stat-col">
+          <div class="hero-stat-val">6</div>
+          <div class="hero-stat-lbl">Trials Ready</div>
+        </div>
+        <div class="hero-stat-sep"></div>
+        <div class="hero-stat-col">
+          <div class="hero-stat-val" style="color:#FCA5A5;">2</div>
+          <div class="hero-stat-lbl">Urgent Deliv.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PASTEL KPI TILES WITH SPARKLINES (Ref: SalesRadar & Dabang) -->
+    <section class="kpi-grid">
+      <!-- KPI 1 -->
+      <div class="kpi-tile" onclick="showToast('Viewing Daily Atelier Sales Breakdown')">
+        <div class="kpi-tile-top">
+          <div class="kpi-icon-chip mint">💎</div>
+          <span class="kpi-trend-pill up">↗ +14.2%</span>
+        </div>
+        <div class="kpi-value-row">
+          <div class="kpi-value-col">
+            <span class="kpi-title">Today's Atelier Sales</span>
+            <span class="kpi-figure">₹4,89,640</span>
+          </div>
+          <!-- Sparkline SVG -->
+          <svg class="kpi-sparkline" viewBox="0 0 100 40">
+            <path d="M0,32 Q15,35 30,22 T60,18 T85,8 T100,2" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- KPI 2 -->
+      <div class="kpi-tile" onclick="showToast('Viewing Bespoke Orders')">
+        <div class="kpi-tile-top">
+          <div class="kpi-icon-chip rose">✂️</div>
+          <span class="kpi-trend-pill up">↗ +8.0%</span>
+        </div>
+        <div class="kpi-value-row">
+          <div class="kpi-value-col">
+            <span class="kpi-title">Bespoke Orders</span>
+            <span class="kpi-figure">28 Orders</span>
+          </div>
+          <svg class="kpi-sparkline" viewBox="0 0 100 40">
+            <path d="M0,28 Q20,15 40,25 T70,12 T100,5" fill="none" stroke="#E11D48" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- KPI 3 -->
+      <div class="kpi-tile" onclick="showToast('Viewing VIP Patron CRM')">
+        <div class="kpi-tile-top">
+          <div class="kpi-icon-chip amber">👑</div>
+          <span class="kpi-trend-pill up">↗ +5.4%</span>
+        </div>
+        <div class="kpi-value-row">
+          <div class="kpi-value-col">
+            <span class="kpi-title">VIP Patrons Active</span>
+            <span class="kpi-figure">142 Patrons</span>
+          </div>
+          <svg class="kpi-sparkline" viewBox="0 0 100 40">
+            <path d="M0,30 Q25,32 50,20 T75,18 T100,8" fill="none" stroke="#D97706" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- KPI 4 -->
+      <div class="kpi-tile" onclick="showToast('Viewing Low Stock Silks')">
+        <div class="kpi-tile-top">
+          <div class="kpi-icon-chip lavender">🧵</div>
+          <span class="kpi-trend-pill down">↘ -2 Bolts</span>
+        </div>
+        <div class="kpi-value-row">
+          <div class="kpi-value-col">
+            <span class="kpi-title">Raw Silk Bolts</span>
+            <span class="kpi-figure">4 Low Stock</span>
+          </div>
+          <svg class="kpi-sparkline" viewBox="0 0 100 40">
+            <path d="M0,15 Q30,12 55,24 T80,28 T100,34" fill="none" stroke="#7E22CE" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- DUAL SPLINE REVENUE & DONUT BREAKDOWN (Ref: Lume Studio & SalesRadar) -->
+    <section class="charts-row">
+      <!-- Left: Dual Spline Revenue Curve -->
+      <div class="chart-card">
+        <div class="card-header-flex">
+          <div class="card-header-titles">
+            <h2>Revenue Velocity & Invoicing</h2>
+            <p>Comparing this week's bespoke sales against previous 7-day trajectory</p>
+          </div>
+
+          <div class="segmented-filter">
+            <button class="seg-pill-btn active" onclick="setChartFilter(this)">This Week</button>
+            <button class="seg-pill-btn" onclick="setChartFilter(this)">Last Week</button>
+            <button class="seg-pill-btn" onclick="setChartFilter(this)">Monthly</button>
+          </div>
+        </div>
+
+        <!-- SVG Dual Curve Spline Chart -->
+        <div class="spline-svg-container">
+          <svg class="spline-svg" viewBox="0 0 600 200" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="splineGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#0F766E" stop-opacity="0.25"/>
+                <stop offset="100%" stop-color="#0F766E" stop-opacity="0.0"/>
+              </linearGradient>
+            </defs>
+
+            <!-- Grid Lines -->
+            <line x1="0" y1="40" x2="600" y2="40" stroke="rgba(15, 23, 42, 0.04)" stroke-width="1"/>
+            <line x1="0" y1="90" x2="600" y2="90" stroke="rgba(15, 23, 42, 0.04)" stroke-width="1"/>
+            <line x1="0" y1="140" x2="600" y2="140" stroke="rgba(15, 23, 42, 0.04)" stroke-width="1"/>
+
+            <!-- Last Week (Muted Dashed Line) -->
+            <path d="M 0,140 C 90,150 150,110 240,120 C 330,130 400,85 500,95 L 600,70" fill="none" stroke="#94A3B8" stroke-width="2" stroke-dasharray="5 5"/>
+
+            <!-- This Week (Area Gradient + Solid Emerald Spline) -->
+            <path d="M 0,120 C 80,100 160,140 240,70 C 320,30 400,90 480,35 L 600,15 L 600,190 L 0,190 Z" fill="url(#splineGradient)"/>
+            <path d="M 0,120 C 80,100 160,140 240,70 C 320,30 400,90 480,35 L 600,15" fill="none" stroke="#0F766E" stroke-width="3"/>
+
+            <!-- Data Point Glow Nodes -->
+            <circle cx="240" cy="70" r="5" fill="#FFFFFF" stroke="#0F766E" stroke-width="3"/>
+            <circle cx="480" cy="35" r="5" fill="#FFFFFF" stroke="#0F766E" stroke-width="3"/>
+            <circle cx="600" cy="15" r="5" fill="#FFFFFF" stroke="#0F766E" stroke-width="3"/>
+          </svg>
+        </div>
+
+        <div class="chart-legend-row">
+          <div><span class="legend-indicator" style="background:#0F766E;"></span> This Week (₹18.42L Total)</div>
+          <div><span class="legend-indicator" style="background:#94A3B8;"></span> Last Week (₹14.10L)</div>
+          <div style="margin-left:auto; font-family:'JetBrains Mono', monospace; color:var(--brand-emerald-luminous); font-weight:700;">
+            Peak Day: Thursday (₹4.89L)
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Couture Donut Breakdown -->
+      <div class="chart-card">
+        <div class="card-header-flex">
+          <div class="card-header-titles">
+            <h2>Couture Mix</h2>
+            <p>Sales volume by category</p>
+          </div>
+          <span style="font-size:12px; color:var(--text-muted); cursor:pointer;">•••</span>
+        </div>
+
+        <div class="donut-content-wrap">
+          <div class="donut-svg-center">
+            <svg viewBox="0 0 100 100" width="170" height="170">
+              <!-- Haute Couture (42%) -->
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#0F766E" stroke-width="13" stroke-dasharray="100.2 238.7" stroke-dashoffset="0"/>
+              <!-- Bridal Lehengas (28%) -->
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#D97706" stroke-width="13" stroke-dasharray="66.8 238.7" stroke-dashoffset="-100.2"/>
+              <!-- Evening Gowns (18%) -->
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#8B5CF6" stroke-width="13" stroke-dasharray="42.9 238.7" stroke-dashoffset="-167"/>
+              <!-- Accessories (12%) -->
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#EC4899" stroke-width="13" stroke-dasharray="28.6 238.7" stroke-dashoffset="-209.9"/>
+            </svg>
+            <div class="donut-center-label">
+              <div class="big">₹24.8L</div>
+              <div class="small">Catalog MTD</div>
+            </div>
+          </div>
+
+          <div class="donut-legend-list">
+            <div class="donut-legend-item">
+              <span class="donut-cat-name"><span class="legend-indicator" style="background:#0F766E;"></span> Haute Couture</span>
+              <span class="donut-cat-pct">42%</span>
+            </div>
+            <div class="donut-legend-item">
+              <span class="donut-cat-name"><span class="legend-indicator" style="background:#D97706;"></span> Bridal Lehengas</span>
+              <span class="donut-cat-pct">28%</span>
+            </div>
+            <div class="donut-legend-item">
+              <span class="donut-cat-name"><span class="legend-indicator" style="background:#8B5CF6;"></span> Evening Gowns</span>
+              <span class="donut-cat-pct">18%</span>
+            </div>
+            <div class="donut-legend-item">
+              <span class="donut-cat-name"><span class="legend-indicator" style="background:#EC4899;"></span> Luxury Jewels</span>
+              <span class="donut-cat-pct">12%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HIGH-DENSITY BESPOKE ORDERS TABLE (Ref: SalesRadar & Invenza) -->
+    <section class="table-card">
+      <div class="card-header-flex">
+        <div class="card-header-titles">
+          <h2>Active Bespoke Fittings & Couture Invoices</h2>
+          <p>Real-time tracking of master craftsmanship, trial dates, and pending payments</p>
+        </div>
+
+        <button class="hero-chip-btn gold-cta" onclick="showToast('Opening New Bespoke Bill Modal')">
+          <span>+</span> Create New Invoice
+        </button>
+      </div>
+
+      <table class="couture-table">
+        <thead>
+          <tr>
+            <th>Garment & Spec</th>
+            <th>VIP Patron</th>
+            <th>Craftsman Stage</th>
+            <th>Master Artisan</th>
+            <th>Total Value</th>
+            <th>Trial Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Row 1 -->
+          <tr>
+            <td>
+              <div class="garment-cell">
+                <img class="garment-thumb" src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&w=100&q=80" alt="Garment">
+                <div>
+                  <div class="garment-name">Midnight Velvet Sherwani</div>
+                  <div class="garment-sub">Custom Raw Silk Lining • Antique Zari</div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div><strong>Aryan Kapoor</strong></div>
+              <span class="guest-pill diamond">VIP Diamond</span>
+            </td>
+            <td>
+              <span class="stage-pill trial"><span class="stage-dot"></span> Final Trial Ready</span>
+            </td>
+            <td>Master Rauf</td>
+            <td class="price-num">₹1,45,000</td>
+            <td><strong style="color:#059669;">Today, 4:00 PM</strong></td>
+            <td>
+              <button class="seg-pill-btn" onclick="showToast('Viewing invoice #INV-4029')">View Bill</button>
+            </td>
+          </tr>
+
+          <!-- Row 2 -->
+          <tr>
+            <td>
+              <div class="garment-cell">
+                <img class="garment-thumb" src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=100&q=80" alt="Garment">
+                <div>
+                  <div class="garment-name">Zardozi Bridal Lehenga</div>
+                  <div class="garment-sub">Pure Crimson Velvet • 16-Kali Flare</div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div><strong>Priya Sharma</strong></div>
+              <span class="guest-pill elite">Bridal Elite</span>
+            </td>
+            <td>
+              <span class="stage-pill embroidery"><span class="stage-dot"></span> Hand Embroidery</span>
+            </td>
+            <td>Ustad Kareem</td>
+            <td class="price-num">₹2,80,000</td>
+            <td>Nov 04, 2026</td>
+            <td>
+              <button class="seg-pill-btn" onclick="showToast('Viewing invoice #INV-4030')">View Bill</button>
+            </td>
+          </tr>
+
+          <!-- Row 3 -->
+          <tr>
+            <td>
+              <div class="garment-cell">
+                <img class="garment-thumb" src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=100&q=80" alt="Garment">
+                <div>
+                  <div class="garment-name">Double-Breasted Cashmere Suit</div>
+                  <div class="garment-sub">Italian Wool 150s • Horn Buttons</div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div><strong>Vikram Singhania</strong></div>
+              <span class="guest-pill platinum">VIP Platinum</span>
+            </td>
+            <td>
+              <span class="stage-pill cutting"><span class="stage-dot"></span> Pattern Cutting</span>
+            </td>
+            <td>Tailor Anthony</td>
+            <td class="price-num">₹95,000</td>
+            <td>Nov 06, 2026</td>
+            <td>
+              <button class="seg-pill-btn" onclick="showToast('Viewing invoice #INV-4031')">View Bill</button>
+            </td>
+          </tr>
+
+          <!-- Row 4 -->
+          <tr>
+            <td>
+              <div class="garment-cell">
+                <img class="garment-thumb" src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=100&q=80" alt="Garment">
+                <div>
+                  <div class="garment-name">Organza Hand-Painted Saree</div>
+                  <div class="garment-sub">Floral Botanicals • Scalloped Border</div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div><strong>Meera Nair</strong></div>
+              <span class="guest-pill diamond">VIP Diamond</span>
+            </td>
+            <td>
+              <span class="stage-pill ready"><span class="stage-dot"></span> Ready For Pickup</span>
+            </td>
+            <td>Artisan Lata</td>
+            <td class="price-num">₹48,000</td>
+            <td><strong style="color:#2563EB;">Ready Now</strong></td>
+            <td>
+              <button class="seg-pill-btn" onclick="showToast('Notifying Meera via WhatsApp')">WhatsApp</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <!-- =========================================================
+       9. LIVE COMPONENT FINE-TUNING DRAWER
+       ========================================================= -->
+  <div class="studio-drawer-backdrop" id="studioBackdrop" onclick="toggleDrawer(false)"></div>
+  <aside class="studio-drawer" id="studioDrawer">
+    <div class="drawer-title-row">
+      <div>
+        <h3>Component Fine-Tuning</h3>
+        <p style="font-size:12px; color:var(--text-muted);">Adjust tokens live in real time</p>
+      </div>
+      <button class="close-drawer-btn" onclick="toggleDrawer(false)">✕</button>
+    </div>
+
+    <!-- 1. Color Palette / Theme Variant -->
+    <div class="tune-group">
+      <span class="tune-label">Theme Paradigm</span>
+      <div class="tune-options-grid">
+        <button class="tune-card-btn active" onclick="applyThemePreset('emerald', this)">
+          <div class="name">Atelier Emerald</div>
+          <div class="sub">Invenza + Lume style</div>
+        </button>
+        <button class="tune-card-btn" onclick="applyThemePreset('salesradar', this)">
+          <div class="name">SalesRadar Clean</div>
+          <div class="sub">Soft Cyan & Pink</div>
+        </button>
+        <button class="tune-card-btn" onclick="applyThemePreset('dabang', this)">
+          <div class="name">Dabang Candy</div>
+          <div class="sub">Pastel color blocks</div>
+        </button>
+        <button class="tune-card-btn" onclick="applyThemePreset('opatix', this)">
+          <div class="name">Opatix Violet</div>
+          <div class="sub">Indigo SaaS look</div>
+        </button>
+      </div>
+    </div>
+
+    <!-- 2. Border Radius Calibration -->
+    <div class="tune-group">
+      <div class="slider-row">
+        <span>Card Corner Radius</span>
+        <span id="radiusValDisplay">22px</span>
+      </div>
+      <input type="range" class="tune-range" min="8" max="32" value="22" oninput="updateRadius(this.value)">
+    </div>
+
+    <!-- 3. Ambient Shadow Intensity -->
+    <div class="tune-group">
+      <div class="slider-row">
+        <span>Shadow Softness</span>
+        <span id="shadowValDisplay">Medium (4%)</span>
+      </div>
+      <input type="range" class="tune-range" min="0" max="10" value="4" oninput="updateShadow(this.value)">
+    </div>
+
+    <!-- 4. Data Density Mode -->
+    <div class="tune-group">
+      <span class="tune-label">Table & Card Density</span>
+      <div class="tune-options-grid">
+        <button class="tune-card-btn active" onclick="applyDensity('comfortable', this)">
+          <div class="name">Atelier Spacious</div>
+          <div class="sub">Generous breathing room</div>
+        </button>
+        <button class="tune-card-btn" onclick="applyDensity('compact', this)">
+          <div class="name">ERP High-Density</div>
+          <div class="sub">Tight cashier grid</div>
+        </button>
+      </div>
+    </div>
+
+    <!-- 5. Component Presets -->
+    <div class="tune-group" style="margin-top:auto;">
+      <button class="hero-chip-btn gold-cta" style="width:100%; justify-content:center; padding:12px;" onclick="copyTokensConfig()">
+        📋 Copy Tokens for Aleen-react2
+      </button>
+    </div>
+  </aside>
+
+  <!-- Live Toast -->
+  <div class="atelier-toast" id="atelierToast">
+    <span id="toastIcon">✨</span>
+    <span id="toastMsg">Action executed</span>
+  </div>
+
+  <!-- JavaScript Interaction Logic -->
+  <script>
+    function toggleDrawer(open) {
+      document.getElementById('studioDrawer').classList.toggle('active', open);
+      document.getElementById('studioBackdrop').classList.toggle('active', open);
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle('theme-dark');
+      showToast('Switched color mode');
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('atelierToast');
+      document.getElementById('toastMsg').innerText = msg;
+      toast.classList.add('active');
+      setTimeout(() => {
+        toast.classList.remove('active');
+      }, 3000);
+    }
+
+    function setChartFilter(btn) {
+      document.querySelectorAll('.segmented-filter .seg-pill-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      showToast('Updated analytics range to ' + btn.innerText);
+    }
+
+    function updateRadius(val) {
+      document.documentElement.style.setProperty('--radius-card', val + 'px');
+      document.getElementById('radiusValDisplay').innerText = val + 'px';
+    }
+
+    function updateShadow(val) {
+      const opacity = val / 100;
+      document.documentElement.style.setProperty('--shadow-ambient', `0 4px 24px -2px rgba(15, 23, 42, ${opacity}), 0 1px 3px 0 rgba(15, 23, 42, 0.02)`);
+      document.getElementById('shadowValDisplay').innerText = `Intensity (${val}%)`;
+    }
+
+    function applyDensity(mode, btn) {
+      btn.parentElement.querySelectorAll('.tune-card-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const table = document.querySelector('.couture-table');
+      if (mode === 'compact') {
+        table.querySelectorAll('td').forEach(td => td.style.padding = '8px 10px');
+        table.querySelectorAll('th').forEach(th => th.style.padding = '8px 10px');
+      } else {
+        table.querySelectorAll('td').forEach(td => td.style.padding = '14px');
+        table.querySelectorAll('th').forEach(th => th.style.padding = '12px 14px');
+      }
+      showToast('Density adjusted to ' + mode);
+    }
+
+    function applyThemePreset(preset, btn) {
+      btn.parentElement.querySelectorAll('.tune-card-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      if (preset === 'emerald') {
+        document.documentElement.style.setProperty('--brand-primary', '#0F766E');
+        document.documentElement.style.setProperty('--brand-primary-light', '#F0FDFA');
+        document.documentElement.style.setProperty('--border-focus', '#0F766E');
+      } else if (preset === 'salesradar') {
+        document.documentElement.style.setProperty('--brand-primary', '#2563EB');
+        document.documentElement.style.setProperty('--brand-primary-light', '#EFF6FF');
+        document.documentElement.style.setProperty('--border-focus', '#2563EB');
+      } else if (preset === 'dabang') {
+        document.documentElement.style.setProperty('--brand-primary', '#6366F1');
+        document.documentElement.style.setProperty('--brand-primary-light', '#EEF2FF');
+        document.documentElement.style.setProperty('--border-focus', '#6366F1');
+      } else if (preset === 'opatix') {
+        document.documentElement.style.setProperty('--brand-primary', '#7C3AED');
+        document.documentElement.style.setProperty('--brand-primary-light', '#F5F3FF');
+        document.documentElement.style.setProperty('--border-focus', '#7C3AED');
+      }
+      showToast('Applied ' + preset + ' color tokens');
+    }
+
+    function copyTokensConfig() {
+      navigator.clipboard.writeText(JSON.stringify({
+        radiusCard: getComputedStyle(document.documentElement).getPropertyValue('--radius-card'),
+        primary: getComputedStyle(document.documentElement).getPropertyValue('--brand-primary'),
+        primaryLight: getComputedStyle(document.documentElement).getPropertyValue('--brand-primary-light')
+      }, null, 2));
+      showToast('Tokens copied to clipboard!');
+    }
+  </script>
+</body>
+</html>
