@@ -2474,91 +2474,101 @@
     } catch(e) {}
   }
 
-  grid.innerHTML = items.map(function(item) {
-    // Get new fields with fallbacks for backward compatibility
-    const mrp = item.mrp !== undefined ? Number(item.mrp) : 0;
-    const discountedPrice = item.discountedPrice !== undefined ? Number(item.discountedPrice) : 0;
-    const fitLabel = item.fitLabel || "";
-    const colors = item.garmentColors || [];
-    const rating = item.rating || 0; /* Optional rating */
+  function renderDressesGrid(dressList) {
+    if (!grid) return;
+    grid.innerHTML = (dressList || []).map(function(item) {
+      const mrp = (item.mrp !== undefined && item.mrp !== null && Number(item.mrp) > 0) ? Number(item.mrp) : 0;
+      const sellingPrice = (item.discountedPrice !== undefined && item.discountedPrice !== null && Number(item.discountedPrice) > 0)
+        ? Number(item.discountedPrice)
+        : Number(item.price || item.mrp || 0);
 
-    // Calculate discount percentage
-    let discountPercent = 0;
-    if (mrp > 0 && discountedPrice >= 0) {
-      discountPercent = Math.round((1 - discountedPrice / mrp) * 100);
+      const fitLabel = item.fitLabel || "";
+      const colors = Array.isArray(item.garmentColors) ? item.garmentColors : (Array.isArray(item.colorVariants) ? item.colorVariants : []);
+      const rating = (item.rating !== undefined && item.rating !== null && !isNaN(Number(item.rating)) && Number(item.rating) > 0)
+        ? Number(item.rating).toFixed(1)
+        : null;
+
+      let discountPercent = 0;
+      if (mrp > 0 && sellingPrice > 0 && mrp > sellingPrice) {
+        discountPercent = Math.round(((mrp - sellingPrice) / mrp) * 100);
+      }
+
+      const colorSwatches = colors.length > 0 ? (
+        '<div class="color-swatches" style="display:flex;gap:4px;position:absolute;bottom:12px;right:12px;z-index:3;">' +
+        colors.map(c => '<span class="color-swatch" style="width:14px;height:14px;border-radius:50%;border:1.5px solid #ffffff;background:' + (c.swatchColor || '#c9a35f') + ';" title="' + (c.name || '') + '"></span>').join('') +
+        '</div>'
+      ) : '';
+
+      const fitTag = fitLabel ? '<span class="fit-tag" style="position:absolute;top:12px;left:12px;z-index:3;padding:4px 8px;border-radius:6px;font-size:10.5px;font-weight:700;background:rgba(255,255,255,0.92);color:#162217;">' + fitLabel + '</span>' : '';
+      const ratingBadge = rating ? '<span class="rating-badge" style="position:absolute;bottom:12px;left:12px;z-index:3;padding:3px 7px;border-radius:8px;font-size:11px;font-weight:700;background:rgba(255,255,255,0.92);color:#162217;"><span style="color:#eab308;">★</span> ' + rating + '</span>' : '';
+
+      let priceHtml = '';
+      if (discountPercent > 0) {
+        priceHtml = '<span class="card-discounted-price" style="font-weight:700;color:#162217;">₹' + sellingPrice.toLocaleString('en-IN') + '</span> ' +
+                    '<span class="card-mrp" style="text-decoration:line-through;color:#748c66;font-size:12px;margin-left:6px;">₹' + mrp.toLocaleString('en-IN') + '</span> ' +
+                    '<span class="card-discount-percent" style="color:#168a3a;font-weight:700;font-size:11.5px;margin-left:6px;">' + discountPercent + '% OFF</span>';
+      } else {
+        priceHtml = '<span class="card-discounted-price" style="font-weight:700;color:#162217;">₹' + sellingPrice.toLocaleString('en-IN') + '</span>';
+      }
+
+      return '<article class="garment-card" style="cursor:pointer;" onclick="window.location.href=\'/collections.html?category=dresses\'">' +
+        '<div class="card-media" style="position:relative;overflow:hidden;border-radius:12px;">' +
+          fitTag +
+          '<img src="' + (item.image || 'assets/women-collections/card_2_dresses.jpg') + '" alt="' + (item.title || '') + '" loading="lazy" style="width:100%;aspect-ratio:3/4;object-fit:cover;" onerror="this.src=\'assets/women-collections/card_2_dresses.jpg\'" />' +
+          ratingBadge +
+          colorSwatches +
+        '</div>' +
+        '<div class="card-info" style="padding:12px 4px 6px;">' +
+          '<span class="card-craft" style="font-size:11.5px;color:#8a6420;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:4px;">' + (item.craft || 'Artisanal') + '</span>' +
+          '<h3 class="card-title" style="font-family:var(--serif);font-size:16px;margin:0 0 6px;color:#162217;">' + (item.title || '') + '</h3>' +
+          '<div class="card-prices">' + priceHtml + '</div>' +
+          '<p class="card-fabric" style="font-size:12.5px;color:#556b4f;margin:6px 0 0;">' + (item.fabric || 'Pure Silk') + '</p>' +
+        '</div>' +
+      '</article>';
+    }).join("");
+  }
+
+  renderDressesGrid(items);
+
+  function syncDressesLive() {
+    fetch('/api/catalog?t=' + Date.now())
+      .then(r => r.json())
+      .then(data => {
+        const list = Array.isArray(data.catalog) ? data.catalog : (Array.isArray(data.garments) ? data.garments : null);
+        if (list && list.length > 0) {
+          try { localStorage.setItem("aleen_master_catalog", JSON.stringify(list)); } catch(e) {}
+          const filtered = list.filter(c => c.category === CATEGORY);
+          if (filtered.length > 0) {
+            renderDressesGrid(filtered);
+          }
+        }
+      })
+      .catch(() => {});
+  }
+
+  // Live Sync on load, tab switch, and storage event
+  syncDressesLive();
+  if (typeof BroadcastChannel !== 'undefined') {
+    const bc = new BroadcastChannel('aleen_catalog_realtime');
+    bc.onmessage = e => {
+      if (e.data && e.data.catalog) {
+        const filtered = e.data.catalog.filter(c => c.category === CATEGORY);
+        if (filtered.length > 0) renderDressesGrid(filtered);
+      }
+    };
+  }
+  window.addEventListener('storage', e => {
+    if (e.key === 'aleen_master_catalog' && e.newValue) {
+      try {
+        const cat = JSON.parse(e.newValue);
+        const filtered = cat.filter(c => c.category === CATEGORY);
+        if (filtered.length > 0) renderDressesGrid(filtered);
+      } catch(err) {}
     }
-
-    // Build color swatches HTML
-    const colorSwatches = colors.map((c, idx) => {
-      const swatchColor = c.swatchColor || "#c9a35f";
-      return "<div class=\"color-swatch\" style=\"width: 14px; height: 14px; border: 2px solid transparent; border-radius: 50%; background: " + swatchColor + ";"></div>";
-    }).join("");
-
-    // Build fit tag HTML
-    const fitTag = fitLabel ? "<span class=\"fit-tag\">" + fitLabel + "</span>" : "";
-
-    // Build rating badge HTML
-    const ratingBadge = rating > 0 ? "<span class=\"rating-badge\" style=\"display: block;">" + "★".repeat(rating) + " " + rating + "</span>" : "";
-
-    // Build price HTML
-    const priceHtml = mrp > 0
-      ? "<span class=\"card-mrp\">" + mrp.toLocaleString("en-IN") + "</span>" +        "<span class=\"card-discounted-price\">" + discountedPrice.toLocaleString("en-IN") + "</span>" +        "<span class=\"card-discount-percent\">-" + discountPercent + "%</span>"      : "";
-
-    // Build garment name HTML
-    const garmentName = item.title ? "<div class=\"garment-name\">" + item.title + "</div>" : "";
-
-    return "<article class=\"garment-card\"> +\n      "<div class=\"card-media\"> +\n        fitTag +\n        ratingBadge +\n        "<img src=\" + item.image + "\" alt=\" + item.title + "\" loading=\"lazy\" />" +\n        colorSwatches +\n      "</div> +\n      "<div class=\"card-prices\"> +\n        priceHtml +\n      "</div> +\n      "<div class=\"garment-name\">" +\n        (item.title || "").toString() +\n      "</div> +\n    "</article>";
-  }).join("");
-    // Build color swatches HTML
-    const colorSwatches = colors.map((c, idx) => {
-      const swatchColor = c.swatchColor || "#c9a35f";
-      return "<div class=\"color-swatch\" style=\"width: 16px; height: 16px; border: 2px solid transparent; border-radius: 50%; background: " + swatchColor + ";"></div>";
-    }).join("");
-
-    // Build fit tag HTML
-    const fitTag = fitLabel ? "<span class=\"fit-tag\">" + fitLabel + "</span>" : "";
-
-    // Build rating badge HTML
-    const ratingBadge = rating > 0 ? "<span class=\"rating-badge\" style=\"display: block;">" + "★".repeat(rating) + " " + rating + "</span>" : "";
-
-    // Build price HTML
-    const priceHtml = mrp > 0
-      ? "<span class=\"card-mrp\">" + mrp.toLocaleString("en-IN") + "</span>" +        "<span class=\"card-discounted-price\">" + discountedPrice.toLocaleString("en-IN") + "</span>" +        "<span class=\"card-discount-percent\">-" + discountPercent + "%</span>"      : "";
-
-    // Build garment name HTML
-    const garmentName = item.title ? "<div class=\"garment-name\">" + item.title + "</div>" : "";
-
-    return "<article class=\"garment-card\"> +\n      "<div class=\"card-media\"> +\n        fitTag +\n        ratingBadge +\n        "<img src=\" + item.image + "\" alt=\" + item.title + "\" loading=\"lazy\" />" +\n        colorSwatches +\n      "</div> +\n      "<div class=\"card-prices\"> +\n        priceHtml +\n      "</div> +\n      "<div class=\"garment-name\">" +\n        (item.title || "").toString() +\n      "</div> +\n    "</article>";
-  }).join("");
-    const colorSwatches = colors.map((c, idx) => {
-      const swatchColor = c.swatchColor || "#c9a35f";
-      const img = c.garmentImage ? "/assets/" + c.garmentImage : item.image;
-      return "<div class=\"color-swatch\" data-index="" + idx + "" style="background: " + swatchColor + "; width: 24px; height: 24px; border: 2px solid transparent; border-radius: 50%; cursor: pointer; margin-right: 4px;" title="Variant " + (idx + 1) + ""></div>";
-    }).join("");
-
-    // Build fit tag HTML
-    const fitTag = fitLabel ? "<span class=\"fit-tag\">" + fitLabel + "</span>" : "";
-
-    // Build price HTML
-    const priceHtml = mrp > 0
-      ? "<span class=\"card-mrp\">" + mrp.toLocaleString("en-IN") + "</span>" +        "<span class=\"card-discounted-price\">" + discountedPrice.toLocaleString("en-IN") + "</span>" +        "<span class=\"card-discount-percent\">-" + discountPercent + "%</span>"      : "<span class=\"card-price\">" + Number(item.price).toLocaleString("en-IN") + "</span>";
-
-    return "<article class=\"garment-card\">" +      "<div class=\"card-media\">" +        fitTag +        "<img src="" + item.image + "" alt="" + item.title + "" loading="lazy" />" +        colorSwatches +      "</div>" +      "<div class=\"card-info\">" +        "<span class=\"card-craft\">" + (item.craft || "Artisanal") + "</span>" +        "<h2 class=\"card-title\">" + item.title + "</h2>" +        "<div class=\"card-prices\">" + priceHtml + "</div>" +        "<p class=\"card-fabric\">" + (item.fabric || "Pure Silk") + "</p>" +      "</div>" +    "</article>";
-  }).join("");
-    const colorSwatches = colors.map((c, idx) => {
-      const swatchColor = c.swatchColor || "#c9a35f";
-      const img = c.garmentImage ? "/assets/" + c.garmentImage : item.image;
-      return "<div class=\"color-swatch\" data-index="" + idx + "" style="background: " + swatchColor + "; width: 24px; height: 24px; border: 2px solid transparent; border-radius: 50%; cursor: pointer; margin-right: 4px;" title="Variant " + (idx + 1) + ""></div>";
-    }).join("");
-
-    // Build fit tag HTML
-    const fitTag = fitLabel ? "<span class=\"fit-tag\">" + fitLabel + "</span>" : "";
-
-    // Build price HTML
-    const priceHtml = mrp > 0
-      ? "<span class=\"card-mrp\">" + mrp.toLocaleString("en-IN") + "</span>" +        "<span class=\"card-discounted-price\">" + discountedPrice.toLocaleString("en-IN") + "</span>" +        "<span class=\"card-discount-percent\">-" + discountPercent + "%</span>"      : "<span class=\"card-price\">" + Number(item.price).toLocaleString("en-IN") + "</span>";
-
-    return "<article class=\"garment-card\">" +      "<div class=\"card-media\">" +        fitTag +        "<img src="" + item.image + "" alt="" + item.title + "" loading="lazy" />" +        colorSwatches +      "</div>" +      "<div class=\"card-info\">" +        "<span class=\"card-craft\">" + (item.craft || "Artisanal") + "</span>" +        "<h2 class=\"card-title\">" + item.title + "</h2>" +        "<div class=\"card-prices\">" + priceHtml + "</div>" +        "<p class=\"card-fabric\">" + (item.fabric || "Pure Silk") + "</p>" +      "</div>" +    "</article>";
+  });
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) syncDressesLive(); });
+  window.addEventListener('focus', syncDressesLive);
+  setInterval(syncDressesLive, 3000);
 })();
 </script>
 

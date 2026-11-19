@@ -244,6 +244,15 @@ async function saveCarouselSlides(slides) {
 async function getCatalog() {
   const remote = await fetchDoc('atelier_catalog');
   if (Array.isArray(remote) && remote.length > 0) {
+    for (let i = 0; i < remote.length; i++) {
+      if (typeof remote[i].image === 'string' && remote[i].image.startsWith('firestore:')) {
+        const docKey = remote[i].image.replace('firestore:', '');
+        const imgDoc = await fetchDoc(docKey);
+        if (imgDoc && imgDoc.img) {
+          remote[i].image = imgDoc.img;
+        }
+      }
+    }
     if (!_cache) _cache = readLocalFallback();
     _cache.catalog = remote;
     return remote;
@@ -256,7 +265,22 @@ async function saveCatalog(catalog) {
   if (!_cache) _cache = readLocalFallback();
   _cache.catalog = catalog;
   _lastFetchTime = Date.now();
-  await saveDoc('atelier_catalog', catalog);
+
+  const payloadCatalog = JSON.parse(JSON.stringify(catalog));
+  const subDocPromises = [];
+  for (let i = 0; i < payloadCatalog.length; i++) {
+    const item = payloadCatalog[i];
+    if (typeof item.image === 'string' && item.image.startsWith('data:image')) {
+      const docKey = `atelier_garment_img_${item.id || i}`;
+      subDocPromises.push(saveDoc(docKey, { img: item.image, updatedAt: new Date().toISOString() }));
+      item.image = `firestore:${docKey}`;
+    }
+  }
+  if (subDocPromises.length > 0) {
+    await Promise.all(subDocPromises);
+  }
+
+  await saveDoc('atelier_catalog', payloadCatalog);
   return catalog;
 }
 

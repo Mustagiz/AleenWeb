@@ -6840,6 +6840,29 @@ const DEFAULT_CATALOG = [{"id": "ALN-PK-01", "title": "Zeenat Embroidered Pakist
       });
 
       const catalogBroadcast = typeof BroadcastChannel !== 'undefined' ? new BroadcastChannel('aleen_catalog_realtime') : null;
+      if (catalogBroadcast) {
+        catalogBroadcast.onmessage = (event) => {
+          if (event.data && event.data.type === 'CATALOG_UPDATED' && Array.isArray(event.data.catalog) && event.data.catalog.length > 0) {
+            const currentStr = JSON.stringify(catalog);
+            const newStr = JSON.stringify(event.data.catalog);
+            if (currentStr !== newStr) {
+              catalog = event.data.catalog;
+              renderCatalog();
+            }
+          }
+        };
+      }
+      window.addEventListener('storage', (e) => {
+        if (e.key === 'aleen_master_catalog' && e.newValue) {
+          try {
+            const parsed = JSON.parse(e.newValue);
+            if (Array.isArray(parsed) && JSON.stringify(catalog) !== e.newValue) {
+              catalog = parsed;
+              renderCatalog();
+            }
+          } catch(err) {}
+        }
+      });
 
       async function saveCatalog() {
         localStorage.setItem("aleen_master_catalog", JSON.stringify(catalog));
@@ -6912,6 +6935,11 @@ const DEFAULT_CATALOG = [{"id": "ALN-PK-01", "title": "Zeenat Embroidered Pakist
               catalog = updated;
               localStorage.setItem("aleen_master_catalog", JSON.stringify(catalog));
               renderCatalog();
+              if (catalogBroadcast) {
+                try {
+                  catalogBroadcast.postMessage({ type: 'CATALOG_UPDATED', catalog: catalog, timestamp: Date.now() });
+                } catch(e) {}
+              }
             }
             showToast("✦ Garment & catalog saved to server permanently!");
             return true;

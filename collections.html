@@ -5274,65 +5274,79 @@ html, body {
         try {
           const parsed = JSON.parse(savedCatalog);
           if (Array.isArray(parsed) && parsed.length > 0) {
-            GARMENTS = parsed.map(item => {
-              if (item.id === "ALN-SR-01" || (item.title && item.title.includes("Chandramukhi"))) return DEFAULT_GARMENTS[0];
-              if (item.id === "ALN-SR-05" || (item.title && item.title.includes("Kalamkari"))) return DEFAULT_GARMENTS[4];
-              if (item.id === "ALN-SR-09" || (item.title && item.title.includes("Nirvana Organza"))) return DEFAULT_GARMENTS[8];
-              return mergeDefaultPricing(item);
-            });
+            GARMENTS = parsed;
           }
         } catch (e) {
           console.warn("Using default garments:", e);
         }
       }
 
-      // Live Sync with Server Backend
-      fetch('/api/catalog?t=' + Date.now())
-        .then(r => r.json())
-        .then(data => {
-          const list = Array.isArray(data.catalog) ? data.catalog : (Array.isArray(data.garments) ? data.garments : null);
-          if (list && list.length > 0) {
-            GARMENTS = list.map(mergeDefaultPricing);
-            localStorage.setItem("aleen_master_catalog", JSON.stringify(GARMENTS));
-            if (typeof updateCategoryPillCounts === 'function') {
-              updateCategoryPillCounts();
-            }
-            if (typeof filterAndSortGarments === 'function') {
-              filterAndSortGarments(false);
-            }
-          }
-        })
-        .catch(() => { });
+      function applyCatalogSync(list) {
+        if (!Array.isArray(list) || list.length === 0) return;
+        const currentStr = JSON.stringify(GARMENTS);
+        const newStr = JSON.stringify(list);
+        if (currentStr === newStr) return;
 
-      // Real-time tab sync when Admin modifies catalog
+        GARMENTS = list;
+        try {
+          localStorage.setItem("aleen_master_catalog", newStr);
+        } catch(e) {}
+
+        if (typeof updateCategoryPillCounts === 'function') {
+          updateCategoryPillCounts();
+        }
+        if (typeof filterAndSortGarments === 'function') {
+          filterAndSortGarments(false);
+        }
+        if (activeModalItem && typeof openModal === 'function') {
+          const fresh = GARMENTS.find(g => g.id === activeModalItem.id);
+          if (fresh) openModal(fresh.id);
+        }
+      }
+
+      function refreshCatalogFromServer() {
+        fetch('/api/catalog?t=' + Date.now())
+          .then(r => r.json())
+          .then(data => {
+            const list = Array.isArray(data.catalog) ? data.catalog : (Array.isArray(data.garments) ? data.garments : null);
+            if (list && list.length > 0) {
+              applyCatalogSync(list);
+            }
+          })
+          .catch(() => {});
+      }
+
+      // Initial live fetch
+      refreshCatalogFromServer();
+
+      // Real-time tab sync when Admin modifies catalog (BroadcastChannel)
       if (typeof BroadcastChannel !== 'undefined') {
         const catChannel = new BroadcastChannel('aleen_catalog_realtime');
         catChannel.onmessage = (event) => {
           if (event.data && event.data.type === 'CATALOG_UPDATED' && Array.isArray(event.data.catalog) && event.data.catalog.length > 0) {
-            GARMENTS = event.data.catalog;
-            if (typeof updateCategoryPillCounts === 'function') {
-              updateCategoryPillCounts();
-            }
-            if (typeof filterAndSortGarments === 'function') {
-              filterAndSortGarments(false);
-            }
+            applyCatalogSync(event.data.catalog);
           }
         };
       }
 
+      // Cross-window/tab sync via storage event
       window.addEventListener('storage', (e) => {
         if (e.key === 'aleen_master_catalog' && e.newValue) {
           try {
-            GARMENTS = JSON.parse(e.newValue);
-            if (typeof updateCategoryPillCounts === 'function') {
-              updateCategoryPillCounts();
-            }
-            if (typeof filterAndSortGarments === 'function') {
-              filterAndSortGarments(false);
-            }
+            const parsed = JSON.parse(e.newValue);
+            if (Array.isArray(parsed)) applyCatalogSync(parsed);
           } catch (err) { }
         }
       });
+
+      // Instant sync on tab switch or window focus
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) refreshCatalogFromServer();
+      });
+      window.addEventListener('focus', refreshCatalogFromServer);
+
+      // Lightweight polling every 3 seconds for cross-device & cross-browser live sync
+      setInterval(refreshCatalogFromServer, 3000);
 
       let currentCategory = "all";
       let currentPriceFilter = "all"; // 'all', 'under30k', '30k-50k', '50k-80k', 'above80k', 'custom'

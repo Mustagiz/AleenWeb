@@ -83,7 +83,7 @@
       "title": "Zeenat Embroidered Pakistani Kurti",
       "category": "kurtis",
       "categoryLabel": "Pakistani Kurtis",
-      "price": 33600,
+      "price": 14999,
       "craft": "Pure Zari & Adda Needlework",
       "fabric": "Pure Raw Silk with Organza Lace Trims",
       "origin": "Lahore Atelier",
@@ -97,9 +97,9 @@
       "images": [
         "/assets/pakistani-kurti-1.jpg"
       ],
-      "mrp": 48000,
-      "discountedPrice": 33600,
-      "discountPercent": 30,
+      "mrp": 24999,
+      "discountedPrice": 14999,
+      "discountPercent": 40,
       "fitLabel": "Royal Tailored Fit",
       "rating": 4.2,
       "garmentColors": [
