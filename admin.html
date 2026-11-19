@@ -6840,17 +6840,27 @@ const DEFAULT_CATALOG = [{"id": "ALN-PK-01", "title": "Zeenat Embroidered Pakist
         try {
           let res = await doSave(token);
           if (res.status === 401 || res.status === 403) {
-            const pass = prompt("Atelier admin session required. Please enter admin passcode (aleen):") || "aleen";
+            // Token expired — prompt for password with no leaked default
+            const pass = prompt("Session expired. Please re-enter your admin password to save:");
+            if (!pass) {
+              showToast("⚠ Save cancelled — please log out and log back in.");
+              return false;
+            }
             const loginRes = await fetch("/api/auth/login", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ password: pass, username: "admin" })
+              body: JSON.stringify({ passcode: pass, username: "admin" })
             });
             if (loginRes.ok) {
               const loginData = await loginRes.json();
-              token = loginData.token;
-              localStorage.setItem("atelier_admin_token", token);
-              res = await doSave(token);
+              if (loginData.token) {
+                token = loginData.token;
+                localStorage.setItem("atelier_admin_token", token);
+                res = await doSave(token);
+              }
+            } else {
+              showToast("⚠ Authentication failed — wrong password. Please log out and log back in.");
+              return false;
             }
           }
 
@@ -6865,13 +6875,14 @@ const DEFAULT_CATALOG = [{"id": "ALN-PK-01", "title": "Zeenat Embroidered Pakist
             showToast("✦ Garment & catalog saved to server permanently!");
             return true;
           } else {
-            console.error("Save catalog error status:", res.status);
-            showToast("⚠ Notice: Saved to local draft (status " + res.status + ").");
+            const errBody = await res.json().catch(() => ({}));
+            console.error("Save catalog error status:", res.status, errBody);
+            showToast("⚠ Save FAILED (status " + res.status + "): " + (errBody.error || "Please log out and log back in."));
             return false;
           }
         } catch(err) {
           console.error("Save catalog error:", err);
-          showToast("⚠ Saved to local storage draft.");
+          showToast("⚠ Network error — could not reach server. Changes saved locally only.");
           return false;
         }
       }
