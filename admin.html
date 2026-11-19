@@ -3472,6 +3472,207 @@ const DEFAULT_CATALOG = [{"id": "ALN-PK-01", "title": "Zeenat Embroidered Pakist
       }
     }
 
+    /* Universal Button Shadow Removal across Admin */
+    button,
+    [type="button"],
+    [type="submit"],
+    .btn,
+    .admin-tab-btn,
+    .auth-btn,
+    .tbl-btn,
+    .pane-add-btn,
+    .admin-logout-btn,
+    .admin-wa-modal-btn,
+    .auth-gate-close-btn {
+      box-shadow: none !important;
+    }
+    button:hover,
+    [type="button"]:hover,
+    [type="submit"]:hover,
+    .btn:hover,
+    .admin-tab-btn:hover,
+    .auth-btn:hover,
+    .tbl-btn:hover,
+    .pane-add-btn:hover,
+    .admin-logout-btn:hover,
+    .admin-wa-modal-btn:hover,
+    .auth-gate-close-btn:hover {
+      box-shadow: none !important;
+    }
+
+    /* Auth Gate Close Button */
+    .auth-gate-close-btn {
+      position: absolute !important;
+      top: 16px !important;
+      right: 16px !important;
+      width: 36px !important;
+      height: 36px !important;
+      border-radius: 50% !important;
+      background: rgba(0, 0, 0, 0.05) !important;
+      border: 1px solid rgba(0, 0, 0, 0.08) !important;
+      color: #162217 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      cursor: pointer !important;
+      padding: 0 !important;
+      box-shadow: none !important;
+      transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+    }
+    .auth-gate-close-btn:hover {
+      background: #ffffff !important;
+      color: #000000 !important;
+      transform: scale(1.08) !important;
+      border-color: rgba(201, 163, 95, 0.4) !important;
+      box-shadow: none !important;
+    }
+
+    /* Responsive Admin Top Section & Subbar (Mobile & Tablet) */
+    .admin-subbar {
+      box-shadow: none !important;
+    }
+    .admin-tab-btn {
+      border-radius: 8px !important;
+      box-shadow: none !important;
+    }
+
+    .tbl-mobile-meta {
+      display: none;
+    }
+
+    @media (max-width: 900px) {
+      .admin-subbar {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 12px !important;
+        padding: 12px 16px !important;
+      }
+      .admin-tabs {
+        display: flex !important;
+        overflow-x: auto !important;
+        flex-wrap: nowrap !important;
+        -webkit-overflow-scrolling: touch !important;
+        scrollbar-width: none !important;
+        gap: 6px !important;
+        padding-bottom: 4px !important;
+        width: 100% !important;
+      }
+      .admin-tabs::-webkit-scrollbar {
+        display: none !important;
+      }
+      .admin-tab-btn {
+        flex-shrink: 0 !important;
+        white-space: nowrap !important;
+        padding: 8px 14px !important;
+        font-size: 12px !important;
+      }
+      .admin-subbar-right {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        width: 100% !important;
+      }
+      .user-pill {
+        font-size: 11.5px !important;
+        padding: 6px 12px !important;
+      }
+      .admin-logout-btn {
+        padding: 6px 14px !important;
+        font-size: 11.5px !important;
+        border-radius: 6px !important;
+        box-shadow: none !important;
+      }
+      .catalog-toolbar {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 12px !important;
+      }
+      .catalog-toolbar .search-box {
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+      .toolbar-actions {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+        width: 100% !important;
+      }
+      .toolbar-actions button {
+        flex: 1 1 auto !important;
+        justify-content: center !important;
+        padding: 10px 14px !important;
+        font-size: 12px !important;
+        border-radius: 8px !important;
+        box-shadow: none !important;
+      }
+    }
+
+    /* Responsive Catalog Table (Fix for Picture media_1795119192230_c69bda26.jpg) */
+    .table-card {
+      background: #ffffff !important;
+      border: 1.5px solid #9caf88 !important;
+      border-radius: 16px !important;
+      box-shadow: none !important;
+      overflow-x: auto !important;
+      -webkit-overflow-scrolling: touch !important;
+      width: 100% !important;
+    }
+
+    @media (max-width: 768px) {
+      .table-card {
+        border-radius: 12px !important;
+      }
+      .col-craft,
+      .col-fabric,
+      .col-cat {
+        display: none !important;
+      }
+      .tbl-mobile-meta {
+        display: flex !important;
+        align-items: center;
+        gap: 6px;
+        margin-top: 4px;
+        flex-wrap: wrap;
+      }
+      .tbl-fabric-tag {
+        font-size: 10px;
+        color: #556b4f;
+        background: #f7f5ef;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-weight: 500;
+      }
+      .admin-table {
+        min-width: 100% !important;
+        width: 100% !important;
+      }
+      .admin-table th,
+      .admin-table td {
+        padding: 12px 10px !important;
+      }
+      .tbl-img {
+        width: 46px !important;
+        height: 60px !important;
+      }
+      .tbl-title {
+        font-size: 13.5px !important;
+        line-height: 1.25 !important;
+      }
+      .tbl-actions {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 4px !important;
+      }
+      .tbl-btn {
+        padding: 6px 12px !important;
+        font-size: 11px !important;
+        border-radius: 6px !important;
+        box-shadow: none !important;
+        text-align: center !important;
+        width: 100% !important;
+      }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       .admin-stats-row.is-revealing .stat-card {
         animation: none !important;
@@ -3826,6 +4027,12 @@ const DEFAULT_CATALOG = [{"id": "ALN-PK-01", "title": "Zeenat Embroidered Pakist
   <!-- ======================= AUTH GATE ======================= -->
   <div class="admin-auth-gate" id="adminAuthGate">
     <div class="auth-gate-card">
+      <button type="button" class="auth-gate-close-btn" id="authGateCloseBtn" aria-label="Exit to storefront" title="Exit to storefront">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
       <div class="auth-crest-icon">
         <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"
           stroke-linecap="round" stroke-linejoin="round">
@@ -3976,13 +4183,13 @@ const DEFAULT_CATALOG = [{"id": "ALN-PK-01", "title": "Zeenat Embroidered Pakist
         <table class="admin-table">
           <thead>
             <tr>
-              <th>Photo</th>
-              <th>Garment Name &amp; Code</th>
-              <th>Category</th>
-              <th>Craftsmanship</th>
-              <th>Fabric</th>
-              <th>Price</th>
-              <th>Actions</th>
+              <th class="col-photo">Photo</th>
+              <th class="col-title">Garment Name &amp; Code</th>
+              <th class="col-cat">Category</th>
+              <th class="col-craft">Craftsmanship</th>
+              <th class="col-fabric">Fabric</th>
+              <th class="col-price">Price</th>
+              <th class="col-actions">Actions</th>
             </tr>
           </thead>
           <tbody id="catalogTableBody">
@@ -5623,6 +5830,12 @@ const DEFAULT_CATALOG = [{"id": "ALN-PK-01", "title": "Zeenat Embroidered Pakist
       const toastTxt = document.getElementById("adminToastTxt");
       const userNameTxt = document.getElementById("userNameTxt");
       const userRoleBadge = document.getElementById("userRoleBadge");
+      const authGateCloseBtn = document.getElementById("authGateCloseBtn");
+      if (authGateCloseBtn) {
+        authGateCloseBtn.addEventListener("click", () => {
+          window.location.href = "/collections";
+        });
+      }
 
       function showToast(msg) {
         if (!toast || !toastTxt) return;
@@ -5926,26 +6139,30 @@ const DEFAULT_CATALOG = [{"id": "ALN-PK-01", "title": "Zeenat Embroidered Pakist
 
         catalogBody.innerHTML = filtered.map(item => `
       <tr>
-        <td>
+        <td class="col-photo">
           <img src="${item.image}" alt="${item.title}" class="tbl-img" onerror="this.src='assets/pakistani-kurti-1.jpg'">
         </td>
-        <td>
+        <td class="col-title">
           <div class="tbl-title">${item.title}</div>
           <div class="tbl-id">${item.id}</div>
+          <div class="tbl-mobile-meta">
+            <span class="tbl-cat-badge">${item.category}</span>
+            <span class="tbl-fabric-tag">${item.fabric || 'Pure Silk'}</span>
+          </div>
         </td>
-        <td>
+        <td class="col-cat">
           <span class="tbl-cat-badge">${item.category}</span>
         </td>
-        <td>${item.craft || 'Artisanal'}</td>
-        <td>${item.fabric || 'Pure Silk'}</td>
-        <td>
+        <td class="col-craft">${item.craft || 'Artisanal'}</td>
+        <td class="col-fabric">${item.fabric || 'Pure Silk'}</td>
+        <td class="col-price">
           <span class="tbl-price">₹${Number(item.price || item.discountedPrice || 0).toLocaleString("en-IN")}</span>
           ${item.mrp && Number(item.mrp) > Number(item.price || item.discountedPrice || 0) ? `
             <div style="font-size: 11px; color: #748c66; text-decoration: line-through;">MRP ₹${Number(item.mrp).toLocaleString("en-IN")}</div>
             <div style="font-size: 10.5px; color: #168a3a; font-weight: 700;">${Math.round(((Number(item.mrp) - Number(item.price || item.discountedPrice || 0)) / Number(item.mrp)) * 100)}% OFF</div>
           ` : ''}
         </td>
-        <td>
+        <td class="col-actions">
           <div class="tbl-actions">
             <button type="button" class="tbl-btn tbl-btn-edit" onclick="editGarment('${item.id}')">Edit</button>
             <button type="button" class="tbl-btn tbl-btn-del" onclick="deleteGarment('${item.id}')">Delete</button>

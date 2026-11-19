@@ -1257,7 +1257,7 @@
       padding: 11px 22px;
       background: linear-gradient(135deg, rgba(201, 163, 95, 0.22) 0%, rgba(201, 163, 95, 0.1) 100%);
       border: 1px solid rgba(201, 163, 95, 0.55);
-      border-radius: 999px;
+      border-radius: 8px;
       color: #fce7b3;
       font-family: var(--sans);
       font-size: 12px;
@@ -1268,11 +1268,12 @@
       transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
       white-space: nowrap;
       user-select: none;
+      box-shadow: none;
     }
     .ecom-refine-trigger-btn:hover {
       background: linear-gradient(135deg, rgba(201, 163, 95, 0.35) 0%, rgba(201, 163, 95, 0.2) 100%);
       border-color: var(--gold-light);
-      box-shadow: 0 4px 18px rgba(201, 163, 95, 0.35);
+      box-shadow: none;
       transform: translateY(-1px);
       color: #ffffff;
     }
@@ -1343,7 +1344,7 @@
       height: 42px;
       background: rgba(4, 10, 7, 0.78);
       border: 1px solid rgba(201, 163, 95, 0.32);
-      border-radius: 999px;
+      border-radius: 8px;
       padding: 0 42px 0 44px;
       font-family: var(--sans);
       font-size: 12.5px;
@@ -1351,11 +1352,12 @@
       outline: none;
       box-sizing: border-box;
       transition: all 0.25s ease;
+      box-shadow: none;
     }
     .search-input:focus {
       border-color: var(--gold);
       background: rgba(4, 10, 7, 0.95);
-      box-shadow: 0 0 18px rgba(201, 163, 95, 0.35);
+      box-shadow: none;
     }
     .search-input::placeholder {
       color: rgba(239, 228, 200, 0.45);
@@ -4519,13 +4521,13 @@ html, body {
   <div class="ecom-drawer-scrim" id="ecomDrawerScrim" aria-hidden="true"></div>
   <aside class="ecom-filter-drawer" id="ecomFilterDrawer" aria-labelledby="ecomDrawerTitle" role="dialog" aria-modal="true">
     <div class="ecom-drawer-header">
-      <div style="display: flex; align-items: center; gap: 10px;">
-        <h2 class="ecom-drawer-title" id="ecomDrawerTitle">Filter &amp; Refine</h2>
-      </div>
-      <div style="display: flex; align-items: center; gap: 14px;">
-        <button type="button" class="ecom-drawer-clear-btn" onclick="resetFilters()">Reset All</button>
-        <button type="button" class="ecom-drawer-close" id="closeFilterDrawerBtn" aria-label="Close filters">✕</button>
-      </div>
+      <h2 class="ecom-drawer-title" id="ecomDrawerTitle">Filter &amp; Refine</h2>
+      <button type="button" class="ecom-drawer-close" id="closeFilterDrawerBtn" aria-label="Close filters" title="Close">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
     </div>
 
     <div class="ecom-drawer-body">
