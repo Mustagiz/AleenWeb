@@ -1571,16 +1571,21 @@
       position: fixed;
       top: 0;
       right: 0;
+      bottom: 0;
       width: min(450px, 92vw);
+      height: 100%;
       height: 100vh;
+      height: 100dvh;
+      max-height: 100dvh;
       background: linear-gradient(180deg, #c2d1b0 0%, #b2c29f 100%);
       border-left: 2px solid #000000;
       box-shadow: -15px 0 50px rgba(0, 0, 0, 0.65);
-      z-index: 9995;
+      z-index: 99995;
       transform: translateX(100%);
       transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
       display: flex;
       flex-direction: column;
+      overflow: hidden;
       box-sizing: border-box;
       color: #000000;
     }
@@ -1644,7 +1649,10 @@
     .ecom-drawer-body {
       padding: 20px 24px;
       overflow-y: auto;
-      flex: 1;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      flex: 1 1 auto;
+      min-height: 0;
       display: flex;
       flex-direction: column;
       gap: 24px;
@@ -1778,25 +1786,32 @@
     }
 
     .ecom-drawer-footer {
-      padding: 18px 24px;
+      padding: 14px 22px;
+      padding-bottom: max(16px, env(safe-area-inset-bottom, 16px));
       border-top: 1.5px solid rgba(0, 0, 0, 0.2);
       display: flex;
       align-items: center;
       gap: 12px;
       background: #aab997;
       flex-shrink: 0;
+      position: sticky;
+      bottom: 0;
+      z-index: 20;
+      box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.12);
     }
     .ecom-drawer-reset-btn {
       flex: 1;
-      height: 44px;
+      height: 46px;
+      min-height: 46px;
       background: transparent;
       border: 1.5px solid #000000;
       color: #000000;
-      border-radius: 999px;
+      border-radius: 8px;
       font-family: var(--sans);
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 700;
       cursor: pointer;
+      box-shadow: none !important;
       transition: all 0.2s ease;
     }
     .ecom-drawer-reset-btn:hover {
@@ -1804,28 +1819,25 @@
       color: #000000;
     }
     .ecom-drawer-apply-btn {
-      flex: 2;
-      height: 44px;
+      flex: 1.8;
+      height: 46px;
+      min-height: 46px;
       background: #000000;
       border: 1.5px solid #000000;
       color: #ffffff;
-      border-radius: 999px;
+      border-radius: 8px;
       font-family: var(--sans);
-      font-size: 12.5px;
+      font-size: 13px;
       font-weight: 700;
       letter-spacing: 0.5px;
       cursor: pointer;
+      box-shadow: none !important;
       transition: all 0.25s ease;
     }
     .ecom-drawer-apply-btn:hover {
       background: #242424;
       color: #ffffff;
-    }
-      box-shadow: 0 6px 20px rgba(201, 163, 95, 0.35);
-    }
-    .ecom-drawer-apply-btn:hover {
       transform: translateY(-1px);
-      box-shadow: 0 8px 25px rgba(201, 163, 95, 0.5);
     }
 
     /* Grid View Switcher Modifier Classes */

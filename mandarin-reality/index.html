@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mandarin Reality — Luxury Real Estate in Dubai | ماندارين العقارية</title>
+<meta name="description" content="Mandarin Reality curates Dubai's finest penthouses, villas and residences. Golden Visa guidance, private viewings and concierge ownership — from Downtown to the Palm.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230A1120'/%3E%3Cg fill='none' stroke='%23C9A227' stroke-width='5'%3E%3Crect x='28' y='28' width='44' height='44'/%3E%3Crect x='28' y='28' width='44' height='44' transform='rotate(45 50 50)'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Outfit:wght@300;400;500;600&family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --ink:#0A1120; --ink-2:#0F1930; --ink-3:#16233E; --ink-4:#1D2C4C;
+  --gold:#C9A227; --gold-2:#E8C96A; --gold-3:#F3E3AC;
+  --sand:#EDE3CE; --sand-2:#F7F1E3; --sand-3:#E2D5B8;
+  --emerald:#0E6B54; --emerald-2:#1B9C77; --emerald-deep:#0A3D31;
+  --terra:#C05B2E;
+  --success:#1B9C77; --warning:#D9A420; --danger:#C44536; --info:#3E7CB1;
+  --text-on-ink:#EFE8D8; --muted-on-ink:#9BA6BC;
+  --text-on-sand:#22293A; --muted-on-sand:#6B6350;
+  --line-on-ink:rgba(201,162,39,.22); --line-on-sand:rgba(34,41,58,.14);
+  --ease:cubic-bezier(.22,1,.36,1); --ease-io:cubic-bezier(.65,0,.35,1);
+  --nav-h:76px;
+  --font-display:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+  --font-body:"Outfit",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --font-ar:"Aref Ruqaa","Traditional Arabic","Amiri",serif;
+  --pattern-ink:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='84' height='84' viewBox='0 0 84 84'%3E%3Cg fill='none' stroke='%23C9A227' stroke-opacity='.14' stroke-width='1'%3E%3Crect x='26' y='26' width='32' height='32'/%3E%3Crect x='26' y='26' width='32' height='32' transform='rotate(45 42 42)'/%3E%3Cpath d='M42 0v18M42 66v18M0 42h18M66 42h18'/%3E%3C/g%3E%3C/svg%3E");
+  --pattern-sand:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='84' height='84' viewBox='0 0 84 84'%3E%3Cg fill='none' stroke='%238a713a' stroke-opacity='.16' stroke-width='1'%3E%3Crect x='26' y='26' width='32' height='32'/%3E%3Crect x='26' y='26' width='32' height='32' transform='rotate(45 42 42)'/%3E%3Cpath d='M42 0v18M42 66v18M0 42h18M66 42h18'/%3E%3C/g%3E%3C/svg%3E");
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--font-body); background:var(--ink); color:var(--text-on-ink);
+  font-weight:300; line-height:1.6; overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+body.menu-open,body.loading{overflow:hidden}
+::selection{background:var(--gold);color:var(--ink)}
+/* scrollbar in the page's own language */
+html{scrollbar-width:thin;scrollbar-color:var(--gold) var(--ink-2)}
+::-webkit-scrollbar{width:10px}
+::-webkit-scrollbar-track{background:var(--ink-2)}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--gold),#8a713a);border-radius:8px;border:2px solid var(--ink-2)}
+::-webkit-scrollbar-thumb:hover{background:var(--gold-2)}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--gold-2);outline-offset:3px;border-radius:2px}
+section{scroll-margin-top:calc(var(--nav-h) + 8px)}
+.skip-link{position:fixed;top:-60px;left:16px;z-index:3000;background:var(--gold);color:var(--ink);padding:10px 18px;border-radius:6px;font-weight:600;transition:top .25s}
+.skip-link:focus{top:12px}
+.wrap{width:min(1220px,92%);margin-inline:auto}
+.ar{font-family:var(--font-ar);direction:rtl;unicode-bidi:isolate}
+
+/* ============ LOADER ============ */
+#loader{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;background:var(--ink)}
+#loader .panel{position:absolute;left:0;width:100%;height:50.5%;background:var(--ink);transition:transform 1s var(--ease-io)}
+#loader .panel.top{top:0}
+#loader .panel.bottom{bottom:0;background:var(--ink-2)}
+#loader .panel.bottom::before{content:"";position:absolute;inset:0;background-image:var(--pattern-ink);opacity:.5}
+#loader .core{position:relative;z-index:2;text-align:center;transition:opacity .5s ease,transform .7s var(--ease)}
+#loader .star{width:92px;height:92px;margin:0 auto 22px;position:relative}
+#loader .star svg{width:100%;height:100%;overflow:visible}
+#loader .star .s1{animation:spin 9s linear infinite;transform-origin:50% 50%}
+#loader .star .s2{animation:spin-r 9s linear infinite;transform-origin:50% 50%}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes spin-r{to{transform:rotate(-360deg)}}
+#loader .welcome{font-family:var(--font-ar);color:var(--gold-2);font-size:1.35rem;margin-bottom:10px;opacity:.9}
+#loader .brand{font-family:var(--font-display);font-weight:600;font-size:clamp(1.7rem,4.5vw,2.6rem);letter-spacing:.34em;text-indent:.34em;color:var(--text-on-ink);display:flex;justify-content:center}
+#loader .brand span{opacity:0;transform:translateY(16px);animation:letter .7s var(--ease) forwards;animation-delay:calc(var(--i)*.055s + .15s)}
+@keyframes letter{to{opacity:1;transform:none}}
+#loader .sub{margin-top:8px;font-size:.72rem;letter-spacing:.5em;text-indent:.5em;color:var(--muted-on-ink);text-transform:uppercase}
+#loader .bar{width:min(260px,60vw);height:1px;background:rgba(201,162,39,.2);margin:30px auto 12px;position:relative;overflow:hidden}
+#loader .bar i{position:absolute;inset:0;background:linear-gradient(90deg,var(--gold),var(--gold-2));transform-origin:left;transform:scaleX(0)}
+#loader .pct{font-size:.78rem;letter-spacing:.3em;color:var(--gold-2);font-variant-numeric:tabular-nums}
+#loader.done .core{opacity:0;transform:translateY(-26px) scale(.96)}
+#loader.done .panel.top{transform:translateY(-101%)}
+#loader.done .panel.bottom{transform:translateY(101%)}
+#loader.gone{display:none}
+
+/* ============ CURSOR ============ */
+#cursor-dot,#cursor-ring{position:fixed;top:0;left:0;pointer-events:none;z-index:1500;border-radius:50%;opacity:0}
+#cursor-dot{width:6px;height:6px;background:var(--gold-2);transform:translate(-50%,-50%)}
+#cursor-ring{width:36px;height:36px;border:1px solid rgba(201,162,39,.65);transform:translate(-50%,-50%);transition:width .3s var(--ease),height .3s var(--ease),border-color .3s,background .3s}
+#cursor-ring.hot{width:58px;height:58px;border-color:var(--gold-2);background:rgba(201,162,39,.08)}
+@media (pointer:coarse){#cursor-dot,#cursor-ring{display:none}}
+
+/* ============ NAV ============ */
+#nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:var(--nav-h);display:flex;align-items:center;transition:background .4s,box-shadow .4s,border-color .4s;border-bottom:1px solid transparent}
+#nav.scrolled{background:rgba(10,17,32,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom-color:var(--line-on-ink);box-shadow:0 12px 40px rgba(0,0,0,.35)}
+#nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:12px}
+.logo svg{width:34px;height:34px;flex:none}
+.logo .t{line-height:1.15}
+.logo .t b{display:block;font-family:var(--font-display);font-weight:600;font-size:1.12rem;letter-spacing:.22em;color:var(--text-on-ink)}
+.logo .t small{display:block;font-size:.58rem;letter-spacing:.42em;color:var(--gold-2);text-transform:uppercase}
+.nav-links{display:flex;align-items:center;gap:30px;list-style:none}
+.nav-links a{font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-on-ink);position:relative;padding:6px 0;transition:color .3s}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:1px;background:var(--gold-2);transform:scaleX(0);transform-origin:right;transition:transform .35s var(--ease)}
+.nav-links a:hover,.nav-links a.active{color:var(--gold-2)}
+.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1);transform-origin:left}
+.nav-cta{display:flex;align-items:center;gap:16px}
+.nav-ar{font-family:var(--font-ar);color:var(--gold);font-size:1.05rem;opacity:.85}
+.btn{display:inline-flex;align-items:center;gap:10px;border:none;border-radius:4px;font-family:var(--font-body);font-weight:500;font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;padding:14px 26px;transition:transform .3s var(--ease),box-shadow .3s,background .3s,color .3s,border-color .3s;will-change:transform}
+.btn-gold{background:linear-gradient(120deg,var(--gold),#A88420);color:var(--ink);box-shadow:0 8px 26px rgba(201,162,39,.28)}
+.btn-gold:hover{background:linear-gradient(120deg,var(--gold-2),var(--gold));box-shadow:0 12px 34px rgba(201,162,39,.42)}
+.btn-ghost{background:transparent;color:var(--text-on-ink);border:1px solid rgba(239,232,216,.35)}
+.btn-ghost:hover{border-color:var(--gold-2);color:var(--gold-2)}
+.btn-sm{padding:11px 20px;font-size:.74rem}
+.btn .arr{transition:transform .3s var(--ease)}
+.btn:hover .arr{transform:translateX(4px)}
+#hamburger{display:none;background:none;border:1px solid var(--line-on-ink);border-radius:6px;width:46px;height:42px;position:relative;z-index:1201}
+#hamburger span{position:absolute;left:12px;right:12px;height:1.6px;background:var(--gold-2);transition:transform .35s var(--ease),opacity .25s,top .35s var(--ease)}
+#hamburger span:nth-child(1){top:14px}
+#hamburger span:nth-child(2){top:20px}
+#hamburger span:nth-child(3){top:26px}
+body.menu-open #hamburger span:nth-child(1){top:20px;transform:rotate(45deg)}
+body.menu-open #hamburger span:nth-child(2){opacity:0}
+body.menu-open #hamburger span:nth-child(3){top:20px;transform:rotate(-45deg)}
+#mobile-menu{position:fixed;inset:0;z-index:1100;background:rgba(10,17,32,.97);backdrop-filter:blur(10px);display:flex;flex-direction:column;justify-content:center;padding:0 8%;opacity:0;visibility:hidden;transition:opacity .45s ease,visibility .45s}
+#mobile-menu::before{content:"";position:absolute;inset:0;background-image:var(--pattern-ink);opacity:.4;pointer-events:none}
+body.menu-open #mobile-menu{opacity:1;visibility:visible}
+#mobile-menu a.mm-link{font-family:var(--font-display);font-size:clamp(2rem,8vw,3.2rem);font-weight:500;color:var(--text-on-ink);padding:10px 0;display:flex;align-items:baseline;gap:18px;border-bottom:1px solid rgba(201,162,39,.12);opacity:0;transform:translateY(24px);transition:opacity .5s var(--ease),transform .5s var(--ease),color .3s}
+#mobile-menu a.mm-link small{font-family:var(--font-ar);font-size:1rem;color:var(--gold);opacity:.8}
+#mobile-menu a.mm-link:hover{color:var(--gold-2)}
+body.menu-open #mobile-menu a.mm-link{opacity:1;transform:none;transition-delay:calc(var(--i)*.07s + .1s)}
+#mobile-menu .mm-foot{margin-top:34px;color:var(--muted-on-ink);font-size:.85rem;letter-spacing:.1em;opacity:0;transition:opacity .5s .5s}
+body.menu-open #mobile-menu .mm-foot{opacity:1}
+
+/* ============ HERO ============ */
+#hero{position:relative;min-height:100svh;display:flex;align-items:center;overflow:hidden;background:var(--ink)}
+.hero-bg{position:absolute;inset:-6%;z-index:0;will-change:transform}
+.hero-bg img{width:100%;height:100%;object-fit:cover;animation:kenburns 26s ease-in-out infinite alternate}
+@keyframes kenburns{from{transform:scale(1.05)}to{transform:scale(1.16)}}
+.hero-veil{position:absolute;inset:0;z-index:1;background:
+  linear-gradient(100deg,rgba(10,17,32,.93) 0%,rgba(10,17,32,.72) 34%,rgba(10,17,32,.28) 62%,rgba(10,61,49,.34) 100%),
+  linear-gradient(to top,var(--ink) 0%,rgba(10,17,32,.05) 30%,rgba(10,17,32,.35) 100%)}
+#dust{position:absolute;inset:0;z-index:2;pointer-events:none}
+.hero-pattern{position:absolute;inset:0;z-index:2;background-image:var(--pattern-ink);opacity:.35;pointer-events:none;mask-image:linear-gradient(115deg,transparent 40%,#000 100%);-webkit-mask-image:linear-gradient(115deg,transparent 40%,#000 100%)}
+.hero-ar-wm{position:absolute;z-index:2;right:-1%;top:8%;font-family:var(--font-ar);font-size:clamp(9rem,24vw,20rem);line-height:1;color:transparent;-webkit-text-stroke:1px rgba(201,162,39,.28);pointer-events:none;user-select:none;will-change:transform}
+.hero-content{position:relative;z-index:3;padding:calc(var(--nav-h) + 40px) 0 120px;will-change:transform}
+.eyebrow{display:flex;align-items:center;gap:14px;font-size:.72rem;letter-spacing:.42em;text-transform:uppercase;color:var(--gold-2);margin-bottom:26px}
+.eyebrow::before{content:"";width:44px;height:1px;background:var(--gold)}
+.eyebrow .ar{font-size:1rem;letter-spacing:0;text-transform:none}
+#hero h1{font-family:var(--font-display);font-weight:500;font-size:clamp(3.1rem,8.4vw,6.6rem);line-height:1.02;letter-spacing:.01em;max-width:14ch}
+#hero h1 .line{display:block;overflow:hidden}
+#hero h1 .line > span{display:inline-block}
+#hero h1 em{font-style:italic;font-weight:600;background:linear-gradient(105deg,var(--gold-3),var(--gold) 55%,#9a7b1c);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-ar-line{font-family:var(--font-ar);font-size:clamp(1.15rem,2.4vw,1.6rem);color:var(--gold-2);margin:22px 0 14px;opacity:.95}
+.hero-sub{max-width:46ch;color:var(--muted-on-ink);font-size:clamp(.95rem,1.4vw,1.06rem);margin-bottom:38px}
+.hero-ctas{display:flex;gap:18px;flex-wrap:wrap}
+.hero-stats{display:flex;gap:clamp(24px,5vw,64px);margin-top:64px;flex-wrap:wrap}
+.hstat b{display:block;font-family:var(--font-display);font-weight:600;font-size:clamp(1.7rem,3.4vw,2.5rem);color:var(--gold-2);line-height:1.1;font-variant-numeric:tabular-nums}
+.hstat span{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted-on-ink)}
+.scroll-cue{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:4;display:flex;flex-direction:column;align-items:center;gap:10px;color:var(--muted-on-ink);font-size:.62rem;letter-spacing:.4em;text-transform:uppercase}
+.scroll-cue .wire{width:1px;height:52px;background:rgba(201,162,39,.3);position:relative;overflow:hidden}
+.scroll-cue .wire::after{content:"";position:absolute;top:-40%;left:0;width:100%;height:40%;background:var(--gold-2);animation:drip 2.2s var(--ease-io) infinite}
+@keyframes drip{to{top:110%}}
+/* staged entrance */
+[data-entrance]{opacity:0;transform:translateY(30px);transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:var(--d,0s)}
+body.loaded [data-entrance]{opacity:1;transform:none}
+#hero h1 .line > span{transform:translateY(110%);transition:transform 1.1s var(--ease);transition-delay:var(--d,0s)}
+body.loaded #hero h1 .line > span{transform:none}
+
+/* ============ MARQUEE ============ */
+.marquee{background:linear-gradient(90deg,var(--emerald-deep),var(--emerald) 50%,var(--emerald-deep));border-block:1px solid rgba(201,162,39,.35);overflow:hidden;padding:16px 0;position:relative}
+.marquee-track{display:flex;width:max-content;animation:marquee 30s linear infinite}
+.marquee:hover .marquee-track{animation-play-state:paused}
+.marquee-track span{display:flex;align-items:center;gap:26px;padding-right:26px;font-family:var(--font-display);font-size:1.05rem;letter-spacing:.3em;text-transform:uppercase;color:var(--sand);white-space:nowrap}
+.marquee-track .st{color:var(--gold-2);font-size:.8rem}
+@keyframes marquee{to{transform:translateX(-50%)}}
+
+/* ============ SECTION SCAFFOLD ============ */
+.section{padding:clamp(80px,10vw,130px) 0;position:relative}
+.sec-head{max-width:720px;margin-bottom:clamp(40px,6vw,64px)}
+.sec-head .eyebrow{margin-bottom:18px}
+.sec-head h2{font-family:var(--font-display);font-weight:500;font-size:clamp(2.3rem,5vw,3.9rem);line-height:1.08}
+.sec-head h2 em{font-style:italic;font-weight:600;color:var(--gold)}
+.sec-head p{margin-top:18px;color:var(--muted-on-sand);max-width:56ch}
+.on-ink .sec-head p{color:var(--muted-on-ink)}
+.on-ink .sec-head h2 em{color:var(--gold-2)}
+.reveal{opacity:0;transform:translateY(34px);transition:opacity .85s var(--ease),transform .85s var(--ease);transition-delay:var(--d,0s)}
+.reveal.in{opacity:1;transform:none}
+
+/* ============ RESIDENCES ============ */
+#residences{background:var(--sand-2);color:var(--text-on-sand)}
+#residences::before{content:"";position:absolute;inset:0;background-image:var(--pattern-sand);opacity:.5;pointer-events:none}
+#residences .wrap{position:relative}
+.filter-row{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:38px}
+.filters{display:flex;gap:10px;flex-wrap:wrap}
+.filter-btn{background:transparent;border:1px solid var(--line-on-sand);border-radius:999px;padding:10px 22px;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted-on-sand);transition:all .3s var(--ease)}
+.filter-btn small{opacity:.65;margin-left:6px;font-variant-numeric:tabular-nums}
+.filter-btn:hover{border-color:var(--gold);color:var(--text-on-sand)}
+.filter-btn[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--gold-2)}
+.result-count{font-size:.8rem;color:var(--muted-on-sand);letter-spacing:.06em}
+.res-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px}
+.res-card{background:var(--sand);border:1px solid var(--line-on-sand);border-radius:14px;overflow:hidden;position:relative;transition:transform .5s var(--ease),box-shadow .5s,opacity .45s var(--ease);transform-style:preserve-3d;will-change:transform}
+.res-card:hover{box-shadow:0 26px 60px rgba(34,41,58,.22)}
+.res-card.hide{opacity:0;transform:scale(.94);pointer-events:none;position:absolute;visibility:hidden}
+.res-media{position:relative;aspect-ratio:4/4.6;overflow:hidden;border-radius:150px 150px 0 0;margin:14px 14px 0;border:1px solid rgba(201,162,39,.4)}
+.res-media img{width:100%;height:100%;object-fit:cover;transition:transform 1.1s var(--ease)}
+.res-card:hover .res-media img{transform:scale(1.07)}
+.res-media::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(10,17,32,.55),transparent 45%)}
+.res-shine{position:absolute;inset:0;z-index:2;background:radial-gradient(320px circle at var(--mx,50%) var(--my,50%),rgba(243,227,172,.22),transparent 60%);opacity:0;transition:opacity .4s;pointer-events:none}
+.res-card:hover .res-shine{opacity:1}
+.res-tag{position:absolute;z-index:3;top:18px;left:50%;transform:translateX(-50%);background:rgba(10,17,32,.72);backdrop-filter:blur(6px);border:1px solid rgba(201,162,39,.5);color:var(--gold-2);font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;padding:7px 16px;border-radius:999px;white-space:nowrap}
+.res-price{position:absolute;z-index:3;bottom:16px;left:20px;color:var(--sand-2);font-family:var(--font-display);font-weight:600;font-size:1.45rem;text-shadow:0 2px 14px rgba(0,0,0,.5)}
+.res-price small{font-family:var(--font-body);font-weight:400;font-size:.62rem;letter-spacing:.2em;display:block;color:var(--gold-2)}
+.res-body{padding:22px 22px 24px}
+.res-body h3{font-family:var(--font-display);font-weight:600;font-size:1.5rem;line-height:1.15}
+.res-loc{display:flex;align-items:center;gap:7px;color:var(--muted-on-sand);font-size:.82rem;margin:7px 0 16px}
+.res-loc svg{width:13px;height:13px;stroke:var(--gold);flex:none}
+.res-specs{display:flex;gap:18px;padding-top:15px;border-top:1px dashed rgba(138,113,58,.35);font-size:.78rem;color:var(--muted-on-sand)}
+.res-specs span{display:flex;align-items:center;gap:6px}
+.res-specs svg{width:15px;height:15px;stroke:var(--emerald);flex:none}
+.res-enquire{margin-top:18px;width:100%;justify-content:center;background:transparent;border:1px solid var(--ink);color:var(--ink);border-radius:6px;padding:12px;font-size:.76rem;letter-spacing:.16em;text-transform:uppercase;font-weight:500;display:inline-flex;align-items:center;gap:8px;transition:all .35s var(--ease)}
+.res-enquire:hover{background:var(--ink);color:var(--gold-2)}
+.res-enquire .arr{transition:transform .3s}
+.res-enquire:hover .arr{transform:translateX(4px)}
+
+/* ============ WHY DUBAI ============ */
+#why{background:var(--ink);overflow:hidden}
+#why::before{content:"";position:absolute;inset:0;background-image:var(--pattern-ink);opacity:.4;pointer-events:none}
+#why .wrap{position:relative;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(40px,6vw,80px);align-items:center}
+.why-copy .sec-head{margin-bottom:34px}
+.why-list{list-style:none;display:grid;gap:0}
+.why-list li{display:flex;gap:22px;align-items:baseline;padding:22px 0;border-bottom:1px solid var(--line-on-ink)}
+.why-list li:first-child{border-top:1px solid var(--line-on-ink)}
+.why-list b{font-family:var(--font-display);font-weight:600;font-size:clamp(1.9rem,3.4vw,2.7rem);color:var(--gold-2);min-width:150px;line-height:1;font-variant-numeric:tabular-nums}
+.why-list b sup{font-size:.5em;color:var(--gold)}
+.why-list div strong{display:block;font-weight:500;font-size:.95rem;letter-spacing:.04em;color:var(--text-on-ink)}
+.why-list div span{font-size:.82rem;color:var(--muted-on-ink)}
+.why-visual{position:relative}
+.why-arch{border-radius:999px 999px 16px 16px;overflow:hidden;border:1px solid rgba(201,162,39,.5);position:relative;aspect-ratio:3/3.8;box-shadow:0 40px 90px rgba(0,0,0,.5)}
+.why-arch img{width:100%;height:100%;object-fit:cover;will-change:transform}
+.why-arch::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(10,61,49,.45),transparent 50%)}
+.why-frame{position:absolute;inset:22px -22px -22px 22px;border:1px solid rgba(201,162,39,.35);border-radius:999px 999px 16px 16px;z-index:-1}
+.why-badge{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:2;background:rgba(10,17,32,.78);backdrop-filter:blur(8px);border:1px solid rgba(201,162,39,.5);border-radius:999px;padding:10px 24px;font-family:var(--font-ar);color:var(--gold-2);font-size:1.05rem;white-space:nowrap}
+.why-star{position:absolute;top:-34px;right:-8px;width:88px;height:88px;opacity:.9;animation:spin 24s linear infinite}
+
+/* ============ SERVICES ============ */
+#services{background:var(--sand);color:var(--text-on-sand)}
+#services::before{content:"";position:absolute;inset:0;background-image:var(--pattern-sand);opacity:.4;pointer-events:none}
+#services .wrap{position:relative}
+.svc-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
+.svc{background:var(--sand-2);border:1px solid var(--line-on-sand);border-radius:12px;padding:34px 26px 30px;position:relative;overflow:hidden;transition:transform .45s var(--ease),box-shadow .45s,border-color .45s}
+.svc::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--emerald));transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease)}
+.svc:hover{transform:translateY(-8px);box-shadow:0 24px 50px rgba(34,41,58,.16);border-color:rgba(201,162,39,.55)}
+.svc:hover::before{transform:scaleX(1)}
+.svc .num{font-family:var(--font-display);font-style:italic;font-size:.95rem;color:var(--gold);letter-spacing:.1em}
+.svc .ico{width:46px;height:46px;margin:16px 0 18px;border-radius:10px;background:var(--ink);display:flex;align-items:center;justify-content:center}
+.svc .ico svg{width:24px;height:24px;stroke:var(--gold-2);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.svc h3{font-family:var(--font-display);font-weight:600;font-size:1.4rem;line-height:1.2;margin-bottom:10px}
+.svc p{font-size:.86rem;color:var(--muted-on-sand)}
+.svc .ar-s{display:block;margin-top:16px;font-family:var(--font-ar);color:var(--emerald);font-size:.95rem}
+
+/* ============ STORIES ============ */
+#stories{background:linear-gradient(160deg,var(--emerald-deep),#0C4A3B 60%,var(--emerald-deep));overflow:hidden}
+#stories::before{content:"";position:absolute;inset:0;background-image:var(--pattern-ink);opacity:.35;pointer-events:none}
+#stories .wrap{position:relative}
+#stories .eyebrow{color:var(--gold-2)}
+#stories .sec-head h2{color:var(--sand-2)}
+#stories .sec-head h2 em{color:var(--gold-2)}
+.slider{position:relative;max-width:860px}
+.quote-mark{font-family:var(--font-display);font-size:7rem;line-height:.6;color:var(--gold);opacity:.85;height:52px}
+.slides-viewport{overflow:hidden}
+.slides-track{display:flex;transition:transform .7s var(--ease)}
+.slide{flex:0 0 100%;padding-right:8px}
+.slide blockquote{font-family:var(--font-display);font-weight:500;font-size:clamp(1.35rem,2.8vw,2rem);line-height:1.4;color:var(--sand-2);font-style:italic}
+.slide .who{margin-top:26px;display:flex;align-items:center;gap:16px}
+.slide .who .av{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--emerald));display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:600;color:var(--ink);font-size:1.1rem;flex:none}
+.slide .who b{display:block;font-weight:500;font-size:.95rem;color:var(--text-on-ink)}
+.slide .who span{font-size:.78rem;color:rgba(239,232,216,.65);letter-spacing:.08em}
+.slider-nav{display:flex;align-items:center;gap:20px;margin-top:38px}
+.snav-btn{width:48px;height:48px;border-radius:50%;border:1px solid rgba(201,162,39,.5);background:transparent;color:var(--gold-2);display:flex;align-items:center;justify-content:center;transition:all .3s var(--ease)}
+.snav-btn:hover{background:var(--gold);color:var(--ink);border-color:var(--gold)}
+.snav-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.dots{display:flex;gap:10px}
+.dot{width:8px;height:8px;border-radius:999px;border:none;background:rgba(239,232,216,.3);transition:all .4s var(--ease);padding:0}
+.dot.on{width:30px;background:var(--gold-2)}
+
+/* ============ CONTACT ============ */
+#contact{background:var(--ink)}
+#contact::before{content:"";position:absolute;inset:0;background-image:var(--pattern-ink);opacity:.35;pointer-events:none}
+#contact .wrap{position:relative;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(40px,6vw,80px);align-items:start}
+.c-info .sec-head{margin-bottom:30px}
+.c-rows{display:grid;gap:0;margin-top:8px}
+.c-row{display:flex;gap:18px;align-items:flex-start;padding:20px 0;border-bottom:1px solid var(--line-on-ink)}
+.c-row:first-child{border-top:1px solid var(--line-on-ink)}
+.c-row .ci{width:42px;height:42px;flex:none;border:1px solid rgba(201,162,39,.4);border-radius:10px;display:flex;align-items:center;justify-content:center}
+.c-row .ci svg{width:19px;height:19px;stroke:var(--gold-2);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.c-row b{display:block;font-weight:500;font-size:.92rem;letter-spacing:.04em}
+.c-row span,.c-row a{font-size:.86rem;color:var(--muted-on-ink)}
+.c-row a:hover{color:var(--gold-2)}
+.c-ar-big{font-family:var(--font-ar);font-size:clamp(1.6rem,3vw,2.2rem);color:var(--gold);margin-top:34px;opacity:.9}
+.form-card{background:var(--sand-2);color:var(--text-on-sand);border-radius:16px;padding:clamp(28px,4vw,44px);border:1px solid rgba(201,162,39,.5);box-shadow:0 40px 90px rgba(0,0,0,.45);position:relative;overflow:hidden}
+.form-card::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--gold),var(--emerald),var(--gold))}
+.form-card h3{font-family:var(--font-display);font-weight:600;font-size:1.7rem;margin-bottom:6px}
+.form-card .fsub{font-size:.85rem;color:var(--muted-on-sand);margin-bottom:26px}
+.f-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.f-field{display:flex;flex-direction:column;gap:7px}
+.f-field.full{grid-column:1/-1}
+.f-field label{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted-on-sand);font-weight:500}
+.f-field label .req{color:var(--terra)}
+.f-field input,.f-field select,.f-field textarea{font-family:var(--font-body);font-size:.92rem;font-weight:400;color:var(--text-on-sand);background:#fff;border:1px solid var(--line-on-sand);border-radius:8px;padding:13px 15px;transition:border-color .3s,box-shadow .3s;width:100%}
+.f-field textarea{resize:vertical;min-height:104px}
+.f-field input:focus,.f-field select:focus,.f-field textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,39,.18)}
+.f-field input[aria-invalid="true"],.f-field select[aria-invalid="true"]{border-color:var(--danger);box-shadow:0 0 0 3px rgba(196,69,54,.14)}
+.f-err{font-size:.74rem;color:var(--danger);min-height:0;display:none}
+.f-err.show{display:block}
+.f-submit{grid-column:1/-1;justify-content:center;padding:16px;font-size:.85rem;margin-top:6px}
+.f-note{grid-column:1/-1;font-size:.72rem;color:var(--muted-on-sand);text-align:center}
+.form-success{display:none;text-align:center;padding:30px 6px}
+.form-success.show{display:block;animation:pop .6s var(--ease)}
+@keyframes pop{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:none}}
+.form-success .ok-star{width:84px;height:84px;margin:0 auto 22px;position:relative}
+.form-success .ok-star svg{width:100%;height:100%}
+.form-success h4{font-family:var(--font-display);font-weight:600;font-size:1.9rem}
+.form-success .ar-shukran{font-family:var(--font-ar);color:var(--gold);font-size:1.5rem;margin:8px 0 12px}
+.form-success p{color:var(--muted-on-sand);font-size:.9rem;max-width:40ch;margin:0 auto 26px}
+
+/* ============ FOOTER ============ */
+footer{background:#070C17;border-top:1px solid var(--line-on-ink);padding:70px 0 34px;position:relative}
+footer::before{content:"";position:absolute;inset:0;background-image:var(--pattern-ink);opacity:.22;pointer-events:none}
+footer .wrap{position:relative}
+.f-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;padding-bottom:48px;border-bottom:1px solid rgba(201,162,39,.14)}
+.f-brand p{color:var(--muted-on-ink);font-size:.85rem;max-width:34ch;margin-top:16px}
+.f-brand .ar-tag{font-family:var(--font-ar);color:var(--gold);font-size:1.25rem;margin-top:14px}
+.f-col h5{font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-2);margin-bottom:18px;font-weight:500}
+.f-col ul{list-style:none;display:grid;gap:11px}
+.f-col a{font-size:.86rem;color:var(--muted-on-ink);transition:color .3s,padding-left .3s}
+.f-col a:hover{color:var(--gold-2);padding-left:5px}
+.socials{display:flex;gap:12px;margin-top:22px}
+.socials a{width:40px;height:40px;border:1px solid rgba(201,162,39,.35);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .3s var(--ease)}
+.socials a:hover{background:var(--gold);border-color:var(--gold);transform:translateY(-3px)}
+.socials svg{width:17px;height:17px;fill:var(--gold-2);transition:fill .3s}
+.socials a:hover svg{fill:var(--ink)}
+.f-bottom{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:28px;font-size:.74rem;color:#5E6A82;letter-spacing:.05em}
+#toTop{width:46px;height:46px;border-radius:50%;border:1px solid rgba(201,162,39,.45);background:transparent;color:var(--gold-2);display:flex;align-items:center;justify-content:center;transition:all .3s var(--ease)}
+#toTop:hover{background:var(--gold);color:var(--ink);transform:translateY(-4px)}
+#toTop svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* ============ TOAST ============ */
+#toast{position:fixed;bottom:26px;left:50%;transform:translate(-50%,140%);z-index:1600;background:var(--ink-2);border:1px solid rgba(201,162,39,.55);color:var(--text-on-ink);padding:14px 24px;border-radius:10px;font-size:.85rem;display:flex;align-items:center;gap:12px;box-shadow:0 18px 50px rgba(0,0,0,.5);transition:transform .5s var(--ease);max-width:92%}
+#toast.show{transform:translate(-50%,0)}
+#toast .st{color:var(--gold-2)}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:1024px){
+  .res-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .svc-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #why .wrap{grid-template-columns:1fr;gap:60px}
+  .why-visual{max-width:480px;margin-inline:auto;width:100%}
+  .why-frame{inset:18px -14px -14px 18px}
+  #contact .wrap{grid-template-columns:1fr;gap:56px}
+  .f-top{grid-template-columns:1fr 1fr}
+}
+@media (max-width:860px){
+  .nav-links,.nav-ar,.nav-cta .btn{display:none}
+  #hamburger{display:block}
+}
+@media (max-width:640px){
+  :root{--nav-h:66px}
+  .res-grid{grid-template-columns:1fr}
+  .svc-grid{grid-template-columns:1fr}
+  .f-grid{grid-template-columns:1fr}
+  .hero-stats{gap:22px}
+  .hstat{min-width:calc(50% - 22px)}
+  .hero-ar-wm{font-size:8rem;top:auto;bottom:16%;opacity:.7}
+  .why-list b{min-width:110px}
+  .f-top{grid-template-columns:1fr}
+  .scroll-cue{display:none}
+  .hero-content{padding-bottom:80px}
+  .filter-row{flex-direction:column;align-items:flex-start}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+  [data-entrance],.reveal,#hero h1 .line > span{opacity:1;transform:none}
+  .marquee-track{animation:none;flex-wrap:wrap}
+}
+</style>
+</head>
+<body class="loading">
+<a class="skip-link" href="#residences">Skip to residences</a>
+
+<!-- LOADER -->
+<div id="loader" role="status" aria-label="Loading Mandarin Reality">
+  <div class="panel top"></div>
+  <div class="panel bottom"></div>
+  <div class="core">
+    <div class="star" aria-hidden="true">
+      <svg viewBox="0 0 100 100" fill="none">
+        <rect class="s1" x="26" y="26" width="48" height="48" stroke="#C9A227" stroke-width="1.6"/>
+        <rect class="s2" x="26" y="26" width="48" height="48" stroke="#E8C96A" stroke-width="1.6" transform="rotate(45 50 50)"/>
+        <circle cx="50" cy="50" r="5" fill="#C9A227"/>
+      </svg>
+    </div>
+    <div class="welcome ar">أهلاً بك</div>
+    <div class="brand" aria-hidden="true">
+      <span style="--i:0">M</span><span style="--i:1">A</span><span style="--i:2">N</span><span style="--i:3">D</span><span style="--i:4">A</span><span style="--i:5">R</span><span style="--i:6">I</span><span style="--i:7">N</span>
+    </div>
+    <div class="sub">Reality · Dubai</div>
+    <div class="bar"><i id="load-bar"></i></div>
+    <div class="pct"><span id="load-pct">0</span>%</div>
+  </div>
+</div>
+
+<!-- CURSOR -->
+<div id="cursor-dot" aria-hidden="true"></div>
+<div id="cursor-ring" aria-hidden="true"></div>
+
+<!-- NAV -->
+<header id="nav">
+  <div class="wrap">
+    <a class="logo" href="#hero" aria-label="Mandarin Reality — home">
+      <svg viewBox="0 0 100 100" fill="none" aria-hidden="true">
+        <rect x="26" y="26" width="48" height="48" stroke="#C9A227" stroke-width="4"/>
+        <rect x="26" y="26" width="48" height="48" stroke="#E8C96A" stroke-width="4" transform="rotate(45 50 50)"/>
+        <circle cx="50" cy="50" r="6" fill="#C9A227"/>
+      </svg>
+      <span class="t"><b>MANDARIN</b><small>Reality · Dubai</small></span>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="nav-links">
+        <li><a href="#residences" data-nav>Residences</a></li>
+        <li><a href="#why" data-nav>Why Dubai</a></li>
+        <li><a href="#services" data-nav>Services</a></li>
+        <li><a href="#stories" data-nav>Stories</a></li>
+        <li><a href="#contact" data-nav>Contact</a></li>
+      </ul>
+    </nav>
+    <div class="nav-cta">
+      <span class="nav-ar ar" aria-hidden="true">دبي</span>
+      <a class="btn btn-gold btn-sm magnetic" href="#contact">Book a Viewing</a>
+      <button id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- MOBILE MENU -->
+<div id="mobile-menu" aria-hidden="true">
+  <a class="mm-link" style="--i:0" href="#residences">Residences <small class="ar">عقارات</small></a>
+  <a class="mm-link" style="--i:1" href="#why">Why Dubai <small class="ar">لماذا دبي</small></a>
+  <a class="mm-link" style="--i:2" href="#services">Services <small class="ar">خدماتنا</small></a>
+  <a class="mm-link" style="--i:3" href="#stories">Stories <small class="ar">قصصنا</small></a>
+  <a class="mm-link" style="--i:4" href="#contact">Contact <small class="ar">تواصل</small></a>
+  <div class="mm-foot">Gate Village 7, DIFC · Dubai &nbsp;·&nbsp; +971 4 388 2200</div>
+</div>
+
+<main id="main">
+<!-- HERO -->
+<section id="hero" aria-label="Introduction">
+  <div class="hero-bg" data-depth="0.035"><img src="assets/hero.jpg" alt="Dubai skyline at golden dusk with the Burj Khalifa" fetchpriority="high"></div>
+  <div class="hero-veil"></div>
+  <canvas id="dust" aria-hidden="true"></canvas>
+  <div class="hero-pattern" data-depth="0.02" aria-hidden="true"></div>
+  <div class="hero-ar-wm ar" data-depth="0.06" aria-hidden="true">دبي</div>
+  <div class="wrap hero-content" data-depth="0.014">
+    <p class="eyebrow" data-entrance style="--d:.15s">Dubai · Est. 2014 <span class="ar">ماندارين العقارية</span></p>
+    <h1>
+      <span class="line"><span style="--d:.3s">Own the</span></span>
+      <span class="line"><span style="--d:.42s"><em>Skyline.</em></span></span>
+    </h1>
+    <p class="hero-ar-line ar" data-entrance style="--d:.6s">حيث تعانق الرمال السماء</p>
+    <p class="hero-sub" data-entrance style="--d:.7s">Mandarin Reality curates Dubai's most extraordinary addresses — penthouses above the clouds, villas on private shores, and residences that hold their value as beautifully as they hold the light.</p>
+    <div class="hero-ctas" data-entrance style="--d:.82s">
+      <a class="btn btn-gold magnetic" href="#residences">Explore Residences <span class="arr">→</span></a>
+      <a class="btn btn-ghost magnetic" href="#contact">Private Viewing</a>
+    </div>
+    <div class="hero-stats" data-entrance style="--d:.95s">
+      <div class="hstat"><b><span data-count="12" data-suffix="+">0</span></b><span>Years in Dubai</span></div>
+      <div class="hstat"><b>AED <span data-count="4.2" data-decimals="1" data-suffix="B">0</span></b><span>Property transacted</span></div>
+      <div class="hstat"><b><span data-count="98" data-suffix="%">0</span></b><span>Clients who return</span></div>
+    </div>
+  </div>
+  <div class="scroll-cue" data-entrance style="--d:1.15s" aria-hidden="true"><span>Scroll</span><span class="wire"></span></div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track" id="marquee-track">
+    <span>Palm Jumeirah <i class="st">✦</i> Downtown Dubai <i class="st">✦</i> Dubai Marina <i class="st">✦</i> Emirates Hills <i class="st">✦</i> Al Barari <i class="st">✦</i> Creek Harbour <i class="st">✦</i> Jumeirah Bay <i class="st">✦</i> Dubai Hills <i class="st">✦</i></span>
+  </div>
+</div>
+
+<!-- RESIDENCES -->
+<section id="residences" class="section">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Featured Residences <span class="ar">عقارات مميزة</span></p>
+      <h2>Curated for <em>the few.</em></h2>
+      <p>Every address in our portfolio is walked, vetted and negotiated by a Mandarin partner before it ever reaches this page.</p>
+    </div>
+    <div class="filter-row reveal" style="--d:.1s">
+      <div class="filters" role="group" aria-label="Filter residences">
+        <button class="filter-btn" data-filter="all" aria-pressed="true">All <small>6</small></button>
+        <button class="filter-btn" data-filter="penthouse" aria-pressed="false">Penthouses <small>2</small></button>
+        <button class="filter-btn" data-filter="villa" aria-pressed="false">Villas <small>2</small></button>
+        <button class="filter-btn" data-filter="apartment" aria-pressed="false">Apartments <small>2</small></button>
+      </div>
+      <span class="result-count" id="result-count" aria-live="polite">Showing 6 of 6 residences</span>
+    </div>
+    <div class="res-grid" id="res-grid">
+
+      <article class="res-card reveal" data-cat="penthouse" data-name="Skyline Penthouse" style="--d:0s">
+        <div class="res-media">
+          <img src="assets/penthouse.jpg" alt="Skyline Penthouse living room with Burj Khalifa view" loading="lazy">
+          <span class="res-tag">Penthouse · Downtown</span>
+          <span class="res-price"><small>Asking</small>AED 12.5M</span>
+          <div class="res-shine"></div>
+        </div>
+        <div class="res-body">
+          <h3>Skyline Penthouse</h3>
+          <p class="res-loc"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>Standpoint Tower, Downtown Dubai</p>
+          <div class="res-specs">
+            <span><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6M3 18h18M6 10V7a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v3"/></svg>4 Beds</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M4 12h16v2a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-2zM6 12V5a2 2 0 0 1 4 0"/></svg>5 Baths</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="1"/><path d="M4 9h5V4"/></svg>6,200 sqft</span>
+          </div>
+          <button class="res-enquire" data-enquire="Skyline Penthouse — Downtown Dubai">Enquire <span class="arr">→</span></button>
+        </div>
+      </article>
+
+      <article class="res-card reveal" data-cat="villa" data-name="Palm Signature Villa" style="--d:.08s">
+        <div class="res-media">
+          <img src="assets/palmvilla.jpg" alt="Palm Signature Villa with infinity pool at dusk" loading="lazy">
+          <span class="res-tag">Villa · Palm Jumeirah</span>
+          <span class="res-price"><small>Asking</small>AED 28M</span>
+          <div class="res-shine"></div>
+        </div>
+        <div class="res-body">
+          <h3>Palm Signature Villa</h3>
+          <p class="res-loc"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>Frond K, Palm Jumeirah</p>
+          <div class="res-specs">
+            <span><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6M3 18h18M6 10V7a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v3"/></svg>6 Beds</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M4 12h16v2a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-2zM6 12V5a2 2 0 0 1 4 0"/></svg>7 Baths</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="1"/><path d="M4 9h5V4"/></svg>11,400 sqft</span>
+          </div>
+          <button class="res-enquire" data-enquire="Palm Signature Villa — Palm Jumeirah">Enquire <span class="arr">→</span></button>
+        </div>
+      </article>
+
+      <article class="res-card reveal" data-cat="apartment" data-name="Marina Horizon Apartment" style="--d:.16s">
+        <div class="res-media">
+          <img src="assets/marina.jpg" alt="Marina Horizon Apartment overlooking the yacht marina" loading="lazy">
+          <span class="res-tag">Apartment · Marina</span>
+          <span class="res-price"><small>Asking</small>AED 3.4M</span>
+          <div class="res-shine"></div>
+        </div>
+        <div class="res-body">
+          <h3>Marina Horizon Apartment</h3>
+          <p class="res-loc"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>Marina Gate, Dubai Marina</p>
+          <div class="res-specs">
+            <span><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6M3 18h18M6 10V7a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v3"/></svg>2 Beds</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M4 12h16v2a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-2zM6 12V5a2 2 0 0 1 4 0"/></svg>3 Baths</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="1"/><path d="M4 9h5V4"/></svg>1,850 sqft</span>
+          </div>
+          <button class="res-enquire" data-enquire="Marina Horizon Apartment — Dubai Marina">Enquire <span class="arr">→</span></button>
+        </div>
+      </article>
+
+      <article class="res-card reveal" data-cat="villa" data-name="Desert Rose Villa" style="--d:0s">
+        <div class="res-media">
+          <img src="assets/barari.jpg" alt="Desert Rose Villa surrounded by botanical gardens in Al Barari" loading="lazy">
+          <span class="res-tag">Villa · Al Barari</span>
+          <span class="res-price"><small>Asking</small>AED 16.8M</span>
+          <div class="res-shine"></div>
+        </div>
+        <div class="res-body">
+          <h3>Desert Rose Villa</h3>
+          <p class="res-loc"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>The Reserves, Al Barari</p>
+          <div class="res-specs">
+            <span><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6M3 18h18M6 10V7a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v3"/></svg>5 Beds</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M4 12h16v2a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-2zM6 12V5a2 2 0 0 1 4 0"/></svg>6 Baths</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="1"/><path d="M4 9h5V4"/></svg>9,800 sqft</span>
+          </div>
+          <button class="res-enquire" data-enquire="Desert Rose Villa — Al Barari">Enquire <span class="arr">→</span></button>
+        </div>
+      </article>
+
+      <article class="res-card reveal" data-cat="penthouse" data-name="Creek Harbour Penthouse" style="--d:.08s">
+        <div class="res-media">
+          <img src="assets/creek.jpg" alt="Creek Harbour Penthouse terrace with fire bowl at sunset" loading="lazy">
+          <span class="res-tag">Penthouse · Creek</span>
+          <span class="res-price"><small>Asking</small>AED 9.2M</span>
+          <div class="res-shine"></div>
+        </div>
+        <div class="res-body">
+          <h3>Creek Harbour Penthouse</h3>
+          <p class="res-loc"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>Creek Rise, Dubai Creek Harbour</p>
+          <div class="res-specs">
+            <span><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6M3 18h18M6 10V7a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v3"/></svg>3 Beds</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M4 12h16v2a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-2zM6 12V5a2 2 0 0 1 4 0"/></svg>4 Baths</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="1"/><path d="M4 9h5V4"/></svg>4,100 sqft</span>
+          </div>
+          <button class="res-enquire" data-enquire="Creek Harbour Penthouse — Dubai Creek Harbour">Enquire <span class="arr">→</span></button>
+        </div>
+      </article>
+
+      <article class="res-card reveal" data-cat="apartment" data-name="Boulevard Residence" style="--d:.16s">
+        <div class="res-media">
+          <img src="assets/boulevard.jpg" alt="Boulevard Residence interior with arched brass niche" loading="lazy">
+          <span class="res-tag">Apartment · Downtown</span>
+          <span class="res-price"><small>Asking</small>AED 2.15M</span>
+          <div class="res-shine"></div>
+        </div>
+        <div class="res-body">
+          <h3>Boulevard Residence</h3>
+          <p class="res-loc"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>Sheikh Mohammed bin Rashid Blvd</p>
+          <div class="res-specs">
+            <span><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6M3 18h18M6 10V7a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v3"/></svg>1 Bed</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M4 12h16v2a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-2zM6 12V5a2 2 0 0 1 4 0"/></svg>2 Baths</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="1"/><path d="M4 9h5V4"/></svg>1,120 sqft</span>
+          </div>
+          <button class="res-enquire" data-enquire="Boulevard Residence — Downtown Dubai">Enquire <span class="arr">→</span></button>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- WHY DUBAI -->
+<section id="why" class="section on-ink">
+  <div class="wrap">
+    <div class="why-copy">
+      <div class="sec-head reveal">
+        <p class="eyebrow">Why Dubai <span class="ar">لماذا دبي</span></p>
+        <h2>The world's most <em>ambitious</em> address.</h2>
+        <p>A city built on vision, held together by safety, and taxed like a privilege. Here is what ownership actually looks like.</p>
+      </div>
+      <ul class="why-list">
+        <li class="reveal" style="--d:0s"><b><span data-count="0">0</span><sup>%</sup></b><div><strong>Personal income &amp; capital gains tax</strong><span>What your asset earns is what you keep.</span></div></li>
+        <li class="reveal" style="--d:.08s"><b><span data-count="10">0</span><sup>yr</sup></b><div><strong>Golden Visa residency</strong><span>Qualifying property unlocks a decade of residency for your family.</span></div></li>
+        <li class="reveal" style="--d:.16s"><b>+<span data-count="21">0</span><sup>%</sup></b><div><strong>Prime capital growth, 2024–25</strong><span>Downtown and Palm prime stock, DLD transaction data.</span></div></li>
+        <li class="reveal" style="--d:.24s"><b><span data-count="48">0</span><sup>hrs</sup></b><div><strong>From offer to escrow</strong><span>Our legal desk moves at the speed of the market.</span></div></li>
+      </ul>
+    </div>
+    <div class="why-visual reveal" style="--d:.15s">
+      <svg class="why-star" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+        <rect x="26" y="26" width="48" height="48" stroke="#C9A227" stroke-width="1.4"/>
+        <rect x="26" y="26" width="48" height="48" stroke="#E8C96A" stroke-width="1.4" transform="rotate(45 50 50)"/>
+      </svg>
+      <div class="why-frame" aria-hidden="true"></div>
+      <div class="why-arch"><img src="assets/palm.jpg" alt="Aerial view of Palm Jumeirah at golden hour" loading="lazy" id="why-img"></div>
+      <span class="why-badge ar">نخلة جميرا · دبي</span>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="section">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Our Services <span class="ar">خدماتنا</span></p>
+      <h2>Beyond <em>the keys.</em></h2>
+      <p>Ownership is a relationship, not a transaction. Four desks, one standard of care.</p>
+    </div>
+    <div class="svc-grid">
+      <div class="svc reveal" style="--d:0s">
+        <span class="num">01</span>
+        <div class="ico"><svg viewBox="0 0 24 24"><circle cx="8" cy="9" r="3.2"/><path d="M10.5 11.5 19 20M16 17l2-2M13.5 14.5l2-2"/></svg></div>
+        <h3>Golden Visa &amp; Relocation</h3>
+        <p>Residency paperwork, family sponsorship and Emirates ID — handled end to end by our government-relations desk.</p>
+        <span class="ar-s">الإقامة الذهبية</span>
+      </div>
+      <div class="svc reveal" style="--d:.08s">
+        <span class="num">02</span>
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M5 16l1.5-5A2 2 0 0 1 8.4 9.5h7.2a2 2 0 0 1 1.9 1.5L19 16M5 16h14M5 16v3M19 16v3M7.5 12.5h9"/><circle cx="8" cy="18.5" r=".5"/><circle cx="16" cy="18.5" r=".5"/></svg></div>
+        <h3>Chauffeured Private Viewings</h3>
+        <p>See three addresses in an afternoon, door to door, with a partner who knows every floor plan and every sunset angle.</p>
+        <span class="ar-s">جولات خاصة</span>
+      </div>
+      <div class="svc reveal" style="--d:.16s">
+        <span class="num">03</span>
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 20h16M6 20V9l6-4.5L18 9v11M10 20v-5h4v5"/><path d="M12 11.5v.01"/></svg></div>
+        <h3>Mortgage &amp; Escrow Advisory</h3>
+        <p>Non-resident financing up to 60% LTV, DLD escrow protection and a legal desk that reads every clause so you don't have to.</p>
+        <span class="ar-s">التمويل العقاري</span>
+      </div>
+      <div class="svc reveal" style="--d:.24s">
+        <span class="num">04</span>
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 18v-6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v6M4 18h16M6 10V7a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v3M4 18v2M20 18v2"/></svg></div>
+        <h3>Interior &amp; Majlis Styling</h3>
+        <p>From contemporary mashrabiya screens to a family majlis — our atelier furnishes the home before you land.</p>
+        <span class="ar-s">تصميم المجالس</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORIES -->
+<section id="stories" class="section on-ink">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Client Stories <span class="ar">قصص عملائنا</span></p>
+      <h2>Trusted across <em>three continents.</em></h2>
+    </div>
+    <div class="slider reveal" style="--d:.1s" id="slider" tabindex="0" aria-roledescription="carousel" aria-label="Client testimonials">
+      <div class="quote-mark" aria-hidden="true">“</div>
+      <div class="slides-viewport">
+        <div class="slides-track" id="slides-track">
+          <div class="slide" role="group" aria-label="1 of 3">
+            <blockquote>They found us a home that feels written for our family — the majlis, the light, the sea. Mandarin understood before we could say it.</blockquote>
+            <div class="who"><span class="av">LA</span><div><b>Layla Al Mansouri</b><span>Villa owner · Palm Jumeirah</span></div></div>
+          </div>
+          <div class="slide" role="group" aria-label="2 of 3">
+            <blockquote>From London to a Downtown penthouse in eleven days. Escrow, visa, keys — one team, zero friction, no surprises.</blockquote>
+            <div class="who"><span class="av">JW</span><div><b>James Whitfield</b><span>Investor · London</span></div></div>
+          </div>
+          <div class="slide" role="group" aria-label="3 of 3">
+            <blockquote>We were told Dubai was impossible without local contacts. Mandarin became those contacts — and then became friends.</blockquote>
+            <div class="who"><span class="av">PM</span><div><b>Priya &amp; Arjun Mehta</b><span>Owners · Creek Harbour</span></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="slider-nav">
+        <button class="snav-btn" id="prev-slide" aria-label="Previous story"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <div class="dots" id="dots" role="tablist" aria-label="Choose story"></div>
+        <button class="snav-btn" id="next-slide" aria-label="Next story"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section on-ink">
+  <div class="wrap">
+    <div class="c-info">
+      <div class="sec-head reveal">
+        <p class="eyebrow">Contact <span class="ar">تواصل معنا</span></p>
+        <h2>Begin your <em>Dubai story.</em></h2>
+        <p>Tell us what home means to you. A partner — not a call centre — replies within one business day.</p>
+      </div>
+      <div class="c-rows">
+        <div class="c-row reveal" style="--d:0s">
+          <span class="ci"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></span>
+          <div><b>Call the majlis line</b><a href="tel:+97143882200">+971 4 388 2200</a></div>
+        </div>
+        <div class="c-row reveal" style="--d:.07s">
+          <span class="ci"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
+          <div><b>Write to us</b><a href="mailto:hello@mandarinreality.ae">hello@mandarinreality.ae</a></div>
+        </div>
+        <div class="c-row reveal" style="--d:.14s">
+          <span class="ci"><svg viewBox="0 0 24 24"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg></span>
+          <div><b>Visit the atelier</b><span>Gate Village 7, DIFC, Dubai · Mon–Sat 9:00–19:00 GST</span></div>
+        </div>
+      </div>
+      <p class="c-ar-big ar reveal" style="--d:.2s">بيتك يبدأ من هنا</p>
+    </div>
+    <div class="form-card reveal" style="--d:.12s">
+      <form id="enquiry-form" novalidate>
+        <h3>Request a private consultation</h3>
+        <p class="fsub">No obligation. No spam. Just a conversation about your next address.</p>
+        <div class="f-grid">
+          <div class="f-field">
+            <label for="f-name">Full name <span class="req">*</span></label>
+            <input id="f-name" name="name" type="text" autocomplete="name" placeholder="Your name">
+            <span class="f-err" id="err-name">Please tell us your name.</span>
+          </div>
+          <div class="f-field">
+            <label for="f-email">Email <span class="req">*</span></label>
+            <input id="f-email" name="email" type="email" autocomplete="email" placeholder="you@example.com">
+            <span class="f-err" id="err-email">Please enter a valid email address.</span>
+          </div>
+          <div class="f-field">
+            <label for="f-phone">Phone / WhatsApp</label>
+            <input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="+971 50 000 0000">
+            <span class="f-err" id="err-phone">Please use digits, spaces or + only.</span>
+          </div>
+          <div class="f-field">
+            <label for="f-interest">I'm interested in</label>
+            <select id="f-interest" name="interest">
+              <option value="General enquiry">General enquiry</option>
+              <option>Skyline Penthouse — Downtown Dubai</option>
+              <option>Palm Signature Villa — Palm Jumeirah</option>
+              <option>Marina Horizon Apartment — Dubai Marina</option>
+              <option>Desert Rose Villa — Al Barari</option>
+              <option>Creek Harbour Penthouse — Dubai Creek Harbour</option>
+              <option>Boulevard Residence — Downtown Dubai</option>
+              <option>Golden Visa &amp; relocation</option>
+            </select>
+          </div>
+          <div class="f-field full">
+            <label for="f-msg">Your message</label>
+            <textarea id="f-msg" name="message" placeholder="Budget, timeline, favourite view — anything that helps us prepare."></textarea>
+          </div>
+          <button type="submit" class="btn btn-gold f-submit magnetic">Send Enquiry <span class="arr">→</span></button>
+          <p class="f-note">By sending, you agree to be contacted about your enquiry. DLD ORN 12487.</p>
+        </div>
+      </form>
+      <div class="form-success" id="form-success" role="status">
+        <div class="ok-star">
+          <svg viewBox="0 0 100 100" fill="none">
+            <rect x="26" y="26" width="48" height="48" stroke="#C9A227" stroke-width="2"/>
+            <rect x="26" y="26" width="48" height="48" stroke="#0E6B54" stroke-width="2" transform="rotate(45 50 50)"/>
+            <path d="M38 51l8 8 16-18" stroke="#0E6B54" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h4>Enquiry received</h4>
+        <p class="ar-shukran ar">شكراً لك</p>
+        <p>A Mandarin partner will reach out within one business day. Until then — the skyline is waiting.</p>
+        <button class="btn btn-ghost" id="send-another" style="color:var(--text-on-sand);border-color:var(--line-on-sand)">Send another enquiry</button>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="f-top">
+      <div class="f-brand">
+        <a class="logo" href="#hero" aria-label="Mandarin Reality — back to top">
+          <svg viewBox="0 0 100 100" fill="none" aria-hidden="true">
+            <rect x="26" y="26" width="48" height="48" stroke="#C9A227" stroke-width="4"/>
+            <rect x="26" y="26" width="48" height="48" stroke="#E8C96A" stroke-width="4" transform="rotate(45 50 50)"/>
+            <circle cx="50" cy="50" r="6" fill="#C9A227"/>
+          </svg>
+          <span class="t"><b>MANDARIN</b><small>Reality · Dubai</small></span>
+        </a>
+        <p>A boutique real-estate house curating Dubai's finest addresses for families and investors worldwide.</p>
+        <p class="ar-tag ar">بيتك يبدأ من هنا</p>
+        <div class="socials">
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2-.1-1.3-.1-1.7-.1-4.9s0-3.6.1-4.9c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4 1.3-.1 1.7-.1 4.9-.1zm0 2c-3.1 0-3.5 0-4.8.1-1.1.1-1.5.2-1.8.3-.5.2-.8.4-1.1.7-.3.3-.5.6-.7 1.1-.1.3-.3.7-.3 1.8-.1 1.3-.1 1.7-.1 4.8s0 3.5.1 4.8c.1 1.1.2 1.5.3 1.8.2.5.4.8.7 1.1.3.3.6.5 1.1.7.3.1.7.3 1.8.3 1.3.1 1.7.1 4.8.1s3.5 0 4.8-.1c1.1-.1 1.5-.2 1.8-.3.5-.2.8-.4 1.1-.7.3-.3.5-.6.7-1.1.1-.3.3-.7.3-1.8.1-1.3.1-1.7.1-4.8s0-3.5-.1-4.8c-.1-1.1-.2-1.5-.3-1.8-.2-.5-.4-.8-.7-1.1-.3-.3-.6-.5-1.1-.7-.3-.1-.7-.3-1.8-.3-1.3-.1-1.7-.1-4.8-.1zm0 3.4a5.4 5.4 0 1 1 0 10.8 5.4 5.4 0 0 1 0-10.8zm0 2a3.4 3.4 0 1 0 0 6.8 3.4 3.4 0 0 0 0-6.8zm5.6-3.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.1c.5-1 1.8-2 3.7-2 4 0 4.7 2.6 4.7 6V21h-4v-5.5c0-1.3 0-3-1.9-3s-2.2 1.4-2.2 2.9V21H9z"/></svg></a>
+          <a href="#" aria-label="X"><svg viewBox="0 0 24 24"><path d="M17.5 3h3.1l-6.8 7.8L21.8 21h-6.3l-4.9-6.4L5 21H1.9l7.3-8.3L2.2 3h6.4l4.4 5.9L17.5 3zm-1.1 16.1h1.7L7.7 4.8H5.9l10.5 14.3z"/></svg></a>
+          <a href="#" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 2a8 8 0 1 1-4.1 14.9l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 0 1 12 4zm-3.1 4.2c-.2 0-.5.1-.7.3-.3.3-.9.9-.9 2.1s.9 2.4 1 2.6c.1.2 1.8 2.9 4.5 3.9 2.2.9 2.7.7 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3l-2-1c-.3-.1-.5-.2-.7.1l-.9 1.1c-.2.2-.3.2-.6.1-.3-.2-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.6c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.1c-.2-.5-.4-.4-.6-.4z"/></svg></a>
+        </div>
+      </div>
+      <div class="f-col">
+        <h5>Explore</h5>
+        <ul>
+          <li><a href="#residences">Residences</a></li>
+          <li><a href="#why">Why Dubai</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#stories">Client stories</a></li>
+        </ul>
+      </div>
+      <div class="f-col">
+        <h5>Neighbourhoods</h5>
+        <ul>
+          <li><a href="#residences">Palm Jumeirah</a></li>
+          <li><a href="#residences">Downtown Dubai</a></li>
+          <li><a href="#residences">Dubai Marina</a></li>
+          <li><a href="#residences">Al Barari</a></li>
+        </ul>
+      </div>
+      <div class="f-col">
+        <h5>House</h5>
+        <ul>
+          <li><a href="#contact">Book a viewing</a></li>
+          <li><a href="#contact">Golden Visa desk</a></li>
+          <li><a href="mailto:hello@mandarinreality.ae">hello@mandarinreality.ae</a></li>
+          <li><a href="tel:+97143882200">+971 4 388 2200</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="f-bottom">
+      <span>© 2026 Mandarin Reality LLC · Licensed by Dubai Land Department · ORN 12487</span>
+      <span class="ar" style="color:var(--gold);opacity:.8">ماندارين العقارية</span>
+      <button id="toTop" aria-label="Back to top"><svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+    </div>
+  </div>
+</footer>
+
+<div id="toast" role="status"><span class="st">✦</span><span id="toast-msg"></span></div>
+
+<script>
+(function(){
+"use strict";
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const finePointer = matchMedia("(pointer: fine)").matches;
+const $ = (s, c) => (c || document).querySelector(s);
+const $$ = (s, c) => Array.from((c || document).querySelectorAll(s));
+
+/* ---------- LOADER ---------- */
+const loader = $("#loader"), bar = $("#load-bar"), pctEl = $("#load-pct");
+const preload = ["assets/hero.jpg","assets/penthouse.jpg","assets/palmvilla.jpg","assets/marina.jpg"];
+let loadedCount = 0;
+preload.forEach(src => { const im = new Image(); im.onload = im.onerror = () => loadedCount++; im.src = src; });
+const t0 = performance.now();
+const MIN_MS = reduced ? 200 : 1500, MAX_MS = 3200;
+let loaderDone = false;
+function finishLoader(){
+  if (loaderDone) return; loaderDone = true;
+  bar.style.transform = "scaleX(1)"; pctEl.textContent = "100";
+  loader.classList.add("done");
+  document.body.classList.remove("loading");
+  document.body.classList.add("loaded");
+  setTimeout(() => loader.classList.add("gone"), reduced ? 60 : 1150);
+  startCountersWhenVisible();
+}
+(function tickLoader(){
+  if (loaderDone) return;
+  const el = performance.now() - t0;
+  const timeP = Math.min(1, el / (MIN_MS + 500));
+  const loadP = loadedCount / preload.length;
+  const p = Math.min(1, Math.max(timeP * 0.9, loadP * 0.95, el / MAX_MS));
+  bar.style.transform = "scaleX(" + p + ")";
+  pctEl.textContent = Math.round(p * 100);
+  if (p >= 1 && el >= MIN_MS) finishLoader();
+  else requestAnimationFrame(tickLoader);
+})();
+setTimeout(finishLoader, MAX_MS + 400);
+
+/* ---------- NAV ---------- */
+const nav = $("#nav");
+const onScrollNav = () => nav.classList.toggle("scrolled", scrollY > 30);
+addEventListener("scroll", onScrollNav, {passive:true}); onScrollNav();
+const navLinks = $$("[data-nav]");
+const secObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting){
+      navLinks.forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + e.target.id));
+    }
+  });
+}, {rootMargin:"-40% 0px -55% 0px"});
+["residences","why","services","stories","contact"].forEach(id => { const el = $("#" + id); if (el) secObs.observe(el); });
+
+/* mobile menu */
+const burger = $("#hamburger"), mm = $("#mobile-menu");
+function setMenu(open){
+  document.body.classList.toggle("menu-open", open);
+  burger.setAttribute("aria-expanded", String(open));
+  burger.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+  mm.setAttribute("aria-hidden", String(!open));
+}
+burger.addEventListener("click", () => setMenu(!document.body.classList.contains("menu-open")));
+$$(".mm-link", mm).forEach(a => a.addEventListener("click", () => setMenu(false)));
+addEventListener("keydown", e => { if (e.key === "Escape") setMenu(false); });
+
+/* ---------- REVEALS ---------- */
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting){ e.target.classList.add("in"); revealObs.unobserve(e.target); } });
+}, {threshold:.12, rootMargin:"0px 0px -6% 0px"});
+$$(".reveal").forEach(el => revealObs.observe(el));
+
+/* ---------- COUNTERS ---------- */
+function animateCount(el){
+  const to = parseFloat(el.dataset.count), dec = parseInt(el.dataset.decimals || "0", 10);
+  const suf = el.dataset.suffix || "", dur = reduced ? 1 : 1700, start = performance.now();
+  (function step(now){
+    const t = Math.min(1, (now - start) / dur), e = 1 - Math.pow(1 - t, 3);
+    el.textContent = (to * e).toFixed(dec) + suf;
+    if (t < 1) requestAnimationFrame(step);
+  })(start);
+}
+let countersStarted = false;
+function startCountersWhenVisible(){
+  if (countersStarted) return; countersStarted = true;
+  const cObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting){ animateCount(e.target); cObs.unobserve(e.target); } });
+  }, {threshold:.4});
+  $$("[data-count]").forEach(el => cObs.observe(el));
+}
+
+/* ---------- MARQUEE (duplicate for seamless loop) ---------- */
+const mt = $("#marquee-track");
+mt.innerHTML += mt.innerHTML;
+
+/* ---------- HERO PARALLAX + DUST + CURSOR (single rAF) ---------- */
+const hero = $("#hero");
+const layers = $$("[data-depth]", hero);
+const heroContent = $(".hero-content", hero);
+const canvas = $("#dust"), ctx = canvas.getContext("2d");
+let W = 0, H = 0, dpr = 1, motes = [], heroVisible = true;
+function sizeCanvas(){
+  dpr = Math.min(devicePixelRatio || 1, 1.5);
+  W = hero.clientWidth; H = hero.clientHeight;
+  canvas.width = W * dpr; canvas.height = H * dpr;
+  canvas.style.width = W + "px"; canvas.style.height = H + "px";
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const n = Math.min(70, Math.floor(W / 16));
+  motes = Array.from({length:n}, () => ({
+    x: Math.random() * W, y: Math.random() * H,
+    r: .6 + Math.random() * 1.9, s: .12 + Math.random() * .4,
+    sway: Math.random() * Math.PI * 2, swayS: .002 + Math.random() * .006,
+    a: .15 + Math.random() * .5, tw: Math.random() * Math.PI * 2
+  }));
+}
+sizeCanvas();
+addEventListener("resize", sizeCanvas);
+new IntersectionObserver(en => { heroVisible = en[0].isIntersecting; }, {threshold:0}).observe(hero);
+
+let mx = 0, my = 0, cx = 0, cy = 0;
+if (finePointer && !reduced){
+  hero.addEventListener("pointermove", e => {
+    const r = hero.getBoundingClientRect();
+    mx = ((e.clientX - r.left) / r.width - .5) * 2;
+    my = ((e.clientY - r.top) / r.height - .5) * 2;
+  });
+  hero.addEventListener("pointerleave", () => { mx = 0; my = 0; });
+}
+const dot = $("#cursor-dot"), ring = $("#cursor-ring");
+let px = innerWidth / 2, py = innerHeight / 2, rx = px, ry = py, cursorOn = false;
+if (finePointer && !reduced){
+  addEventListener("pointermove", e => {
+    px = e.clientX; py = e.clientY;
+    if (!cursorOn){ cursorOn = true; dot.style.opacity = ring.style.opacity = "1"; rx = px; ry = py; }
+  }, {passive:true});
+  document.addEventListener("pointerover", e => {
+    ring.classList.toggle("hot", !!e.target.closest("a,button,.res-card,input,select,textarea,.dot"));
+  });
+  document.addEventListener("pointerleave", () => { cursorOn = false; dot.style.opacity = ring.style.opacity = "0"; });
+}
+let lastScroll = -1;
+function frame(now){
+  /* cursor */
+  if (cursorOn){
+    rx += (px - rx) * .16; ry += (py - ry) * .16;
+    dot.style.transform = "translate(" + (px - 3) + "px," + (py - 3) + "px)";
+    ring.style.transform = "translate(" + (rx - ring.offsetWidth / 2) + "px," + (ry - ring.offsetHeight / 2) + "px)";
+  }
+  /* hero parallax */
+  if (heroVisible && !reduced){
+    cx += (mx - cx) * .055; cy += (my - cy) * .055;
+    layers.forEach(l => {
+      const d = parseFloat(l.dataset.depth);
+      l.style.transform = "translate3d(" + (-cx * d * 600) + "px," + (-cy * d * 400) + "px,0)";
+    });
+    const sc = Math.min(scrollY, H);
+    heroContent.style.opacity = String(Math.max(0, 1 - sc / (H * .85)));
+    /* dust */
+    ctx.clearRect(0, 0, W, H);
+    for (const m of motes){
+      m.y -= m.s; m.sway += m.swayS; m.tw += .02;
+      if (m.y < -6){ m.y = H + 6; m.x = Math.random() * W; }
+      const a = m.a * (.55 + .45 * Math.sin(m.tw));
+      ctx.beginPath();
+      ctx.arc(m.x + Math.sin(m.sway) * 14, m.y, m.r, 0, 6.2832);
+      ctx.fillStyle = "rgba(232,201,106," + a.toFixed(3) + ")";
+      ctx.fill();
+    }
+    lastScroll = sc;
+  } else if (heroVisible && reduced && lastScroll !== scrollY){
+    lastScroll = scrollY;
+  }
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+
+/* ---------- MAGNETIC BUTTONS ---------- */
+if (finePointer && !reduced){
+  $$(".magnetic").forEach(btn => {
+    btn.addEventListener("pointermove", e => {
+      const r = btn.getBoundingClientRect();
+      const dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2);
+      btn.style.transform = "translate(" + dx * .22 + "px," + dy * .3 + "px)";
+    });
+    btn.addEventListener("pointerleave", () => { btn.style.transform = ""; });
+  });
+}
+
+/* ---------- RESIDENCE FILTERS ---------- */
+const cards = $$(".res-card"), countEl = $("#result-count");
+$$(".filter-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    $$(".filter-btn").forEach(b => b.setAttribute("aria-pressed", String(b === btn)));
+    const f = btn.dataset.filter;
+    let shown = 0;
+    cards.forEach(card => {
+      const match = f === "all" || card.dataset.cat === f;
+      if (match) shown++;
+      card.classList.toggle("hide", !match);
+    });
+    countEl.textContent = "Showing " + shown + " of " + cards.length + " residences";
+  });
+});
+
+/* ---------- CARD TILT + SHINE ---------- */
+if (finePointer && !reduced){
+  cards.forEach(card => {
+    const media = $(".res-media", card), shine = $(".res-shine", card);
+    card.addEventListener("pointermove", e => {
+      const r = card.getBoundingClientRect();
+      const nx = (e.clientX - r.left) / r.width - .5, ny = (e.clientY - r.top) / r.height - .5;
+      card.style.transform = "perspective(900px) rotateX(" + (-ny * 5) + "deg) rotateY(" + (nx * 6) + "deg) translateY(-4px)";
+      const mr = media.getBoundingClientRect();
+      shine.style.setProperty("--mx", ((e.clientX - mr.left) / mr.width * 100) + "%");
+      shine.style.setProperty("--my", ((e.clientY - mr.top) / mr.height * 100) + "%");
+    });
+    card.addEventListener("pointerleave", () => { card.style.transform = ""; });
+  });
+}
+
+/* ---------- WHY-DUBAI IMAGE PARALLAX ---------- */
+const whyImg = $("#why-img"), whySec = $("#why");
+if (!reduced){
+  addEventListener("scroll", () => {
+    const r = whySec.getBoundingClientRect();
+    if (r.bottom < 0 || r.top > innerHeight) return;
+    const p = (innerHeight - r.top) / (innerHeight + r.height);
+    whyImg.style.transform = "translateY(" + ((p - .5) * 46) + "px) scale(1.12)";
+  }, {passive:true});
+}
+
+/* ---------- TESTIMONIAL SLIDER ---------- */
+const track = $("#slides-track"), slides = $$(".slide", track), dotsWrap = $("#dots");
+let idx = 0, timer = null;
+slides.forEach((_, i) => {
+  const d = document.createElement("button");
+  d.className = "dot" + (i === 0 ? " on" : "");
+  d.setAttribute("role", "tab");
+  d.setAttribute("aria-label", "Story " + (i + 1));
+  d.addEventListener("click", () => go(i, true));
+  dotsWrap.appendChild(d);
+});
+const dots = $$(".dot", dotsWrap);
+function go(i, user){
+  idx = (i + slides.length) % slides.length;
+  track.style.transform = "translateX(-" + idx * 100 + "%)";
+  dots.forEach((d, j) => d.classList.toggle("on", j === idx));
+  if (user) restartAuto();
+}
+function restartAuto(){
+  clearInterval(timer);
+  if (!reduced) timer = setInterval(() => go(idx + 1), 6000);
+}
+$("#prev-slide").addEventListener("click", () => go(idx - 1, true));
+$("#next-slide").addEventListener("click", () => go(idx + 1, true));
+const slider = $("#slider");
+slider.addEventListener("pointerenter", () => clearInterval(timer));
+slider.addEventListener("pointerleave", restartAuto);
+slider.addEventListener("keydown", e => {
+  if (e.key === "ArrowLeft"){ go(idx - 1, true); e.preventDefault(); }
+  if (e.key === "ArrowRight"){ go(idx + 1, true); e.preventDefault(); }
+});
+restartAuto();
+
+/* ---------- TOAST ---------- */
+const toast = $("#toast"), toastMsg = $("#toast-msg");
+let toastTimer = null;
+function showToast(msg){
+  toastMsg.textContent = msg;
+  toast.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove("show"), 3600);
+}
+
+/* ---------- ENQUIRE → PREFILL CONTACT ---------- */
+const interestSel = $("#f-interest"), nameInput = $("#f-name");
+$$("[data-enquire]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const val = btn.dataset.enquire;
+    interestSel.value = val;
+    $("#contact").scrollIntoView({behavior: reduced ? "auto" : "smooth"});
+    showToast(val.split(" — ")[0] + " selected — tell us about yourself.");
+    setTimeout(() => nameInput.focus({preventScroll:true}), reduced ? 100 : 800);
+  });
+});
+
+/* ---------- FORM ---------- */
+const form = $("#enquiry-form"), success = $("#form-success");
+const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const phoneRe = /^[+\d][\d\s\-()]{5,19}$/;
+function setErr(input, errEl, bad){
+  input.setAttribute("aria-invalid", String(bad));
+  errEl.classList.toggle("show", bad);
+  return !bad;
+}
+form.addEventListener("submit", e => {
+  e.preventDefault();
+  const name = $("#f-name"), email = $("#f-email"), phone = $("#f-phone");
+  const okName = setErr(name, $("#err-name"), name.value.trim().length < 2);
+  const okEmail = setErr(email, $("#err-email"), !emailRe.test(email.value.trim()));
+  const okPhone = setErr(phone, $("#err-phone"), phone.value.trim() !== "" && !phoneRe.test(phone.value.trim()));
+  if (!(okName && okEmail && okPhone)){
+    const firstBad = [name, email, phone].find(i => i.getAttribute("aria-invalid") === "true");
+    if (firstBad) firstBad.focus();
+    return;
+  }
+  form.style.display = "none";
+  success.classList.add("show");
+  showToast("Shukran! Your enquiry is on its way.");
+});
+["f-name","f-email","f-phone"].forEach(id => {
+  $("#" + id).addEventListener("input", e => {
+    e.target.setAttribute("aria-invalid", "false");
+    const err = $("#err-" + id.slice(2));
+    if (err) err.classList.remove("show");
+  });
+});
+$("#send-another").addEventListener("click", () => {
+  success.classList.remove("show");
+  form.style.display = "";
+  form.reset();
+  nameInput.focus();
+});
+
+/* ---------- BACK TO TOP ---------- */
+$("#toTop").addEventListener("click", () => scrollTo({top:0, behavior: reduced ? "auto" : "smooth"}));
+})();
+</script>
+</body>
+</html>
