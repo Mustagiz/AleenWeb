@@ -5251,6 +5251,11 @@ html, body {
   #header .nav-toggle {
     display: inline-flex !important;
   }
+
+  /* Keep the mobile menu out of the opening film until the intro completes. */
+  body.has-intro:not(.intro-done) #header .nav-toggle {
+    display: none !important;
+  }
 }
 
 @media (max-width: 640px) {
