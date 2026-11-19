@@ -3875,7 +3875,7 @@ html, body {
   }
 }
 </style>
-  <link rel="stylesheet" href="theme-fresh.css?v=31">
+  <link rel="stylesheet" href="theme-fresh.css?v=32">
 </head>
 
 <body>
@@ -6240,7 +6240,7 @@ html, body {
           return src;
         }
         if (src.startsWith("/")) {
-          return src.substring(1);
+          return src;
         }
         return "/" + src.replace(/^\.\//, "");
       }
