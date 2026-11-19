@@ -13,5 +13,5 @@ module.exports = async (req, res) => {
     res.status(401).json({ error: 'Unauthorized' });
     return;
   }
-  res.status(200).json({ valid: true, role: admin.role, username: admin.username });
+  res.status(200).json({ authorized: true, valid: true, role: admin.role, username: admin.username });
 };

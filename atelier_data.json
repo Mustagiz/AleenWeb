@@ -95,40 +95,18 @@
       "whatsapp": "+91 98765 43210",
       "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
       "images": [
-        "/assets/pakistani-kurti-1.jpg",
-        "/assets/pakistani-kurti-2.jpg",
-        "/assets/pakistani-kurti-3.jpg"
+        "/assets/pakistani-kurti-1.jpg"
       ],
       "mrp": 48000,
       "discountedPrice": 33600,
       "discountPercent": 30,
       "fitLabel": "Royal Tailored Fit",
-      "rating": 4.9,
+      "rating": 4.2,
       "garmentColors": [
         {
           "name": "Pearl Ivory",
           "swatchColor": "#e8e2d2",
           "image": "/assets/pakistani-kurti-1.jpg"
-        },
-        {
-          "name": "Velvet Emerald",
-          "swatchColor": "#163b25",
-          "image": "/assets/pakistani-kurti-2.jpg"
-        },
-        {
-          "name": "",
-          "swatchColor": "#9caf88",
-          "image": ""
-        },
-        {
-          "name": "",
-          "swatchColor": "#9caf88",
-          "image": ""
-        },
-        {
-          "name": "Heirloom Gold",
-          "swatchColor": "#d4af37",
-          "image": ""
         }
       ],
       "colorVariants": [
@@ -136,26 +114,6 @@
           "name": "Pearl Ivory",
           "swatchColor": "#e8e2d2",
           "image": "/assets/pakistani-kurti-1.jpg"
-        },
-        {
-          "name": "Velvet Emerald",
-          "swatchColor": "#163b25",
-          "image": "/assets/pakistani-kurti-2.jpg"
-        },
-        {
-          "name": "",
-          "swatchColor": "#9caf88",
-          "image": ""
-        },
-        {
-          "name": "",
-          "swatchColor": "#9caf88",
-          "image": ""
-        },
-        {
-          "name": "Heirloom Gold",
-          "swatchColor": "#d4af37",
-          "image": ""
         }
       ]
     },

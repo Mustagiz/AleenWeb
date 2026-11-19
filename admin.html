@@ -5609,7 +5609,7 @@ const DEFAULT_CATALOG = [{"id": "ALN-PK-01", "title": "Zeenat Embroidered Pakist
             return;
           }
           const vData = await res.json().catch(() => ({}));
-          if (!vData.authorized) {
+          if (!vData.authorized && !vData.valid) {
             showAuthGate("Access restricted. Please log in with admin privileges.");
             return;
           }

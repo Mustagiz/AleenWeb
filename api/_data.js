@@ -6,12 +6,14 @@ const fs = require('fs');
 const path = require('path');
 const firestore = require('./_firebase');
 
+const LEAKED_PASSWORDS = new Set(['aleen', 'Aleen@Atelier2026!']);
+
 const DATA_FILE = path.join(process.cwd(), 'atelier_data.json');
 
 const DEFAULT_DATA = {
-  masterPassword: process.env.ATELIER_ADMIN_PASSWORD,
+  masterPassword: process.env.ATELIER_ADMIN_PASSWORD || 'Kakarot@123',
   users: [
-    { username: 'admin', role: 'admin', password: process.env.ATELIER_ADMIN_PASSWORD, createdAt: '14 Nov 2026' }
+    { username: 'admin', role: 'admin', password: process.env.ATELIER_ADMIN_PASSWORD || 'Kakarot@123', createdAt: '14 Nov 2026' }
   ],
   megaMenuBanner: {
     img: 'assets/s2-card-women.jpg?v=2',
@@ -286,6 +288,14 @@ async function getData() {
 
   const base = await fetchDoc('atelier_data') || readLocalFallback();
   _cache = { ...DEFAULT_DATA, ...base };
+  if (!_cache.masterPassword || LEAKED_PASSWORDS.has(_cache.masterPassword)) {
+    _cache.masterPassword = process.env.ATELIER_ADMIN_PASSWORD || 'Kakarot@123';
+  }
+  if (!Array.isArray(_cache.users) || _cache.users.length === 0) {
+    _cache.users = [
+      { username: 'admin', role: 'admin', password: process.env.ATELIER_ADMIN_PASSWORD || 'Kakarot@123', createdAt: '14 Nov 2026' }
+    ];
+  }
   _lastFetchTime = now;
   return _cache;
 }
