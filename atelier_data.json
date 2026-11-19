@@ -84,8 +84,6 @@
       "category": "kurtis",
       "categoryLabel": "Pakistani Kurtis",
       "price": 34500,
-      "mrp": 49300,
-      "discountedPrice": 34500,
       "craft": "Pure Zari & Adda Needlework",
       "fabric": "Pure Raw Silk with Organza Lace Trims",
       "origin": "Lahore Atelier",
@@ -100,6 +98,55 @@
         "/assets/pakistani-kurti-1.jpg",
         "/assets/pakistani-kurti-2.jpg",
         "/assets/pakistani-kurti-3.jpg"
+      ],
+      "mrp": 49300,
+      "discountedPrice": 34500,
+      "discountPercent": 30,
+      "fitLabel": "Tailored Fit",
+      "rating": 4.9,
+      "garmentColors": [
+        {
+          "name": "Pearl Ivory",
+          "swatchColor": "#e8e2d2",
+          "image": "/assets/pakistani-kurti-1.jpg"
+        },
+        {
+          "name": "Velvet Emerald",
+          "swatchColor": "#163b25",
+          "image": "/assets/pakistani-kurti-2.jpg"
+        },
+        {
+          "name": "",
+          "swatchColor": "#9caf88",
+          "image": ""
+        },
+        {
+          "name": "",
+          "swatchColor": "#9caf88",
+          "image": ""
+        }
+      ],
+      "colorVariants": [
+        {
+          "name": "Pearl Ivory",
+          "swatchColor": "#e8e2d2",
+          "image": "/assets/pakistani-kurti-1.jpg"
+        },
+        {
+          "name": "Velvet Emerald",
+          "swatchColor": "#163b25",
+          "image": "/assets/pakistani-kurti-2.jpg"
+        },
+        {
+          "name": "",
+          "swatchColor": "#9caf88",
+          "image": ""
+        },
+        {
+          "name": "",
+          "swatchColor": "#9caf88",
+          "image": ""
+        }
       ]
     },
     {
@@ -278,7 +325,7 @@
       "origin": "Aleen Design Studio",
       "badge": "Signature Cut",
       "image": "/assets/women-collections/card_3_lehengas.jpg",
-      "desc": "A springtime dream composed of thousand-petal floral tapestries rendered in ombr\u00e9 pastel threads, crowned by an embroidered sweetheart bustier.",
+      "desc": "A springtime dream composed of thousand-petal floral tapestries rendered in ombré pastel threads, crowned by an embroidered sweetheart bustier.",
       "weave": "French Knot & Silk Floss",
       "delivery": "Express Insured Dispatch (3-5 Days)",
       "whatsapp": "+91 98765 43210",
@@ -414,7 +461,7 @@
     "emailSubtext": "Our client liaison desk responds to all inquiries within 4 business hours.",
     "conciergeBadge": "Direct Concierge & WhatsApp",
     "phone": "+91 98765 43210",
-    "hours": "Mon \u2013 Sat, 10:00 AM \u2013 7:30 PM IST",
+    "hours": "Mon – Sat, 10:00 AM – 7:30 PM IST",
     "whatsappMsg": "Hello Aleen Atelier, I would like to inquire about your couture creations."
   },
   "bestSellers": [
@@ -471,8 +518,8 @@
       ],
       "garmentColors": [],
       "fitLabel": "",
-      "mrp": 49300,
-      "discountedPrice": 34500
+      "mrp": 0,
+      "discountedPrice": 0
     },
     {
       "id": "ALN-KS-02",
@@ -682,7 +729,7 @@
       "origin": "Aleen Design Studio",
       "badge": "Signature Cut",
       "image": "assets/women-collections/card_3_lehengas.jpg",
-      "desc": "A springtime dream composed of thousand-petal floral tapestries rendered in ombr\u00e9 pastel threads, crowned by an embroidered sweetheart bustier.",
+      "desc": "A springtime dream composed of thousand-petal floral tapestries rendered in ombré pastel threads, crowned by an embroidered sweetheart bustier.",
       "weave": "French Knot & Silk Floss",
       "delivery": "Express Insured Dispatch (3-5 Days)",
       "whatsapp": "+91 98765 43210",
