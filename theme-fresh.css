@@ -86,6 +86,7 @@ html,
 body {
   background-color: #f7f5ef !important;
   color: #162217 !important;
+  overflow-x: clip !important;
 }
 
 main,
@@ -331,6 +332,7 @@ body.has-intro:not(.intro-done) header {
 /* Desktop only: below the breakpoint the inline links give way to the drawer,
    and this rule would otherwise out-specify the breakpoint that hides them. */
 @media (min-width: 1200px) {
+
   body.is-ready .nav-side,
   body.is-ready .nav-center,
   body.is-ready .nav-l,
@@ -513,17 +515,45 @@ body.has-intro #header:not(.is-solid) nav a:hover {
 }
 
 /* Rich antique gold colors for high contrast on light header */
-#header #brandLogo #lgGold stop:nth-child(1) { stop-color: #845e22 !important; }
-#header #brandLogo #lgGold stop:nth-child(2) { stop-color: #b88a44 !important; }
-#header #brandLogo #lgGold stop:nth-child(3) { stop-color: #cca258 !important; }
-#header #brandLogo #lgGold stop:nth-child(4) { stop-color: #b88a44 !important; }
-#header #brandLogo #lgGold stop:nth-child(5) { stop-color: #704d16 !important; }
+#header #brandLogo #lgGold stop:nth-child(1) {
+  stop-color: #845e22 !important;
+}
 
-#header #brandLogo #lgWmGold stop:nth-child(1) { stop-color: #704d16 !important; }
-#header #brandLogo #lgWmGold stop:nth-child(2) { stop-color: #ad803d !important; }
-#header #brandLogo #lgWmGold stop:nth-child(3) { stop-color: #cca258 !important; }
-#header #brandLogo #lgWmGold stop:nth-child(4) { stop-color: #ad803d !important; }
-#header #brandLogo #lgWmGold stop:nth-child(5) { stop-color: #704d16 !important; }
+#header #brandLogo #lgGold stop:nth-child(2) {
+  stop-color: #b88a44 !important;
+}
+
+#header #brandLogo #lgGold stop:nth-child(3) {
+  stop-color: #cca258 !important;
+}
+
+#header #brandLogo #lgGold stop:nth-child(4) {
+  stop-color: #b88a44 !important;
+}
+
+#header #brandLogo #lgGold stop:nth-child(5) {
+  stop-color: #704d16 !important;
+}
+
+#header #brandLogo #lgWmGold stop:nth-child(1) {
+  stop-color: #704d16 !important;
+}
+
+#header #brandLogo #lgWmGold stop:nth-child(2) {
+  stop-color: #ad803d !important;
+}
+
+#header #brandLogo #lgWmGold stop:nth-child(3) {
+  stop-color: #cca258 !important;
+}
+
+#header #brandLogo #lgWmGold stop:nth-child(4) {
+  stop-color: #ad803d !important;
+}
+
+#header #brandLogo #lgWmGold stop:nth-child(5) {
+  stop-color: #704d16 !important;
+}
 
 /* Over the hero the home header is transparent and the mark keeps the light
    gold treatment it was designed on */
@@ -866,10 +896,10 @@ section#hero {
 @media (max-width: 1024px) {
   #hero .slide .veil {
     background: linear-gradient(180deg,
-      rgba(6, 12, 8, 0.38) 0%,
-      rgba(6, 12, 8, 0.10) 30%,
-      rgba(6, 12, 8, 0.55) 62%,
-      rgba(6, 12, 8, 0.92) 100%) !important;
+        rgba(6, 12, 8, 0.38) 0%,
+        rgba(6, 12, 8, 0.10) 30%,
+        rgba(6, 12, 8, 0.55) 62%,
+        rgba(6, 12, 8, 0.92) 100%) !important;
     opacity: 1 !important;
   }
 
@@ -896,10 +926,17 @@ section#hero {
   }
 
   #hero .eyebrow,
-  #hero .eyebrow .eb-text { color: #e8d5a6 !important; }
-  #hero .eyebrow .eb-line { background: #c9a35f !important; }
+  #hero .eyebrow .eb-text {
+    color: #e8d5a6 !important;
+  }
 
-  #hero .tagline { color: rgba(251, 247, 238, 0.95) !important; }
+  #hero .eyebrow .eb-line {
+    background: #c9a35f !important;
+  }
+
+  #hero .tagline {
+    color: rgba(251, 247, 238, 0.95) !important;
+  }
 
   #hero .hero-subtext {
     color: rgba(251, 247, 238, 0.9) !important;
@@ -1159,6 +1196,7 @@ section#hero {
    picture out, so the stage shortens, the crop centres, and the veil turns
    into a bottom fade that carries the copy. */
 @media (max-width: 767px) {
+
   #garment-reel,
   .fw-slider-theater,
   .fw-slides-stage {
@@ -1177,12 +1215,11 @@ section#hero {
 
   .fw-slide-veil {
     background: linear-gradient(180deg,
-      rgba(247, 245, 239, 0) 0%,
-      rgba(247, 245, 239, 0.05) 42%,
-      rgba(247, 245, 239, 0.72) 62%,
-      rgba(247, 245, 239, 0.96) 76%,
-      #f7f5ef 100%
-    ) !important;
+        rgba(247, 245, 239, 0) 0%,
+        rgba(247, 245, 239, 0.05) 42%,
+        rgba(247, 245, 239, 0.72) 62%,
+        rgba(247, 245, 239, 0.96) 76%,
+        #f7f5ef 100%) !important;
   }
 
   .fw-slide-content {
@@ -1518,13 +1555,36 @@ header.b-head,
 /* Phone: the section is full bleed and the desktop frame hangs 4.5% outside
    the photograph on each side, so half of it fell off the screen. */
 @media (max-width: 767px) {
-  #storyEd { padding: 58px 22px !important; }
-  #storyEd .se-grid { width: 100% !important; gap: 32px !important; }
-  #storyEd .se-copy { padding: 0 !important; }
-  #storyEd .se-frame { inset: 10px; }
-  #storyEd h2 { font-size: clamp(30px, 8.6vw, 40px) !important; line-height: 1.14 !important; }
-  #storyEd .se-para { font-size: 15px !important; line-height: 1.72 !important; }
-  #storyEd .se-rule { margin: 22px 0 !important; }
+  #storyEd {
+    padding: 58px 22px !important;
+  }
+
+  #storyEd .se-grid {
+    width: 100% !important;
+    gap: 32px !important;
+  }
+
+  #storyEd .se-copy {
+    padding: 0 !important;
+  }
+
+  #storyEd .se-frame {
+    inset: 10px;
+  }
+
+  #storyEd h2 {
+    font-size: clamp(30px, 8.6vw, 40px) !important;
+    line-height: 1.14 !important;
+  }
+
+  #storyEd .se-para {
+    font-size: 15px !important;
+    line-height: 1.72 !important;
+  }
+
+  #storyEd .se-rule {
+    margin: 22px 0 !important;
+  }
 }
 
 /* ========================================================
@@ -1903,15 +1963,33 @@ svg.lotus path {
     padding-top: 24px !important;
     padding-bottom: 28px !important;
   }
-  #footer .f-bottom p { text-align: left; }
-  #footer .f-bottom nav { justify-content: flex-start; }
-  #footer .f-bottom #backTop { align-self: center; }
+
+  #footer .f-bottom p {
+    text-align: left;
+  }
+
+  #footer .f-bottom nav {
+    justify-content: flex-start;
+  }
+
+  #footer .f-bottom #backTop {
+    align-self: center;
+  }
 }
 
 @media (max-width: 767px) {
-  #footer { padding: 38px 0 16px !important; }
-  #footer .f-statement { padding: 0 22px; }
-  #footer .f-statement .f-st-rule { height: 38px; margin: 18px auto; }
+  #footer {
+    padding: 38px 0 16px !important;
+  }
+
+  #footer .f-statement {
+    padding: 0 22px;
+  }
+
+  #footer .f-statement .f-st-rule {
+    height: 38px;
+    margin: 18px auto;
+  }
 
   #footer .f-main {
     grid-template-columns: 1fr;
@@ -1921,26 +1999,52 @@ svg.lotus path {
   }
 
   #footer .foot-brand-logo,
-  #footer .f-logo-link svg { height: 118px; width: auto; }
-  #footer .f-about { margin-bottom: 0; }
+  #footer .f-logo-link svg {
+    height: 118px;
+    width: auto;
+  }
+
+  #footer .f-about {
+    margin-bottom: 0;
+  }
 
   #footer .f-col h4,
-  #footer .f-news h4 { margin-bottom: 2px; }
-  #footer .f-col > i,
-  #footer .f-news > i { margin-bottom: 8px; }
+  #footer .f-news h4 {
+    margin-bottom: 2px;
+  }
 
-  #footer .f-field { width: 100%; }
+  #footer .f-col>i,
+  #footer .f-news>i {
+    margin-bottom: 8px;
+  }
+
+  #footer .f-field {
+    width: 100%;
+  }
+
   #footer #newsEmail,
-  #footer .f-field input { min-width: 0; }
+  #footer .f-field input {
+    min-width: 0;
+  }
 
-  #footer .f-orna { width: calc(100% - 44px); }
+  #footer .f-orna {
+    width: calc(100% - 44px);
+  }
+
   #footer .f-bottom {
     width: calc(100% - 44px);
     padding-top: 18px !important;
     padding-bottom: 22px !important;
   }
-  #footer .f-bottom nav { width: 100%; row-gap: 0; }
-  #footer .f-bottom nav i { display: none; }
+
+  #footer .f-bottom nav {
+    width: 100%;
+    row-gap: 0;
+  }
+
+  #footer .f-bottom nav i {
+    display: none;
+  }
 }
 
 /* Footer Lower Bar Animated Indian Flag */
@@ -3149,7 +3253,6 @@ header.b-head,
 }
 
 /* --- 3. FILTER BAR REMOVE DOUBLE BORDER (PICTURE 3) --- */
-.ecom-refine-bar-card,
 .ecom-refine-main-row {
   border: none !important;
   box-shadow: none !important;
@@ -3841,11 +3944,18 @@ button.modal-inquire-btn:hover {
 .modal-collapsibles {
   display: flex !important;
   flex-direction: column !important;
-  border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+  gap: 12px !important;
+  border-top: none !important;
+  margin-top: 14px !important;
 }
 
 .modal-collapse-item {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 8px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03) !important;
+  overflow: hidden !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
 }
 
 .modal-collapse-header {
@@ -3853,11 +3963,18 @@ button.modal-inquire-btn:hover {
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
-  padding: 14px 0 !important;
-  background: none !important;
+  padding: 14px 16px !important;
+  background: #ffffff !important;
   border: none !important;
+  border-radius: 8px !important;
   cursor: pointer !important;
   text-align: left !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.modal-collapse-item.is-open .modal-collapse-header {
+  border-radius: 8px 8px 0 0 !important;
 }
 
 .collapse-header-text .collapse-title {
@@ -3878,10 +3995,11 @@ button.modal-inquire-btn:hover {
 }
 
 .collapse-chevron {
-  width: 32px !important;
-  height: 32px !important;
+  width: 44px !important;
+  height: 36px !important;
   border-radius: 8px !important;
-  background: rgba(0, 0, 0, 0.04) !important;
+  background: #f4f5f7 !important;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -3892,7 +4010,7 @@ button.modal-inquire-btn:hover {
 
 .modal-collapse-item.is-open .collapse-chevron {
   transform: rotate(180deg) !important;
-  background: rgba(0, 0, 0, 0.08) !important;
+  background: #e5e7eb !important;
 }
 
 .modal-collapse-body {
@@ -3900,13 +4018,14 @@ button.modal-inquire-btn:hover {
   overflow: hidden !important;
   opacity: 0 !important;
   transition: max-height 0.35s ease, opacity 0.25s ease, padding 0.35s ease !important;
-  padding: 0 !important;
+  padding: 0 16px !important;
 }
 
 .modal-collapse-item.is-open .modal-collapse-body {
   max-height: 800px !important;
   opacity: 1 !important;
-  padding: 4px 0 16px !important;
+  padding: 6px 16px 16px !important;
+  border-top: 1px solid #f3f4f6 !important;
 }
 
 .modal-desc {
@@ -4185,12 +4304,13 @@ button.modal-inquire-btn:hover {
   color: #6b7280 !important;
   margin: 12px 0 0 0 !important;
 }
-  border: none !important;
-  border-radius: 999px !important;
-  font-weight: 700 !important;
-  box-shadow: 0 4px 16px rgba(232, 65, 44, 0.25) !important;
-  padding: 14px 28px !important;
-  cursor: pointer !important;
+
+border: none !important;
+border-radius: 999px !important;
+font-weight: 700 !important;
+box-shadow: 0 4px 16px rgba(232, 65, 44, 0.25) !important;
+padding: 14px 28px !important;
+cursor: pointer !important;
 }
 
 .modal-inquire-btn:hover,
@@ -4534,24 +4654,43 @@ html {
   color: inherit !important;
   background: currentColor;
   transition: top 0.38s cubic-bezier(0.77, 0, 0.18, 1),
-              transform 0.38s cubic-bezier(0.77, 0, 0.18, 1);
+    transform 0.38s cubic-bezier(0.77, 0, 0.18, 1);
 }
 
-.nav-toggle span:nth-child(1) { top: 19px; }
-.nav-toggle span:nth-child(2) { top: 24px; }
+.nav-toggle span:nth-child(1) {
+  top: 19px;
+}
 
-.nav-toggle[aria-expanded="true"] span:nth-child(1) { top: 21.5px; transform: rotate(45deg); }
-.nav-toggle[aria-expanded="true"] span:nth-child(2) { top: 21.5px; transform: rotate(-45deg); }
+.nav-toggle span:nth-child(2) {
+  top: 24px;
+}
+
+.nav-toggle[aria-expanded="true"] span:nth-child(1) {
+  top: 21.5px;
+  transform: rotate(45deg);
+}
+
+.nav-toggle[aria-expanded="true"] span:nth-child(2) {
+  top: 21.5px;
+  transform: rotate(-45deg);
+}
 
 /* Over the transparent home header the toggle takes the light ink, exactly
    like the inline links and the mark do. */
-body.has-intro #header:not(.is-solid) .nav-toggle { color: #efe4c8 !important; }
-body.has-intro #header.is-solid .nav-toggle { color: #162217 !important; }
+body.has-intro #header:not(.is-solid) .nav-toggle {
+  color: #efe4c8 !important;
+}
+
+body.has-intro #header.is-solid .nav-toggle {
+  color: #162217 !important;
+}
 
 /* The home film plays under a 99990 curtain while the sheet sits at 1200, so a
 drawer opened mid-film stays invisible yet still locks the scroll; the inline
 links are hidden for the film, and so is the toggle. */
-body.has-intro:not(.intro-done) .nav-toggle { display: none !important; }
+body.has-intro:not(.intro-done) .nav-toggle {
+  display: none !important;
+}
 
 /* ---------- drawer ---------- */
 .site-drawer {
@@ -4566,7 +4705,7 @@ body.has-intro:not(.intro-done) .nav-toggle { display: none !important; }
   /* visibility flips at once on open (so the close button can take focus)
      and waits for the fade before hiding on close. */
   transition: opacity 0.34s var(--ease, cubic-bezier(0.22, 0.61, 0.21, 1)),
-              visibility 0s linear 0.34s;
+    visibility 0s linear 0.34s;
   overscroll-behavior: contain;
 }
 
@@ -4574,7 +4713,7 @@ body.has-intro:not(.intro-done) .nav-toggle { display: none !important; }
   visibility: visible;
   opacity: 1;
   transition: opacity 0.34s var(--ease, cubic-bezier(0.22, 0.61, 0.21, 1)),
-              visibility 0s;
+    visibility 0s;
 }
 
 html.nav-open,
@@ -4628,7 +4767,9 @@ html.nav-open body {
 }
 
 .sd-close:hover,
-.sd-close:active { color: #e8412c !important; }
+.sd-close:active {
+  color: #e8412c !important;
+}
 
 .sd-body {
   flex: 1 1 auto;
@@ -4664,7 +4805,9 @@ html.nav-open body {
 
 .sd-nav a:hover,
 .sd-nav a:active,
-.sd-nav a[aria-current="page"] { color: #e8412c !important; }
+.sd-nav a[aria-current="page"] {
+  color: #e8412c !important;
+}
 
 .sd-idx {
   font-family: var(--sans, 'Montserrat', system-ui, sans-serif);
@@ -4678,8 +4821,8 @@ html.nav-open body {
 /* The page sheets paint every `span` white for the dark film chapters, which
    left the labels white on this ivory sheet; they take the link's ink instead
    and the numerals keep their own tone. */
-.sd-nav a > span:not(.sd-idx),
-.sd-grid a > span:not(.sd-idx) {
+.sd-nav a>span:not(.sd-idx),
+.sd-grid a>span:not(.sd-idx) {
   color: inherit !important;
 }
 
@@ -4715,7 +4858,9 @@ html.nav-open body {
 
 .sd-grid a:hover,
 .sd-grid a:active,
-.sd-grid a[aria-current="page"] { color: #e8412c !important; }
+.sd-grid a[aria-current="page"] {
+  color: #e8412c !important;
+}
 
 .sd-foot {
   margin-top: auto;
@@ -4741,21 +4886,33 @@ html.nav-open body {
 }
 
 .sd-cta:hover,
-.sd-cta:active { background: #cf3420 !important; }
+.sd-cta:active {
+  background: #cf3420 !important;
+}
 
 /* ---------- breakpoints ---------- */
 @media (max-width: 1199px) {
+
   .nav-center,
   .nav-l,
   .nav-r,
-  .mega { display: none !important; }
+  .mega {
+    display: none !important;
+  }
 
-  .nav-toggle { display: inline-flex !important; }
+  .nav-toggle {
+    display: inline-flex !important;
+  }
 }
 
 @media (min-width: 1200px) {
-  .nav-toggle { display: none !important; }
-  .site-drawer { display: none !important; }
+  .nav-toggle {
+    display: none !important;
+  }
+
+  .site-drawer {
+    display: none !important;
+  }
 }
 
 @media (max-width: 767px) {
@@ -4764,20 +4921,37 @@ html.nav-open body {
     padding-right: max(18px, env(safe-area-inset-right));
   }
 
-  .nav-toggle { left: max(14px, env(safe-area-inset-left)); }
+  .nav-toggle {
+    left: max(14px, env(safe-area-inset-left));
+  }
 
-  .sd-top { padding-left: 22px; padding-right: 22px; }
-  .sd-body { padding-left: 22px; padding-right: 22px; }
-  .sd-nav a { font-size: clamp(25px, 7.6vw, 30px); }
+  .sd-top {
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+
+  .sd-body {
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+
+  .sd-nav a {
+    font-size: clamp(25px, 7.6vw, 30px);
+  }
 }
 
 @media (max-width: 359px) {
-  .sd-grid { grid-template-columns: 1fr; }
+  .sd-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .site-drawer,
-  .nav-toggle span { transition-duration: 0.01ms !important; }
+  .nav-toggle span {
+    transition-duration: 0.01ms !important;
+  }
 }
 
 
@@ -4799,6 +4973,7 @@ html.nav-open body {
 }
 
 @media (max-width: 1024px) {
+
   .garments-grid,
   .garments-grid.cols-2,
   .garments-grid.cols-3,
@@ -4813,8 +4988,9 @@ html.nav-open body {
   .catalog-section {
     padding-left: 12px !important;
     padding-right: 12px !important;
-    overflow-x: hidden !important;
+    overflow-x: clip !important;
   }
+
   .garments-grid,
   .garments-grid.cols-2,
   .garments-grid.cols-3,
@@ -4826,29 +5002,37 @@ html.nav-open body {
     max-width: 100% !important;
     overflow-x: hidden !important;
   }
+
   .garment-card {
     width: 100% !important;
     max-width: 100% !important;
   }
+
   .garment-card .card-info {
     padding: 6px 2px 0 !important;
     gap: 1px !important;
   }
+
   .garment-card .garment-name {
     font-size: 13px !important;
   }
+
   .garment-card .card-discounted-price {
     font-size: 13px !important;
   }
+
   .garment-card .card-mrp {
     font-size: 11px !important;
   }
+
   .garment-card .card-discount-percent {
     font-size: 11px !important;
   }
+
   .garment-card .card-media {
     border-radius: 10px !important;
   }
+
   .garment-card .card-media img {
     border-radius: 10px !important;
   }
@@ -5062,27 +5246,38 @@ html.nav-open body {
   display: none !important;
 }
 
-/* Give the collection search and filter controls clear vertical breathing room. */
+/* Sticky Search & Filter Bar directly below the fixed header */
 .ecom-refine-bar-card {
-  padding: 18px 0 24px !important;
-  margin-bottom: 0 !important;
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  top: 104px !important;
+  z-index: 950 !important;
+  background: rgba(247, 245, 239, 0.98) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  padding: 14px 0 16px !important;
+  margin: 0 0 16px 0 !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04) !important;
 }
 
 .ecom-refine-trigger-btn,
 .ecom-refine-search-wrap .search-box,
 .ecom-refine-search-wrap .search-input {
-  min-height: 58px !important;
-  height: 58px !important;
+  min-height: 54px !important;
+  height: 54px !important;
 }
 
 .ecom-refine-trigger-btn {
-  padding-top: 14px !important;
-  padding-bottom: 14px !important;
+  padding-top: 12px !important;
+  padding-bottom: 12px !important;
 }
 
-@media (max-width: 540px) {
+@media (max-width: 768px) {
   .ecom-refine-bar-card {
-    padding: 14px 0 18px !important;
+    top: 104px !important;
+    padding: 10px 0 12px !important;
+    margin-bottom: 12px !important;
   }
 
   .ecom-refine-trigger-btn,
@@ -5146,7 +5341,9 @@ html.nav-open body {
 }
 
 @keyframes garmentSpin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .all-loaded-indicator {

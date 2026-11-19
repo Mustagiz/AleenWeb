@@ -130,7 +130,7 @@
           {
             "@type": "ListItem",
             "position": 2,
-            "name": "Collections",
+            "name": "Garments",
             "item": "https://aleen.clothing/collections"
           }
         ]
@@ -4120,9 +4120,9 @@ footer#footer {
   contain-intrinsic-size: 1px 700px;
 }
 
-/* 5. Mobile viewport stabilization & overflow fix */
+/* 5. Mobile viewport stabilization & overflow fix with clip to preserve sticky search bar */
 html, body {
-  overflow-x: hidden !important;
+  overflow-x: clip !important;
   max-width: 100vw !important;
 }
 
@@ -4142,7 +4142,7 @@ html, body {
   .catalog-section {
     padding-left: 12px !important;
     padding-right: 12px !important;
-    overflow-x: hidden !important;
+    overflow-x: clip !important;
   }
   .garments-grid,
   .garments-grid.cols-2,
@@ -4178,7 +4178,7 @@ html, body {
         <a aria-expanded="false" aria-haspopup="true" data-mega="women" href="/collections">Garments</a>
       </nav>
       <span class="logo-space" aria-hidden="true"></span>
-      <nav class="nav-side nav-r" aria-label="Collections">
+      <nav class="nav-side nav-r" aria-label="Atelier">
         <a href="/our-story">Our Story</a>
         <a href="/contact-us">Contact Us</a>
       </nav>
@@ -4457,7 +4457,7 @@ html, body {
             <div class="mega-group">
               <h4>The Atelier</h4>
               <span class="mega-group-line"></span>
-              <a href="/collections"><span>All Collections Catalog</span><svg class="mega-arr" viewBox="0 0 16 16">
+              <a href="/collections"><span>All Garments Catalog</span><svg class="mega-arr" viewBox="0 0 16 16">
                   <path d="M6 3l5 5-5 5" />
                 </svg></a>
               <a href="/collections?filter=new"><span>New Arrivals 2026</span><svg class="mega-arr"
@@ -7282,10 +7282,12 @@ html, body {
         modalInquireBtn.addEventListener("click", () => {
           if (!activeModalItem) return;
           const selectedSize = modalSizePicker?.querySelector(".size-chip.active")?.textContent || selectedModalSize || "32";
-          const cleanPhone = (activeModalItem.whatsapp || "919876543210").replace(/[^0-9]/g, '');
+          const globalWa = localStorage.getItem('aleen_whatsapp_number');
+          const cleanPhone = (globalWa || activeModalItem.whatsapp || "919876543210").replace(/[^0-9]/g, '');
           const priceFormatted = formatPrice(activeModalItem.price);
+          const customPrefix = localStorage.getItem('aleen_whatsapp_msg') || 'Hello Aleen Atelier,\n\nI would like to inquire about this creation:';
           const msg = encodeURIComponent(
-            `Hello Aleen Atelier,\n\nI would like to inquire about this creation:\n\n✦ Garment: ${activeModalItem.title}\n✦ Code: ${activeModalItem.id}\n✦ Price: ${priceFormatted}\n✦ Craft: ${activeModalItem.craft || 'Artisanal'}\n✦ Fabric: ${activeModalItem.fabric || 'Pure Silk'}\n✦ Selected Sizing: ${selectedSize}\n\nPlease share availability and bespoke curation details.`
+            `${customPrefix}\n\n✦ Garment: ${activeModalItem.title}\n✦ Code: ${activeModalItem.id}\n✦ Price: ${priceFormatted}\n✦ Craft: ${activeModalItem.craft || 'Artisanal'}\n✦ Fabric: ${activeModalItem.fabric || 'Pure Silk'}\n✦ Selected Sizing: ${selectedSize}\n\nPlease share availability and bespoke curation details.`
           );
           window.open(`https://wa.me/${cleanPhone}?text=${msg}`, '_blank');
         });

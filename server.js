@@ -1072,8 +1072,10 @@ const server = http.createServer(async (req, res) => {
   // ==========================================
   // Route / and /index.html directly to home.html
   let normalizedPath = reqPath;
-  if (normalizedPath === '/' || normalizedPath === '' || normalizedPath === '/index.html') {
+  if (normalizedPath === '/' || normalizedPath === '' || normalizedPath === '/index.html' || normalizedPath === '/index' || normalizedPath === '/home') {
     normalizedPath = '/home.html';
+  } else if (normalizedPath === '/garment' || normalizedPath === '/garments') {
+    normalizedPath = '/collections.html';
   }
 
   if (isBlockedStaticPath(normalizedPath)) {

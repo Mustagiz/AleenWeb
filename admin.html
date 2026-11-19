@@ -3952,7 +3952,13 @@ const DEFAULT_CATALOG = [{"id": "ALN-PK-01", "title": "Zeenat Embroidered Pakist
       <div class="pane-action-bar">
         <input type="text" id="catalogSearchInput" class="pane-search-input"
           placeholder="Search by name, craft, or fabric...">
-        <div style="display: flex; gap: 10px;">
+        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+          <button type="button" class="admin-tab-btn" id="openWaSettingsBtn" onclick="openWhatsAppModal()" title="Change Atelier WhatsApp Number" style="border: 1px solid rgba(37, 211, 102, 0.6); color: #25d366; display: inline-flex; align-items: center; gap: 7px; font-weight: 600; padding: 8px 14px; background: rgba(37, 211, 102, 0.08);">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 4.2a7.8 7.8 0 0 0-6.7 11.8L4.1 20l4.1-1.1A7.8 7.8 0 1 0 12 4.2z" />
+            </svg>
+            <span>WhatsApp: <strong id="topBarWaNum">+91 98765 43210</strong></span>
+          </button>
           <button type="button" class="pane-add-btn" id="addNewGarmentBtn">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
               <line x1="12" y1="5" x2="12" y2="19"></line>
@@ -4439,6 +4445,32 @@ const DEFAULT_CATALOG = [{"id": "ALN-PK-01", "title": "Zeenat Embroidered Pakist
     <!-- PANE 8: SETTINGS & STAFF -->
     <section class="admin-pane" id="paneSettings">
       <div class="settings-grid">
+        <!-- Atelier WhatsApp Inquiries Number -->
+        <div class="settings-box" style="border: 1px solid rgba(37, 211, 102, 0.45); background: rgba(5, 16, 9, 0.75);">
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 8px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="font-size: 22px;">💬</span>
+              <h3 style="margin: 0; color: #fff;">Atelier WhatsApp Number</h3>
+            </div>
+            <span class="carousel-sync-badge" style="border-color: rgba(37, 211, 102, 0.4); color: #25d366; background: rgba(37, 211, 102, 0.1);">
+              <span class="sync-indicator-dot" style="background: #25d366;"></span> Live Website Inquiries
+            </span>
+          </div>
+          <p>Update the official WhatsApp phone number used for customer garment inquiries, product dialog concierge, and website contact buttons.</p>
+          <form id="changeWhatsAppForm" onsubmit="event.preventDefault(); saveAdminWhatsAppNumber();">
+            <div class="form-group">
+              <label class="form-label">WhatsApp Number (e.g. +91 98765 43210)</label>
+              <input type="text" id="adminGlobalWhatsApp" class="form-control" placeholder="+91 98765 43210" style="font-size: 15px; font-weight: 600; color: #25d366;" required>
+              <small style="color: rgba(238, 228, 205, 0.7); display: block; margin-top: 5px; font-size: 11.5px;">Include country code. Customers clicking "Inquire on WhatsApp" on any garment will message this number.</small>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Inquiry Message Header</label>
+              <input type="text" id="adminGlobalWhatsAppMsg" class="form-control" placeholder="Hello Aleen Atelier, I would like to inquire about:" value="Hello Aleen Atelier, I would like to inquire about:">
+            </div>
+            <button type="submit" class="form-btn" style="background: #25d366; color: #040906; font-weight: 700; border: none; padding: 11px 22px; cursor: pointer;">✦ Save WhatsApp Number Live</button>
+          </form>
+        </div>
+
         <!-- Change Master Passcode -->
         <div class="settings-box">
           <h3>Master Access Passcode</h3>
@@ -4513,6 +4545,35 @@ const DEFAULT_CATALOG = [{"id": "ALN-PK-01", "title": "Zeenat Embroidered Pakist
     </section>
 
   </main>
+
+  <!-- ======================= MODAL: QUICK ATELIER WHATSAPP ======================= -->
+  <div class="admin-modal-overlay" id="quickWaModal" style="display: none;">
+    <div class="admin-modal-card" style="max-width: 480px;">
+      <button type="button" class="admin-modal-close" onclick="closeWhatsAppModal()" aria-label="Close dialog">&times;</button>
+      <div style="margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid rgba(37, 211, 102, 0.3);">
+        <h3 style="font-family: var(--serif); font-size: 22px; color: #ffffff; margin: 0 0 6px; display: flex; align-items: center; gap: 8px;">
+          <span style="color: #25d366;">💬</span> Atelier WhatsApp Number
+        </h3>
+        <p style="font-size: 12.5px; color: rgba(238, 228, 205, 0.7); margin: 0;">This phone number receives customer inquiries when they click "Inquire on WhatsApp" on any garment.</p>
+      </div>
+
+      <form onsubmit="event.preventDefault(); saveQuickWhatsAppNumber();">
+        <div class="form-group">
+          <label class="form-label">WhatsApp Number (e.g. +91 98765 43210)</label>
+          <input type="text" id="quickWaInput" class="form-control" placeholder="+91 98765 43210" style="font-size: 15px; font-weight: 600; color: #25d366;" required>
+          <small style="color: rgba(238, 228, 205, 0.6); display: block; margin-top: 5px; font-size: 11.5px;">Include country code (e.g. +91 98765 43210 or 919876543210).</small>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Default Message Greeting</label>
+          <input type="text" id="quickWaMsgInput" class="form-control" placeholder="Hello Aleen Atelier, I would like to inquire about:" value="Hello Aleen Atelier, I would like to inquire about:">
+        </div>
+        <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
+          <button type="button" class="admin-tab-btn" onclick="closeWhatsAppModal()">Cancel</button>
+          <button type="submit" class="form-btn" style="background: #25d366; color: #040906; font-weight: 700; border: none; padding: 10px 22px; cursor: pointer;">✦ Save Live</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <!-- ======================= MODAL: EDIT / ADD GARMENT ======================= -->
   <div class="admin-modal-overlay" id="garmentModal">
@@ -8403,6 +8464,119 @@ const DEFAULT_CATALOG = [{"id": "ALN-PK-01", "title": "Zeenat Embroidered Pakist
           showToast("Saved locally and broadcast live!");
         }
       };
+
+      // ==========================================
+      // GLOBAL ATELIER WHATSAPP MANAGER
+      // ==========================================
+      function getActiveWhatsAppNumber() {
+        return localStorage.getItem("aleen_whatsapp_number") || socialLinks.whatsapp || "+91 98765 43210";
+      }
+
+      function getActiveWhatsAppMsg() {
+        return localStorage.getItem("aleen_whatsapp_msg") || "Hello Aleen Atelier, I would like to inquire about:";
+      }
+
+      function updateWhatsAppUIElements(num, msg) {
+        const topEl = document.getElementById("topBarWaNum");
+        if (topEl) topEl.textContent = num;
+        const adminInput = document.getElementById("adminGlobalWhatsApp");
+        if (adminInput) adminInput.value = num;
+        const quickInput = document.getElementById("quickWaInput");
+        if (quickInput) quickInput.value = num;
+        const adminMsgInput = document.getElementById("adminGlobalWhatsAppMsg");
+        if (adminMsgInput && msg) adminMsgInput.value = msg;
+        const quickMsgInput = document.getElementById("quickWaMsgInput");
+        if (quickMsgInput && msg) quickMsgInput.value = msg;
+        const socWa = document.getElementById("socWhatsapp");
+        if (socWa) socWa.value = num;
+        const ctPhone = document.getElementById("ctPhone");
+        if (ctPhone) ctPhone.value = num;
+      }
+
+      window.openWhatsAppModal = function() {
+        const num = getActiveWhatsAppNumber();
+        const msg = getActiveWhatsAppMsg();
+        updateWhatsAppUIElements(num, msg);
+        const modal = document.getElementById("quickWaModal");
+        if (modal) modal.style.display = "flex";
+      };
+
+      window.closeWhatsAppModal = function() {
+        const modal = document.getElementById("quickWaModal");
+        if (modal) modal.style.display = "none";
+      };
+
+      window.saveAdminWhatsAppNumber = async function() {
+        const input = document.getElementById("adminGlobalWhatsApp");
+        const msgInput = document.getElementById("adminGlobalWhatsAppMsg");
+        const val = input ? input.value.trim() : "";
+        const msgVal = msgInput ? msgInput.value.trim() : "";
+        if (!val) {
+          alert("Please enter a valid WhatsApp phone number.");
+          return;
+        }
+        await applyAndPersistWhatsApp(val, msgVal);
+      };
+
+      window.saveQuickWhatsAppNumber = async function() {
+        const input = document.getElementById("quickWaInput");
+        const msgInput = document.getElementById("quickWaMsgInput");
+        const val = input ? input.value.trim() : "";
+        const msgVal = msgInput ? msgInput.value.trim() : "";
+        if (!val) {
+          alert("Please enter a valid WhatsApp phone number.");
+          return;
+        }
+        await applyAndPersistWhatsApp(val, msgVal);
+        closeWhatsAppModal();
+      };
+
+      async function applyAndPersistWhatsApp(num, msg) {
+        localStorage.setItem("aleen_whatsapp_number", num);
+        if (msg) localStorage.setItem("aleen_whatsapp_msg", msg);
+
+        socialLinks.whatsapp = num;
+        if (msg) socialLinks.whatsappMsg = msg;
+        localStorage.setItem("aleen_social_links", JSON.stringify(socialLinks));
+
+        if (typeof contactDetails !== "undefined") {
+          contactDetails.phone = num;
+          localStorage.setItem("aleen_contact_details", JSON.stringify(contactDetails));
+        }
+
+        updateWhatsAppUIElements(num, msg);
+
+        // Broadcast to collections.html & other tabs
+        try {
+          const catBc = new BroadcastChannel("aleen_catalog_realtime");
+          catBc.postMessage({ type: "WHATSAPP_NUMBER_UPDATED", whatsapp: num, msg: msg, timestamp: Date.now() });
+        } catch (e) {}
+
+        if (socialBroadcast) {
+          try {
+            socialBroadcast.postMessage({ type: "SOCIAL_LINKS_UPDATED", socialLinks, timestamp: Date.now() });
+          } catch (e) {}
+        }
+
+        // Persist to server API
+        try {
+          const token = localStorage.getItem("atelier_admin_token") || "";
+          await fetch("/api/social-links", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
+            body: JSON.stringify({ socialLinks })
+          });
+        } catch (e) {}
+
+        showToast("✦ WhatsApp number updated to " + num + " and synchronized live!");
+      }
+
+      // Initialize on load
+      setTimeout(() => {
+        const initialWa = getActiveWhatsAppNumber();
+        const initialMsg = getActiveWhatsAppMsg();
+        updateWhatsAppUIElements(initialWa, initialMsg);
+      }, 300);
 
       // Boot
       checkAuth();
