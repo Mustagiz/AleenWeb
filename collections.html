@@ -1228,7 +1228,7 @@
       border: none;
       box-shadow: none;
       padding: 0;
-      margin-bottom: 24px;
+      margin-bottom: 12px;
       display: flex;
       flex-direction: column;
       gap: 14px;
@@ -1849,7 +1849,7 @@
       position: relative;
       max-width: 1680px;
       margin: 0 auto;
-      padding: 24px clamp(20px, 3.2vw, 56px) 100px;
+      padding: 14px clamp(20px, 3.2vw, 56px) 100px;
     }
 
     /* See More Pagination Button */
@@ -4234,69 +4234,6 @@ html, body {
       <p class="catalog-tagline">"From timeless Banarasi weaves to hand-cut modern drapes &mdash; explore our complete
         atelier portfolio."</p>
 
-      <!-- Controls: Luxury Minimal Refine Filters & Sort Bar -->
-      <div class="ecom-refine-bar-card">
-        <div class="ecom-refine-main-row">
-          <!-- Left: Refine Filters Trigger Button -->
-          <div class="ecom-refine-trigger-wrap">
-            <button type="button" class="ecom-refine-trigger-btn" id="openFilterDrawerBtn" aria-label="Open refine filters drawer">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
-                <line x1="4" y1="21" x2="4" y2="14"></line>
-                <line x1="4" y1="10" x2="4" y2="3"></line>
-                <line x1="12" y1="21" x2="12" y2="12"></line>
-                <line x1="12" y1="8" x2="12" y2="3"></line>
-                <line x1="20" y1="21" x2="20" y2="16"></line>
-                <line x1="20" y1="12" x2="20" y2="3"></line>
-                <line x1="1" y1="14" x2="7" y2="14"></line>
-                <line x1="9" y1="8" x2="15" y2="8"></line>
-                <line x1="17" y1="16" x2="23" y2="16"></line>
-              </svg>
-              <span>Refine Filters</span>
-              <span class="ecom-refine-badge" id="ecomActiveFilterBadge" style="display: none;">0</span>
-            </button>
-          </div>
-
-          <!-- Center / Right: Instant Search Bar -->
-          <div class="ecom-refine-search-wrap">
-            <div class="search-box">
-              <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              </svg>
-              <input type="text" id="searchInput" class="search-input" aria-label="Search garments by title, needlecraft, or material"
-                placeholder="Search garments..." autocomplete="off">
-              <button type="button" class="search-clear-btn" id="searchClearBtn" aria-label="Clear search query" title="Clear search">✕</button>
-            </div>
-
-            <!-- Predictive Visual Search Overlay -->
-            <div class="visual-search-dropdown" id="visualSearchDropdown" role="listbox" aria-label="Visual Search Results" style="display: none;">
-              <div class="vs-header">
-                <span class="vs-kicker" id="vsKicker">Live Atelier Suggestions</span>
-                <span class="vs-count-badge" id="vsCountBadge">0 matches</span>
-              </div>
-              <div class="vs-quick-tags" id="vsQuickTags">
-                <!-- Quick filter pills injected via JavaScript -->
-              </div>
-              <div class="vs-results-list" id="vsResultsList">
-                <!-- Visual product cards injected via JavaScript -->
-              </div>
-              <div class="vs-footer" id="vsFooter">
-                <button type="button" class="vs-view-all-btn" id="vsViewAllBtn">
-                  <span>View all results in gallery</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Active Filters Strip (Removable Tags) -->
-        <div class="ecom-active-strip" id="ecomActiveStrip" style="display: none;">
-          <span class="ecom-active-label">Active Filters:</span>
-          <div class="ecom-active-tags" id="ecomActiveTags"></div>
-          <button type="button" class="ecom-clear-all-link" id="ecomClearAllLink" onclick="resetFilters()">Clear All</button>
-        </div>
-      </div>
     </div>
   </header>
 
@@ -4411,6 +4348,70 @@ html, body {
   </aside>
 
   <main id="main" class="catalog-section">
+    <!-- Controls: Luxury Minimal Refine Filters & Sort Bar -->
+    <div class="ecom-refine-bar-card">
+      <div class="ecom-refine-main-row">
+        <!-- Left: Refine Filters Trigger Button -->
+        <div class="ecom-refine-trigger-wrap">
+          <button type="button" class="ecom-refine-trigger-btn" id="openFilterDrawerBtn" aria-label="Open refine filters drawer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+              <line x1="4" y1="21" x2="4" y2="14"></line>
+              <line x1="4" y1="10" x2="4" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12" y2="3"></line>
+              <line x1="20" y1="21" x2="20" y2="16"></line>
+              <line x1="20" y1="12" x2="20" y2="3"></line>
+              <line x1="1" y1="14" x2="7" y2="14"></line>
+              <line x1="9" y1="8" x2="15" y2="8"></line>
+              <line x1="17" y1="16" x2="23" y2="16"></line>
+            </svg>
+            <span>Refine Filters</span>
+            <span class="ecom-refine-badge" id="ecomActiveFilterBadge" style="display: none;">0</span>
+          </button>
+        </div>
+
+        <!-- Center / Right: Instant Search Bar -->
+        <div class="ecom-refine-search-wrap">
+          <div class="search-box">
+            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="searchInput" class="search-input" aria-label="Search garments by title, needlecraft, or material"
+              placeholder="Search garments..." autocomplete="off">
+            <button type="button" class="search-clear-btn" id="searchClearBtn" aria-label="Clear search query" title="Clear search">✕</button>
+          </div>
+
+          <!-- Predictive Visual Search Overlay -->
+          <div class="visual-search-dropdown" id="visualSearchDropdown" role="listbox" aria-label="Visual Search Results" style="display: none;">
+            <div class="vs-header">
+              <span class="vs-kicker" id="vsKicker">Live Atelier Suggestions</span>
+              <span class="vs-count-badge" id="vsCountBadge">0 matches</span>
+            </div>
+            <div class="vs-quick-tags" id="vsQuickTags">
+              <!-- Quick filter pills injected via JavaScript -->
+            </div>
+            <div class="vs-results-list" id="vsResultsList">
+              <!-- Visual product cards injected via JavaScript -->
+            </div>
+            <div class="vs-footer" id="vsFooter">
+              <button type="button" class="vs-view-all-btn" id="vsViewAllBtn">
+                <span>View all results in gallery</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Active Filters Strip (Removable Tags) -->
+      <div class="ecom-active-strip" id="ecomActiveStrip" style="display: none;">
+        <span class="ecom-active-label">Active Filters:</span>
+        <div class="ecom-active-tags" id="ecomActiveTags"></div>
+        <button type="button" class="ecom-clear-all-link" id="ecomClearAllLink" onclick="resetFilters()">Clear All</button>
+      </div>
+    </div>
+
     <div class="garments-grid" id="garmentsGrid">
       <!-- Garments Injected via JavaScript -->
     </div>
@@ -5331,7 +5332,7 @@ html, body {
       const PAGE_SIZE = 10;
       let currentFilteredList = [];
       let currentGridCols = parseInt(localStorage.getItem("aleen_ecom_grid_cols") || "3", 10);
-      if (currentGridCols > 4 || currentGridCols < 1) currentGridCols = 3;
+      if (currentGridCols > 3 || currentGridCols < 1) currentGridCols = 3;
       let wishlist = JSON.parse(localStorage.getItem("aleen_wishlist") || "[]");
       let bag = JSON.parse(localStorage.getItem("aleen_bag") || "[]");
       let activeModalItem = null;
@@ -5725,7 +5726,7 @@ html, body {
           card.innerHTML = `
             <div class="card-media">
               ${fitLabel ? `<span class="fit-tag">${escapeHtml(fitLabel)}</span>` : ''}
-              <img src="${formatImgSrc(item.image)}" alt="${escapeHtml(item.title)}" class="card-main-img" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='assets/pakistani-kurti-1.jpg'" />
+              <img src="${formatImgSrc(item.image)}" alt="${escapeHtml(item.title)}" class="card-main-img" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='/assets/pakistani-kurti-1.jpg'" />
               ${ratingVal ? `<span class="rating-badge"><span class="rating-star">★</span> ${ratingVal}</span>` : ''}
               ${swatchesMarkup}
             </div>
@@ -6241,7 +6242,7 @@ html, body {
         if (src.startsWith("/")) {
           return src.substring(1);
         }
-        return src;
+        return "/" + src.replace(/^\.\//, "");
       }
 
       function renderVisualSearch(query) {
@@ -6299,7 +6300,7 @@ html, body {
           vsResultsList.innerHTML = topHits.map((item, idx) => `
             <div class="vs-item" data-id="${item.id}" role="option" tabindex="0" data-index="${idx}">
               <div class="vs-thumb-frame">
-                <img src="${formatImgSrc(item.image)}" alt="${item.title}" class="vs-thumb-img" loading="lazy" onerror="this.onerror=null;this.src='assets/pakistani-kurti-1.jpg'">
+                <img src="${formatImgSrc(item.image)}" alt="${item.title}" class="vs-thumb-img" loading="lazy" onerror="this.onerror=null;this.src='/assets/pakistani-kurti-1.jpg'">
               </div>
               <div class="vs-info">
                 <span class="vs-item-origin">${item.origin || 'Lucknow Atelier'}</span>
