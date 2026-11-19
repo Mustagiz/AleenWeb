@@ -4243,25 +4243,30 @@ html.nav-open body {
 
 
 /* ==========================================================================
-   GARMENT CARD & RESPONSIVE GRID REDESIGN (LARGE PORTRAIT SCALE)
+   GARMENT CARD & RESPONSIVE GRID REDESIGN (4 CARDS PER ROW ON DESKTOP)
    ========================================================================== */
 .garments-grid {
   display: grid !important;
-  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-  gap: 36px 24px !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 26px 18px !important;
   width: 100% !important;
   max-width: 100% !important;
   box-sizing: border-box !important;
 }
 
-@media (max-width: 992px) {
+.garments-grid.cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 26px 18px !important;
+}
+
+@media (max-width: 1024px) {
   .garments-grid,
   .garments-grid.cols-2,
   .garments-grid.cols-3,
   .garments-grid.cols-4,
   .garments-grid.cols-5 {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 24px 16px !important;
+    gap: 22px 14px !important;
   }
 }
 

@@ -1907,26 +1907,33 @@
       font-weight: 700;
     }
 
-    /* Garments Grid: Redesigned 3 cards per row on desktop, 2 on tablet, 1 on mobile */
+    /* Garments Grid: Redesigned 4 cards per row on desktop, 2 on tablet, 1 on mobile */
     .garments-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 36px 24px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 26px 18px;
       width: 100%;
       box-sizing: border-box;
     }
 
-    @media (max-width: 992px) {
-      .garments-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 24px 16px;
+    .garments-grid.cols-4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+      gap: 26px 18px !important;
+    }
+
+    @media (max-width: 1024px) {
+      .garments-grid,
+      .garments-grid.cols-4 {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 22px 14px !important;
       }
     }
 
     @media (max-width: 640px) {
-      .garments-grid {
-        grid-template-columns: minmax(0, 1fr);
-        gap: 24px;
+      .garments-grid,
+      .garments-grid.cols-4 {
+        grid-template-columns: minmax(0, 1fr) !important;
+        gap: 20px !important;
       }
     }
 
@@ -5357,11 +5364,13 @@ html, body {
       let selectedBadges = new Set();
       let searchQuery = "";
       let sortOrder = "featured";
-      let visibleLimit = 10;
-      const PAGE_SIZE = 10;
+      let visibleLimit = 12;
+      const PAGE_SIZE = 12;
       let currentFilteredList = [];
-      let currentGridCols = parseInt(localStorage.getItem("aleen_ecom_grid_cols") || "3", 10);
-      if (currentGridCols > 3 || currentGridCols < 1) currentGridCols = 3;
+      let currentGridCols = 4;
+      try {
+        localStorage.setItem("aleen_ecom_grid_cols", "4");
+      } catch(e) {}
       let wishlist = JSON.parse(localStorage.getItem("aleen_wishlist") || "[]");
       let bag = JSON.parse(localStorage.getItem("aleen_bag") || "[]");
       let activeModalItem = null;
@@ -5676,7 +5685,7 @@ html, body {
         if (!items) items = currentFilteredList.length ? currentFilteredList : GARMENTS;
         if (!gridEl) return;
         gridEl.innerHTML = "";
-        gridEl.className = "garments-grid cols-" + (currentGridCols || 3);
+        gridEl.className = "garments-grid cols-" + (currentGridCols || 4);
 
         if (items.length === 0) {
           if (countEl) countEl.textContent = "0";
