@@ -166,8 +166,32 @@ function fetchDoc(docName) {
   return firestore.fetchDoc(docName, 3500);
 }
 
-function saveDoc(docName, data) {
-  return firestore.saveDoc(docName, data, 3000);
+async function saveDoc(docName, data) {
+  const ok = await firestore.saveDoc(docName, data, 3000);
+  // Always persist to local JSON file as fallback (survives restarts and
+  // handles deployments where Firestore is not configured)
+  try {
+    writeLocalFile();
+  } catch (e) {
+    // On Vercel the filesystem is read-only — that's fine, Firestore is the
+    // primary store there. Locally this keeps atelier_data.json in sync.
+  }
+  return ok;
+}
+
+function writeLocalFile() {
+  if (!_cache) return;
+  const toWrite = { ..._cache };
+  // Remove large image blobs from the JSON file to keep it manageable
+  if (Array.isArray(toWrite.carouselSlides)) {
+    toWrite.carouselSlides = toWrite.carouselSlides.map(s => {
+      if (typeof s.img === 'string' && s.img.length > 50000) {
+        return { ...s, img: s.img.slice(0, 100) + '...[truncated]' };
+      }
+      return s;
+    });
+  }
+  fs.writeFileSync(DATA_FILE, JSON.stringify(toWrite, null, 2), 'utf8');
 }
 
 async function getCarouselSlides() {

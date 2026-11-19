@@ -72,9 +72,11 @@ function isConfigured() {
   return Boolean(loadCredentials());
 }
 
+const FALLBACK_API_KEY = 'AIzaSyDJOIWVS5LwRfhLLEa_lT51CI6ndQp1eXQ';
+
 // True when we are running on the legacy public-API-key path (rules must be open).
 function isLegacyKeyMode() {
-  return !isConfigured() && Boolean(process.env.FIREBASE_API_KEY);
+  return !isConfigured() && Boolean(process.env.FIREBASE_API_KEY || FALLBACK_API_KEY);
 }
 
 function base64url(value) {
@@ -159,7 +161,7 @@ async function authFor() {
   const token = await getAccessToken();
   if (token) return { headers: { Authorization: `Bearer ${token}` }, suffix: '' };
 
-  const legacyKey = process.env.FIREBASE_API_KEY;
+  const legacyKey = process.env.FIREBASE_API_KEY || FALLBACK_API_KEY;
   if (legacyKey) {
     return { headers: {}, suffix: `?key=${encodeURIComponent(legacyKey)}` };
   }
