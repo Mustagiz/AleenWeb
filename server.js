@@ -195,6 +195,39 @@ let atelierData = {
 if (fs.existsSync(DATA_FILE)) {
   try {
     const loaded = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+    // Convert assets/ paths to /assets/ prefix for consistency
+    if (loaded.megaMenuBanner && loaded.megaMenuBanner.img && loaded.megaMenuBanner.img.startsWith('assets/')) {
+      loaded.megaMenuBanner.img = '/' + loaded.megaMenuBanner.img;
+    }
+    if (loaded.carouselSlides) {
+      loaded.carouselSlides = loaded.carouselSlides.map((s) => {
+        if (typeof s.img === 'string' && s.img.startsWith('assets/')) s.img = '/' + s.img;
+        return s;
+      });
+    }
+    if (loaded.catalog) {
+      loaded.catalog = loaded.catalog.map((item) => {
+        if (item.image && item.image.startsWith('assets/')) item.image = '/' + item.image;
+        if (Array.isArray(item.images)) {
+          item.images = item.images.map(img => (typeof img === 'string' && img.startsWith('assets/')) ? '/' + img : img);
+        }
+        if (Array.isArray(item.garmentColors)) {
+          item.garmentColors = item.garmentColors.map(v => {
+            const cv = { ...v };
+            if (cv.image && typeof cv.image === 'string' && cv.image.startsWith('assets/')) cv.image = '/' + cv.image;
+            return cv;
+          });
+          item.colorVariants = item.garmentColors;
+        }
+        return item;
+      });
+    }
+    if (loaded.womenCollections) {
+      loaded.womenCollections = loaded.womenCollections.map((c) => {
+        if (typeof c.img === 'string' && c.img.startsWith('assets/')) c.img = '/' + c.img;
+        return c;
+      });
+    }
     atelierData = { ...atelierData, ...loaded };
     if (!atelierData.megaMenuBanner) {
       atelierData.megaMenuBanner = {

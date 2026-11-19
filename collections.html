@@ -238,7 +238,7 @@
       border-bottom: 1px solid transparent !important;
       box-shadow: none !important;
       transition: height 0.35s ease, background 0.35s ease, backdrop-filter 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
-      --logo-h: clamp(74px, 8.4vh, 92px);
+      --logo-h: clamp(82px, 9.2vh, 102px);
       --logo-half: calc(var(--logo-h) * 0.5925);
       --nav-gap: clamp(26px, 2.8vw, 54px);
     }
@@ -246,7 +246,7 @@
     #header.is-solid,
     #header.scrolled {
       height: clamp(104px, 11.5vh, 126px);
-      --logo-h: clamp(62px, 7vh, 76px);
+      --logo-h: clamp(68px, 7.6vh, 84px);
       background: rgba(247, 245, 239, 0.98) !important;
       backdrop-filter: blur(16px) !important;
       -webkit-backdrop-filter: blur(16px) !important;
@@ -2988,7 +2988,7 @@
       box-shadow: none !important;
       box-sizing: border-box !important;
       transition: height 0.35s ease, background 0.35s ease, backdrop-filter 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease !important;
-      --logo-h: clamp(74px, 8.4vh, 92px);
+      --logo-h: clamp(82px, 9.2vh, 102px);
       --logo-half: calc(var(--logo-h) * 0.5925);
       --nav-gap: clamp(26px, 2.8vw, 54px);
     }
@@ -2996,7 +2996,7 @@
     #header.is-solid,
     #header.scrolled {
       height: clamp(104px, 11.5vh, 126px) !important;
-      --logo-h: clamp(62px, 7vh, 76px);
+      --logo-h: clamp(68px, 7.6vh, 84px);
       background: rgba(247, 245, 239, 0.98) !important;
       backdrop-filter: blur(18px) !important;
       -webkit-backdrop-filter: blur(18px) !important;
@@ -3761,14 +3761,14 @@
     /* ================= END GLOBAL COMPONENTS CSS ================= */
 </style>
 <style id="aleen-logo-shadow">
-/* Header Aleen Brand Logo Shadow & Elevation */
+/* Header Aleen Brand Logo — refined for cream background */
 #brandLogo, .brand svg {
-  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.75)) drop-shadow(0 1px 5px rgba(201, 163, 95, 0.3)) !important;
+  filter: drop-shadow(0 2px 6px rgba(22, 34, 23, 0.12)) drop-shadow(0 1px 3px rgba(201, 163, 95, 0.18)) !important;
   transition: filter 0.3s ease, height 0.35s ease !important;
 }
 
 .brand:hover #brandLogo, .brand:hover svg {
-  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.85)) drop-shadow(0 2px 8px rgba(201, 163, 95, 0.45)) !important;
+  filter: drop-shadow(0 3px 10px rgba(22, 34, 23, 0.18)) drop-shadow(0 1px 5px rgba(201, 163, 95, 0.28)) !important;
 }
 </style>
 <style id="aleen-performance-snappiness">
@@ -3875,7 +3875,7 @@ html, body {
   }
 }
 </style>
-  <link rel="stylesheet" href="theme-fresh.css?v=32">
+  <link rel="stylesheet" href="theme-fresh.css?v=33">
 </head>
 
 <body>
@@ -5100,6 +5100,8 @@ html, body {
           category: "kurtis",
           categoryLabel: "Pakistani Kurtis",
           price: 34500,
+          mrp: 49300,
+          discountedPrice: 34500,
           craft: "Pure Zari & Adda Needlework",
           fabric: "Pure Raw Silk with Organza Lace Trims",
           origin: "Lahore Atelier",

@@ -4453,3 +4453,34 @@ html.nav-open body {
 .garment-card .f-heart-btn {
   display: none !important;
 }
+
+/* Give the collection search and filter controls clear vertical breathing room. */
+.ecom-refine-bar-card {
+  padding: 18px 0 24px !important;
+  margin-bottom: 0 !important;
+}
+
+.ecom-refine-trigger-btn,
+.ecom-refine-search-wrap .search-box,
+.ecom-refine-search-wrap .search-input {
+  min-height: 58px !important;
+  height: 58px !important;
+}
+
+.ecom-refine-trigger-btn {
+  padding-top: 14px !important;
+  padding-bottom: 14px !important;
+}
+
+@media (max-width: 540px) {
+  .ecom-refine-bar-card {
+    padding: 14px 0 18px !important;
+  }
+
+  .ecom-refine-trigger-btn,
+  .ecom-refine-search-wrap .search-box,
+  .ecom-refine-search-wrap .search-input {
+    min-height: 48px !important;
+    height: 48px !important;
+  }
+}
