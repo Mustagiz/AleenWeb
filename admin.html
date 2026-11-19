@@ -26,7 +26,7 @@
   <script>
     (function () {
       try {
-        if (sessionStorage.getItem('aleen_admin_logged') === 'true' || localStorage.getItem('atelier_admin_token')) {
+        if (sessionStorage.getItem('aleen_admin_logged') === 'true' && localStorage.getItem('atelier_admin_token')) {
           document.documentElement.classList.add('admin-logged-in');
         }
       } catch (e) {}
@@ -5264,6 +5264,7 @@ const DEFAULT_CATALOG = [{"id": "ALN-PK-01", "title": "Zeenat Embroidered Pakist
           if (lockErrorMsg) lockErrorMsg.style.display = 'none';
         }
       }
+      window.openLockModal = openLockModal;
 
       function closeLockModal() {
         if (lockModal) {
@@ -5271,6 +5272,7 @@ const DEFAULT_CATALOG = [{"id": "ALN-PK-01", "title": "Zeenat Embroidered Pakist
           lockModal.setAttribute('aria-hidden', 'true');
         }
       }
+      window.closeLockModal = closeLockModal;
 
       document.addEventListener('click', e => {
         const lockTrigger = e.target.closest('#lockModalBtn, .f-lock-btn, [data-lock-modal]');
@@ -5303,7 +5305,14 @@ const DEFAULT_CATALOG = [{"id": "ALN-PK-01", "title": "Zeenat Embroidered Pakist
             if (res.ok && data.success && data.token) {
               localStorage.setItem('atelier_admin_token', data.token);
               localStorage.setItem('atelier_admin_user', JSON.stringify(data.user));
-              window.location.href = 'admin.html';
+              sessionStorage.setItem('aleen_admin_logged', 'true');
+              closeLockModal();
+              if (typeof checkAuth === 'function') {
+                await checkAuth();
+                if (typeof showToast === 'function') showToast("✦ Re-authenticated successfully!");
+              } else {
+                window.location.href = 'admin.html';
+              }
             } else {
               if (lockErrorMsg) {
                 lockErrorMsg.textContent = data.error || 'Access denied.';
@@ -5561,16 +5570,75 @@ const DEFAULT_CATALOG = [{"id": "ALN-PK-01", "title": "Zeenat Embroidered Pakist
         setTimeout(() => toast.classList.remove("show"), 3200);
       }
 
+      // Session & Auth Helpers
+      function clearAdminSession() {
+        localStorage.removeItem("atelier_admin_token");
+        localStorage.removeItem("atelier_admin_user");
+        sessionStorage.removeItem("aleen_admin_logged");
+        sessionStorage.removeItem("aleen_admin_user");
+        sessionStorage.removeItem("aleen_admin_role");
+        document.documentElement.classList.remove("admin-logged-in");
+      }
+
+      function showAuthGate(msg) {
+        clearAdminSession();
+        if (authGate) authGate.style.display = "flex";
+        if (adminApp) adminApp.style.display = "none";
+        if (authErrMsg) {
+          authErrMsg.style.display = msg ? "block" : "none";
+          authErrMsg.textContent = msg || "";
+        }
+        if (authPassInput) setTimeout(() => authPassInput.focus(), 120);
+      }
+
       // Check Auth State
-      function checkAuth() {
-        const isLogged = sessionStorage.getItem("aleen_admin_logged") === "true" || !!localStorage.getItem("atelier_admin_token");
-        if (isLogged) {
+      async function checkAuth() {
+        const token = localStorage.getItem("atelier_admin_token") || "";
+        if (!token) {
+          showAuthGate("");
+          return;
+        }
+
+        // Verify token with server
+        try {
+          const res = await fetch("/api/admin/verify", {
+            headers: { "Authorization": "Bearer " + token }
+          });
+          if (!res.ok) {
+            showAuthGate("Session expired or invalid. Please enter your passcode to reconnect.");
+            return;
+          }
+          const vData = await res.json().catch(() => ({}));
+          if (!vData.authorized) {
+            showAuthGate("Access restricted. Please log in with admin privileges.");
+            return;
+          }
+
+          // Successfully authenticated!
+          document.documentElement.classList.add("admin-logged-in");
+          sessionStorage.setItem("aleen_admin_logged", "true");
           if (authGate) authGate.style.display = "none";
           if (adminApp) adminApp.style.display = "block";
-          const u = sessionStorage.getItem("aleen_admin_user") || (JSON.parse(localStorage.getItem("atelier_admin_user") || "{}").username) || "Admin";
-          const r = sessionStorage.getItem("aleen_admin_role") || (JSON.parse(localStorage.getItem("atelier_admin_user") || "{}").role) || "Super Admin";
+          const u = vData.user || sessionStorage.getItem("aleen_admin_user") || "Super Admin";
+          const r = "admin";
           if (userNameTxt) userNameTxt.textContent = u;
           if (userRoleBadge) userRoleBadge.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"></circle></svg> ${u} &middot; ${r}`;
+
+          // Live load latest catalog from server on login
+          try {
+            const catRes = await fetch("/api/catalog?t=" + Date.now());
+            if (catRes.ok) {
+              const catData = await catRes.json();
+              const list = Array.isArray(catData.catalog) ? catData.catalog : (Array.isArray(catData.garments) ? catData.garments : null);
+              if (list && list.length > 0) {
+                catalog = list;
+                localStorage.setItem("aleen_master_catalog", JSON.stringify(catalog));
+              }
+            }
+          } catch (e) {
+            console.warn("Could not fetch server catalog:", e);
+          }
+
           renderCatalog();
           if (typeof countUpStats === "function") countUpStats();
           renderHeroManager();
@@ -5580,10 +5648,15 @@ const DEFAULT_CATALOG = [{"id": "ALN-PK-01", "title": "Zeenat Embroidered Pakist
           renderContactDeskManager();
           renderSocialLinksManager();
           renderUsersTable();
-        } else {
-          if (authGate) authGate.style.display = "flex";
-          if (adminApp) adminApp.style.display = "none";
-          if (authPassInput) setTimeout(() => authPassInput.focus(), 100);
+        } catch (netErr) {
+          // If network error but session was previously authenticated, allow offline view
+          if (sessionStorage.getItem("aleen_admin_logged") === "true") {
+            if (authGate) authGate.style.display = "none";
+            if (adminApp) adminApp.style.display = "block";
+            renderCatalog();
+          } else {
+            showAuthGate("Server offline. Please verify the server is running.");
+          }
         }
       }
 
@@ -5607,7 +5680,7 @@ const DEFAULT_CATALOG = [{"id": "ALN-PK-01", "title": "Zeenat Embroidered Pakist
               sessionStorage.setItem("aleen_admin_user", data.user?.username || "Master Admin");
               sessionStorage.setItem("aleen_admin_role", data.user?.role || "admin");
               if (authErrMsg) authErrMsg.style.display = "none";
-              checkAuth();
+              await checkAuth();
               showToast("Authenticated successfully. Welcome to the Atelier.");
             } else {
               if (authErrMsg) {
@@ -5626,10 +5699,8 @@ const DEFAULT_CATALOG = [{"id": "ALN-PK-01", "title": "Zeenat Embroidered Pakist
 
       if (logoutBtn) {
         logoutBtn.addEventListener("click", () => {
-          sessionStorage.removeItem("aleen_admin_logged");
-          sessionStorage.removeItem("aleen_admin_user");
-          sessionStorage.removeItem("aleen_admin_role");
-          window.location.href = "index.html";
+          clearAdminSession();
+          window.location.href = "admin.html";
         });
       }
 
@@ -6195,18 +6266,25 @@ const DEFAULT_CATALOG = [{"id": "ALN-PK-01", "title": "Zeenat Embroidered Pakist
               data: optimizedDataUrl
             })
           });
-          const upData = await upRes.json();
-          if (upData.success && upData.url) {
+          const upData = await upRes.json().catch(() => ({}));
+          if (upRes.ok && upData.success && upData.url) {
             finalUrl = upData.url;
+            showToast("✦ Variant photo uploaded successfully!");
+          } else if (upRes.status === 401 || upRes.status === 403) {
+            showToast("⚠ Upload failed: Admin session expired. Please log in again.");
+            checkAuth();
+            return;
+          } else {
+            showToast("⚠ Upload warning: " + (upData.error || "Using local image draft"));
           }
         } catch (err) {
           console.warn("Variant upload error:", err);
+          showToast("⚠ Upload error: saved as local image");
         }
         if (currentGarmentVariants[idx]) {
           currentGarmentVariants[idx].image = finalUrl;
         }
         renderColorVariants();
-        showToast("✦ Variant photo ready!");
       };
 
       btnAddColorVariant?.addEventListener("click", () => {
@@ -6410,8 +6488,8 @@ const DEFAULT_CATALOG = [{"id": "ALN-PK-01", "title": "Zeenat Embroidered Pakist
       }
 
       window.updateGarmentSlotUrl = function(idx, val) {
-        if (!currentGarmentImages[idx] && currentGarmentImages[idx] !== "") return;
-        currentGarmentImages[idx] = val;
+        if (!Array.isArray(currentGarmentImages)) currentGarmentImages = [];
+        currentGarmentImages[idx] = (val || "").trim();
         const thumb = document.getElementById("garmentSlotThumb_" + idx);
         if (thumb) thumb.src = val || "/assets/pakistani-kurti-1.jpg";
       };
@@ -6442,16 +6520,23 @@ const DEFAULT_CATALOG = [{"id": "ALN-PK-01", "title": "Zeenat Embroidered Pakist
               data: optimizedDataUrl
             })
           });
-          const upData = await upRes.json();
-          if (upData.success && upData.url) {
+          const upData = await upRes.json().catch(() => ({}));
+          if (upRes.ok && upData.success && upData.url) {
             finalUrl = upData.url;
+            showToast("✦ Pristine HD photo uploaded live!");
+          } else if (upRes.status === 401 || upRes.status === 403) {
+            showToast("⚠ Upload failed: Admin session expired. Please log in again.");
+            checkAuth();
+            return;
+          } else {
+            showToast("⚠ Upload notice: " + (upData.error || "Using local image"));
           }
         } catch (err) {
           console.warn("Direct garment upload error:", err);
+          showToast("⚠ Upload error: saved as local image");
         }
         updateGarmentSlotUrl(idx, finalUrl);
         renderGarmentImageSlots();
-        showToast("✦ Pristine HD photo applied live!");
       };
 
       window.uploadAndCropGarmentSlot = async function(idx, fileInput) {
@@ -6466,33 +6551,8 @@ const DEFAULT_CATALOG = [{"id": "ALN-PK-01", "title": "Zeenat Embroidered Pakist
             maxWidth: 2400,
             maxHeight: 3200,
             quality: 0.96,
-            onApply: async (croppedUrl) => {
-              showToast("✦ Uploading photo to server...");
-              const token = localStorage.getItem("atelier_admin_token") || "";
-              try {
-                const upRes = await fetch("/api/admin/upload", {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": "Bearer " + token
-                  },
-                  body: JSON.stringify({
-                    filename: "garment_slot_" + idx + "_" + Date.now() + ".jpg",
-                    data: croppedUrl
-                  })
-                });
-                if (upRes.ok) {
-                  const upData = await upRes.json();
-                  if (upData.url) {
-                    updateGarmentSlotUrl(idx, upData.url);
-                    renderGarmentImageSlots();
-                    showToast("✦ Photo saved to server!");
-                    return;
-                  }
-                }
-              } catch (upErr) {
-                console.warn("Upload error, using cropped data:", upErr);
-              }
+            onApply: (croppedUrl) => {
+              // applyCropBtn already uploaded to /api/admin/upload and returned permanent URL
               updateGarmentSlotUrl(idx, croppedUrl);
               renderGarmentImageSlots();
               showToast("✦ Photo cropped & ready!");
@@ -6513,36 +6573,10 @@ const DEFAULT_CATALOG = [{"id": "ALN-PK-01", "title": "Zeenat Embroidered Pakist
           maxWidth: 2400,
           maxHeight: 3200,
           quality: 0.96,
-          onApply: async (croppedUrl) => {
-            showToast("✦ Uploading cropped photo...");
-            const token = localStorage.getItem("atelier_admin_token") || "";
-            try {
-              const upRes = await fetch("/api/admin/upload", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                  "Authorization": "Bearer " + token
-                },
-                body: JSON.stringify({
-                  filename: "garment_slot_" + idx + "_" + Date.now() + ".jpg",
-                  data: croppedUrl
-                })
-              });
-              if (upRes.ok) {
-                const upData = await upRes.json();
-                if (upData.url) {
-                  updateGarmentSlotUrl(idx, upData.url);
-                  renderGarmentImageSlots();
-                  showToast("✦ Photo updated on server!");
-                  return;
-                }
-              }
-            } catch (upErr) {
-              console.warn("Upload error, using cropped data:", upErr);
-            }
+          onApply: (croppedUrl) => {
             updateGarmentSlotUrl(idx, croppedUrl);
             renderGarmentImageSlots();
-            showToast("✦ Photo cropped & ready!");
+            showToast("✦ Photo updated!");
           }
         });
       };
@@ -6790,9 +6824,11 @@ const DEFAULT_CATALOG = [{"id": "ALN-PK-01", "title": "Zeenat Embroidered Pakist
         const finalId = customCode || id || ("ALN-" + cat.substring(0, 2).toUpperCase() + "-" + String(Date.now()).slice(-4));
 
         if (id) {
-          const idx = catalog.findIndex(c => c.id === id);
+          const idx = catalog.findIndex(c => (c.id && String(c.id).trim() === String(id).trim()) || (c.sku && String(c.sku).trim() === String(id).trim()));
           if (idx > -1) {
             catalog[idx] = Object.assign({}, catalog[idx], itemData, { id: finalId });
+          } else {
+            catalog.unshift(Object.assign({ id: finalId }, itemData));
           }
         } else {
           catalog.unshift(Object.assign({ id: finalId }, itemData));
@@ -6840,8 +6876,12 @@ const DEFAULT_CATALOG = [{"id": "ALN-PK-01", "title": "Zeenat Embroidered Pakist
         try {
           let res = await doSave(token);
           if (res.status === 401 || res.status === 403) {
-            // Token expired — prompt for password with no leaked default
-            const pass = prompt("Session expired. Please re-enter your admin password to save:");
+            if (window.openLockModal) {
+              showToast("⚠ Session expired. Please enter passcode in the login dialog to save:");
+              window.openLockModal();
+              return false;
+            }
+            const pass = prompt("Session expired. Please enter admin passcode:");
             if (!pass) {
               showToast("⚠ Save cancelled — please log out and log back in.");
               return false;
@@ -6856,6 +6896,7 @@ const DEFAULT_CATALOG = [{"id": "ALN-PK-01", "title": "Zeenat Embroidered Pakist
               if (loginData.token) {
                 token = loginData.token;
                 localStorage.setItem("atelier_admin_token", token);
+                sessionStorage.setItem("aleen_admin_logged", "true");
                 res = await doSave(token);
               }
             } else {

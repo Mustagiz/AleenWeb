@@ -83,7 +83,7 @@
       "title": "Zeenat Embroidered Pakistani Kurti",
       "category": "kurtis",
       "categoryLabel": "Pakistani Kurtis",
-      "price": 34500,
+      "price": 33600,
       "craft": "Pure Zari & Adda Needlework",
       "fabric": "Pure Raw Silk with Organza Lace Trims",
       "origin": "Lahore Atelier",
@@ -99,10 +99,10 @@
         "/assets/pakistani-kurti-2.jpg",
         "/assets/pakistani-kurti-3.jpg"
       ],
-      "mrp": 49300,
-      "discountedPrice": 34500,
+      "mrp": 48000,
+      "discountedPrice": 33600,
       "discountPercent": 30,
-      "fitLabel": "Tailored Fit",
+      "fitLabel": "Royal Tailored Fit",
       "rating": 4.9,
       "garmentColors": [
         {
@@ -123,6 +123,11 @@
         {
           "name": "",
           "swatchColor": "#9caf88",
+          "image": ""
+        },
+        {
+          "name": "Heirloom Gold",
+          "swatchColor": "#d4af37",
           "image": ""
         }
       ],
@@ -145,6 +150,11 @@
         {
           "name": "",
           "swatchColor": "#9caf88",
+          "image": ""
+        },
+        {
+          "name": "Heirloom Gold",
+          "swatchColor": "#d4af37",
           "image": ""
         }
       ]
@@ -516,55 +526,10 @@
         "/assets/pakistani-kurti-2.jpg",
         "/assets/pakistani-kurti-3.jpg"
       ],
-      "mrp": 49300,
-      "discountedPrice": 34500,
-      "discountPercent": 30,
-      "fitLabel": "Tailored Fit",
-      "rating": 4.9,
-      "garmentColors": [
-        {
-          "name": "Pearl Ivory",
-          "swatchColor": "#e8e2d2",
-          "image": "/assets/pakistani-kurti-1.jpg"
-        },
-        {
-          "name": "Velvet Emerald",
-          "swatchColor": "#163b25",
-          "image": "/assets/pakistani-kurti-2.jpg"
-        },
-        {
-          "name": "",
-          "swatchColor": "#9caf88",
-          "image": ""
-        },
-        {
-          "name": "",
-          "swatchColor": "#9caf88",
-          "image": ""
-        }
-      ],
-      "colorVariants": [
-        {
-          "name": "Pearl Ivory",
-          "swatchColor": "#e8e2d2",
-          "image": "/assets/pakistani-kurti-1.jpg"
-        },
-        {
-          "name": "Velvet Emerald",
-          "swatchColor": "#163b25",
-          "image": "/assets/pakistani-kurti-2.jpg"
-        },
-        {
-          "name": "",
-          "swatchColor": "#9caf88",
-          "image": ""
-        },
-        {
-          "name": "",
-          "swatchColor": "#9caf88",
-          "image": ""
-        }
-      ]
+      "garmentColors": [],
+      "fitLabel": "",
+      "mrp": 0,
+      "discountedPrice": 0
     },
     {
       "id": "ALN-KS-02",
@@ -576,15 +541,19 @@
       "fabric": "Tissue Chanderi with Silk Organza",
       "origin": "Chanderi Weavers Guild",
       "badge": "Bestseller",
-      "image": "/assets/women-collections/card_1_kurta-sets.jpg",
+      "image": "assets/women-collections/card_1_kurta-sets.jpg",
       "desc": "Delicate dusty rose organza adorned with fine metallic badla and antique marodi needlecraft. Paired with straight-cut brocade trousers and scalloped veil.",
       "weave": "Marodi & Aari Needlework",
       "delivery": "Express Insured Dispatch (3-5 Days)",
       "whatsapp": "+91 98765 43210",
       "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
       "images": [
-        "/assets/women-collections/card_1_kurta-sets.jpg"
-      ]
+        "assets/women-collections/card_1_kurta-sets.jpg"
+      ],
+      "garmentColors": [],
+      "fitLabel": "",
+      "mrp": 0,
+      "discountedPrice": 0
     },
     {
       "id": "ALN-DS-03",
@@ -596,15 +565,19 @@
       "fabric": "Raw Silk & Multilayered Tulle",
       "origin": "Aleen Design Studio",
       "badge": "New Silhouette",
-      "image": "/assets/women-collections/card_2_dresses.jpg",
+      "image": "assets/women-collections/card_2_dresses.jpg",
       "desc": "Contemporary architectural drape meeting traditional hand-embroidery. A 32-meter flare cut structured for gala celebrations and grand occasions.",
       "weave": "Pita Work & Micro Pleating",
       "delivery": "Express Insured Dispatch (3-5 Days)",
       "whatsapp": "+91 98765 43210",
       "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
       "images": [
-        "/assets/women-collections/card_2_dresses.jpg"
-      ]
+        "assets/women-collections/card_2_dresses.jpg"
+      ],
+      "garmentColors": [],
+      "fitLabel": "",
+      "mrp": 0,
+      "discountedPrice": 0
     },
     {
       "id": "ALN-LH-04",
@@ -616,15 +589,19 @@
       "fabric": "Heritage Velvet & Tissue Silk",
       "origin": "Lucknow Artisans",
       "badge": "Royal Couture",
-      "image": "/assets/women-collections/card_3_lehengas.jpg",
+      "image": "assets/women-collections/card_3_lehengas.jpg",
       "desc": "Inspired by the mirrored halls of Amber Fort. Encased in genuine semi-precious bead embroidery, beaten metallic cord, and a dual tissue veil.",
       "weave": "Zardozi & Dabka Resham",
       "delivery": "Express Insured Dispatch (3-5 Days)",
       "whatsapp": "+91 98765 43210",
       "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
       "images": [
-        "/assets/women-collections/card_3_lehengas.jpg"
-      ]
+        "assets/women-collections/card_3_lehengas.jpg"
+      ],
+      "garmentColors": [],
+      "fitLabel": "",
+      "mrp": 0,
+      "discountedPrice": 0
     },
     {
       "id": "ALN-PK-05",
@@ -646,7 +623,11 @@
         "/assets/pakistani-kurti-2.jpg",
         "/assets/pakistani-kurti-1.jpg",
         "/assets/pakistani-kurti-3.jpg"
-      ]
+      ],
+      "garmentColors": [],
+      "fitLabel": "",
+      "mrp": 0,
+      "discountedPrice": 0
     },
     {
       "id": "ALN-KS-06",
@@ -658,15 +639,19 @@
       "fabric": "Pure Mulberry Georgette",
       "origin": "Awadh Atelier",
       "badge": "Hand-Embroidered",
-      "image": "/assets/women-collections/card_4_anarkalis.jpg",
+      "image": "assets/women-collections/card_4_anarkalis.jpg",
       "desc": "32 Kalis of handcrafted shadow-work Chikankari interspersed with silver mukaish dots that catch the light at every graceful turn.",
       "weave": "Lucknowi Chikankari & Mukaish",
       "delivery": "Express Insured Dispatch (3-5 Days)",
       "whatsapp": "+91 98765 43210",
       "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
       "images": [
-        "/assets/women-collections/card_4_anarkalis.jpg"
-      ]
+        "assets/women-collections/card_4_anarkalis.jpg"
+      ],
+      "garmentColors": [],
+      "fitLabel": "",
+      "mrp": 0,
+      "discountedPrice": 0
     },
     {
       "id": "ALN-DP-07",
@@ -678,16 +663,20 @@
       "fabric": "Grade-A Cashmere Pashmina",
       "origin": "Srinagar Valley",
       "badge": "Limited Craft",
-      "image": "/assets/women-collections/card_5_dupattas.jpg",
+      "image": "assets/women-collections/card_5_dupattas.jpg",
       "desc": "Featherlight warmth woven from Himalayan capra hircus fleece, detailed with single-needle botanical jaal borders.",
       "weave": "Sozni Hand Needlework",
       "delivery": "Express Insured Dispatch (3-5 Days)",
       "whatsapp": "+91 98765 43210",
       "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
       "images": [
-        "/assets/women-collections/card_5_dupattas.jpg",
-        "/assets/s5-room.jpg"
-      ]
+        "assets/women-collections/card_5_dupattas.jpg",
+        "assets/s5-room.jpg"
+      ],
+      "garmentColors": [],
+      "fitLabel": "",
+      "mrp": 0,
+      "discountedPrice": 0
     },
     {
       "id": "ALN-UN-08",
@@ -699,15 +688,19 @@
       "fabric": "Pure Mulberry Silk 4.5m",
       "origin": "Bespoke Loom 12",
       "badge": "Mastercut",
-      "image": "/assets/women-collections/card_6_fabrics.jpg",
+      "image": "assets/women-collections/card_6_fabrics.jpg",
       "desc": "Rare artisanal yardage crafted on hand-shuttle looms with alternating warp threads. Tailorable for bespoke lehengas or sherwanis.",
       "weave": "Multi-warp Rangkat Weaving",
       "delivery": "Express Insured Dispatch (3-5 Days)",
       "whatsapp": "+91 98765 43210",
       "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
       "images": [
-        "/assets/women-collections/card_6_fabrics.jpg"
-      ]
+        "assets/women-collections/card_6_fabrics.jpg"
+      ],
+      "garmentColors": [],
+      "fitLabel": "",
+      "mrp": 0,
+      "discountedPrice": 0
     },
     {
       "id": "ALN-PK-09",
@@ -729,7 +722,11 @@
         "/assets/pakistani-kurti-3.jpg",
         "/assets/pakistani-kurti-1.jpg",
         "/assets/pakistani-kurti-2.jpg"
-      ]
+      ],
+      "garmentColors": [],
+      "fitLabel": "",
+      "mrp": 0,
+      "discountedPrice": 0
     },
     {
       "id": "ALN-LH-10",
@@ -741,15 +738,19 @@
       "fabric": "Mulberry Organza & Crepe",
       "origin": "Aleen Design Studio",
       "badge": "Signature Cut",
-      "image": "/assets/women-collections/card_3_lehengas.jpg",
+      "image": "assets/women-collections/card_3_lehengas.jpg",
       "desc": "A springtime dream composed of thousand-petal floral tapestries rendered in ombré pastel threads, crowned by an embroidered sweetheart bustier.",
       "weave": "French Knot & Silk Floss",
       "delivery": "Express Insured Dispatch (3-5 Days)",
       "whatsapp": "+91 98765 43210",
       "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
       "images": [
-        "/assets/women-collections/card_3_lehengas.jpg"
-      ]
+        "assets/women-collections/card_3_lehengas.jpg"
+      ],
+      "garmentColors": [],
+      "fitLabel": "",
+      "mrp": 0,
+      "discountedPrice": 0
     },
     {
       "id": "ALN-DS-11",
@@ -761,15 +762,19 @@
       "fabric": "Italian Crepe de Chine",
       "origin": "Modern Atelier",
       "badge": "Resort Couture",
-      "image": "/assets/women-collections/card_2_dresses.jpg",
+      "image": "assets/women-collections/card_2_dresses.jpg",
       "desc": "Effortless luxury designed for intimate soirees. Relaxed silhouette cinched with an ornate hand-beaded bullion belt.",
       "weave": "Hand-rolled Zardozi Cords",
       "delivery": "Express Insured Dispatch (3-5 Days)",
       "whatsapp": "+91 98765 43210",
       "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
       "images": [
-        "/assets/women-collections/card_2_dresses.jpg"
-      ]
+        "assets/women-collections/card_2_dresses.jpg"
+      ],
+      "garmentColors": [],
+      "fitLabel": "",
+      "mrp": 0,
+      "discountedPrice": 0
     },
     {
       "id": "ALN-UN-12",
@@ -781,15 +786,19 @@
       "fabric": "Organic Handspun Chanderi",
       "origin": "Madhya Pradesh Looms",
       "badge": "Pure Natural",
-      "image": "/assets/women-collections/card_6_fabrics.jpg",
+      "image": "assets/women-collections/card_6_fabrics.jpg",
       "desc": "Includes 5 meters of pure chanderi with woven golden bootis alongside 2.5 meters of dyed satin lining and a matched organza drape.",
       "weave": "Jamdani Floral Insertion",
       "delivery": "Express Insured Dispatch (3-5 Days)",
       "whatsapp": "+91 98765 43210",
       "sizes": "Custom Bespoke, Standard S, Standard M, Standard L",
       "images": [
-        "/assets/women-collections/card_6_fabrics.jpg"
-      ]
+        "assets/women-collections/card_6_fabrics.jpg"
+      ],
+      "garmentColors": [],
+      "fitLabel": "",
+      "mrp": 0,
+      "discountedPrice": 0
     }
   ]
 }
