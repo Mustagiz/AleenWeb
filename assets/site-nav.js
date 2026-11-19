@@ -111,7 +111,7 @@
     toggle.setAttribute('aria-label', 'Open menu');
     toggle.setAttribute('aria-controls', 'siteNav');
     toggle.setAttribute('aria-expanded', 'false');
-    toggle.innerHTML = '<span></span><span></span>';
+    toggle.innerHTML = '<span></span><span></span><span></span>';
     header.insertBefore(toggle, header.firstChild);
 
     // Sits directly after the header in the DOM (it is position: fixed, so this

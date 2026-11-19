@@ -2162,14 +2162,10 @@
 
     .modal-close-btn {
       position: absolute;
-      top: 16px;
-      right: 18px;
-      background: none;
-      border: none;
-      color: var(--cream);
-      font-size: 26px;
+      top: 14px;
+      right: 14px;
+      z-index: 50;
       cursor: pointer;
-      z-index: 5;
     }
 
     .card-angles-badge {
@@ -2499,20 +2495,15 @@
         position: relative !important;
       }
 
+      /* Close button anchored directly on the garment picture */
       .modal-close-btn,
       button.modal-close-btn {
-        position: fixed !important;
-        top: 18px !important;
-        right: 18px !important;
-        z-index: 10005 !important;
-        width: 38px !important;
-        height: 38px !important;
-        background: #ffffff !important;
-        background-color: #ffffff !important;
-        border: 1.5px solid #9caf88 !important;
-        color: #162217 !important;
-        font-size: 22px !important;
-        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25) !important;
+        position: absolute !important;
+        top: 14px !important;
+        right: 14px !important;
+        z-index: 50 !important;
+        width: 36px !important;
+        height: 36px !important;
       }
 
       .modal-gallery-col {
@@ -4720,28 +4711,22 @@ html, body {
   <!-- Quick Examine Modal -->
   <div class="modal-overlay" id="quickModal" role="dialog" aria-modal="true">
     <div class="modal-card" id="modalCard">
-      <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close modal">&times;</button>
-      
       <!-- TOP SPLIT: Image Gallery on Left, Details on Right -->
       <div class="modal-top-split">
         <div class="modal-gallery-col">
           <div class="modal-img-frame">
+            <!-- Redesigned luxury close button directly on the picture -->
+            <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close modal" title="Close">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+
             <img id="modalImg" src="" alt="Garment presentation">
             
-            <!-- Floating Top-Right Actions (Picture 1) -->
-            <div class="modal-img-floating-actions">
-              <button type="button" class="modal-float-btn modal-wish-btn" id="modalWishBtn" aria-label="Add to wishlist" title="Wishlist">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                </svg>
-              </button>
-              <button type="button" class="modal-float-btn modal-share-btn" id="modalShareBtn" aria-label="Share product" title="Share">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <line x1="22" y1="2" x2="11" y2="13"></line>
-                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                </svg>
-              </button>
-            </div>
+            <!-- Pagination dots at bottom of picture (visible only if multiple pictures) -->
+            <div class="modal-img-dots is-hidden" id="modalImgDots" style="display: none;"></div>
 
             <!-- Rating Badge Bottom-Left (Picture 1) -->
             <div class="modal-img-rating-badge" id="modalImgRating">
@@ -4750,14 +4735,8 @@ html, body {
               <span class="rating-sep">|</span>
               <span class="rating-count">194</span>
             </div>
-
-            <button type="button" class="modal-gallery-arrow modal-arrow-prev" id="modalGalleryPrev"
-              aria-label="Previous angle">&#10094;</button>
-            <button type="button" class="modal-gallery-arrow modal-arrow-next" id="modalGalleryNext"
-              aria-label="Next angle">&#10095;</button>
-            <div class="modal-gallery-counter" id="modalGalleryCounter">1 of 1</div>
           </div>
-          <div class="modal-thumbs-strip" id="modalThumbsStrip"></div>
+          <div class="modal-thumbs-strip" id="modalThumbsStrip" style="display: none;"></div>
         </div>
 
         <div class="modal-detail-col">
@@ -4778,7 +4757,6 @@ html, body {
           <!-- Brand Row (Picture 1) -->
           <div class="modal-brand-row">
             <span class="modal-brand-name">ALEEN</span>
-            <a href="/collections" class="modal-visit-store-link">Visit store</a>
           </div>
 
           <!-- Product Title (Picture 1) -->
@@ -5696,6 +5674,7 @@ html, body {
           console.warn("Using default garments:", e);
         }
       }
+      window.GARMENTS = GARMENTS;
 
       function applyCatalogSync(list) {
         if (!Array.isArray(list) || list.length === 0) return;
@@ -5704,6 +5683,7 @@ html, body {
         if (currentStr === newStr) return;
 
         GARMENTS = list;
+        window.GARMENTS = GARMENTS;
         try {
           localStorage.setItem("aleen_master_catalog", newStr);
         } catch(e) {}
@@ -6203,17 +6183,29 @@ html, body {
 
         // Update Infinite Scroll / Auto-load Sentinel
         if (seeMoreWrap) {
-          seeMoreWrap.style.display = "flex";
-          seeMoreWrap.innerHTML = `
-            <div class="infinite-scroll-trigger" id="infiniteScrollTrigger" aria-label="Loading more garments">
-              <div class="infinite-scroll-loader">
-                <span class="scroll-spinner"></span>
-                <span class="scroll-loader-text">Loading more garments...</span>
+          if (visibleLimit >= items.length) {
+            seeMoreWrap.style.display = "flex";
+            seeMoreWrap.innerHTML = `
+              <div class="scroll-loader-pill" style="opacity: 0.9; background: rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.06); padding: 10px 24px; border-radius: 999px;">
+                <span class="scroll-loader-text" style="color: #666; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500;">✦ All ${items.length} Atelier Curations Displayed ✦</span>
               </div>
-            </div>
-          `;
-          if (infiniteObserver) {
-            infiniteObserver.observe(seeMoreWrap);
+            `;
+            if (infiniteObserver) {
+              infiniteObserver.unobserve(seeMoreWrap);
+            }
+          } else {
+            seeMoreWrap.style.display = "flex";
+            seeMoreWrap.innerHTML = `
+              <div class="infinite-scroll-trigger" id="infiniteScrollTrigger" aria-label="Loading more garments">
+                <div class="infinite-scroll-loader">
+                  <span class="scroll-spinner"></span>
+                  <span class="scroll-loader-text">Loading more garments...</span>
+                </div>
+              </div>
+            `;
+            if (infiniteObserver) {
+              infiniteObserver.observe(seeMoreWrap);
+            }
           }
         }
       }
@@ -6222,24 +6214,21 @@ html, body {
       function loadMoreGarments() {
         const items = currentFilteredList.length ? currentFilteredList : GARMENTS;
         if (isScrollLoading) return;
+        if (visibleLimit >= items.length) {
+          if (infiniteObserver && seeMoreWrap) infiniteObserver.unobserve(seeMoreWrap);
+          return;
+        }
         isScrollLoading = true;
 
         const loaderText = seeMoreWrap?.querySelector(".scroll-loader-text");
-        if (loaderText) loaderText.textContent = "Loading more garments...";
+        if (loaderText) loaderText.textContent = "Loading more curations...";
 
         setTimeout(() => {
           visibleLimit += PAGE_SIZE;
-          if (visibleLimit > items.length && items.length > 0) {
-            // Virtual extension so users can continuously test infinite scrolling on desktop/tablet/mobile
-            const loopRound = Math.floor(visibleLimit / items.length);
-            const extra = items.map((g, idx) => ({
-              ...g,
-              id: `${g.id}-more-${loopRound}-${idx}`
-            }));
-            if (currentFilteredList.length) {
-              currentFilteredList = currentFilteredList.concat(extra);
-            } else {
-              GARMENTS = GARMENTS.concat(extra);
+          if (visibleLimit >= items.length) {
+            visibleLimit = items.length;
+            if (infiniteObserver && seeMoreWrap) {
+              infiniteObserver.unobserve(seeMoreWrap);
             }
           }
           renderGarments(currentFilteredList.length ? currentFilteredList : GARMENTS);
@@ -6441,9 +6430,12 @@ html, body {
 
         let batch = modalRelatedPool.slice(modalRelatedIndex, modalRelatedIndex + MODAL_RELATED_PAGE_SIZE);
         if (batch.length === 0) {
-          // Loop through related garments so auto-scroll keeps loading smoothly
-          modalRelatedIndex = 0;
-          batch = modalRelatedPool.slice(0, MODAL_RELATED_PAGE_SIZE);
+          const loader = document.getElementById("modalRelatedLoader");
+          if (loader) {
+            loader.innerHTML = `<span style="font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#888;">✦ End of Curated Recommendations ✦</span>`;
+            loader.style.display = "flex";
+          }
+          return;
         }
         modalRelatedIndex += batch.length;
 
@@ -6500,6 +6492,7 @@ html, body {
       }
 
       function openModal(id) {
+        window.openModal = openModal;
         const rawId = id.replace(/-more-.*/, '');
         const item = GARMENTS.find(g => g.id === rawId) || GARMENTS.find(g => g.id === id);
         if (!item || !modalEl) return;
@@ -6510,8 +6503,14 @@ html, body {
         if (modalCard) modalCard.scrollTop = 0;
 
         // Multi-angle gallery setup
-        const itemImages = (Array.isArray(item.images) && item.images.length > 0) ? item.images : [item.image || 'assets/pakistani-kurti-1.jpg'];
+        const itemImages = (Array.isArray(item.images) && item.images.length > 0)
+          ? item.images
+          : (Array.isArray(item.gallery) && item.gallery.length > 0)
+            ? item.gallery
+            : [item.image || 'assets/pakistani-kurti-1.jpg'];
         let currentAngleIdx = 0;
+
+        const dotsContainer = document.getElementById("modalImgDots");
 
         function setModalAngle(idx) {
           if (idx < 0) idx = itemImages.length - 1;
@@ -6522,70 +6521,59 @@ html, body {
             modalImg.style.opacity = '0.35';
             setTimeout(() => {
               modalImg.src = itemImages[currentAngleIdx];
-              modalImg.alt = `${item.title} — Angle ${currentAngleIdx + 1}`;
+              modalImg.alt = `${item.title} — Photo ${currentAngleIdx + 1}`;
               modalImg.style.opacity = '1';
-            }, 100);
+            }, 80);
           }
 
-          const counterEl = document.getElementById("modalGalleryCounter");
-          if (counterEl) {
-            counterEl.textContent = `${currentAngleIdx + 1} of ${itemImages.length}`;
-            counterEl.style.display = itemImages.length > 1 ? 'block' : 'none';
+          if (dotsContainer) {
+            const dots = dotsContainer.querySelectorAll(".modal-img-dot");
+            dots.forEach((d, i) => {
+              if (i === currentAngleIdx) d.classList.add("active");
+              else d.classList.remove("active");
+            });
           }
+        }
 
-          const prevBtn = document.getElementById("modalGalleryPrev");
-          const nextBtn = document.getElementById("modalGalleryNext");
-          if (prevBtn) prevBtn.style.display = itemImages.length > 1 ? 'flex' : 'none';
-          if (nextBtn) nextBtn.style.display = itemImages.length > 1 ? 'flex' : 'none';
+        // Render pagination dots: ONLY IF multiple pictures (> 1). If 1 picture, DO NOT SHOW.
+        if (dotsContainer) {
+          if (itemImages.length > 1) {
+            dotsContainer.classList.remove("is-hidden");
+            dotsContainer.style.setProperty("display", "flex", "important");
+            dotsContainer.innerHTML = itemImages.map((_, i) => `
+              <button type="button" class="modal-img-dot ${i === 0 ? 'active' : ''}" data-idx="${i}" aria-label="Photo ${i + 1}"></button>
+            `).join("");
+            dotsContainer.onclick = (e) => {
+              e.stopPropagation();
+              const dot = e.target.closest(".modal-img-dot");
+              if (dot) {
+                const idx = parseInt(dot.getAttribute("data-idx"), 10);
+                if (!isNaN(idx)) setModalAngle(idx);
+              }
+            };
+          } else {
+            dotsContainer.classList.add("is-hidden");
+            dotsContainer.style.setProperty("display", "none", "important");
+            dotsContainer.innerHTML = "";
+          }
+        }
 
-          const thumbBtns = document.querySelectorAll(".modal-thumb-btn");
-          thumbBtns.forEach((tb, i) => {
-            if (i === currentAngleIdx) tb.classList.add("active");
-            else tb.classList.remove("active");
-          });
+        // Clicking picture also smoothly cycles through photos if multiple exist
+        if (modalImg) {
+          modalImg.onclick = () => {
+            if (itemImages.length > 1) {
+              setModalAngle(currentAngleIdx + 1);
+            }
+          };
         }
 
         const thumbsStrip = document.getElementById("modalThumbsStrip");
         if (thumbsStrip) {
-          if (itemImages.length > 1) {
-            thumbsStrip.style.display = "flex";
-            thumbsStrip.innerHTML = itemImages.map((src, i) => `
-          <button type="button" class="modal-thumb-btn ${i === 0 ? 'active' : ''}" data-idx="${i}" aria-label="View Angle ${i + 1}">
-            <img src="${src}" alt="Angle ${i + 1}">
-          </button>
-        `).join("");
-          } else {
-            thumbsStrip.style.display = "none";
-            thumbsStrip.innerHTML = "";
-          }
+          thumbsStrip.style.display = "none";
+          thumbsStrip.innerHTML = "";
         }
 
         setModalAngle(0);
-
-        const prevBtn = document.getElementById("modalGalleryPrev");
-        const nextBtn = document.getElementById("modalGalleryNext");
-        if (prevBtn) {
-          prevBtn.onclick = (e) => {
-            e.stopPropagation();
-            setModalAngle(currentAngleIdx - 1);
-          };
-        }
-        if (nextBtn) {
-          nextBtn.onclick = (e) => {
-            e.stopPropagation();
-            setModalAngle(currentAngleIdx + 1);
-          };
-        }
-
-        if (thumbsStrip) {
-          thumbsStrip.onclick = (e) => {
-            const btn = e.target.closest(".modal-thumb-btn");
-            if (btn) {
-              const idx = parseInt(btn.getAttribute("data-idx"), 10);
-              if (!isNaN(idx)) setModalAngle(idx);
-            }
-          };
-        }
 
         // Title and descriptions
         if (modalTitle) modalTitle.textContent = item.title;
@@ -7308,10 +7296,17 @@ html, body {
             closeModal();
           }
         } else if (modalEl?.classList.contains("open")) {
-          if (e.key === "ArrowLeft") {
-            document.getElementById("modalGalleryPrev")?.click();
-          } else if (e.key === "ArrowRight") {
-            document.getElementById("modalGalleryNext")?.click();
+          const dots = document.querySelectorAll(".modal-img-dot");
+          if (dots.length > 1) {
+            const activeDot = document.querySelector(".modal-img-dot.active");
+            const curIdx = activeDot ? parseInt(activeDot.getAttribute("data-idx") || "0", 10) : 0;
+            if (e.key === "ArrowLeft") {
+              const prevIdx = (curIdx - 1 + dots.length) % dots.length;
+              dots[prevIdx]?.click();
+            } else if (e.key === "ArrowRight") {
+              const nextIdx = (curIdx + 1) % dots.length;
+              dots[nextIdx]?.click();
+            }
           }
         }
       });

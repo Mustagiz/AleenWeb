@@ -3548,37 +3548,85 @@ button.vs-view-all-btn:hover {
   position: relative !important;
 }
 
+/* Redesigned Close (X) Button Directly on Top of Portrait Picture */
 .modal-close-btn,
 button.modal-close-btn {
   position: absolute !important;
-  top: 16px !important;
-  right: 18px !important;
+  top: 14px !important;
+  right: 14px !important;
   width: 36px !important;
   height: 36px !important;
   border-radius: 50% !important;
-  background: #ffffff !important;
-  background-color: #ffffff !important;
-  border: 1.5px solid #9caf88 !important;
-  color: #162217 !important;
-  font-size: 22px !important;
-  line-height: 1 !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  color: #1a1a1a !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   cursor: pointer !important;
-  box-shadow: 0 2px 8px rgba(22, 34, 23, 0.08) !important;
-  z-index: 10 !important;
-  transition: all 0.2s ease !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  z-index: 50 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  transition: all 0.22s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
 }
 
 .modal-close-btn:hover,
 button.modal-close-btn:hover {
-  background: #e8412c !important;
-  background-color: #e8412c !important;
-  border-color: #e8412c !important;
-  color: #ffffff !important;
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  color: #000000 !important;
   transform: scale(1.08) !important;
-  box-shadow: 0 4px 12px rgba(232, 65, 44, 0.3) !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22) !important;
+  border-color: rgba(201, 163, 95, 0.45) !important;
+}
+
+/* Pagination Dots on Bottom of Garment Picture (only when multiple pictures exist) */
+.modal-img-dots {
+  position: absolute !important;
+  bottom: 14px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  display: flex;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  z-index: 35 !important;
+  background: rgba(0, 0, 0, 0.38) !important;
+  backdrop-filter: blur(6px) !important;
+  -webkit-backdrop-filter: blur(6px) !important;
+  padding: 5px 10px !important;
+  border-radius: 999px !important;
+  pointer-events: auto !important;
+}
+
+.modal-img-dots.is-hidden,
+.modal-img-dots[style*="display: none"] {
+  display: none !important;
+}
+
+.modal-img-dot {
+  width: 6px !important;
+  height: 6px !important;
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, 0.5) !important;
+  border: none !important;
+  padding: 0 !important;
+  cursor: pointer !important;
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+}
+
+.modal-img-dot:hover {
+  background: rgba(255, 255, 255, 0.85) !important;
+}
+
+.modal-img-dot.active {
+  background: #ffffff !important;
+  width: 18px !important;
+  border-radius: 999px !important;
 }
 
 /* TOP SPLIT: Gallery Left, Details Right */
@@ -4248,7 +4296,8 @@ button.modal-inquire-btn:hover {
   width: 100% !important;
   max-width: 480px !important;
   padding: 22px 24px !important;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3) !important;
+  box-shadow: none !important;
+  border: 1px solid #e5e7eb !important;
   color: #111827 !important;
 }
 
@@ -4616,62 +4665,106 @@ html {
   transition-property: color, background-color, border-color, opacity, transform !important;
 }
 
-/* ---------- hamburger ---------- */
-/* Pinned to the header edge rather than left in the flex flow: the home and
-   the inner-page headers distribute their children differently, and an
-   in-flow button drifted onto the centred mark on the inner pages. */
+/* ---------- REDESIGNED LUXURY HAMBURGER BUTTON ---------- */
 .nav-toggle {
   display: none;
   position: absolute;
   top: 50%;
-  left: max(18px, env(safe-area-inset-left));
+  left: max(16px, env(safe-area-inset-left));
   transform: translateY(-50%);
-  z-index: 3;
-  flex: 0 0 auto;
+  z-index: 100;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   margin: 0;
   padding: 0;
-  background: transparent !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
+  background: rgba(255, 255, 255, 0.88) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  border-radius: 50% !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06) !important;
   color: #162217 !important;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+}
+
+.nav-toggle:hover {
+  background: #ffffff !important;
+  transform: translateY(-50%) scale(1.06);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12) !important;
+  border-color: rgba(201, 163, 95, 0.4) !important;
 }
 
 .nav-toggle span {
   position: absolute;
   left: 11px;
-  width: 22px;
-  height: 1.5px;
+  height: 1.8px;
   border-radius: 2px;
-  /* The bars are painted from the button's ink; the page-wide `span` colour
-     would otherwise make the span white whatever the button said. */
   color: inherit !important;
   background: currentColor;
-  transition: top 0.38s cubic-bezier(0.77, 0, 0.18, 1),
-    transform 0.38s cubic-bezier(0.77, 0, 0.18, 1);
+  transition: all 0.3s cubic-bezier(0.77, 0, 0.18, 1);
 }
 
 .nav-toggle span:nth-child(1) {
-  top: 19px;
+  top: 13.5px;
+  width: 20px;
 }
 
 .nav-toggle span:nth-child(2) {
+  top: 20px;
+  width: 14px;
+}
+
+.nav-toggle span:nth-child(3) {
+  top: 26.5px;
+  width: 20px;
+}
+
+.nav-toggle:hover span:nth-child(2) {
+  width: 20px;
+}
+
+.nav-toggle span:first-child:nth-last-child(2) {
+  top: 16px;
+  width: 20px;
+}
+.nav-toggle span:first-child:nth-last-child(2) ~ span {
   top: 24px;
+  width: 20px;
+}
+
+.nav-toggle[aria-expanded="true"] {
+  background: #ffffff !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12) !important;
 }
 
 .nav-toggle[aria-expanded="true"] span:nth-child(1) {
-  top: 21.5px;
+  top: 20px;
+  width: 20px;
   transform: rotate(45deg);
 }
 
 .nav-toggle[aria-expanded="true"] span:nth-child(2) {
-  top: 21.5px;
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.nav-toggle[aria-expanded="true"] span:nth-child(3) {
+  top: 20px;
+  width: 20px;
+  transform: rotate(-45deg);
+}
+
+.nav-toggle[aria-expanded="true"] span:first-child:nth-last-child(2) {
+  top: 20px;
+  transform: rotate(45deg);
+}
+
+.nav-toggle[aria-expanded="true"] span:first-child:nth-last-child(2) ~ span {
+  top: 20px;
   transform: rotate(-45deg);
 }
 
@@ -5396,21 +5489,15 @@ html.nav-open body {
     width: 100% !important;
   }
 
-  /* Fixed close button stays reachable while scrolling modal content */
+  /* Close button anchored directly on the garment picture */
   .modal-close-btn,
   button.modal-close-btn {
-    position: fixed !important;
-    top: 18px !important;
-    right: 18px !important;
-    z-index: 10005 !important;
-    width: 38px !important;
-    height: 38px !important;
-    background: #ffffff !important;
-    background-color: #ffffff !important;
-    border: 1.5px solid #9caf88 !important;
-    color: #162217 !important;
-    font-size: 22px !important;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25) !important;
+    position: absolute !important;
+    top: 14px !important;
+    right: 14px !important;
+    z-index: 50 !important;
+    width: 36px !important;
+    height: 36px !important;
   }
 
   .modal-gallery-col {
