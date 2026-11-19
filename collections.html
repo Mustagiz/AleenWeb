@@ -2146,17 +2146,18 @@
     }
 
     .modal-card {
-      background: linear-gradient(135deg, #112318 0%, #07100a 100%);
-      border: 1px solid rgba(201, 163, 95, 0.5);
-      border-radius: 24px;
-      max-width: 900px;
-      width: 100%;
+      background: #f7f5ef;
+      border: 1.5px solid #9caf88;
+      border-radius: 20px;
+      max-width: 1020px;
+      width: min(94vw, 1020px);
       max-height: 90vh;
       overflow-y: auto;
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8);
+      overflow-x: hidden;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
       position: relative;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+      display: flex;
+      flex-direction: column;
     }
 
     .modal-close-btn {
@@ -4718,78 +4719,207 @@ html, body {
 
   <!-- Quick Examine Modal -->
   <div class="modal-overlay" id="quickModal" role="dialog" aria-modal="true">
-    <div class="modal-card">
+    <div class="modal-card" id="modalCard">
       <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close modal">&times;</button>
-      <div class="modal-gallery-col">
-        <div class="modal-img-frame">
-          <img id="modalImg" src="" alt="Garment presentation">
-          <button type="button" class="modal-gallery-arrow modal-arrow-prev" id="modalGalleryPrev"
-            aria-label="Previous angle">&#10094;</button>
-          <button type="button" class="modal-gallery-arrow modal-arrow-next" id="modalGalleryNext"
-            aria-label="Next angle">&#10095;</button>
-          <div class="modal-gallery-counter" id="modalGalleryCounter">1 of 1</div>
+      
+      <!-- TOP SPLIT: Image Gallery on Left, Details on Right -->
+      <div class="modal-top-split">
+        <div class="modal-gallery-col">
+          <div class="modal-img-frame">
+            <img id="modalImg" src="" alt="Garment presentation">
+            
+            <!-- Floating Top-Right Actions (Picture 1) -->
+            <div class="modal-img-floating-actions">
+              <button type="button" class="modal-float-btn modal-wish-btn" id="modalWishBtn" aria-label="Add to wishlist" title="Wishlist">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                </svg>
+              </button>
+              <button type="button" class="modal-float-btn modal-share-btn" id="modalShareBtn" aria-label="Share product" title="Share">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="22" y1="2" x2="11" y2="13"></line>
+                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+              </button>
+            </div>
+
+            <!-- Rating Badge Bottom-Left (Picture 1) -->
+            <div class="modal-img-rating-badge" id="modalImgRating">
+              <span class="rating-num">4.2</span>
+              <span class="rating-star">★</span>
+              <span class="rating-sep">|</span>
+              <span class="rating-count">194</span>
+            </div>
+
+            <button type="button" class="modal-gallery-arrow modal-arrow-prev" id="modalGalleryPrev"
+              aria-label="Previous angle">&#10094;</button>
+            <button type="button" class="modal-gallery-arrow modal-arrow-next" id="modalGalleryNext"
+              aria-label="Next angle">&#10095;</button>
+            <div class="modal-gallery-counter" id="modalGalleryCounter">1 of 1</div>
+          </div>
+          <div class="modal-thumbs-strip" id="modalThumbsStrip"></div>
         </div>
-        <div class="modal-thumbs-strip" id="modalThumbsStrip"></div>
+
+        <div class="modal-detail-col">
+          <!-- Select Size Section (Picture 1) -->
+          <div class="modal-size-header-row">
+            <span class="modal-size-title">Select Size</span>
+            <button type="button" class="modal-size-chart-btn" id="modalSizeChartBtn">Size Chart</button>
+          </div>
+          <div class="modal-size-chips" id="modalSizePicker">
+            <button type="button" class="size-chip dashed" data-size="28">28</button>
+            <button type="button" class="size-chip dashed" data-size="30">30</button>
+            <button type="button" class="size-chip active" data-size="32">32</button>
+            <button type="button" class="size-chip" data-size="34">34</button>
+            <button type="button" class="size-chip" data-size="36">36</button>
+            <button type="button" class="size-chip" data-size="38">38</button>
+          </div>
+
+          <!-- Brand Row (Picture 1) -->
+          <div class="modal-brand-row">
+            <span class="modal-brand-name">ALEEN</span>
+            <a href="/collections" class="modal-visit-store-link">Visit store</a>
+          </div>
+
+          <!-- Product Title (Picture 1) -->
+          <h2 class="modal-title" id="modalTitle">Men Straight Fit Mid Rise Blue Jeans</h2>
+
+          <!-- Price Row with Green Discount First, Strikethrough MRP, Selling Price (Picture 1) -->
+          <div class="modal-price-row" id="modalPriceRow">
+            <span class="modal-disc-badge" id="modalDiscPercent">↓ 69%</span>
+            <span class="modal-mrp-price" id="modalMrpPrice">₹3,599</span>
+            <span class="modal-selling-price" id="modalPrice">₹1,101</span>
+          </div>
+
+          <!-- Prominent Inquire Button (User: add inquire button at the bottom) -->
+          <div class="modal-action-row">
+            <button type="button" class="modal-inquire-btn" id="modalInquireBtn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12c0 1.82.49 3.53 1.34 5L2 22l5.16-1.31C8.59 21.49 10.25 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18.2c-1.57 0-3.05-.44-4.32-1.21l-.31-.19-3.06.78.82-2.98-.2-.33A8.17 8.17 0 0 1 3.8 12c0-4.52 3.68-8.2 8.2-8.2s8.2 3.68 8.2 8.2-3.68 8.2-8.2 8.2zm4.52-6.13c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.12-.14.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43l-.48-.01c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1s.9 2.44 1.03 2.61c.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.22-.16-.47-.29z" />
+              </svg>
+              <span>Inquire on WhatsApp</span>
+            </button>
+          </div>
+
+          <!-- COLLAPSIBLE ACCORDIONS (Picture 2: Product highlights & All details) -->
+          <div class="modal-collapsibles">
+            <!-- 1. Product Highlights Accordion -->
+            <div class="modal-collapse-item is-open" id="collapseItemHighlights">
+              <button type="button" class="modal-collapse-header" id="collapseBtnHighlights" aria-expanded="true">
+                <div class="collapse-header-text">
+                  <h3 class="collapse-title">Product highlights</h3>
+                  <span class="collapse-subtitle">Key features, specifications and more</span>
+                </div>
+                <span class="collapse-chevron">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </span>
+              </button>
+              <div class="modal-collapse-body" id="collapseBodyHighlights">
+                <div class="spec-grid">
+                  <div class="spec-item">
+                    <span class="spec-lbl">Fabric</span>
+                    <span class="spec-val" id="modalFabric">Pure Silk</span>
+                  </div>
+                  <div class="spec-item">
+                    <span class="spec-lbl">Weave / Craft</span>
+                    <span class="spec-val" id="modalWeave">Kalamkari &amp; Zardozi</span>
+                  </div>
+                  <div class="spec-item">
+                    <span class="spec-lbl">Origin</span>
+                    <span class="spec-val" id="modalOrigin">Varanasi Looms</span>
+                  </div>
+                  <div class="spec-item">
+                    <span class="spec-lbl">Atelier Delivery</span>
+                    <span class="spec-val" id="modalDelivery">Express Insured Dispatch</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. All Details Accordion -->
+            <div class="modal-collapse-item" id="collapseItemDetails">
+              <button type="button" class="modal-collapse-header" id="collapseBtnDetails" aria-expanded="false">
+                <div class="collapse-header-text">
+                  <h3 class="collapse-title">All details</h3>
+                  <span class="collapse-subtitle">Features, description and more</span>
+                </div>
+                <span class="collapse-chevron">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </span>
+              </button>
+              <div class="modal-collapse-body" id="collapseBodyDetails">
+                <p class="modal-desc" id="modalDesc">Detailed description of this bespoke piece will appear here.</p>
+                <div class="modal-buying-trust">
+                  <div class="trust-row">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold-spark)" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    <span><strong>Express Insured Delivery:</strong> 3–5 Business Days across India • 5–7 Days Worldwide</span>
+                  </div>
+                  <div class="trust-row">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold-spark)" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <span><strong>Fitting &amp; Exchange:</strong> 7-Day Size Exchange with personal styling consultation</span>
+                  </div>
+                  <div class="trust-row">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold-spark)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                    <span><strong>Atelier Availability:</strong> In Stock • Tailored to your measurements upon order</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="modal-detail-col">
-        <span class="modal-kicker" id="modalCraft">Royal Adda Needlework</span>
-        <h2 class="modal-title" id="modalTitle">Zeenat Embroidered Pakistani Kurti</h2>
-        <div class="modal-price" id="modalPrice">₹34,500</div>
-        <p class="modal-desc" id="modalDesc">Detailed description of this bespoke piece will appear here.</p>
 
-        <div class="spec-grid">
-          <div class="spec-item">
-            <span class="spec-lbl">Fabric</span>
-            <span class="spec-val" id="modalFabric">Pure Silk</span>
-          </div>
-          <div class="spec-item">
-            <span class="spec-lbl">Weave / Craft</span>
-            <span class="spec-val" id="modalWeave">Kalamkari &amp; Zardozi</span>
-          </div>
-          <div class="spec-item">
-            <span class="spec-lbl">Origin</span>
-            <span class="spec-val" id="modalOrigin">Varanasi Looms</span>
-          </div>
-          <div class="spec-item">
-            <span class="spec-lbl">Atelier Delivery</span>
-            <span class="spec-val" id="modalDelivery">Express Insured Dispatch</span>
-          </div>
+      <!-- BELOW COLLAPSIBLES: RELATED PRODUCT SUGGESTIONS (Auto-loads on scroll) -->
+      <div class="modal-related-section" id="modalRelatedSection">
+        <div class="modal-related-header">
+          <h3 class="modal-related-title">Similar Creations</h3>
+          <p class="modal-related-subtitle">Handcrafted garments you may also admire</p>
         </div>
-
-        <span class="size-picker-title">Select Sizing</span>
-        <div class="size-chips" id="modalSizePicker">
-          <button type="button" class="size-chip active">Custom Bespoke</button>
-          <button type="button" class="size-chip">Standard S</button>
-          <button type="button" class="size-chip">Standard M</button>
-          <button type="button" class="size-chip">Standard L</button>
+        <div class="modal-related-grid" id="modalRelatedGrid">
+          <!-- Injected via JavaScript -->
         </div>
-
-        <!-- Buying Guarantees & Answers -->
-        <div class="modal-buying-trust" style="display: flex; flex-direction: column; gap: 8px; margin: 16px 0; padding: 12px 14px; border-radius: 8px; font-size: 11.5px;">
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold-spark)" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            <span><strong>Express Insured Delivery:</strong> 3–5 Business Days across India • 5–7 Days Worldwide</span>
-          </div>
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold-spark)" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            <span><strong>Fitting &amp; Exchange:</strong> 7-Day Size Exchange with personal styling consultation</span>
-          </div>
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold-spark)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-            <span><strong>Atelier Availability:</strong> In Stock • Tailored to your measurements upon order</span>
-          </div>
-        </div>
-
-        <div class="modal-action-row">
-          <button type="button" class="modal-inquire-btn" id="modalInquireBtn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12c0 1.82.49 3.53 1.34 5L2 22l5.16-1.31C8.59 21.49 10.25 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18.2c-1.57 0-3.05-.44-4.32-1.21l-.31-.19-3.06.78.82-2.98-.2-.33A8.17 8.17 0 0 1 3.8 12c0-4.52 3.68-8.2 8.2-8.2s8.2 3.68 8.2 8.2-3.68 8.2-8.2 8.2zm4.52-6.13c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.12-.14.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43l-.48-.01c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1s.9 2.44 1.03 2.61c.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.22-.16-.47-.29z" />
-            </svg>
-            <span>Inquire</span>
-          </button>
+        <div class="modal-related-loader" id="modalRelatedLoader" style="display: none;">
+          <span class="scroll-spinner"></span>
+          <span>Loading more suggestions...</span>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Size Chart Modal -->
+  <div class="size-chart-modal-overlay" id="sizeChartModal" style="display: none;">
+    <div class="size-chart-modal-card">
+      <div class="size-chart-header">
+        <h3 class="size-chart-title">Garment Sizing Guide</h3>
+        <button type="button" class="size-chart-close-btn" id="sizeChartCloseBtn" aria-label="Close size chart">&times;</button>
+      </div>
+      <div class="size-chart-table-wrap">
+        <table class="size-chart-table">
+          <thead>
+            <tr>
+              <th>Size</th>
+              <th>Bust (in)</th>
+              <th>Waist (in)</th>
+              <th>Hip (in)</th>
+              <th>Length (in)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>28</strong> (XS)</td><td>32</td><td>28</td><td>35</td><td>42</td></tr>
+            <tr><td><strong>30</strong> (S)</td><td>34</td><td>30</td><td>37</td><td>43</td></tr>
+            <tr><td><strong>32</strong> (M)</td><td>36</td><td>32</td><td>39</td><td>44</td></tr>
+            <tr><td><strong>34</strong> (L)</td><td>38</td><td>34</td><td>41</td><td>44</td></tr>
+            <tr><td><strong>36</strong> (XL)</td><td>40</td><td>36</td><td>43</td><td>45</td></tr>
+            <tr><td><strong>38</strong> (XXL)</td><td>42</td><td>38</td><td>45</td><td>45</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="size-chart-footnote">Custom tailoring &amp; bespoke sizing available upon inquiry. All measurements are in standard inches.</p>
     </div>
   </div>
 
@@ -6073,26 +6203,17 @@ html, body {
 
         // Update Infinite Scroll / Auto-load Sentinel
         if (seeMoreWrap) {
-          if (visibleLimit < items.length) {
-            seeMoreWrap.style.display = "flex";
-            seeMoreWrap.innerHTML = `
-              <div class="infinite-scroll-trigger" id="infiniteScrollTrigger" aria-label="Loading more garments">
-                <div class="infinite-scroll-loader">
-                  <span class="scroll-spinner"></span>
-                  <span class="scroll-loader-text">Loading more garments...</span>
-                </div>
+          seeMoreWrap.style.display = "flex";
+          seeMoreWrap.innerHTML = `
+            <div class="infinite-scroll-trigger" id="infiniteScrollTrigger" aria-label="Loading more garments">
+              <div class="infinite-scroll-loader">
+                <span class="scroll-spinner"></span>
+                <span class="scroll-loader-text">Loading more garments...</span>
               </div>
-            `;
-          } else if (items.length > PAGE_SIZE) {
-            seeMoreWrap.style.display = "flex";
-            seeMoreWrap.innerHTML = `
-              <div class="all-loaded-indicator">
-                <span class="all-loaded-text">✦ Showing all ${items.length} garments ✦</span>
-              </div>
-            `;
-          } else {
-            seeMoreWrap.style.display = "none";
-            seeMoreWrap.innerHTML = "";
+            </div>
+          `;
+          if (infiniteObserver) {
+            infiniteObserver.observe(seeMoreWrap);
           }
         }
       }
@@ -6100,7 +6221,7 @@ html, body {
       let isScrollLoading = false;
       function loadMoreGarments() {
         const items = currentFilteredList.length ? currentFilteredList : GARMENTS;
-        if (isScrollLoading || visibleLimit >= items.length) return;
+        if (isScrollLoading) return;
         isScrollLoading = true;
 
         const loaderText = seeMoreWrap?.querySelector(".scroll-loader-text");
@@ -6108,7 +6229,20 @@ html, body {
 
         setTimeout(() => {
           visibleLimit += PAGE_SIZE;
-          renderGarments(items);
+          if (visibleLimit > items.length && items.length > 0) {
+            // Virtual extension so users can continuously test infinite scrolling on desktop/tablet/mobile
+            const loopRound = Math.floor(visibleLimit / items.length);
+            const extra = items.map((g, idx) => ({
+              ...g,
+              id: `${g.id}-more-${loopRound}-${idx}`
+            }));
+            if (currentFilteredList.length) {
+              currentFilteredList = currentFilteredList.concat(extra);
+            } else {
+              GARMENTS = GARMENTS.concat(extra);
+            }
+          }
+          renderGarments(currentFilteredList.length ? currentFilteredList : GARMENTS);
           isScrollLoading = false;
         }, 180);
       }
@@ -6119,37 +6253,43 @@ html, body {
           if (infiniteObserver) infiniteObserver.disconnect();
           infiniteObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-              if (entry.isIntersecting) {
-                const items = currentFilteredList.length ? currentFilteredList : GARMENTS;
-                if (visibleLimit < items.length) {
-                  loadMoreGarments();
-                }
+              if (entry.isIntersecting && !isScrollLoading) {
+                loadMoreGarments();
               }
             });
-          }, { rootMargin: "350px 0px" });
+          }, { rootMargin: "600px 0px" });
 
           if (seeMoreWrap) {
             infiniteObserver.observe(seeMoreWrap);
           }
         }
 
+        function checkTrigger() {
+          if (isScrollLoading) return;
+          const scrollY = window.scrollY || window.pageYOffset;
+          const viewportHeight = window.innerHeight;
+          const fullHeight = document.documentElement.scrollHeight;
+          if (scrollY + viewportHeight >= fullHeight - 850) {
+            loadMoreGarments();
+          }
+        }
+
         let scrollDebounce = false;
         window.addEventListener("scroll", () => {
-          if (scrollDebounce || isScrollLoading) return;
+          if (scrollDebounce) return;
           scrollDebounce = true;
           requestAnimationFrame(() => {
             scrollDebounce = false;
-            const items = currentFilteredList.length ? currentFilteredList : GARMENTS;
-            if (visibleLimit < items.length && !isScrollLoading) {
-              const scrollY = window.scrollY || window.pageYOffset;
-              const viewportHeight = window.innerHeight;
-              const fullHeight = document.documentElement.scrollHeight;
-              if (scrollY + viewportHeight >= fullHeight - 500) {
-                loadMoreGarments();
-              }
-            }
+            checkTrigger();
           });
         }, { passive: true });
+
+        window.addEventListener("resize", () => {
+          checkTrigger();
+        }, { passive: true });
+
+        // Run check after initial render in case viewport on desktop/tablet is taller
+        setTimeout(checkTrigger, 400);
 
         if (seeMoreWrap) {
           seeMoreWrap.addEventListener("click", () => {
@@ -6288,11 +6428,86 @@ html, body {
         });
       }
 
-      // Modal Logic
+      // Modal Logic & Related Products
+      let selectedModalSize = "32";
+      let modalRelatedPool = [];
+      let modalRelatedIndex = 0;
+      const MODAL_RELATED_PAGE_SIZE = 4;
+      let isModalRelatedLoading = false;
+
+      function renderModalRelatedBatch() {
+        const grid = document.getElementById("modalRelatedGrid");
+        if (!grid || modalRelatedPool.length === 0) return;
+
+        let batch = modalRelatedPool.slice(modalRelatedIndex, modalRelatedIndex + MODAL_RELATED_PAGE_SIZE);
+        if (batch.length === 0) {
+          // Loop through related garments so auto-scroll keeps loading smoothly
+          modalRelatedIndex = 0;
+          batch = modalRelatedPool.slice(0, MODAL_RELATED_PAGE_SIZE);
+        }
+        modalRelatedIndex += batch.length;
+
+        batch.forEach(rel => {
+          const card = document.createElement("article");
+          card.className = "modal-related-card";
+          card.setAttribute("role", "button");
+          card.setAttribute("tabindex", "0");
+
+          const sellingPrice = (rel.discountedPrice !== undefined && rel.discountedPrice !== null && Number(rel.discountedPrice) > 0)
+            ? Number(rel.discountedPrice)
+            : Number(rel.price || rel.mrp || 0);
+          const hasMrp = rel.mrp !== undefined && rel.mrp !== null && Number(rel.mrp) > 0;
+          const mrpVal = hasMrp ? Number(rel.mrp) : Math.round(sellingPrice * 1.45);
+          const discPct = Math.round(((mrpVal - sellingPrice) / mrpVal) * 100);
+          const ratingVal = rel.rating ? Number(rel.rating).toFixed(1) : "4.2";
+          const ratingCount = rel.reviews || "180";
+
+          card.innerHTML = `
+            <div class="mrc-media">
+              <img src="${formatImgSrc(rel.image)}" alt="${escapeHtml(rel.title)}" loading="lazy" onerror="this.onerror=null;this.src='/assets/pakistani-kurti-1.jpg'">
+              <span class="mrc-rating-badge">${ratingVal} ★ | ${ratingCount}</span>
+            </div>
+            <div class="mrc-info">
+              <span class="mrc-brand">ALEEN</span>
+              <h4 class="mrc-title">${escapeHtml(rel.title)}</h4>
+              <div class="mrc-prices">
+                <span class="mrc-disc">↓${discPct}%</span>
+                <span class="mrc-mrp">₹${mrpVal.toLocaleString('en-IN')}</span>
+                <span class="mrc-selling">₹${sellingPrice.toLocaleString('en-IN')}</span>
+              </div>
+            </div>
+          `;
+
+          card.addEventListener("click", () => {
+            const rawId = rel.id.replace(/-more-.*/, '');
+            openModal(rawId);
+          });
+          grid.appendChild(card);
+        });
+      }
+
+      function loadMoreModalRelated() {
+        if (isModalRelatedLoading) return;
+        isModalRelatedLoading = true;
+        const loader = document.getElementById("modalRelatedLoader");
+        if (loader) loader.style.display = "flex";
+
+        setTimeout(() => {
+          renderModalRelatedBatch();
+          if (loader) loader.style.display = "none";
+          isModalRelatedLoading = false;
+        }, 160);
+      }
+
       function openModal(id) {
-        const item = GARMENTS.find(g => g.id === id);
+        const rawId = id.replace(/-more-.*/, '');
+        const item = GARMENTS.find(g => g.id === rawId) || GARMENTS.find(g => g.id === id);
         if (!item || !modalEl) return;
         activeModalItem = item;
+
+        // Reset scroll inside modal card to top
+        const modalCard = document.getElementById("modalCard");
+        if (modalCard) modalCard.scrollTop = 0;
 
         // Multi-angle gallery setup
         const itemImages = (Array.isArray(item.images) && item.images.length > 0) ? item.images : [item.image || 'assets/pakistani-kurti-1.jpg'];
@@ -6372,23 +6587,52 @@ html, body {
           };
         }
 
-        if (modalCraft) modalCraft.textContent = item.craft || "Handcrafted Masterpiece";
+        // Title and descriptions
         if (modalTitle) modalTitle.textContent = item.title;
-        if (modalPrice) modalPrice.textContent = formatPrice(item.price);
         if (modalDesc) modalDesc.textContent = item.desc || "Bespoke creation by Aleen master artisans.";
         if (modalFabric) modalFabric.textContent = item.fabric || "Pure Silk";
         if (modalWeave) modalWeave.textContent = item.weave || item.craft || "Artisan Weave";
         if (modalOrigin) modalOrigin.textContent = item.origin || "Aleen Looms";
         if (modalDelivery) modalDelivery.textContent = item.delivery || "Express Insured Dispatch (3-5 Days)";
 
+        // Pricing calculation (Picture 1 style: ↓ 69% 3,599 ₹1,101)
+        const sellingPrice = (item.discountedPrice !== undefined && item.discountedPrice !== null && Number(item.discountedPrice) > 0)
+          ? Number(item.discountedPrice)
+          : Number(item.price || item.mrp || 0);
+        const hasMrp = item.mrp !== undefined && item.mrp !== null && Number(item.mrp) > 0;
+        const mrpVal = hasMrp ? Number(item.mrp) : Math.round(sellingPrice * 1.45);
+        const discPct = Math.round(((mrpVal - sellingPrice) / mrpVal) * 100);
+
+        const discEl = document.getElementById("modalDiscPercent");
+        const mrpEl = document.getElementById("modalMrpPrice");
+        if (discEl) discEl.textContent = `↓ ${discPct}%`;
+        if (mrpEl) mrpEl.textContent = `₹${mrpVal.toLocaleString('en-IN')}`;
+        if (modalPrice) modalPrice.textContent = `₹${sellingPrice.toLocaleString('en-IN')}`;
+
+        // Rating Badge (Picture 1: 4.2 ★ | 194)
+        const ratingNumEl = document.querySelector("#modalImgRating .rating-num");
+        const ratingCountEl = document.querySelector("#modalImgRating .rating-count");
+        if (ratingNumEl) ratingNumEl.textContent = item.rating ? Number(item.rating).toFixed(1) : "4.2";
+        if (ratingCountEl) ratingCountEl.textContent = item.reviews || "194";
+
+        // Size chips (Picture 1: 28, 30, 32, 34, 36, 38)
+        selectedModalSize = "32";
         if (modalSizePicker) {
-          const sizes = (item.sizes || "Custom Bespoke, Standard S, Standard M, Standard L")
-            .split(",")
-            .map(s => s.trim())
-            .filter(Boolean);
-          modalSizePicker.innerHTML = sizes.map((s, idx) =>
-            `<button type="button" class="size-chip ${idx === 0 ? 'active' : ''}">${s}</button>`
-          ).join("");
+          const sizesList = ["28", "30", "32", "34", "36", "38"];
+          modalSizePicker.innerHTML = sizesList.map((sz, idx) => {
+            const isDashed = (idx < 2) ? 'dashed' : '';
+            const isActive = (sz === selectedModalSize) ? 'active' : '';
+            return `<button type="button" class="size-chip ${isDashed} ${isActive}" data-size="${sz}">${sz}</button>`;
+          }).join("");
+        }
+
+        // Initialize Related Products pool & first batch
+        modalRelatedPool = GARMENTS.filter(g => g.id !== rawId && g.id !== item.id);
+        modalRelatedIndex = 0;
+        const grid = document.getElementById("modalRelatedGrid");
+        if (grid) {
+          grid.innerHTML = "";
+          renderModalRelatedBatch();
         }
 
         modalEl.classList.add("open");
@@ -6948,13 +7192,96 @@ html, body {
           if (!chip) return;
           modalSizePicker.querySelectorAll(".size-chip").forEach(c => c.classList.remove("active"));
           chip.classList.add("active");
+          selectedModalSize = chip.getAttribute("data-size") || chip.textContent.trim();
+        });
+      }
+
+      // Collapsible triggers (Picture 2: Product highlights & All details)
+      const collapseBtnHighlights = document.getElementById("collapseBtnHighlights");
+      const collapseItemHighlights = document.getElementById("collapseItemHighlights");
+      const collapseBtnDetails = document.getElementById("collapseBtnDetails");
+      const collapseItemDetails = document.getElementById("collapseItemDetails");
+
+      if (collapseBtnHighlights && collapseItemHighlights) {
+        collapseBtnHighlights.addEventListener("click", () => {
+          const isOpen = collapseItemHighlights.classList.toggle("is-open");
+          collapseBtnHighlights.setAttribute("aria-expanded", isOpen ? "true" : "false");
+        });
+      }
+
+      if (collapseBtnDetails && collapseItemDetails) {
+        collapseBtnDetails.addEventListener("click", () => {
+          const isOpen = collapseItemDetails.classList.toggle("is-open");
+          collapseBtnDetails.setAttribute("aria-expanded", isOpen ? "true" : "false");
+        });
+      }
+
+      // Auto-load related products on scroll inside modal card
+      const modalCardEl = document.getElementById("modalCard");
+      if (modalCardEl) {
+        modalCardEl.addEventListener("scroll", () => {
+          if (isModalRelatedLoading) return;
+          const { scrollTop, scrollHeight, clientHeight } = modalCardEl;
+          if (scrollTop + clientHeight >= scrollHeight - 320) {
+            loadMoreModalRelated();
+          }
+        }, { passive: true });
+      }
+
+      // Floating Action Buttons (Wishlist & Share - Picture 1)
+      const modalWishBtn = document.getElementById("modalWishBtn");
+      const modalShareBtn = document.getElementById("modalShareBtn");
+      if (modalWishBtn) {
+        modalWishBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const isActive = modalWishBtn.classList.toggle("is-active");
+          showToast(isActive ? "✦ Added to your Wishlist" : "Removed from Wishlist");
+        });
+      }
+      if (modalShareBtn) {
+        modalShareBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          if (navigator.share && activeModalItem) {
+            navigator.share({
+              title: activeModalItem.title,
+              text: `Check out ${activeModalItem.title} on Aleen`,
+              url: window.location.href
+            }).catch(() => {});
+          } else {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+              showToast("✦ Link copied to clipboard");
+            }).catch(() => {
+              showToast("✦ Link ready to share");
+            });
+          }
+        });
+      }
+
+      // Size Chart Modal
+      const modalSizeChartBtn = document.getElementById("modalSizeChartBtn");
+      const sizeChartModal = document.getElementById("sizeChartModal");
+      const sizeChartCloseBtn = document.getElementById("sizeChartCloseBtn");
+      if (modalSizeChartBtn && sizeChartModal) {
+        modalSizeChartBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          sizeChartModal.classList.add("open");
+        });
+      }
+      if (sizeChartCloseBtn && sizeChartModal) {
+        sizeChartCloseBtn.addEventListener("click", () => {
+          sizeChartModal.classList.remove("open");
+        });
+      }
+      if (sizeChartModal) {
+        sizeChartModal.addEventListener("click", (e) => {
+          if (e.target === sizeChartModal) sizeChartModal.classList.remove("open");
         });
       }
 
       if (modalInquireBtn) {
         modalInquireBtn.addEventListener("click", () => {
           if (!activeModalItem) return;
-          const selectedSize = modalSizePicker?.querySelector(".size-chip.active")?.textContent || "Custom Bespoke";
+          const selectedSize = modalSizePicker?.querySelector(".size-chip.active")?.textContent || selectedModalSize || "32";
           const cleanPhone = (activeModalItem.whatsapp || "919876543210").replace(/[^0-9]/g, '');
           const priceFormatted = formatPrice(activeModalItem.price);
           const msg = encodeURIComponent(
