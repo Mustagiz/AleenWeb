@@ -1147,7 +1147,14 @@ section#hero {
 }
 
 .fw-slide-veil {
-  background: linear-gradient(90deg, rgba(247, 245, 239, 0.95) 0%, rgba(247, 245, 239, 0.8) 45%, rgba(247, 245, 239, 0.25) 100%) !important;
+  background: linear-gradient(90deg,
+    rgba(247, 245, 239, 0.96) 0%,
+    rgba(247, 245, 239, 0.88) 22%,
+    rgba(247, 245, 239, 0.42) 36%,
+    rgba(247, 245, 239, 0.08) 46%,
+    rgba(247, 245, 239, 0) 54%,
+    rgba(247, 245, 239, 0) 100%
+  ) !important;
 }
 
 .fw-slide-eyebrow {
@@ -2219,7 +2226,6 @@ a.cta svg path {
 .col-card,
 .story-card,
 .luxury-card,
-.contact-detail-card,
 .action-cta-box {
   background: #ffffff !important;
   border: 1.5px solid rgba(156, 175, 136, 0.5) !important;
@@ -2228,7 +2234,6 @@ a.cta svg path {
   transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
 }
 
-.contact-detail-card,
 .luxury-card,
 .action-cta-box {
   border-radius: 16px !important;
@@ -2645,147 +2650,562 @@ a.cta svg path {
   color: #384e36 !important;
 }
 
-/* Contact Cards (Boutique, Email, WhatsApp) */
-.contact-detail-card {
-  background: #ffffff !important;
-  border: 1.5px solid #9caf88 !important;
-  border-radius: 16px !important;
-  box-shadow: 0 8px 24px rgba(22, 34, 23, 0.05) !important;
-  padding: 20px 22px !important;
-  transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+/* ==========================================================================
+   ATELIER HAUTE COUTURE SALON & CONTACT REDESIGN (/ui-ux-designer)
+   Editorial salon register, tactile hairline dividers, understated bespoke forms.
+   ========================================================================== */
+
+.atelier-contact-container {
+  max-width: 1240px !important;
+  margin: 0 auto !important;
+  padding: 52px 24px 80px !important;
 }
 
-.contact-detail-card:hover {
-  transform: translateY(-2px) !important;
-  box-shadow: 0 12px 32px rgba(22, 34, 23, 0.09) !important;
-  border-color: #748c66 !important;
+.atelier-contact-grid {
+  display: grid !important;
+  grid-template-columns: 1.05fr 0.95fr !important;
+  gap: clamp(36px, 4.5vw, 68px) !important;
+  align-items: start !important;
 }
 
-.contact-card-icon {
-  background: rgba(156, 175, 136, 0.15) !important;
-  border: 1px solid #9caf88 !important;
+/* Left Column: Dossier */
+.atelier-salon-dossier {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.atelier-dossier-header {
+  margin-bottom: 28px !important;
+}
+
+.atelier-kicker {
+  display: inline-block !important;
+  font-family: var(--sans, 'Montserrat', sans-serif) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: 2px !important;
+  text-transform: uppercase !important;
+  color: #5d7454 !important;
+  margin-bottom: 12px !important;
+}
+
+.atelier-main-title {
+  font-family: var(--serif, 'Cormorant Garamond', serif) !important;
+  font-size: clamp(32px, 3.2vw, 42px) !important;
+  font-weight: 600 !important;
+  line-height: 1.15 !important;
   color: #162217 !important;
-  border-radius: 12px !important;
+  margin: 0 0 14px 0 !important;
 }
 
-.contact-card-badge {
-  background: #f7f5ef !important;
-  color: #748c66 !important;
-  border: 1px solid #9caf88 !important;
-  font-weight: 700 !important;
-  font-size: 10px !important;
-  letter-spacing: 1.5px !important;
+.atelier-main-desc {
+  font-family: var(--sans, 'Montserrat', sans-serif) !important;
+  font-size: 14.5px !important;
+  line-height: 1.75 !important;
+  color: #435941 !important;
+  margin: 0 !important;
+  max-width: 520px !important;
 }
 
-.contact-card-title,
-.contact-card-title a {
-  color: #162217 !important;
-  font-family: var(--serif) !important;
-  font-size: 18px !important;
-  font-weight: 700 !important;
+/* Atelier Salon Register (Hairline architectural rows) */
+.atelier-salon-register {
+  display: flex !important;
+  flex-direction: column !important;
+  border-top: 1px solid rgba(22, 34, 23, 0.12) !important;
+  margin-top: 8px !important;
 }
 
-.contact-card-text {
-  color: #384e36 !important;
-  font-size: 13.5px !important;
-  line-height: 1.65 !important;
-}
-
-.contact-sublink {
-  color: #e8412c !important;
-  font-weight: 700 !important;
-  font-size: 12px !important;
-  letter-spacing: 0.5px !important;
-}
-
-.contact-sublink:hover {
-  color: #d0301d !important;
-}
-
-.contact-wa-btn {
-  background: #e8412c !important;
-  color: #ffffff !important;
-  border: none !important;
-  border-radius: 999px !important;
-  padding: 9px 18px !important;
-  font-weight: 700 !important;
-  font-size: 12px !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 8px !important;
-  text-decoration: none !important;
+.atelier-salon-row {
+  display: flex !important;
+  gap: 22px !important;
+  padding: 24px 0 !important;
+  border-bottom: 1px solid rgba(22, 34, 23, 0.12) !important;
   transition: all 0.25s ease !important;
 }
 
-.contact-wa-btn:hover {
-  background: #d0301d !important;
-  box-shadow: 0 4px 16px rgba(232, 65, 44, 0.3) !important;
-  transform: translateY(-1px) !important;
+.salon-num-col {
+  flex-shrink: 0 !important;
+  width: 28px !important;
+  padding-top: 3px !important;
 }
 
-/* Contact Form Card */
+.salon-num {
+  font-family: var(--serif, 'Cormorant Garamond', serif) !important;
+  font-size: 20px !important;
+  font-weight: 600 !important;
+  color: #8a9f81 !important;
+  display: inline-block !important;
+}
+
+.salon-details-col {
+  flex: 1 !important;
+  min-width: 0 !important;
+}
+
+.salon-kicker {
+  display: block !important;
+  font-family: var(--sans, 'Montserrat', sans-serif) !important;
+  font-size: 10.5px !important;
+  font-weight: 600 !important;
+  letter-spacing: 1.6px !important;
+  text-transform: uppercase !important;
+  color: #647b5b !important;
+  margin-bottom: 6px !important;
+}
+
+.salon-title {
+  font-family: var(--serif, 'Cormorant Garamond', serif) !important;
+  font-size: 21px !important;
+  font-weight: 600 !important;
+  color: #162217 !important;
+  margin: 0 0 8px 0 !important;
+  line-height: 1.25 !important;
+}
+
+.salon-title a {
+  color: inherit !important;
+  text-decoration: none !important;
+  transition: color 0.2s ease !important;
+}
+
+.salon-title a:hover {
+  color: #647b5b !important;
+}
+
+.salon-meta {
+  font-family: var(--sans, 'Montserrat', sans-serif) !important;
+  font-size: 13.5px !important;
+  line-height: 1.65 !important;
+  color: #4a6147 !important;
+  margin: 0 0 12px 0 !important;
+}
+
+.salon-action-row {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+}
+
+.salon-nav-link {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-family: var(--sans, 'Montserrat', sans-serif) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.6px !important;
+  color: #162217 !important;
+  text-decoration: none !important;
+  border-bottom: 1px solid rgba(22, 34, 23, 0.35) !important;
+  padding-bottom: 2px !important;
+  transition: all 0.2s ease !important;
+}
+
+.salon-nav-link:hover {
+  color: #5d7454 !important;
+  border-bottom-color: #5d7454 !important;
+  transform: translateX(2px) !important;
+}
+
+.salon-wa-action {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  background: #162217 !important;
+  color: #ffffff !important;
+  padding: 10px 18px !important;
+  border-radius: 8px !important;
+  font-family: var(--sans, 'Montserrat', sans-serif) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.8px !important;
+  text-decoration: none !important;
+  box-shadow: none !important;
+  transition: all 0.25s ease !important;
+}
+
+.salon-wa-action:hover {
+  background: #273b2a !important;
+  color: #ffffff !important;
+  transform: translateY(-1px) !important;
+  box-shadow: none !important;
+}
+
+/* Right Column: Atelier Inquiry Suite */
+.atelier-inquiry-suite {
+  background: #ffffff !important;
+  border: 1px solid rgba(22, 34, 23, 0.12) !important;
+  border-radius: 12px !important;
+  padding: clamp(28px, 4vw, 42px) !important;
+  box-shadow: 0 4px 24px rgba(22, 34, 23, 0.03) !important;
+}
+
+.atelier-suite-header {
+  margin-bottom: 24px !important;
+  padding-bottom: 16px !important;
+  border-bottom: 1px solid rgba(22, 34, 23, 0.08) !important;
+}
+
+.suite-title {
+  font-family: var(--serif, 'Cormorant Garamond', serif) !important;
+  font-size: clamp(24px, 2.4vw, 30px) !important;
+  font-weight: 600 !important;
+  color: #162217 !important;
+  margin: 6px 0 6px 0 !important;
+}
+
+.suite-desc {
+  font-family: var(--sans, 'Montserrat', sans-serif) !important;
+  font-size: 13.5px !important;
+  line-height: 1.6 !important;
+  color: #556c52 !important;
+  margin: 0 !important;
+}
+
+.contact-form-row {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 16px !important;
+}
+
+.contact-form-group {
+  margin-bottom: 18px !important;
+}
+
+.atelier-field-label {
+  display: block !important;
+  font-family: var(--sans, 'Montserrat', sans-serif) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: 1.2px !important;
+  text-transform: uppercase !important;
+  color: #384e36 !important;
+  margin-bottom: 7px !important;
+}
+
+.req-star {
+  color: #b83424 !important;
+  margin-left: 2px !important;
+}
+
+.atelier-field-input {
+  width: 100% !important;
+  padding: 12px 16px !important;
+  background: #fdfbf7 !important;
+  border: 1px solid #dcd7cc !important;
+  border-radius: 8px !important;
+  font-family: var(--sans, 'Montserrat', sans-serif) !important;
+  font-size: 13.5px !important;
+  color: #162217 !important;
+  box-sizing: border-box !important;
+  outline: none !important;
+  transition: all 0.2s ease !important;
+  box-shadow: none !important;
+}
+
+.atelier-field-input::placeholder {
+  color: #9ea899 !important;
+}
+
+.atelier-field-input:focus {
+  background: #ffffff !important;
+  border-color: #162217 !important;
+  box-shadow: 0 0 0 1px #162217 !important;
+}
+
+.atelier-select-wrapper {
+  position: relative !important;
+  width: 100% !important;
+}
+
+.atelier-field-select {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  padding-right: 36px !important;
+  cursor: pointer !important;
+}
+
+.select-chevron {
+  position: absolute !important;
+  right: 14px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  pointer-events: none !important;
+  color: #5d7454 !important;
+}
+
+.atelier-field-textarea {
+  resize: vertical !important;
+  min-height: 110px !important;
+  line-height: 1.6 !important;
+}
+
+.atelier-submit-action {
+  width: 100% !important;
+  padding: 15px 24px !important;
+  background: #162217 !important;
+  border: 1px solid #162217 !important;
+  color: #ffffff !important;
+  border-radius: 8px !important;
+  font-family: var(--sans, 'Montserrat', sans-serif) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: 1.5px !important;
+  text-transform: uppercase !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  box-shadow: none !important;
+  transition: all 0.25s ease !important;
+  margin-top: 6px !important;
+}
+
+.atelier-submit-action:hover {
+  background: #283e2c !important;
+  border-color: #283e2c !important;
+  color: #ffffff !important;
+  transform: translateY(-1px) !important;
+  box-shadow: none !important;
+}
+
+.atelier-success-card {
+  text-align: center !important;
+  padding: 40px 20px !important;
+}
+
+.atelier-success-icon {
+  width: 48px !important;
+  height: 48px !important;
+  margin: 0 auto 16px !important;
+  border-radius: 50% !important;
+  background: rgba(93, 116, 84, 0.12) !important;
+  border: 1px solid rgba(93, 116, 84, 0.35) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #41553c !important;
+}
+
+.atelier-success-title {
+  font-family: var(--serif, 'Cormorant Garamond', serif) !important;
+  font-size: 24px !important;
+  color: #162217 !important;
+  margin: 0 0 8px 0 !important;
+}
+
+.atelier-success-text {
+  font-family: var(--sans, 'Montserrat', sans-serif) !important;
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+  color: #556c52 !important;
+  max-width: 380px !important;
+  margin: 0 auto !important;
+}
+
+/* Amenities Strip */
+.atelier-amenities-strip {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 0 !important;
+  margin-top: 64px !important;
+  border: 1px solid rgba(22, 34, 23, 0.1) !important;
+  border-radius: 10px !important;
+  background: #f7f4ee !important;
+  overflow: hidden !important;
+}
+
+.amenity-cell {
+  padding: 32px 28px !important;
+  border-right: 1px solid rgba(22, 34, 23, 0.1) !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.amenity-cell:last-child {
+  border-right: none !important;
+}
+
+.amenity-glyph {
+  font-size: 14px !important;
+  color: #748c66 !important;
+  margin-bottom: 10px !important;
+  display: block !important;
+}
+
+.amenity-cell-title {
+  font-family: var(--serif, 'Cormorant Garamond', serif) !important;
+  font-size: 19px !important;
+  font-weight: 600 !important;
+  color: #162217 !important;
+  margin: 0 0 8px 0 !important;
+}
+
+.amenity-cell-text {
+  font-family: var(--sans, 'Montserrat', sans-serif) !important;
+  font-size: 13px !important;
+  line-height: 1.65 !important;
+  color: #556c52 !important;
+  margin: 0 !important;
+}
+
+/* Backward compatibility mapping */
+.contact-detail-card {
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid rgba(22, 34, 23, 0.12) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 22px 0 !important;
+}
+
+.contact-card-badge {
+  background: transparent !important;
+  color: #647b5b !important;
+  border: none !important;
+  font-weight: 600 !important;
+  font-size: 10.5px !important;
+  letter-spacing: 1.6px !important;
+  padding: 0 !important;
+}
+
+.contact-card-icon {
+  display: none !important;
+}
+
 .contact-form-card {
   background: #ffffff !important;
-  border: 1.5px solid #9caf88 !important;
-  border-radius: 20px !important;
-  box-shadow: 0 16px 40px rgba(22, 34, 23, 0.07) !important;
-  padding: clamp(28px, 3.5vw, 42px) !important;
-}
-
-.contact-form-card h4 {
-  color: #162217 !important;
-  font-family: var(--serif) !important;
-  font-size: 26px !important;
-  font-weight: 700 !important;
-}
-
-.contact-form-card p {
-  color: #384e36 !important;
-}
-
-.contact-label {
-  color: #162217 !important;
-  font-size: 11.5px !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.8px !important;
+  border: 1px solid rgba(22, 34, 23, 0.12) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 24px rgba(22, 34, 23, 0.03) !important;
+  padding: clamp(28px, 4vw, 42px) !important;
 }
 
 .contact-input,
 select.contact-input,
 textarea.contact-input {
-  background: #f7f5ef !important;
-  border: 1.5px solid #9caf88 !important;
-  border-radius: 10px !important;
+  background: #fdfbf7 !important;
+  border: 1px solid #dcd7cc !important;
+  border-radius: 8px !important;
   color: #162217 !important;
-  font-size: 14px !important;
-  padding: 13px 16px !important;
-  outline: none !important;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+  font-size: 13.5px !important;
+  padding: 12px 16px !important;
+  box-shadow: none !important;
 }
 
 .contact-input:focus,
 select.contact-input:focus,
 textarea.contact-input:focus {
-  border-color: #e8412c !important;
-  box-shadow: 0 0 12px rgba(232, 65, 44, 0.2) !important;
+  border-color: #162217 !important;
+  box-shadow: 0 0 0 1px #162217 !important;
   background: #ffffff !important;
 }
 
 .contact-submit-btn {
-  background: #e8412c !important;
-  border: none !important;
+  background: #162217 !important;
+  border: 1px solid #162217 !important;
   color: #ffffff !important;
-  border-radius: 999px !important;
-  height: 50px !important;
-  font-weight: 700 !important;
-  font-size: 13px !important;
-  letter-spacing: 1px !important;
-  cursor: pointer !important;
-  transition: all 0.25s ease !important;
+  border-radius: 8px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: 1.5px !important;
+  box-shadow: none !important;
 }
 
 .contact-submit-btn:hover {
-  background: #d0301d !important;
+  background: #283e2c !important;
+  box-shadow: none !important;
+  transform: translateY(-1px) !important;
+}
+
+.contact-amenities-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 0 !important;
+  margin-top: 64px !important;
+  border: 1px solid rgba(22, 34, 23, 0.1) !important;
+  border-radius: 10px !important;
+  background: #f7f4ee !important;
+  overflow: hidden !important;
+}
+
+.contact-amenity-card {
+  padding: 32px 28px !important;
+  border: none !important;
+  border-right: 1px solid rgba(22, 34, 23, 0.1) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  text-align: left !important;
+}
+
+.contact-amenity-card:last-child {
+  border-right: none !important;
+}
+
+.contact-amenity-card h6 {
+  font-family: var(--serif, 'Cormorant Garamond', serif) !important;
+  font-size: 19px !important;
+  font-weight: 600 !important;
+  color: #162217 !important;
+  margin: 0 0 8px 0 !important;
+}
+
+.contact-amenity-card p {
+  font-family: var(--sans, 'Montserrat', sans-serif) !important;
+  font-size: 13px !important;
+  line-height: 1.65 !important;
+  color: #556c52 !important;
+  margin: 0 !important;
+}
+
+/* Mobile & Tablet Responsiveness */
+@media (max-width: 900px) {
+  .atelier-contact-grid {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+
+  .atelier-contact-container {
+    padding: 36px 18px 60px !important;
+  }
+
+  .atelier-amenities-strip,
+  .contact-amenities-grid {
+    grid-template-columns: 1fr !important;
+    margin-top: 48px !important;
+  }
+
+  .amenity-cell,
+  .contact-amenity-card {
+    border-right: none !important;
+    border-bottom: 1px solid rgba(22, 34, 23, 0.1) !important;
+    padding: 24px 20px !important;
+  }
+
+  .amenity-cell:last-child,
+  .contact-amenity-card:last-child {
+    border-bottom: none !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .contact-form-row {
+    grid-template-columns: 1fr !important;
+    gap: 0 !important;
+  }
+
+  .atelier-salon-row {
+    gap: 16px !important;
+    padding: 22px 0 !important;
+  }
+
+  .atelier-inquiry-suite,
+  .contact-form-card {
+    padding: 24px 18px !important;
+  }
+}
   box-shadow: 0 6px 20px rgba(232, 65, 44, 0.35) !important;
   transform: translateY(-2px) !important;
 }
