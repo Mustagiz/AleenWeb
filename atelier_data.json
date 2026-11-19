@@ -1,16 +1,16 @@
 {
-  "masterPassword": "Aleen@2026#Atelier",
+  "masterPassword": "Kakarot@123",
   "users": [
     {
       "username": "admin",
       "role": "admin",
-      "password": "Aleen@2026#Atelier",
+      "password": "Kakarot@123",
       "createdAt": "14 Nov 2026"
     },
     {
       "username": "rajesh",
       "role": "staff",
-      "password": "pass123",
+      "password": "Kakarot@123",
       "createdAt": "14 Nov 2026"
     }
   ],
