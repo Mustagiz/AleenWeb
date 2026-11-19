@@ -5255,6 +5255,19 @@ html, body {
       ];
 
       // State
+      function mergeDefaultPricing(item) {
+        const fallback = DEFAULT_GARMENTS.find(defaultItem => defaultItem.id === item.id);
+        if (!fallback || Number(item.price) !== Number(fallback.price)) return item;
+
+        const merged = { ...item };
+        ["mrp", "discountedPrice"].forEach(field => {
+          if ((merged[field] === undefined || merged[field] === null || merged[field] === "") && fallback[field] > 0) {
+            merged[field] = fallback[field];
+          }
+        });
+        return merged;
+      }
+
       let GARMENTS = [...DEFAULT_GARMENTS];
       const savedCatalog = localStorage.getItem("aleen_master_catalog");
       if (savedCatalog) {
@@ -5265,7 +5278,7 @@ html, body {
               if (item.id === "ALN-SR-01" || (item.title && item.title.includes("Chandramukhi"))) return DEFAULT_GARMENTS[0];
               if (item.id === "ALN-SR-05" || (item.title && item.title.includes("Kalamkari"))) return DEFAULT_GARMENTS[4];
               if (item.id === "ALN-SR-09" || (item.title && item.title.includes("Nirvana Organza"))) return DEFAULT_GARMENTS[8];
-              return item;
+              return mergeDefaultPricing(item);
             });
           }
         } catch (e) {
@@ -5279,7 +5292,7 @@ html, body {
         .then(data => {
           const list = Array.isArray(data.catalog) ? data.catalog : (Array.isArray(data.garments) ? data.garments : null);
           if (list && list.length > 0) {
-            GARMENTS = list;
+            GARMENTS = list.map(mergeDefaultPricing);
             localStorage.setItem("aleen_master_catalog", JSON.stringify(GARMENTS));
             if (typeof updateCategoryPillCounts === 'function') {
               updateCategoryPillCounts();

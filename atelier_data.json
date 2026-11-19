@@ -454,8 +454,6 @@
       "category": "kurtis",
       "categoryLabel": "Pakistani Kurtis",
       "price": 34500,
-      "mrp": 49300,
-      "discountedPrice": 34500,
       "craft": "Pure Zari & Adda Needlework",
       "fabric": "Pure Raw Silk with Organza Lace Trims",
       "origin": "Lahore Atelier",
@@ -473,8 +471,8 @@
       ],
       "garmentColors": [],
       "fitLabel": "",
-      "mrp": 0,
-      "discountedPrice": 0
+      "mrp": 49300,
+      "discountedPrice": 34500
     },
     {
       "id": "ALN-KS-02",
