@@ -4553,3 +4553,312 @@ html.nav-open body {
     height: 48px !important;
   }
 }
+
+/* ========================================================
+   INFINITE SCROLL LOADER & END INDICATOR
+   ======================================================== */
+.see-more-wrap {
+  text-align: center !important;
+  margin: 36px auto 28px !important;
+  position: relative !important;
+  z-index: 5 !important;
+  min-height: 48px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.infinite-scroll-trigger {
+  display: inline-flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  cursor: pointer !important;
+}
+
+.infinite-scroll-loader {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  padding: 10px 24px !important;
+  background: #f7f5ef !important;
+  border: 1.5px solid #9caf88 !important;
+  border-radius: 999px !important;
+  color: #162217 !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.3px !important;
+  box-shadow: 0 4px 14px rgba(22, 34, 23, 0.08) !important;
+  transition: all 0.25s ease !important;
+}
+
+.infinite-scroll-loader:hover {
+  background: #edeae0 !important;
+  border-color: #748c66 !important;
+}
+
+.scroll-spinner {
+  width: 16px !important;
+  height: 16px !important;
+  border: 2.5px solid rgba(232, 65, 44, 0.25) !important;
+  border-top-color: #e8412c !important;
+  border-radius: 50% !important;
+  animation: garmentSpin 0.7s linear infinite !important;
+}
+
+@keyframes garmentSpin {
+  to { transform: rotate(360deg); }
+}
+
+.all-loaded-indicator {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  padding: 16px 24px !important;
+  color: #768573 !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: 1.2px !important;
+  text-transform: uppercase !important;
+}
+
+/* ========================================================
+   QUICK EXAMINE GARMENT DIALOG - MOBILE RESPONSIVENESS
+   ======================================================== */
+@media (max-width: 768px) {
+  .modal-overlay {
+    padding: 12px 10px !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .modal-card {
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    width: 100% !important;
+    max-width: 520px !important;
+    max-height: 88vh !important;
+    height: auto !important;
+    border-radius: 18px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: contain !important;
+    position: relative !important;
+  }
+
+  /* Fixed close button stays reachable while scrolling modal content */
+  .modal-close-btn,
+  button.modal-close-btn {
+    position: fixed !important;
+    top: 18px !important;
+    right: 18px !important;
+    z-index: 10005 !important;
+    width: 38px !important;
+    height: 38px !important;
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    border: 1.5px solid #9caf88 !important;
+    color: #162217 !important;
+    font-size: 22px !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25) !important;
+  }
+
+  .modal-gallery-col {
+    width: 100% !important;
+    border-radius: 18px 18px 0 0 !important;
+    border-right: none !important;
+    border-bottom: 1.5px solid rgba(156, 175, 136, 0.35) !important;
+    flex-shrink: 0 !important;
+    background: #edeae0 !important;
+  }
+
+  .modal-img-frame {
+    width: 100% !important;
+    height: 300px !important;
+    min-height: 250px !important;
+    max-height: 330px !important;
+    flex: none !important;
+    position: relative !important;
+    overflow: hidden !important;
+    background: #edeae0 !important;
+  }
+
+  .modal-img-frame img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+  }
+
+  .modal-gallery-arrow,
+  button.modal-gallery-arrow {
+    width: 34px !important;
+    height: 34px !important;
+    font-size: 13px !important;
+    z-index: 5 !important;
+  }
+
+  .modal-arrow-prev {
+    left: 8px !important;
+  }
+
+  .modal-arrow-next {
+    right: 8px !important;
+  }
+
+  .modal-gallery-counter {
+    bottom: 8px !important;
+    right: 8px !important;
+    font-size: 10px !important;
+    padding: 3px 8px !important;
+  }
+
+  .modal-thumbs-strip {
+    padding: 8px 10px !important;
+    gap: 8px !important;
+    overflow-x: auto !important;
+    justify-content: flex-start !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .modal-thumb-btn,
+  button.modal-thumb-btn {
+    width: 44px !important;
+    height: 44px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .modal-detail-col {
+    padding: 16px 14px 24px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+    flex: none !important;
+    height: auto !important;
+    background: #f7f5ef !important;
+  }
+
+  .modal-kicker {
+    font-size: 10.5px !important;
+    letter-spacing: 1.2px !important;
+    margin-bottom: 4px !important;
+  }
+
+  .modal-title {
+    font-size: 19px !important;
+    line-height: 1.3 !important;
+    margin-bottom: 8px !important;
+    word-break: break-word !important;
+  }
+
+  .modal-price {
+    font-size: 19px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .modal-desc {
+    font-size: 13px !important;
+    line-height: 1.55 !important;
+    margin-bottom: 14px !important;
+  }
+
+  .spec-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+    padding: 10px !important;
+    margin-bottom: 14px !important;
+  }
+
+  .spec-lbl {
+    font-size: 9px !important;
+    letter-spacing: 1px !important;
+  }
+
+  .spec-val {
+    font-size: 11.5px !important;
+    line-height: 1.3 !important;
+    word-break: break-word !important;
+  }
+
+  .size-picker-title {
+    font-size: 10.5px !important;
+    margin-bottom: 6px !important;
+  }
+
+  .size-chips {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+    margin-bottom: 14px !important;
+  }
+
+  .size-chip,
+  button.size-chip {
+    padding: 6px 12px !important;
+    font-size: 11px !important;
+  }
+
+  .modal-buying-trust {
+    padding: 10px !important;
+    margin: 10px 0 14px !important;
+    font-size: 11px !important;
+    gap: 6px !important;
+  }
+
+  .modal-action-row {
+    margin-top: 6px !important;
+    padding-top: 0 !important;
+    width: 100% !important;
+  }
+
+  .modal-inquire-btn,
+  button.modal-inquire-btn {
+    padding: 12px 20px !important;
+    font-size: 13px !important;
+    letter-spacing: 1px !important;
+    width: 100% !important;
+    justify-content: center !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-overlay {
+    padding: 8px 6px !important;
+  }
+
+  .modal-card {
+    max-height: 92vh !important;
+    border-radius: 16px !important;
+  }
+
+  .modal-img-frame {
+    height: 270px !important;
+    min-height: 240px !important;
+    max-height: 290px !important;
+  }
+
+  .modal-detail-col {
+    padding: 14px 12px 20px !important;
+  }
+
+  .modal-title {
+    font-size: 17.5px !important;
+  }
+
+  .modal-price {
+    font-size: 17.5px !important;
+  }
+
+  .modal-desc {
+    font-size: 12.5px !important;
+  }
+
+  .spec-grid {
+    padding: 8px !important;
+    gap: 6px !important;
+  }
+}

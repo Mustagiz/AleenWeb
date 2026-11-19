@@ -1852,12 +1852,70 @@
       padding: 14px clamp(20px, 3.2vw, 56px) 100px;
     }
 
-    /* See More Pagination Button */
+    /* See More & Infinite Scroll */
     .see-more-wrap {
       text-align: center;
-      margin: 48px auto 20px;
+      margin: 40px auto 24px;
       position: relative;
       z-index: 5;
+      min-height: 48px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .infinite-scroll-trigger {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .infinite-scroll-loader {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 10px 24px;
+      background: #f7f5ef;
+      border: 1.5px solid #9caf88;
+      border-radius: 999px;
+      color: #162217;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      box-shadow: 0 4px 14px rgba(22, 34, 23, 0.08);
+      transition: all 0.25s ease;
+    }
+
+    .infinite-scroll-loader:hover {
+      background: #edeae0;
+      border-color: #748c66;
+    }
+
+    .scroll-spinner {
+      width: 16px;
+      height: 16px;
+      border: 2.5px solid rgba(232, 65, 44, 0.25);
+      border-top-color: #e8412c;
+      border-radius: 50%;
+      animation: garmentSpin 0.7s linear infinite;
+    }
+
+    @keyframes garmentSpin {
+      to { transform: rotate(360deg); }
+    }
+
+    .all-loaded-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 24px;
+      color: #768573;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
     }
 
     .see-more-btn {
@@ -2418,17 +2476,237 @@
     }
 
     @media (max-width: 768px) {
+      .modal-overlay {
+        padding: 12px 10px !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+
       .modal-card {
-        grid-template-columns: 1fr;
+        display: flex !important;
+        flex-direction: column !important;
+        grid-template-columns: minmax(0, 1fr) !important;
+        width: 100% !important;
+        max-width: 520px !important;
+        max-height: 88vh !important;
+        height: auto !important;
+        border-radius: 18px !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        -webkit-overflow-scrolling: touch !important;
+        overscroll-behavior: contain !important;
+        position: relative !important;
+      }
+
+      .modal-close-btn,
+      button.modal-close-btn {
+        position: fixed !important;
+        top: 18px !important;
+        right: 18px !important;
+        z-index: 10005 !important;
+        width: 38px !important;
+        height: 38px !important;
+        background: #ffffff !important;
+        background-color: #ffffff !important;
+        border: 1.5px solid #9caf88 !important;
+        color: #162217 !important;
+        font-size: 22px !important;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25) !important;
+      }
+
+      .modal-gallery-col {
+        width: 100% !important;
+        border-radius: 18px 18px 0 0 !important;
+        border-right: none !important;
+        border-bottom: 1.5px solid rgba(156, 175, 136, 0.35) !important;
+        flex-shrink: 0 !important;
+        background: #edeae0 !important;
       }
 
       .modal-img-frame {
-        min-height: 280px;
-        height: 280px;
+        width: 100% !important;
+        height: 300px !important;
+        min-height: 250px !important;
+        max-height: 330px !important;
+        flex: none !important;
+        position: relative !important;
+        overflow: hidden !important;
+      }
+
+      .modal-img-frame img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        display: block !important;
+      }
+
+      .modal-gallery-arrow,
+      button.modal-gallery-arrow {
+        width: 34px !important;
+        height: 34px !important;
+        font-size: 13px !important;
+        z-index: 5 !important;
+      }
+
+      .modal-arrow-prev {
+        left: 8px !important;
+      }
+
+      .modal-arrow-next {
+        right: 8px !important;
+      }
+
+      .modal-gallery-counter {
+        bottom: 8px !important;
+        right: 8px !important;
+        font-size: 10px !important;
+        padding: 3px 8px !important;
+      }
+
+      .modal-thumbs-strip {
+        padding: 8px 10px !important;
+        gap: 8px !important;
+        overflow-x: auto !important;
+        justify-content: flex-start !important;
+        -webkit-overflow-scrolling: touch !important;
+      }
+
+      .modal-thumb-btn,
+      button.modal-thumb-btn {
+        width: 44px !important;
+        height: 44px !important;
+        flex-shrink: 0 !important;
       }
 
       .modal-detail-col {
-        padding: 24px 20px;
+        padding: 16px 14px 24px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        overflow: visible !important;
+        overflow-x: visible !important;
+        overflow-y: visible !important;
+        flex: none !important;
+        height: auto !important;
+      }
+
+      .modal-kicker {
+        font-size: 10.5px !important;
+        letter-spacing: 1.2px !important;
+        margin-bottom: 4px !important;
+      }
+
+      .modal-title {
+        font-size: 19px !important;
+        line-height: 1.3 !important;
+        margin-bottom: 8px !important;
+        word-break: break-word !important;
+      }
+
+      .modal-price {
+        font-size: 19px !important;
+        margin-bottom: 10px !important;
+      }
+
+      .modal-desc {
+        font-size: 13px !important;
+        line-height: 1.55 !important;
+        margin-bottom: 14px !important;
+      }
+
+      .spec-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 8px !important;
+        padding: 10px !important;
+        margin-bottom: 14px !important;
+      }
+
+      .spec-lbl {
+        font-size: 9px !important;
+        letter-spacing: 1px !important;
+      }
+
+      .spec-val {
+        font-size: 11.5px !important;
+        line-height: 1.3 !important;
+        word-break: break-word !important;
+      }
+
+      .size-picker-title {
+        font-size: 10.5px !important;
+        margin-bottom: 6px !important;
+      }
+
+      .size-chips {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 6px !important;
+        margin-bottom: 14px !important;
+      }
+
+      .size-chip,
+      button.size-chip {
+        padding: 6px 12px !important;
+        font-size: 11px !important;
+      }
+
+      .modal-buying-trust {
+        padding: 10px !important;
+        margin: 10px 0 14px !important;
+        font-size: 11px !important;
+        gap: 6px !important;
+      }
+
+      .modal-action-row {
+        margin-top: 6px !important;
+        padding-top: 0 !important;
+        width: 100% !important;
+      }
+
+      .modal-inquire-btn,
+      button.modal-inquire-btn {
+        padding: 12px 20px !important;
+        font-size: 13px !important;
+        letter-spacing: 1px !important;
+        width: 100% !important;
+        justify-content: center !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .modal-overlay {
+        padding: 8px 6px !important;
+      }
+
+      .modal-card {
+        max-height: 92vh !important;
+        border-radius: 16px !important;
+      }
+
+      .modal-img-frame {
+        height: 270px !important;
+        min-height: 240px !important;
+        max-height: 290px !important;
+      }
+
+      .modal-detail-col {
+        padding: 14px 12px 20px !important;
+      }
+
+      .modal-title {
+        font-size: 17.5px !important;
+      }
+
+      .modal-price {
+        font-size: 17.5px !important;
+      }
+
+      .modal-desc {
+        font-size: 12.5px !important;
+      }
+
+      .spec-grid {
+        padding: 8px !important;
+        gap: 6px !important;
       }
     }
 
@@ -5365,8 +5643,8 @@ html, body {
       let selectedBadges = new Set();
       let searchQuery = "";
       let sortOrder = "featured";
-      let visibleLimit = 12;
-      const PAGE_SIZE = 12;
+      const PAGE_SIZE = 8;
+      let visibleLimit = PAGE_SIZE;
       let currentFilteredList = [];
       let currentGridCols = 4;
       try {
@@ -5793,14 +6071,90 @@ html, body {
           gridEl.appendChild(card);
         });
 
-        // Update See More Button
-        if (seeMoreWrap && seeMoreBtn) {
+        // Update Infinite Scroll / Auto-load Sentinel
+        if (seeMoreWrap) {
           if (visibleLimit < items.length) {
-            seeMoreWrap.style.display = "block";
-            seeMoreBtn.innerHTML = `<span>See More</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>`;
+            seeMoreWrap.style.display = "flex";
+            seeMoreWrap.innerHTML = `
+              <div class="infinite-scroll-trigger" id="infiniteScrollTrigger" aria-label="Loading more garments">
+                <div class="infinite-scroll-loader">
+                  <span class="scroll-spinner"></span>
+                  <span class="scroll-loader-text">Loading more garments...</span>
+                </div>
+              </div>
+            `;
+          } else if (items.length > PAGE_SIZE) {
+            seeMoreWrap.style.display = "flex";
+            seeMoreWrap.innerHTML = `
+              <div class="all-loaded-indicator">
+                <span class="all-loaded-text">✦ Showing all ${items.length} garments ✦</span>
+              </div>
+            `;
           } else {
             seeMoreWrap.style.display = "none";
+            seeMoreWrap.innerHTML = "";
           }
+        }
+      }
+
+      let isScrollLoading = false;
+      function loadMoreGarments() {
+        const items = currentFilteredList.length ? currentFilteredList : GARMENTS;
+        if (isScrollLoading || visibleLimit >= items.length) return;
+        isScrollLoading = true;
+
+        const loaderText = seeMoreWrap?.querySelector(".scroll-loader-text");
+        if (loaderText) loaderText.textContent = "Loading more garments...";
+
+        setTimeout(() => {
+          visibleLimit += PAGE_SIZE;
+          renderGarments(items);
+          isScrollLoading = false;
+        }, 180);
+      }
+
+      let infiniteObserver = null;
+      function setupInfiniteScroll() {
+        if ("IntersectionObserver" in window) {
+          if (infiniteObserver) infiniteObserver.disconnect();
+          infiniteObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                const items = currentFilteredList.length ? currentFilteredList : GARMENTS;
+                if (visibleLimit < items.length) {
+                  loadMoreGarments();
+                }
+              }
+            });
+          }, { rootMargin: "350px 0px" });
+
+          if (seeMoreWrap) {
+            infiniteObserver.observe(seeMoreWrap);
+          }
+        }
+
+        let scrollDebounce = false;
+        window.addEventListener("scroll", () => {
+          if (scrollDebounce || isScrollLoading) return;
+          scrollDebounce = true;
+          requestAnimationFrame(() => {
+            scrollDebounce = false;
+            const items = currentFilteredList.length ? currentFilteredList : GARMENTS;
+            if (visibleLimit < items.length && !isScrollLoading) {
+              const scrollY = window.scrollY || window.pageYOffset;
+              const viewportHeight = window.innerHeight;
+              const fullHeight = document.documentElement.scrollHeight;
+              if (scrollY + viewportHeight >= fullHeight - 500) {
+                loadMoreGarments();
+              }
+            }
+          });
+        }, { passive: true });
+
+        if (seeMoreWrap) {
+          seeMoreWrap.addEventListener("click", () => {
+            loadMoreGarments();
+          });
         }
       }
 
@@ -6643,6 +6997,7 @@ html, body {
       syncSortChipsState();
       setGridColumns(currentGridCols || 3);
       filterAndSortGarments(true);
+      setupInfiniteScroll();
 
       // Deep link query or search focus
       if (searchParam && searchInput) {
