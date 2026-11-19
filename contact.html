@@ -2741,6 +2741,19 @@
       }
     }).catch(() => {});
 
+    fetch("/api/whatsapp?t=" + Date.now()).then(r => r.json()).then(d => {
+      if (d && d.success && d.whatsapp) {
+        const cPhone = document.getElementById("contactPhoneText");
+        if (cPhone) cPhone.textContent = d.whatsapp;
+        const cWa = document.getElementById("contactWhatsappLink");
+        if (cWa) {
+          const cleanPhone = d.whatsapp.replace(/[^0-9]/g, "");
+          const msg = encodeURIComponent(d.whatsappMsg || "Hello Aleen Atelier, I would like to inquire about your couture creations.");
+          cWa.href = `https://wa.me/${cleanPhone}?text=${msg}`;
+        }
+      }
+    }).catch(() => {});
+
     fetch("/api/social-links").then(r => r.json()).then(d => {
       if (d && d.success && d.socialLinks) {
         applySocialLinks(d.socialLinks);

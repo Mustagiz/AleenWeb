@@ -8037,6 +8037,15 @@ window.MAHIRA_LOGO = window.ALEEN_LOGO;
       }
     }).catch(() => {});
 
+    fetch('/api/whatsapp?t=' + Date.now()).then(r => r.json()).then(d => {
+      if (d && d.success && d.whatsapp) {
+        const clean = d.whatsapp.replace(/[^0-9]/g, '');
+        const msg = encodeURIComponent(d.whatsappMsg || 'Hello Aleen Atelier, I would like to connect with a private stylist for bespoke curation.');
+        const waLinks = document.querySelectorAll("a[aria-label*='WhatsApp'], .f-social a[href*='wa.me']");
+        waLinks.forEach(w => { w.href = `https://wa.me/${clean}?text=${msg}`; });
+      }
+    }).catch(() => {});
+
     // Listen to real-time BroadcastChannel updates from Admin Panel
     try {
       const bcBest = new BroadcastChannel('aleen_bestsellers_realtime');

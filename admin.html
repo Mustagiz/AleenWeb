@@ -8780,7 +8780,14 @@ const DEFAULT_CATALOG = [{"id": "ALN-PK-01", "title": "Zeenat Embroidered Pakist
 
         if (typeof contactDetails !== "undefined") {
           contactDetails.phone = num;
+          if (msg) contactDetails.whatsappMsg = msg;
           localStorage.setItem("aleen_contact_details", JSON.stringify(contactDetails));
+        }
+
+        // Update all catalog items in memory
+        if (Array.isArray(catalog)) {
+          catalog.forEach(item => { item.whatsapp = num; });
+          localStorage.setItem("aleen_master_catalog", JSON.stringify(catalog));
         }
 
         updateWhatsAppUIElements(num, msg);
@@ -8797,21 +8804,47 @@ const DEFAULT_CATALOG = [{"id": "ALN-PK-01", "title": "Zeenat Embroidered Pakist
           } catch (e) {}
         }
 
-        // Persist to server API
+        // Persist to unified server API
         try {
           const token = localStorage.getItem("atelier_admin_token") || "";
+          await fetch("/api/whatsapp", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
+            body: JSON.stringify({ whatsapp: num, whatsappMsg: msg })
+          });
           await fetch("/api/social-links", {
             method: "POST",
             headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
             body: JSON.stringify({ socialLinks })
           });
-        } catch (e) {}
+          if (typeof contactDetails !== "undefined") {
+            await fetch("/api/contact-details", {
+              method: "POST",
+              headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
+              body: JSON.stringify({ contactDetails })
+            });
+          }
+        } catch (e) {
+          console.warn("Could not save WhatsApp number to server:", e);
+        }
 
         showToast("✦ WhatsApp number updated to " + num + " and synchronized live!");
       }
 
-      // Initialize on load
-      setTimeout(() => {
+      // Initialize on load from server
+      setTimeout(async () => {
+        try {
+          const res = await fetch("/api/whatsapp?t=" + Date.now());
+          if (res.ok) {
+            const data = await res.json();
+            if (data.whatsapp) {
+              localStorage.setItem("aleen_whatsapp_number", data.whatsapp);
+              if (data.whatsappMsg) localStorage.setItem("aleen_whatsapp_msg", data.whatsappMsg);
+              updateWhatsAppUIElements(data.whatsapp, data.whatsappMsg);
+              return;
+            }
+          }
+        } catch (e) {}
         const initialWa = getActiveWhatsAppNumber();
         const initialMsg = getActiveWhatsAppMsg();
         updateWhatsAppUIElements(initialWa, initialMsg);

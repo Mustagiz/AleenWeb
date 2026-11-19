@@ -546,8 +546,11 @@ const server = http.createServer(async (req, res) => {
     if (reqPath === '/api/catalog' || reqPath === '/api/admin/catalog') {
       if (req.method === 'GET') {
         res.writeHead(200);
+        const activeWa = atelierData.whatsapp || atelierData.socialLinks?.whatsapp || atelierData.contactDetails?.phone || '+91 98765 43210';
+        const activeWaMsg = atelierData.whatsappMsg || atelierData.socialLinks?.whatsappMsg || atelierData.contactDetails?.whatsappMsg || 'Hello Aleen Atelier,\n\nI would like to inquire about this creation:';
         const garments = (atelierData.catalog || []).map(item => {
           const g = { ...item };
+          if (activeWa) g.whatsapp = activeWa;
           if (g.image && g.image.startsWith('assets/')) g.image = '/' + g.image;
           if (Array.isArray(g.images)) {
             g.images = g.images.map(img => (typeof img === 'string' && img.startsWith('assets/')) ? '/' + img : img);
@@ -562,7 +565,7 @@ const server = http.createServer(async (req, res) => {
           }
           return g;
         });
-        res.end(JSON.stringify({ success: true, garments, catalog: garments }));
+        res.end(JSON.stringify({ success: true, garments, catalog: garments, whatsapp: activeWa, whatsappMsg: activeWaMsg }));
         return;
       }
 
@@ -716,17 +719,28 @@ const server = http.createServer(async (req, res) => {
         }
         const { socialLinks } = await parseBody(req);
         if (socialLinks && typeof socialLinks === 'object') {
+          const waNum = socialLinks.whatsapp || atelierData.whatsapp || '+91 98765 43210';
+          const waMsg = socialLinks.whatsappMsg || atelierData.whatsappMsg || 'Hello Aleen Atelier, I would like to connect with a private stylist for bespoke curation.';
+          atelierData.whatsapp = waNum;
+          atelierData.whatsappMsg = waMsg;
           atelierData.socialLinks = {
             instagram: socialLinks.instagram || 'https://instagram.com',
             facebook: socialLinks.facebook || 'https://facebook.com',
             youtube: socialLinks.youtube || 'https://youtube.com',
-            whatsapp: socialLinks.whatsapp || '+91 98765 43210',
-            whatsappMsg: socialLinks.whatsappMsg || 'Hello Aleen Atelier, I would like to connect with a private stylist for bespoke curation.',
+            whatsapp: waNum,
+            whatsappMsg: waMsg,
             email: socialLinks.email || 'Contact@aleen.com'
           };
+          if (atelierData.contactDetails) {
+            atelierData.contactDetails.phone = waNum;
+            atelierData.contactDetails.whatsappMsg = waMsg;
+          }
+          if (Array.isArray(atelierData.catalog)) {
+            atelierData.catalog.forEach(item => { item.whatsapp = waNum; });
+          }
           saveData();
           res.writeHead(200);
-          res.end(JSON.stringify({ success: true, message: 'Social links & email updated live!', socialLinks: atelierData.socialLinks }));
+          res.end(JSON.stringify({ success: true, message: 'Social links & WhatsApp updated live!', socialLinks: atelierData.socialLinks }));
           return;
         }
         res.writeHead(400);
@@ -735,11 +749,66 @@ const server = http.createServer(async (req, res) => {
       }
     }
 
+    // Unified Global WhatsApp Coordinates Endpoint
+    if (reqPath === '/api/whatsapp' || reqPath === '/api/admin/whatsapp') {
+      if (req.method === 'GET') {
+        const waNum = atelierData.whatsapp || atelierData.socialLinks?.whatsapp || atelierData.contactDetails?.phone || '+91 98765 43210';
+        const waMsg = atelierData.whatsappMsg || atelierData.socialLinks?.whatsappMsg || atelierData.contactDetails?.whatsappMsg || 'Hello Aleen Atelier,\n\nI would like to inquire about this creation:';
+        res.writeHead(200);
+        res.end(JSON.stringify({ success: true, whatsapp: waNum, whatsappMsg: waMsg }));
+        return;
+      }
+      if (req.method === 'POST') {
+        const admin = verifyAdmin(req);
+        if (!admin) {
+          res.writeHead(403);
+          res.end(JSON.stringify({ error: 'Admin role required to modify WhatsApp number' }));
+          return;
+        }
+        const body = await parseBody(req);
+        const waNum = (body.whatsapp || body.phone || '').toString().trim();
+        const waMsg = (body.whatsappMsg || body.msg || '').toString().trim();
+        if (!waNum) {
+          res.writeHead(400);
+          res.end(JSON.stringify({ error: 'Valid WhatsApp number is required' }));
+          return;
+        }
+
+        atelierData.whatsapp = waNum;
+        if (waMsg) atelierData.whatsappMsg = waMsg;
+
+        if (!atelierData.socialLinks) atelierData.socialLinks = {};
+        atelierData.socialLinks.whatsapp = waNum;
+        if (waMsg) atelierData.socialLinks.whatsappMsg = waMsg;
+
+        if (!atelierData.contactDetails) atelierData.contactDetails = {};
+        atelierData.contactDetails.phone = waNum;
+        if (waMsg) atelierData.contactDetails.whatsappMsg = waMsg;
+
+        if (Array.isArray(atelierData.catalog)) {
+          atelierData.catalog.forEach(item => { item.whatsapp = waNum; });
+        }
+
+        saveData();
+        res.writeHead(200);
+        res.end(JSON.stringify({
+          success: true,
+          message: 'Atelier WhatsApp number synchronized across entire catalog, contact desk, and social channels!',
+          whatsapp: waNum,
+          whatsappMsg: atelierData.whatsappMsg
+        }));
+        return;
+      }
+    }
+
     // Contact Page & Flagship Boutique Desk
     if (reqPath === '/api/contact-details') {
       if (req.method === 'GET') {
+        const waNum = atelierData.whatsapp || atelierData.socialLinks?.whatsapp || atelierData.contactDetails?.phone;
+        const resp = { ...(atelierData.contactDetails || {}) };
+        if (waNum) resp.phone = waNum;
         res.writeHead(200);
-        res.end(JSON.stringify({ success: true, contactDetails: atelierData.contactDetails || {} }));
+        res.end(JSON.stringify({ success: true, contactDetails: resp }));
         return;
       }
       if (req.method === 'POST') {
@@ -751,6 +820,17 @@ const server = http.createServer(async (req, res) => {
         }
         const { contactDetails } = await parseBody(req);
         if (contactDetails && typeof contactDetails === 'object') {
+          const waNum = contactDetails.phone || atelierData.whatsapp || '+91 98765 43210';
+          const waMsg = contactDetails.whatsappMsg || atelierData.whatsappMsg || 'Hello Aleen Atelier, I would like to inquire about your couture creations.';
+          atelierData.whatsapp = waNum;
+          atelierData.whatsappMsg = waMsg;
+          if (atelierData.socialLinks) {
+            atelierData.socialLinks.whatsapp = waNum;
+            atelierData.socialLinks.whatsappMsg = waMsg;
+          }
+          if (Array.isArray(atelierData.catalog)) {
+            atelierData.catalog.forEach(item => { item.whatsapp = waNum; });
+          }
           atelierData.contactDetails = {
             boutiqueBadge: contactDetails.boutiqueBadge || 'Pune Flagship Boutique',
             boutiqueTitle: contactDetails.boutiqueTitle || 'Aleen Clothing Atelier',
@@ -762,9 +842,9 @@ const server = http.createServer(async (req, res) => {
             email: contactDetails.email || 'Contact@aleen.com',
             emailSubtext: contactDetails.emailSubtext || 'Our client liaison desk responds to all inquiries within 4 business hours.',
             conciergeBadge: contactDetails.conciergeBadge || 'Direct Concierge & WhatsApp',
-            phone: contactDetails.phone || '+91 98765 43210',
+            phone: waNum,
             hours: contactDetails.hours || 'Mon – Sat, 10:00 AM – 7:30 PM IST',
-            whatsappMsg: contactDetails.whatsappMsg || 'Hello Aleen Atelier, I would like to inquire about your couture creations.'
+            whatsappMsg: waMsg
           };
           saveData();
           res.writeHead(200);

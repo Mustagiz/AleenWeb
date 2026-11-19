@@ -5706,6 +5706,12 @@ html, body {
         fetch('/api/catalog?t=' + Date.now())
           .then(r => r.json())
           .then(data => {
+            if (data.whatsapp) {
+              window.__ALEEN_WHATSAPP__ = data.whatsapp;
+              if (data.whatsappMsg) window.__ALEEN_WHATSAPP_MSG__ = data.whatsappMsg;
+              localStorage.setItem('aleen_whatsapp_number', data.whatsapp);
+              if (data.whatsappMsg) localStorage.setItem('aleen_whatsapp_msg', data.whatsappMsg);
+            }
             const list = Array.isArray(data.catalog) ? data.catalog : (Array.isArray(data.garments) ? data.garments : null);
             if (list && list.length > 0) {
               applyCatalogSync(list);
@@ -5723,6 +5729,11 @@ html, body {
         catChannel.onmessage = (event) => {
           if (event.data && event.data.type === 'CATALOG_UPDATED' && Array.isArray(event.data.catalog) && event.data.catalog.length > 0) {
             applyCatalogSync(event.data.catalog);
+          } else if (event.data && event.data.type === 'WHATSAPP_NUMBER_UPDATED' && event.data.whatsapp) {
+            window.__ALEEN_WHATSAPP__ = event.data.whatsapp;
+            if (event.data.msg) window.__ALEEN_WHATSAPP_MSG__ = event.data.msg;
+            localStorage.setItem('aleen_whatsapp_number', event.data.whatsapp);
+            if (event.data.msg) localStorage.setItem('aleen_whatsapp_msg', event.data.msg);
           }
         };
       }
@@ -7272,10 +7283,10 @@ html, body {
         modalInquireBtn.addEventListener("click", () => {
           if (!activeModalItem) return;
           const selectedSize = modalSizePicker?.querySelector(".size-chip.active")?.textContent || selectedModalSize || "32";
-          const globalWa = localStorage.getItem('aleen_whatsapp_number');
-          const cleanPhone = (globalWa || activeModalItem.whatsapp || "919876543210").replace(/[^0-9]/g, '');
+          const activeWa = window.__ALEEN_WHATSAPP__ || localStorage.getItem('aleen_whatsapp_number') || activeModalItem.whatsapp || "919876543210";
+          const cleanPhone = String(activeWa).replace(/[^0-9]/g, '');
           const priceFormatted = formatPrice(activeModalItem.price);
-          const customPrefix = localStorage.getItem('aleen_whatsapp_msg') || 'Hello Aleen Atelier,\n\nI would like to inquire about this creation:';
+          const customPrefix = window.__ALEEN_WHATSAPP_MSG__ || localStorage.getItem('aleen_whatsapp_msg') || 'Hello Aleen Atelier,\n\nI would like to inquire about this creation:';
           const msg = encodeURIComponent(
             `${customPrefix}\n\n✦ Garment: ${activeModalItem.title}\n✦ Code: ${activeModalItem.id}\n✦ Price: ${priceFormatted}\n✦ Craft: ${activeModalItem.craft || 'Artisanal'}\n✦ Fabric: ${activeModalItem.fabric || 'Pure Silk'}\n✦ Selected Sizing: ${selectedSize}\n\nPlease share availability and bespoke curation details.`
           );
